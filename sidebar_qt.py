@@ -2595,10 +2595,12 @@ class SidebarQt(QWidget):
                                     # If current tab is Folders, Dates, Branches, or Tags, trigger reload
                                     current_tab_idx = self.tabs_controller.tab_widget.currentIndex()
                                     if current_tab_idx >= 0:
-                                        tab_name = self.tabs_controller.tab_widget.tabText(current_tab_idx)
-                                        if tab_name in ["Folders", "Dates", "Branches", "Tags"]:
-                                            print(f"[Sidebar]   Reloading {tab_name} tab...")
-                                            self.tabs_controller._load_tab_if_selected(current_tab_idx)
+                                        tab_widget = self.tabs_controller.tab_widget.widget(current_tab_idx)
+                                        if tab_widget:
+                                            tab_type = tab_widget.property("tab_type")
+                                            if tab_type in ["folders", "dates", "branches", "tags"]:
+                                                print(f"[Sidebar]   Reloading {tab_type} tab...")
+                                                self.tabs_controller._populate_tab(tab_type, current_tab_idx, force=True)
 
                                 print(f"[Sidebar] ✓ Import complete, grid loaded with {len(imported_paths)} files")
                                 print(f"[Sidebar] ✓ Sidebar tabs will refresh when viewed")
