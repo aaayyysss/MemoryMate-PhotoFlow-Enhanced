@@ -177,6 +177,22 @@ def _get_insightface_app():
                             "or download models using: python download_face_models.py"
                         )
 
+                    # P1-8 FIX: Validate ONNX model files exist and have reasonable size
+                    import os
+                    required_models = ['det_10g.onnx', 'genderage.onnx', 'w600k_r50.onnx']
+                    for model_file in required_models:
+                        model_path = os.path.join(buffalo_dir, model_file)
+                        if not os.path.exists(model_path):
+                            logger.warning(f"P1-8: Missing model file: {model_file}")
+                        else:
+                            file_size = os.path.getsize(model_path)
+                            if file_size < 1000:  # Less than 1KB = likely corrupted
+                                raise RuntimeError(
+                                    f"Model file appears corrupted: {model_file} ({file_size} bytes)\n"
+                                    f"Please re-download models using: python download_face_models.py"
+                                )
+                            logger.debug(f"P1-8: Validated {model_file} ({file_size / 1024 / 1024:.1f} MB)")
+
                     # Save successful path to settings for future use
                     try:
                         from settings_manager_qt import SettingsManager

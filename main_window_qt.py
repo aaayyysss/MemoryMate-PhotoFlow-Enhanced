@@ -364,7 +364,8 @@ class ScanController:
         """
         print("[ScanController] cleanup after scan")
         # P1-7 FIX: Check if we're in the main thread
-        from PySide6.QtCore import QTimer, QApplication
+        from PySide6.QtCore import QTimer
+        from PySide6.QtWidgets import QApplication
         if self.main.thread() != QApplication.instance().thread():
             # Called from worker thread - marshal to main thread
             QTimer.singleShot(0, self._cleanup_impl)

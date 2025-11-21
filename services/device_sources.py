@@ -229,8 +229,15 @@ class DeviceScanner:
                         is_folder = item.IsFolder
                         is_filesystem = item.IsFileSystem
                         print(f"[DeviceScanner]       → Item: '{item_name}' | IsFolder={is_folder} | IsFileSystem={is_filesystem}")
-                    except Exception as e:
+                    except (AttributeError, OSError, RuntimeError) as e:
+                        # P1-2 FIX: Specific exception types for COM operations
                         print(f"[DeviceScanner]       → Item inspection error: {e}")
+                        continue
+                    except Exception as e:
+                        # P1-2 FIX: Log unexpected exceptions and continue
+                        print(f"[DeviceScanner]       → Unexpected error during item inspection: {e}")
+                        import traceback
+                        traceback.print_exc()
                         continue
 
                     # Check if it's a portable device (primary method)
@@ -277,8 +284,14 @@ class DeviceScanner:
                                             devices.append(device)
                                         else:
                                             print(f"[DeviceScanner]             ✗ No DCIM found")
-                        except Exception as e:
+                        except (AttributeError, OSError, PermissionError) as e:
+                            # P1-2 FIX: Specific exceptions for device access
                             print(f"[DeviceScanner]         ERROR accessing {device_name}: {e}")
+                        except Exception as e:
+                            # P1-2 FIX: Log unexpected errors with traceback
+                            print(f"[DeviceScanner]         UNEXPECTED ERROR accessing {device_name}: {e}")
+                            import traceback
+                            traceback.print_exc()
             else:
                 print(f"[DeviceScanner]     ✗ Could not access 'This PC' namespace")
 
@@ -286,9 +299,16 @@ class DeviceScanner:
             print(f"[DeviceScanner]     ✗ win32com not available, trying fallback...")
             # Fallback: Use wmic to list portable devices
             devices.extend(self._scan_windows_portable_wmic())
-        except Exception as e:
+        except (OSError, RuntimeError, AttributeError) as e:
+            # P1-2 FIX: Specific exceptions for COM failures
             print(f"[DeviceScanner]     ✗ Shell COM enumeration failed: {e}")
             # Fallback: Use wmic
+            devices.extend(self._scan_windows_portable_wmic())
+        except Exception as e:
+            # P1-2 FIX: Log unexpected errors with full traceback
+            print(f"[DeviceScanner]     ✗ UNEXPECTED Shell COM error: {e}")
+            import traceback
+            traceback.print_exc()
             devices.extend(self._scan_windows_portable_wmic())
 
         return devices
@@ -363,8 +383,13 @@ class DeviceScanner:
                                             break
                                 if has_dcim:
                                     break
-                            except Exception as e:
+                            except (AttributeError, OSError, PermissionError) as e:
+                                # P1-2 FIX: Specific exceptions for folder access
                                 # Skip this subfolder if we can't access it
+                                continue
+                            except Exception as e:
+                                # P1-2 FIX: Log unexpected errors
+                                print(f"[DeviceScanner]               Unexpected error checking {folder_name}: {e}")
                                 continue
 
                     # Timeout protection: Stop after checking max_check items
@@ -372,8 +397,14 @@ class DeviceScanner:
                         print(f"[DeviceScanner]             Stopped after checking {checked} items (timeout protection)")
                         break
 
-            except Exception as e:
+            except (AttributeError, OSError, RuntimeError) as e:
+                # P1-2 FIX: Specific exceptions for COM/folder operations
                 print(f"[DeviceScanner]             ERROR during DCIM search: {e}")
+            except Exception as e:
+                # P1-2 FIX: Log unexpected errors with traceback
+                print(f"[DeviceScanner]             UNEXPECTED ERROR during DCIM search: {e}")
+                import traceback
+                traceback.print_exc()
 
             if not has_dcim:
                 print(f"[DeviceScanner]             REJECTED: No DCIM found")
