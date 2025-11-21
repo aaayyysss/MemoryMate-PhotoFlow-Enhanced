@@ -261,10 +261,10 @@ class PhotoScanService:
             batch_rows = []
             folders_seen: Set[str] = set()
 
-            # CRITICAL FIX: Increase thread pool size to prevent deadlock
-            # With max_workers=4, if 4 files timeout simultaneously, the pool deadlocks
-            # Using 8 workers provides headroom for timeouts while maintaining reasonable concurrency
-            executor = ThreadPoolExecutor(max_workers=8)
+            # P0 FIX: Create fresh executor PER FILE to prevent worker exhaustion/deadlock
+            # ISSUE: Each file makes 2 executor submissions (stat + metadata extraction)
+            # With shared executor, after ~10 files (20 submissions), workers can deadlock
+            # SOLUTION: Fresh executor per file ensures clean state, prevents accumulated deadlocks
 
             try:
                 for i, file_path in enumerate(all_files, 1):
@@ -276,16 +276,26 @@ class PhotoScanService:
                     print(f"[SCAN] Starting file {i}/{total_files}: {file_path.name}")
                     logger.info(f"[Scan] File {i}/{total_files}: {file_path.name}")
 
-                    # Process file
-                    row = self._process_file(
-                        file_path=file_path,
-                        root_path=root_path,
-                        project_id=project_id,
-                        existing_metadata=existing_metadata,
-                        skip_unchanged=skip_unchanged,
-                        extract_exif_date=extract_exif_date,
-                        executor=executor
-                    )
+                    # P0 FIX: Create fresh executor for each file to prevent deadlock
+                    executor = ThreadPoolExecutor(max_workers=2)
+
+                    try:
+                        # Process file
+                        row = self._process_file(
+                            file_path=file_path,
+                            root_path=root_path,
+                            project_id=project_id,
+                            existing_metadata=existing_metadata,
+                            skip_unchanged=skip_unchanged,
+                            extract_exif_date=extract_exif_date,
+                            executor=executor
+                        )
+                    finally:
+                        # P0 FIX: Clean shutdown after each file
+                        try:
+                            executor.shutdown(wait=False, cancel_futures=True)
+                        except Exception as e:
+                            logger.debug(f"Executor shutdown error (ignored): {e}")
 
                     if row is None:
                         # Skipped or failed
@@ -323,12 +333,9 @@ class PhotoScanService:
                     self._write_batch(batch_rows, project_id)
 
             finally:
-                # Properly shutdown executor to prevent Qt timer warnings
-                # Don't wait if cancelled to exit quickly
-                try:
-                    executor.shutdown(wait=not self._cancelled, cancel_futures=True)
-                except Exception as e:
-                    logger.debug(f"Executor shutdown error (ignored): {e}")
+                # P0 FIX: No need for executor shutdown here - each file has its own executor
+                # that is shut down immediately after processing (see line 294-298)
+                pass
 
             # Step 4: Process videos
             if total_videos > 0 and not self._cancelled:
