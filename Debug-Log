@@ -1,38 +1,40 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01>python main_qt.py
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03
+
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03>python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-2025-11-21 13:50:05,430 [INFO] ================================================================================
-2025-11-21 13:50:05,430 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-21 13:50:05,430 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\app_log.txt
-2025-11-21 13:50:05,430 [INFO] ================================================================================
-2025-11-21 13:50:05,465 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-21 13:50:05,465 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-21 14:09:02,469 [INFO] ================================================================================
+2025-11-21 14:09:02,469 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-21 14:09:02,469 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\app_log.txt
+2025-11-21 14:09:02,469 [INFO] ================================================================================
+2025-11-21 14:09:02,506 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-21 14:09:02,506 [INFO] Qt message handler installed to suppress TIFF warnings
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-01\\thumbnails_cache.db', 'last_updated': '2025-11-21 13:46'}
-2025-11-21 13:50:05,665 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-03\\thumbnails_cache.db', 'last_updated': '2025-11-21 14:09'}
+2025-11-21 14:09:02,758 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-21 13:50:05,665 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-21 13:50:05,665 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-21 13:50:05,665 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-21 14:09:02,758 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-21 14:09:02,758 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-21 14:09:02,758 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\locales\en.json
+✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\locales\en.json
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-21 13:50:05,674 [INFO] SearchService initialized
-[13:50:05.957] [Tabs] __init__ started
-[13:50:06.123] [Tabs] _build_tabs → building tab widgets
-[13:50:06.132] [Tabs] _on_tab_changed(idx=0)
-[13:50:06.160] [Tabs] _start_timeout idx=0 type=branches
-[13:50:06.162] [Tabs] _populate_tab(branches, idx=0, force=False)
-[13:50:06.162] [Tabs]   populated=False, loading=False
-[13:50:06.162] [Tabs]   Starting load for branches
-[13:50:06.162] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[13:50:06.162] [Tabs] _clear_tab idx=0
-[13:50:06.175] [Tabs] _on_tab_changed → tab_type=branches
-[13:50:06.182] [Tabs] _build_tabs → added 6 tabs
-[13:50:06.182] [Tabs] __init__ completed
+2025-11-21 14:09:02,769 [INFO] SearchService initialized
+[14:09:03.006] [Tabs] __init__ started
+[14:09:03.031] [Tabs] _build_tabs → building tab widgets
+[14:09:03.073] [Tabs] _on_tab_changed(idx=0)
+[14:09:03.090] [Tabs] _start_timeout idx=0 type=branches
+[14:09:03.123] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:09:03.172] [Tabs]   populated=False, loading=False
+[14:09:03.173] [Tabs]   Starting load for branches
+[14:09:03.231] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:09:03.273] [Tabs] _clear_tab idx=0
+[14:09:03.473] [Tabs] _on_tab_changed → tab_type=branches
+[14:09:03.482] [Tabs] _build_tabs → added 6 tabs
+[14:09:03.490] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Creating fresh model (avoiding Qt segfault)
@@ -42,7 +44,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C7CF39CB10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -81,7 +83,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[13:50:06.597] [Tabs] hide_tabs() called - canceling pending workers
+[14:09:04.340] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -95,7 +97,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C7CF39CB10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -134,75 +136,78 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] _build_tree_model() completed
 [Startup] Database schema initialized successfully
-[13:50:07.181] [Tabs] _finish_branches (stale gen=1) — ignoring
-[13:50:07.181] [Tabs] _on_tab_changed(idx=0)
-[13:50:07.181] [Tabs] _start_timeout idx=0 type=branches
-[13:50:07.181] [Tabs] _populate_tab(branches, idx=0, force=False)
-[13:50:07.181] [Tabs]   populated=False, loading=False
-[13:50:07.181] [Tabs]   Starting load for branches
-[13:50:07.181] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[13:50:07.181] [Tabs] _clear_tab idx=0
-[13:50:07.181] [Tabs] _on_tab_changed → tab_type=branches
-[13:50:07.181] [Tabs] _clear_tab idx=0
+[14:09:04.973] [Tabs] _finish_branches (stale gen=1) — ignoring
+[14:09:04.973] [Tabs] _on_tab_changed(idx=0)
+[14:09:04.973] [Tabs] _start_timeout idx=0 type=branches
+[14:09:04.973] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:09:04.973] [Tabs]   populated=False, loading=False
+[14:09:04.973] [Tabs]   Starting load for branches
+[14:09:04.973] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:09:04.973] [Tabs] _clear_tab idx=0
+[14:09:04.973] [Tabs] _on_tab_changed → tab_type=branches
+[14:09:04.973] [Tabs] _clear_tab idx=0
 ✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
 ✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l
+   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l
 [MainWindow] Set grid.project_id = 1
 [SidebarQt] set_project(1) called
-[13:51:08.092] [Tabs] refresh_all(force=True) called
-[13:51:08.092] [Tabs] refresh_all: key=branches, idx=0, force=True
-[13:51:08.092] [Tabs] _populate_tab(branches, idx=0, force=True)
-[13:51:08.092] [Tabs]   populated=True, loading=False
-[13:51:08.092] [Tabs]   Force refresh: removing branches from populated set
-[13:51:08.092] [Tabs]   Starting load for branches
-[13:51:08.092] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[13:51:08.092] [Tabs] _clear_tab idx=0
-[13:51:08.092] [Tabs] refresh_all: key=folders, idx=1, force=True
-[13:51:08.092] [Tabs] _populate_tab(folders, idx=1, force=True)
-[13:51:08.092] [Tabs]   populated=False, loading=False
-[13:51:08.092] [Tabs]   Starting load for folders
-[13:51:08.092] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[13:51:08.092] [Tabs] _clear_tab idx=1
-[13:51:08.092] [Tabs] refresh_all: key=dates, idx=2, force=True
-[13:51:08.092] [Tabs] _populate_tab(dates, idx=2, force=True)
-[13:51:08.092] [Tabs]   populated=False, loading=False
-[13:51:08.092] [Tabs]   Starting load for dates
-[13:51:08.092] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[13:51:08.092] [Tabs] _clear_tab idx=2
-[13:51:08.092] [Tabs] _load_folders → got 0 rows for project_id=1
-[13:51:08.092] [Tabs] refresh_all: key=tags, idx=3, force=True
-[13:51:08.092] [Tabs] _populate_tab(tags, idx=3, force=True)
-[13:51:08.092] [Tabs]   populated=False, loading=False
-[13:51:08.092] [Tabs]   Starting load for tags
-[13:51:08.092] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[13:51:08.108] [Tabs] _clear_tab idx=3
-[13:51:08.108] [Tabs] _load_dates → got hierarchy data for project_id=1
-[13:51:08.108] [Tabs] refresh_all: key=quick, idx=5, force=True
-[13:51:08.108] [Tabs] _populate_tab(quick, idx=5, force=True)
-[13:51:08.108] [Tabs]   populated=False, loading=False
-[13:51:08.108] [Tabs]   Starting load for quick
-[13:51:08.108] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[13:51:08.108] [Tabs] _clear_tab idx=5
-[13:51:08.108] [Tabs] refresh_all(force=True) completed
+[14:09:13.400] [Tabs] refresh_all(force=True) called
+[14:09:13.400] [Tabs] refresh_all: key=branches, idx=0, force=True
+[14:09:13.400] [Tabs] _populate_tab(branches, idx=0, force=True)
+[14:09:13.400] [Tabs]   populated=True, loading=False
+[14:09:13.400] [Tabs]   Force refresh: removing branches from populated set
+[14:09:13.400] [Tabs]   Starting load for branches
+[14:09:13.400] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:09:13.400] [Tabs] _clear_tab idx=0
+[14:09:13.400] [Tabs] refresh_all: key=folders, idx=1, force=True
+[14:09:13.407] [Tabs] _populate_tab(folders, idx=1, force=True)
+[14:09:13.407] [Tabs]   populated=False, loading=False
+[14:09:13.407] [Tabs]   Starting load for folders
+[14:09:13.407] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[14:09:13.407] [Tabs] _clear_tab idx=1
+[14:09:13.407] [Tabs] refresh_all: key=dates, idx=2, force=True
+[14:09:13.407] [Tabs] _populate_tab(dates, idx=2, force=True)
+[14:09:13.407] [Tabs]   populated=False, loading=False
+[14:09:13.407] [Tabs]   Starting load for dates
+[14:09:13.407] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[14:09:13.407] [Tabs] _clear_tab idx=2
+[14:09:13.407] [Tabs] _load_folders → got 0 rows for project_id=1
+[14:09:13.407] [Tabs] refresh_all: key=tags, idx=3, force=True
+[14:09:13.407] [Tabs] _populate_tab(tags, idx=3, force=True)
+[14:09:13.407] [Tabs]   populated=False, loading=False
+[14:09:13.407] [Tabs]   Starting load for tags
+[14:09:13.407] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[14:09:13.407] [Tabs] _clear_tab idx=3
+[14:09:13.407] [Tabs] _load_dates → got hierarchy data for project_id=1
+[14:09:13.407] [Tabs] refresh_all: key=quick, idx=5, force=True
+[14:09:13.407] [Tabs] _populate_tab(quick, idx=5, force=True)
+[14:09:13.407] [Tabs]   populated=False, loading=False
+[14:09:13.407] [Tabs]   Starting load for quick
+[14:09:13.407] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[14:09:13.407] [Tabs] _clear_tab idx=5
+[14:09:13.407] [Tabs] refresh_all(force=True) completed
 [SidebarQt] Calling reload() after setting project_id
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
+[14:09:13.407] [Tabs] _load_tags → got 0 rows for project_id=1
 [SidebarQt] _build_tree_model() called with project_id=1
 [Sidebar] Detaching old model from tree view
 [Sidebar] Processing pending events (model detached - safe)
-[13:51:08.108] [Tabs] _clear_tab idx=0
+[14:09:13.407] [Tabs] _clear_tab idx=0
+[14:09:13.407] [Tabs] _load_quick → got 6 rows
 [TAG FILTER] Cleared by navigation.
 [GRID] Fetched tags for 0 paths, got 0 entries
-[13:51:08.115] [Tabs] _load_quick → got 6 rows
-[13:51:08.123] [Tabs] _clear_tab idx=1
-[13:51:08.126] [Tabs] _clear_tab idx=2
+[14:09:13.417] [Tabs] _clear_tab idx=1
+[14:09:13.417] [Tabs] _clear_tab idx=2
+[14:09:13.423] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[14:09:13.423] [Tabs] _clear_tab idx=3
+[14:09:13.433] [Tabs] _clear_tab idx=5
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [get_images_by_branch] project_id=1, branch_key='all'
 [get_images_by_branch] Found 0 photos
 [get_images_by_branch] Available branch_keys in DB: []
 [GRID] Fetched tags for 0 paths, got 0 entries
-[13:51:08.140] [Tabs] _clear_tab idx=5
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in branch-mode (base=0)
 [Sidebar] Pending events processed
@@ -215,7 +220,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C7CF39CB10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -223,7 +228,6 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
 [DeviceScanner]   Checking drive letters D:-Z:...
-[13:51:08.166] [Tabs] _load_tags → got 0 rows for project_id=1
 [DeviceScanner]     Drive H: exists, checking...
 [DeviceScanner]           Checking path: H:\
 [DeviceScanner]           Directories found: []
@@ -260,8 +264,6 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [get_images_by_branch] Available branch_keys in DB: []
 [GRID] Fetched tags for 0 paths, got 0 entries
 [Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[13:51:08.427] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[13:51:08.427] [Tabs] _clear_tab idx=3
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in branch-mode (base=0)
 [MainWindow] Switched to project ID: 1
@@ -269,7 +271,6 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [MainWindow] Refreshed project list: 1 projects
 [Schema] Database schema initialized successfully
 [ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-2025-11-21 13:51:17,385 [INFO] DBWriter timer started in worker thread
 [ScanController] ScanWorker imported successfully
 [ScanController] QThread created
 [ScanController] ScanWorker instance created with project_id=1
@@ -279,140 +280,141 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [ScanController] thread.start() called
 [ScanWorkerAdapter] run() method called!
 [ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
-2025-11-21 13:51:17,407 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+[ScanController] QThread STARTED!
+2025-11-21 14:09:21,322 [INFO] DBWriter timer started in worker thread
+2025-11-21 14:09:21,345 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
 [ScanWorkerAdapter] Starting scan...
-2025-11-21 13:51:17,407 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
-2025-11-21 13:51:17,407 [INFO] Discovered 15 candidate image files and 0 video files
-2025-11-21 13:51:17,407 [INFO] Loading existing metadata for incremental scan...
-2025-11-21 13:51:17,407 [INFO] ✓ Loaded 0 existing file records
+2025-11-21 14:09:21,361 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
+2025-11-21 14:09:21,362 [INFO] Discovered 15 candidate image files and 0 video files
+2025-11-21 14:09:21,363 [INFO] Loading existing metadata for incremental scan...
+2025-11-21 14:09:21,364 [INFO] ✓ Loaded 0 existing file records
 [SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
-2025-11-21 13:51:17,407 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
+2025-11-21 14:09:21,365 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
 [SCAN] _process_file started for: Alya1_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,407 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
+2025-11-21 14:09:21,368 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
 [SCAN] Processing: Alya1_2_2_2.jpeg
-[ScanController] QThread STARTED!
 [SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
 [SCAN] Starting file 2/15: Alya1_3_2.jpeg
-2025-11-21 13:51:17,562 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
+2025-11-21 14:09:21,411 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
 [SCAN] _process_file started for: Alya1_3_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,562 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
+2025-11-21 14:09:21,414 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
 [SCAN] Processing: Alya1_3_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
 [SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
-2025-11-21 13:51:17,590 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
+2025-11-21 14:09:21,431 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,590 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
+2025-11-21 14:09:21,432 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
 [SCAN] Processing: Alya2_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
 [SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
-2025-11-21 13:51:17,609 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
+2025-11-21 14:09:21,448 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,609 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
+2025-11-21 14:09:21,448 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
 [SCAN] Processing: Alya3_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
 [SCAN] Starting file 5/15: Alya_2_2.jpeg
-2025-11-21 13:51:17,625 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
+2025-11-21 14:09:21,467 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
 [SCAN] _process_file started for: Alya_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,625 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
+2025-11-21 14:09:21,468 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
 [SCAN] Processing: Alya_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
 [SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
-2025-11-21 13:51:17,640 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
+2025-11-21 14:09:21,484 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,641 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
+2025-11-21 14:09:21,486 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
 [SCAN] Processing: Alya_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
 [SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
-2025-11-21 13:51:17,653 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
+2025-11-21 14:09:21,492 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
 [SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,653 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
+2025-11-21 14:09:21,492 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref(1)_2_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
 [SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
-2025-11-21 13:51:17,678 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
+2025-11-21 14:09:21,527 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
 [SCAN] _process_file started for: Ammar-Ref_2_2_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,679 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
+2025-11-21 14:09:21,529 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref_2_2_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
 [SCAN] Starting file 9/15: Ammar-Ref_3_2.png
-2025-11-21 13:51:17,785 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
+2025-11-21 14:09:21,543 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
 [SCAN] _process_file started for: Ammar-Ref_3_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,788 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
+2025-11-21 14:09:21,543 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref_3_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
 [SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
-2025-11-21 13:51:17,809 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
+2025-11-21 14:09:21,573 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
 [SCAN] _process_file started for: Ammar1_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,809 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
+2025-11-21 14:09:21,573 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
 [SCAN] Processing: Ammar1_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
 [SCAN] Starting file 11/15: Ammar2_2_2_2.jpeg
-2025-11-21 13:51:17,840 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
+2025-11-21 14:09:21,591 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
 [SCAN] _process_file started for: Ammar2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,840 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
+2025-11-21 14:09:21,591 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
 [SCAN] Processing: Ammar2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Ammar2_2_2_2.jpeg
 [SCAN] Starting file 12/15: Ammar3_2_2_2_2.jpeg
-2025-11-21 13:51:17,857 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
+2025-11-21 14:09:21,604 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
 [SCAN] _process_file started for: Ammar3_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,857 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
+2025-11-21 14:09:21,604 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
 [SCAN] Processing: Ammar3_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Ammar3_2_2_2_2.jpeg
 [SCAN] Starting file 13/15: IMG_6850_2_2_2.jpeg
-2025-11-21 13:51:17,867 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
+2025-11-21 14:09:21,736 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
 [SCAN] _process_file started for: IMG_6850_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,873 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
+2025-11-21 14:09:21,744 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
 [SCAN] Processing: IMG_6850_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: IMG_6850_2_2_2.jpeg
 [SCAN] Starting file 14/15: IMG_6995_2_2_2.jpeg
-2025-11-21 13:51:17,890 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
+2025-11-21 14:09:21,758 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
 [SCAN] _process_file started for: IMG_6995_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,890 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
+2025-11-21 14:09:21,763 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
 [SCAN] Processing: IMG_6995_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: IMG_6995_2_2_2.jpeg
 [SCAN] Starting file 15/15: عليا_2_2_2.jpeg
-2025-11-21 13:51:17,904 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
+2025-11-21 14:09:21,775 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
 [SCAN] _process_file started for: عليا_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 13:51:17,905 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
+2025-11-21 14:09:21,777 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
 [SCAN] Processing: عليا_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: عليا_2_2_2.jpeg
-2025-11-21 13:51:17,923 [INFO] Bulk upserted 15 photos for project 1
-2025-11-21 13:51:17,930 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.5s
-2025-11-21 13:51:17,930 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.5s
+2025-11-21 14:09:21,793 [INFO] Bulk upserted 15 photos for project 1
+2025-11-21 14:09:21,793 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.4s
+2025-11-21 14:09:21,793 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.4s
 [ScanController] scan finished: 1 folders, 15 photos, 0 videos
 [ScanController] cleanup after scan
-2025-11-21 13:51:19,412 [INFO] Building date branches...
-2025-11-21 13:51:19,423 [INFO] Building date branches for project_id=1
+2025-11-21 14:09:23,413 [INFO] Building date branches...
+2025-11-21 14:09:23,416 [INFO] Building date branches for project_id=1
 [build_date_branches] Using project_id=1
 [build_date_branches] Populating 'all' branch with 15 photos for project 1
 [build_date_branches] Inserted 15/15 photos into 'all' branch
@@ -437,17 +439,17 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [build_date_branches] Date 2025-08-09: inserted 1/1 into project_images (new)
 [build_date_branches] Total entries processed: 8
 [build_date_branches] project_images table has 23 rows for project 1
-2025-11-21 13:51:19,456 [INFO] Created 8 photo date branch entries for project 1
-2025-11-21 13:51:19,456 [INFO] Building video date branches for project_id=1
+2025-11-21 14:09:23,426 [INFO] Created 8 photo date branch entries for project 1
+2025-11-21 14:09:23,434 [INFO] Building video date branches for project_id=1
 [build_video_date_branches] Using project_id=1
 [build_video_date_branches] Found 0 videos with dates for project 1
 [build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-21 13:51:19,461 [INFO] Created 0 video date branch entries for project 1
-2025-11-21 13:51:19,461 [INFO] Backfilling created_date fields for photos...
-2025-11-21 13:51:19,468 [INFO] Backfilled 7 photo rows with created_date
-2025-11-21 13:51:19,469 [INFO] Backfilling created_date fields for videos...
+2025-11-21 14:09:23,434 [INFO] Created 0 video date branch entries for project 1
+2025-11-21 14:09:23,434 [INFO] Backfilling created_date fields for photos...
+2025-11-21 14:09:23,440 [INFO] Backfilled 7 photo rows with created_date
+2025-11-21 14:09:23,440 [INFO] Backfilling created_date fields for videos...
 [FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-2025-11-21 13:51:19,503 [INFO] Reloading sidebar after date branches built...
+2025-11-21 14:09:23,444 [INFO] Reloading sidebar after date branches built...
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
 [SidebarQt] _build_tree_model() called with project_id=1
@@ -464,7 +466,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C7CF39CB10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -540,73 +542,73 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [GRID] Reloaded 15 thumbnails in branch-mode (base=15)
 [GRID] Using scroll-based start position: 0 (scroll: 0/0)
 [GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 5 new thumbnail workers
+[GRID] Queued 4 new thumbnail workers
 [MainWindow] Launching automatic face grouping pipeline for project 1
-2025-11-21 13:51:28,954 [INFO] [FaceDetectionWorker] Starting face detection for project 1
-2025-11-21 13:51:29,001 [INFO] 💻 Using CPU for face detection (CUDA not available)
-2025-11-21 13:51:29,001 [INFO] 📁 Using local bundled models: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l
-2025-11-21 13:51:29,007 [INFO] 💾 Saved InsightFace model path to settings: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l
-2025-11-21 13:51:29,007 [INFO] ✓ Initializing InsightFace with buffalo_l directory: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l
-2025-11-21 13:51:29,033 [INFO] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
-find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l\buffalo_l\scrfd_10g_bnkps.onnx detection
+2025-11-21 14:09:32,641 [INFO] [FaceDetectionWorker] Starting face detection for project 1
+2025-11-21 14:09:32,657 [INFO] 💻 Using CPU for face detection (CUDA not available)
+2025-11-21 14:09:32,657 [INFO] 📁 Using local bundled models: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l
+2025-11-21 14:09:32,667 [INFO] 💾 Saved InsightFace model path to settings: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l
+2025-11-21 14:09:32,667 [INFO] ✓ Initializing InsightFace with buffalo_l directory: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l
+2025-11-21 14:09:32,667 [INFO] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
+find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l\buffalo_l\scrfd_10g_bnkps.onnx detection
 input mean and std: 127.5 127.5
-find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l\buffalo_l\w600k_r50.onnx recognition
-2025-11-21 13:51:29,699 [INFO] ✓ Using CPU acceleration (ctx_id=-1)
+find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l\buffalo_l\w600k_r50.onnx recognition
+2025-11-21 14:09:33,271 [INFO] ✓ Using CPU acceleration (ctx_id=-1)
 set det-size: (640, 640)
-2025-11-21 13:51:30,208 [INFO] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration
-2025-11-21 13:51:30,208 [INFO] [FaceDetection] Initialized InsightFace with model=hog
-2025-11-21 13:51:30,215 [INFO] [FaceDetectionWorker] Processing 15 photos
+2025-11-21 14:09:33,793 [INFO] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration
+2025-11-21 14:09:33,793 [INFO] [FaceDetection] Initialized InsightFace with model=hog
+2025-11-21 14:09:33,793 [INFO] [FaceDetectionWorker] Processing 15 photos
 [FaceDetection] [1/15] Detecting faces: alya1_2_2_2.jpeg
-2025-11-21 13:51:30,561 [INFO] [FaceDetection] Found 1 faces in alya1_2_2_2.jpeg
-2025-11-21 13:51:30,615 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:34,111 [INFO] [FaceDetection] Found 1 faces in alya1_2_2_2.jpeg
+2025-11-21 14:09:34,174 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg: 1 faces
 [FaceDetection] [2/15] Detecting faces: alya1_3_2.jpeg
-2025-11-21 13:51:30,881 [INFO] [FaceDetection] Found 1 faces in alya1_3_2.jpeg
-2025-11-21 13:51:30,973 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg: 1 faces
+2025-11-21 14:09:34,411 [INFO] [FaceDetection] Found 1 faces in alya1_3_2.jpeg
+2025-11-21 14:09:34,461 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg: 1 faces
 [FaceDetection] [3/15] Detecting faces: alya2_2_2_2_2.jpeg
-2025-11-21 13:51:31,149 [INFO] [FaceDetection] Found 1 faces in alya2_2_2_2_2.jpeg
-2025-11-21 13:51:31,211 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:34,641 [INFO] [FaceDetection] Found 1 faces in alya2_2_2_2_2.jpeg
+2025-11-21 14:09:34,651 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg: 1 faces
 [FaceDetection] [4/15] Detecting faces: alya3_2_2_2_2.jpeg
-2025-11-21 13:51:31,589 [INFO] [FaceDetection] Found 3 faces in alya3_2_2_2_2.jpeg
-2025-11-21 13:51:31,673 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg: 3 faces
+2025-11-21 14:09:35,040 [INFO] [FaceDetection] Found 3 faces in alya3_2_2_2_2.jpeg
+2025-11-21 14:09:35,112 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg: 3 faces
 [FaceDetection] [5/15] Detecting faces: alya_2_2.jpeg
-2025-11-21 13:51:31,891 [INFO] [FaceDetection] Found 1 faces in alya_2_2.jpeg
-2025-11-21 13:51:31,955 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg: 1 faces
+2025-11-21 14:09:35,311 [INFO] [FaceDetection] Found 1 faces in alya_2_2.jpeg
+2025-11-21 14:09:35,339 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg: 1 faces
 [FaceDetection] [6/15] Detecting faces: alya_2_2_2_2.jpeg
-2025-11-21 13:51:32,223 [INFO] [FaceDetection] Found 1 faces in alya_2_2_2_2.jpeg
-2025-11-21 13:51:32,279 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:35,523 [INFO] [FaceDetection] Found 1 faces in alya_2_2_2_2.jpeg
+2025-11-21 14:09:35,540 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg: 1 faces
 [FaceDetection] [7/15] Detecting faces: ammar-ref(1)_2_2.png
-2025-11-21 13:51:32,557 [INFO] [FaceDetection] Found 1 faces in ammar-ref(1)_2_2.png
-2025-11-21 13:51:32,623 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png: 1 faces
+2025-11-21 14:09:35,793 [INFO] [FaceDetection] Found 1 faces in ammar-ref(1)_2_2.png
+2025-11-21 14:09:35,812 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png: 1 faces
 [FaceDetection] [8/15] Detecting faces: ammar-ref_2_2_2.png
-2025-11-21 13:51:32,824 [INFO] [FaceDetection] Found 1 faces in ammar-ref_2_2_2.png
-2025-11-21 13:51:32,890 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png: 1 faces
+2025-11-21 14:09:36,031 [INFO] [FaceDetection] Found 1 faces in ammar-ref_2_2_2.png
+2025-11-21 14:09:36,056 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png: 1 faces
 [FaceDetection] [9/15] Detecting faces: ammar-ref_3_2.png
-2025-11-21 13:51:33,144 [INFO] [FaceDetection] Found 1 faces in ammar-ref_3_2.png
-2025-11-21 13:51:33,209 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png: 1 faces
+2025-11-21 14:09:36,215 [INFO] [FaceDetection] Found 1 faces in ammar-ref_3_2.png
+2025-11-21 14:09:36,240 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png: 1 faces
 [FaceDetection] [10/15] Detecting faces: ammar1_2_2_2.jpeg
-2025-11-21 13:51:33,625 [INFO] [FaceDetection] Found 1 faces in ammar1_2_2_2.jpeg
-2025-11-21 13:51:33,740 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:36,544 [INFO] [FaceDetection] Found 1 faces in ammar1_2_2_2.jpeg
+2025-11-21 14:09:36,645 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg: 1 faces
 [FaceDetection] [11/15] Detecting faces: ammar2_2_2_2.jpeg
-2025-11-21 13:51:33,971 [INFO] [FaceDetection] Found 1 faces in ammar2_2_2_2.jpeg
-2025-11-21 13:51:34,067 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:36,944 [INFO] [FaceDetection] Found 1 faces in ammar2_2_2_2.jpeg
+2025-11-21 14:09:37,011 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg: 1 faces
 [FaceDetection] [12/15] Detecting faces: ammar3_2_2_2_2.jpeg
-2025-11-21 13:51:34,313 [INFO] [FaceDetection] Found 2 faces in ammar3_2_2_2_2.jpeg
-2025-11-21 13:51:34,440 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg: 2 faces
+2025-11-21 14:09:37,271 [INFO] [FaceDetection] Found 2 faces in ammar3_2_2_2_2.jpeg
+2025-11-21 14:09:37,327 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg: 2 faces
 [FaceDetection] [13/15] Detecting faces: img_6850_2_2_2.jpeg
-2025-11-21 13:51:34,840 [INFO] [FaceDetection] Found 3 faces in img_6850_2_2_2.jpeg
-2025-11-21 13:51:35,097 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg: 3 faces
+2025-11-21 14:09:37,879 [INFO] [FaceDetection] Found 3 faces in img_6850_2_2_2.jpeg
+2025-11-21 14:09:38,076 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg: 3 faces
 [FaceDetection] [14/15] Detecting faces: img_6995_2_2_2.jpeg
-2025-11-21 13:51:35,416 [INFO] [FaceDetection] Found 1 faces in img_6995_2_2_2.jpeg
-2025-11-21 13:51:35,540 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:38,368 [INFO] [FaceDetection] Found 1 faces in img_6995_2_2_2.jpeg
+2025-11-21 14:09:38,456 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg: 1 faces
 [FaceDetection] [15/15] Detecting faces: عليا_2_2_2.jpeg
-2025-11-21 13:51:35,782 [INFO] [FaceDetection] Found 1 faces in عليا_2_2_2.jpeg
-2025-11-21 13:51:35,872 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg: 1 faces
-2025-11-21 13:51:35,872 [INFO] [FaceDetectionWorker] Complete in 6.9s: 15 processed, 20 faces detected, 0 failed
+2025-11-21 14:09:38,811 [INFO] [FaceDetection] Found 1 faces in عليا_2_2_2.jpeg
+2025-11-21 14:09:38,856 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg: 1 faces
+2025-11-21 14:09:38,861 [INFO] [FaceDetectionWorker] Complete in 6.2s: 15 processed, 20 faces detected, 0 failed
 [FaceDetection] Complete: 15 photos, 20 faces detected
-2025-11-21 13:51:35,873 [INFO] [FaceClusterWorker] Starting face clustering for project 1
-2025-11-21 13:51:35,873 [ERROR] [FaceClusterWorker] Fatal error: '_GeneratorContextManager' object has no attribute 'cursor'
+2025-11-21 14:09:38,861 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-21 14:09:38,861 [ERROR] [FaceClusterWorker] Fatal error: '_GeneratorContextManager' object has no attribute 'cursor'
 Traceback (most recent call last):
-  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\workers\face_cluster_worker.py", line 102, in run
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\workers\face_cluster_worker.py", line 102, in run
     cur = conn.cursor()
           ^^^^^^^^^^^
 AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
@@ -627,7 +629,7 @@ AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C7CF39CB10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -667,142 +669,3 @@ AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
 [Sidebar] starting async count population for 1 branch targets
 [Sidebar][counts worker gen=8] running for 1 targets...
 [Sidebar][counts worker gen=8] finished scanning targets, scheduling UI update
-[MainWindow] Launching clustering worker for 20 detected faces
-2025-11-21 13:51:45,308 [INFO] [FaceClusterWorker] Starting face clustering for project 1
-2025-11-21 13:51:45,308 [ERROR] [FaceClusterWorker] Fatal error: '_GeneratorContextManager' object has no attribute 'cursor'
-Traceback (most recent call last):
-  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\workers\face_cluster_worker.py", line 102, in run
-    cur = conn.cursor()
-          ^^^^^^^^^^^
-AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
-2025-11-21 13:51:45,332 [INFO] [FaceClusterWorker] Cancellation requested
-[FaceCluster] Complete: 0 person groups created
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Processing pending events (model detached - safe)
-[Sidebar] Pending events processed
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000121231D5410>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=10] running for 1 targets...
-[Sidebar][counts worker gen=10] finished scanning targets, scheduling UI update
-[ThumbnailGridQt_on_double_clicked] index: <built-in method data of PySide6.QtCore.QModelIndex object at 0x000001217A827AC0>
-[open_lightbox] self.grid=<thumbnail_grid_qt.ThumbnailGridQt(0x12123b4a890) at 0x00000121281667C0>
-[open_lightbox] folder_id=None
-[open_lightbox] paths=[]
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 15 photos
-[open_lightbox] branch_key=all
-[open_lightbox] date_key=None
-[open_lightbox] paths=['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg']
-[open_lightbox] context=branch(all), total=15
-[open_lightbox] paths=['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg']
-[open_lightbox] path=c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png
-[UnifiedPreview] Opening media in unified dialog: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png
-[UnifiedPreview] Media type: photo
-2025-11-21 13:52:07,789 [INFO] [LightboxDialog.__init__] parent=<main_window_qt.MainWindow(0x121238e53b0) at 0x00000121244D2880>
-2025-11-21 13:52:07,789 [INFO] [LightboxDialog.__init__] parent type=MainWindow
-2025-11-21 13:52:07,789 [INFO] [LightboxDialog.__init__] parent.db exists: False
-2025-11-21 13:52:07,798 [INFO] [LightboxDialog.__init__] parent.reference_db exists: False
-2025-11-21 13:52:07,798 [INFO] [LightboxDialog.__init__] parent.project_id exists: False
-2025-11-21 13:52:07,799 [WARNING] [LightboxDialog.__init__] Parent has NO db - creating new ReferenceDB instance
-2025-11-21 13:52:07,799 [INFO] [LightboxDialog.__init__] Created new db instance: <reference_db.ReferenceDB object at 0x00000121231D5410>
-2025-11-21 13:52:07,799 [INFO] [LightboxDialog.__init__] Got project_id from parent.grid: 1
-[LightboxDialog] Video player signals connected successfully
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1140, 791)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1140, 791)
-2025-11-21 13:52:10,011 [INFO] Showing metadata panel (is_video=False, 14 fields)
-2025-11-21 13:52:20,579 [INFO] Added tag 1 to 1 photos (out of 1 requested)
-2025-11-21 13:52:20,581 [INFO] Bulk assigned tag 'favorite' to 1 photos
-[Sidebar] reload_tags_only → got 1 tags for project_id=1
-[HoverActions] Favorite added for c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png
-2025-11-21 13:52:24,615 [INFO] Added tag 1 to 1 photos (out of 1 requested)
-2025-11-21 13:52:24,615 [INFO] Bulk assigned tag 'favorite' to 1 photos
-[Sidebar] reload_tags_only → got 1 tags for project_id=1
-[HoverActions] Favorite added for c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg
-[TAG FILTER] Showing all tagged photos for 'favorite' (2)
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-      orig='c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 2 rows (2 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS] Found favorite tag: c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', tag='favorite'
-[DB_TAGS] Found favorite tag: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref(1)_2_2.png
-[DB_TAGS] Retrieved 2 tags for 2/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2/2 thumbnails in None-mode (tag=favorite)
-[TAG FILTER] Showing ALL photos with tag 'favorite' (no navigation context)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[ThumbCacheDB] Closing cache gracefully...
-
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01>
