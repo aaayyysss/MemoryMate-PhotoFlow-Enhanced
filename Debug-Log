@@ -1,40 +1,40 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05
 
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>python main_qt.py
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05>python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-2025-11-21 14:34:58,759 [INFO] ================================================================================
-2025-11-21 14:34:58,759 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-21 14:34:58,759 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\app_log.txt
-2025-11-21 14:34:58,759 [INFO] ================================================================================
-2025-11-21 14:34:58,830 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-21 14:34:58,830 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-21 14:52:53,557 [INFO] ================================================================================
+2025-11-21 14:52:53,560 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-21 14:52:53,560 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\app_log.txt
+2025-11-21 14:52:53,560 [INFO] ================================================================================
+2025-11-21 14:52:53,629 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-21 14:52:53,724 [INFO] Qt message handler installed to suppress TIFF warnings
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-04\\thumbnails_cache.db', 'last_updated': '2025-11-21 14:34'}
-2025-11-21 14:34:59,097 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-05\\thumbnails_cache.db', 'last_updated': '2025-11-21 14:52'}
+2025-11-21 14:52:54,173 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-21 14:34:59,099 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-21 14:34:59,099 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-21 14:34:59,100 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-21 14:52:54,176 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-21 14:52:54,176 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-21 14:52:54,176 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\locales\en.json
+✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\locales\en.json
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-21 14:34:59,108 [INFO] SearchService initialized
-[14:35:02.223] [Tabs] __init__ started
-[14:35:02.223] [Tabs] _build_tabs → building tab widgets
-[14:35:02.223] [Tabs] _on_tab_changed(idx=0)
-[14:35:02.223] [Tabs] _start_timeout idx=0 type=branches
-[14:35:02.239] [Tabs] _populate_tab(branches, idx=0, force=False)
-[14:35:02.239] [Tabs]   populated=False, loading=False
-[14:35:02.239] [Tabs]   Starting load for branches
-[14:35:02.239] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[14:35:02.239] [Tabs] _clear_tab idx=0
-[14:35:02.240] [Tabs] _on_tab_changed → tab_type=branches
-[14:35:02.240] [Tabs] _build_tabs → added 6 tabs
-[14:35:02.240] [Tabs] __init__ completed
+2025-11-21 14:52:54,185 [INFO] SearchService initialized
+[14:52:56.536] [Tabs] __init__ started
+[14:52:56.536] [Tabs] _build_tabs → building tab widgets
+[14:52:56.536] [Tabs] _on_tab_changed(idx=0)
+[14:52:56.536] [Tabs] _start_timeout idx=0 type=branches
+[14:52:56.536] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:52:56.536] [Tabs]   populated=False, loading=False
+[14:52:56.536] [Tabs]   Starting load for branches
+[14:52:56.536] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:52:56.536] [Tabs] _clear_tab idx=0
+[14:52:56.536] [Tabs] _on_tab_changed → tab_type=branches
+[14:52:56.536] [Tabs] _build_tabs → added 6 tabs
+[14:52:56.536] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Creating fresh model (avoiding Qt segfault)
@@ -44,7 +44,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001AFA24CCA10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -83,7 +83,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[14:35:02.620] [Tabs] hide_tabs() called - canceling pending workers
+[14:52:56.933] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -97,7 +97,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001AFA24CCA10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -136,78 +136,78 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] _build_tree_model() completed
 [Startup] Database schema initialized successfully
-[14:35:03.262] [Tabs] _finish_branches (stale gen=1) — ignoring
-[14:35:03.262] [Tabs] _on_tab_changed(idx=0)
-[14:35:03.262] [Tabs] _start_timeout idx=0 type=branches
-[14:35:03.262] [Tabs] _populate_tab(branches, idx=0, force=False)
-[14:35:03.262] [Tabs]   populated=False, loading=False
-[14:35:03.262] [Tabs]   Starting load for branches
-[14:35:03.262] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[14:35:03.262] [Tabs] _clear_tab idx=0
-[14:35:03.262] [Tabs] _on_tab_changed → tab_type=branches
-[14:35:03.262] [Tabs] _clear_tab idx=0
+[14:52:57.615] [Tabs] _finish_branches (stale gen=1) — ignoring
+[14:52:57.615] [Tabs] _on_tab_changed(idx=0)
+[14:52:57.615] [Tabs] _start_timeout idx=0 type=branches
+[14:52:57.617] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:52:57.617] [Tabs]   populated=False, loading=False
+[14:52:57.617] [Tabs]   Starting load for branches
+[14:52:57.617] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:52:57.617] [Tabs] _clear_tab idx=0
+[14:52:57.617] [Tabs] _on_tab_changed → tab_type=branches
+[14:52:57.621] [Tabs] _clear_tab idx=0
 ✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
 ✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l
+   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\models\buffalo_l
 [MainWindow] Set grid.project_id = 1
 [SidebarQt] set_project(1) called
-[14:35:14.453] [Tabs] refresh_all(force=True) called
-[14:35:14.453] [Tabs] refresh_all: key=branches, idx=0, force=True
-[14:35:14.453] [Tabs] _populate_tab(branches, idx=0, force=True)
-[14:35:14.453] [Tabs]   populated=True, loading=False
-[14:35:14.453] [Tabs]   Force refresh: removing branches from populated set
-[14:35:14.453] [Tabs]   Starting load for branches
-[14:35:14.453] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[14:35:14.453] [Tabs] _clear_tab idx=0
-[14:35:14.458] [Tabs] refresh_all: key=folders, idx=1, force=True
-[14:35:14.458] [Tabs] _populate_tab(folders, idx=1, force=True)
-[14:35:14.458] [Tabs]   populated=False, loading=False
-[14:35:14.458] [Tabs]   Starting load for folders
-[14:35:14.458] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[14:35:14.458] [Tabs] _clear_tab idx=1
-[14:35:14.458] [Tabs] refresh_all: key=dates, idx=2, force=True
-[14:35:14.458] [Tabs] _populate_tab(dates, idx=2, force=True)
-[14:35:14.458] [Tabs]   populated=False, loading=False
-[14:35:14.458] [Tabs]   Starting load for dates
-[14:35:14.458] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[14:35:14.458] [Tabs] _clear_tab idx=2
-[14:35:14.458] [Tabs] _load_folders → got 0 rows for project_id=1
-[14:35:14.458] [Tabs] refresh_all: key=tags, idx=3, force=True
-[14:35:14.458] [Tabs] _populate_tab(tags, idx=3, force=True)
-[14:35:14.458] [Tabs]   populated=False, loading=False
-[14:35:14.458] [Tabs]   Starting load for tags
-[14:35:14.458] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[14:35:14.458] [Tabs] _clear_tab idx=3
-[14:35:14.466] [Tabs] refresh_all: key=quick, idx=5, force=True
-[14:35:14.466] [Tabs] _populate_tab(quick, idx=5, force=True)
-[14:35:14.466] [Tabs]   populated=False, loading=False
-[14:35:14.466] [Tabs]   Starting load for quick
-[14:35:14.466] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[14:35:14.466] [Tabs] _clear_tab idx=5
-[14:35:14.466] [Tabs] _load_dates → got hierarchy data for project_id=1
-[14:35:14.467] [Tabs] refresh_all(force=True) completed
+[14:53:08.101] [Tabs] refresh_all(force=True) called
+[14:53:08.101] [Tabs] refresh_all: key=branches, idx=0, force=True
+[14:53:08.101] [Tabs] _populate_tab(branches, idx=0, force=True)
+[14:53:08.101] [Tabs]   populated=True, loading=False
+[14:53:08.101] [Tabs]   Force refresh: removing branches from populated set
+[14:53:08.101] [Tabs]   Starting load for branches
+[14:53:08.101] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:53:08.101] [Tabs] _clear_tab idx=0
+[14:53:08.101] [Tabs] refresh_all: key=folders, idx=1, force=True
+[14:53:08.101] [Tabs] _populate_tab(folders, idx=1, force=True)
+[14:53:08.101] [Tabs]   populated=False, loading=False
+[14:53:08.101] [Tabs]   Starting load for folders
+[14:53:08.101] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[14:53:08.101] [Tabs] _clear_tab idx=1
+[14:53:08.101] [Tabs] refresh_all: key=dates, idx=2, force=True
+[14:53:08.101] [Tabs] _populate_tab(dates, idx=2, force=True)
+[14:53:08.101] [Tabs]   populated=False, loading=False
+[14:53:08.101] [Tabs]   Starting load for dates
+[14:53:08.101] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[14:53:08.101] [Tabs] _clear_tab idx=2
+[14:53:08.101] [Tabs] _load_folders → got 0 rows for project_id=1
+[14:53:08.101] [Tabs] refresh_all: key=tags, idx=3, force=True
+[14:53:08.101] [Tabs] _populate_tab(tags, idx=3, force=True)
+[14:53:08.101] [Tabs]   populated=False, loading=False
+[14:53:08.117] [Tabs]   Starting load for tags
+[14:53:08.117] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[14:53:08.117] [Tabs] _clear_tab idx=3
+[14:53:08.117] [Tabs] _load_dates → got hierarchy data for project_id=1
+[14:53:08.117] [Tabs] refresh_all: key=quick, idx=5, force=True
+[14:53:08.117] [Tabs] _populate_tab(quick, idx=5, force=True)
+[14:53:08.117] [Tabs]   populated=False, loading=False
+[14:53:08.117] [Tabs]   Starting load for quick
+[14:53:08.117] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[14:53:08.117] [Tabs] _clear_tab idx=5
+[14:53:08.117] [Tabs] refresh_all(force=True) completed
 [SidebarQt] Calling reload() after setting project_id
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
 [SidebarQt] _build_tree_model() called with project_id=1
 [Sidebar] Detaching old model from tree view
 [Sidebar] Processing pending events (model detached - safe)
-[14:35:14.467] [Tabs] _clear_tab idx=0
-[14:35:14.467] [Tabs] _load_tags → got 0 rows for project_id=1
+[14:53:08.117] [Tabs] _clear_tab idx=0
+[14:53:08.117] [Tabs] _load_tags → got 0 rows for project_id=1
 [TAG FILTER] Cleared by navigation.
 [GRID] Fetched tags for 0 paths, got 0 entries
-[14:35:14.477] [Tabs] _clear_tab idx=1
-[14:35:14.477] [Tabs] _load_quick → got 6 rows
-[14:35:14.481] [Tabs] _clear_tab idx=2
-[14:35:14.487] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[14:35:14.487] [Tabs] _clear_tab idx=3
+[14:53:08.117] [Tabs] _clear_tab idx=1
+[14:53:08.117] [Tabs] _load_quick → got 6 rows
+[14:53:08.117] [Tabs] _clear_tab idx=2
+[14:53:08.137] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[14:53:08.137] [Tabs] _clear_tab idx=3
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [get_images_by_branch] project_id=1, branch_key='all'
 [get_images_by_branch] Found 0 photos
 [get_images_by_branch] Available branch_keys in DB: []
 [GRID] Fetched tags for 0 paths, got 0 entries
-[14:35:14.496] [Tabs] _clear_tab idx=5
+[14:53:08.165] [Tabs] _clear_tab idx=5
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in branch-mode (base=0)
 [Sidebar] Pending events processed
@@ -220,7 +220,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001AFA24CCA10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -271,6 +271,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [MainWindow] Refreshed project list: 1 projects
 [Schema] Database schema initialized successfully
 [ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+2025-11-21 14:53:21,103 [INFO] DBWriter timer started in worker thread
 [ScanController] ScanWorker imported successfully
 [ScanController] QThread created
 [ScanController] ScanWorker instance created with project_id=1
@@ -278,1116 +279,92 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoF
 [ScanController] Signals connected
 [ScanController] Starting scan thread...
 [ScanController] thread.start() called
-2025-11-21 14:35:26,556 [INFO] DBWriter timer started in worker thread
 [ScanWorkerAdapter] run() method called!
 [ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
-2025-11-21 14:35:26,556 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+[ScanController] QThread STARTED!
+2025-11-21 14:53:21,199 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
 [ScanWorkerAdapter] Starting scan...
-2025-11-21 14:35:26,556 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
-2025-11-21 14:35:26,556 [INFO] Discovered 15 candidate image files and 0 video files
-2025-11-21 14:35:26,556 [INFO] Loading existing metadata for incremental scan...
-2025-11-21 14:35:26,556 [INFO] ✓ Loaded 0 existing file records
+2025-11-21 14:53:21,212 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
+2025-11-21 14:53:21,214 [INFO] Discovered 15 candidate image files and 0 video files
+2025-11-21 14:53:21,220 [INFO] Loading existing metadata for incremental scan...
+2025-11-21 14:53:21,221 [INFO] ✓ Loaded 0 existing file records
 [SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
-2025-11-21 14:35:26,556 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
+2025-11-21 14:53:21,222 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
 [SCAN] _process_file started for: Alya1_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,565 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
+2025-11-21 14:53:21,223 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
 [SCAN] Processing: Alya1_2_2_2.jpeg
-[ScanController] QThread STARTED!
 [SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
 [SCAN] Starting file 2/15: Alya1_3_2.jpeg
-2025-11-21 14:35:26,661 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
+2025-11-21 14:53:21,344 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
 [SCAN] _process_file started for: Alya1_3_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,661 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
+2025-11-21 14:53:21,344 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
 [SCAN] Processing: Alya1_3_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
 [SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
-2025-11-21 14:35:26,677 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
+2025-11-21 14:53:21,357 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,677 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
+2025-11-21 14:53:21,368 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
 [SCAN] Processing: Alya2_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
 [SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
-2025-11-21 14:35:26,689 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
+2025-11-21 14:53:21,374 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,693 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
+2025-11-21 14:53:21,388 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
 [SCAN] Processing: Alya3_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
 [SCAN] Starting file 5/15: Alya_2_2.jpeg
-2025-11-21 14:35:26,706 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
+2025-11-21 14:53:21,389 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
 [SCAN] _process_file started for: Alya_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,709 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
+2025-11-21 14:53:21,389 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
 [SCAN] Processing: Alya_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
 [SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
-2025-11-21 14:35:26,724 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
+2025-11-21 14:53:21,405 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
 [SCAN] _process_file started for: Alya_2_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,724 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
+2025-11-21 14:53:21,405 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
 [SCAN] Processing: Alya_2_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
 [SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
-2025-11-21 14:35:26,739 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
+2025-11-21 14:53:21,421 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
 [SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,739 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
+2025-11-21 14:53:21,421 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref(1)_2_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
 [SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
-2025-11-21 14:35:26,768 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
+2025-11-21 14:53:21,437 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
 [SCAN] _process_file started for: Ammar-Ref_2_2_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,771 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
+2025-11-21 14:53:21,437 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref_2_2_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
 [SCAN] Starting file 9/15: Ammar-Ref_3_2.png
-2025-11-21 14:35:26,788 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
+2025-11-21 14:53:21,462 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
 [SCAN] _process_file started for: Ammar-Ref_3_2.png
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,788 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
+2025-11-21 14:53:21,563 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
 [SCAN] Processing: Ammar-Ref_3_2.png
 [SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
 [SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
-2025-11-21 14:35:26,818 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
+2025-11-21 14:53:21,596 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
 [SCAN] _process_file started for: Ammar1_2_2_2.jpeg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,818 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
+2025-11-21 14:53:21,596 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
 [SCAN] Processing: Ammar1_2_2_2.jpeg
 [SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
-[SCAN] Starting file 11/15: Ammar2_2_2_2.jpeg
-2025-11-21 14:35:26,856 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,865 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
-[SCAN] Processing: Ammar2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar2_2_2_2.jpeg
-[SCAN] Starting file 12/15: Ammar3_2_2_2_2.jpeg
-2025-11-21 14:35:26,876 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar3_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,876 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
-[SCAN] Processing: Ammar3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar3_2_2_2_2.jpeg
-[SCAN] Starting file 13/15: IMG_6850_2_2_2.jpeg
-2025-11-21 14:35:26,882 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6850_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,888 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
-[SCAN] Processing: IMG_6850_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6850_2_2_2.jpeg
-[SCAN] Starting file 14/15: IMG_6995_2_2_2.jpeg
-2025-11-21 14:35:26,900 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6995_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,900 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
-[SCAN] Processing: IMG_6995_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6995_2_2_2.jpeg
-[SCAN] Starting file 15/15: عليا_2_2_2.jpeg
-2025-11-21 14:35:26,915 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
-[SCAN] _process_file started for: عليا_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-21 14:35:26,916 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: عليا_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: عليا_2_2_2.jpeg
-2025-11-21 14:35:26,933 [INFO] Bulk upserted 15 photos for project 1
-2025-11-21 14:35:26,939 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.4s
-2025-11-21 14:35:26,939 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.4s
-[ScanController] scan finished: 1 folders, 15 photos, 0 videos
-[ScanController] cleanup after scan
-2025-11-21 14:35:28,427 [INFO] Building date branches...
-2025-11-21 14:35:28,428 [INFO] Building date branches for project_id=1
-[build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 15 photos for project 1
-[build_date_branches] Inserted 15/15 photos into 'all' branch
-[build_date_branches] Found 6 unique dates for project 1
-[build_date_branches] Date 2024-08-11: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg
-[build_date_branches] Date 2024-08-11: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-18: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg
-[build_date_branches] Date 2024-11-18: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-29: found 3 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
-[build_date_branches] Date 2024-11-29: inserted 3/3 into project_images (new)
-[build_date_branches] Date 2024-12-02: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg
-[build_date_branches] Date 2024-12-02: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-30: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg
-[build_date_branches] Date 2025-07-30: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-08-09: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg
-[build_date_branches] Date 2025-08-09: inserted 1/1 into project_images (new)
-[build_date_branches] Total entries processed: 8
-[build_date_branches] project_images table has 23 rows for project 1
-2025-11-21 14:35:28,444 [INFO] Created 8 photo date branch entries for project 1
-2025-11-21 14:35:28,444 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 0 videos with dates for project 1
-[build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-21 14:35:28,445 [INFO] Created 0 video date branch entries for project 1
-2025-11-21 14:35:28,446 [INFO] Backfilling created_date fields for photos...
-2025-11-21 14:35:28,452 [INFO] Backfilled 7 photo rows with created_date
-2025-11-21 14:35:28,452 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-2025-11-21 14:35:28,469 [INFO] Reloading sidebar after date branches built...
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Processing pending events (model detached - safe)
-[Sidebar] Pending events processed
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=6] running for 1 targets...
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 15 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
-[GRID] Fetched tags for 15 paths, got 15 entries
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Loaded 15 thumbnails.
-[GRID] Reloaded 15 thumbnails in branch-mode (base=15)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 6 new thumbnail workers
-[MainWindow] Launching automatic face grouping pipeline for project 1
-2025-11-21 14:35:34,776 [INFO] [FaceDetectionWorker] Starting face detection for project 1
-2025-11-21 14:35:34,795 [INFO] 💻 Using CPU for face detection (CUDA not available)
-2025-11-21 14:35:34,795 [INFO] 📁 Using local bundled models: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l
-2025-11-21 14:35:34,795 [INFO] 💾 Saved InsightFace model path to settings: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l
-2025-11-21 14:35:34,795 [INFO] ✓ Initializing InsightFace with buffalo_l directory: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l
-2025-11-21 14:35:34,820 [INFO] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
-find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l\buffalo_l\scrfd_10g_bnkps.onnx detection
-input mean and std: 127.5 127.5
-find model: C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\models\buffalo_l\buffalo_l\w600k_r50.onnx recognition
-2025-11-21 14:35:35,564 [INFO] ✓ Using CPU acceleration (ctx_id=-1)
-set det-size: (640, 640)
-2025-11-21 14:35:36,380 [INFO] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration
-2025-11-21 14:35:36,380 [INFO] [FaceDetection] Initialized InsightFace with model=hog
-2025-11-21 14:35:36,385 [INFO] [FaceDetectionWorker] Processing 15 photos
-[FaceDetection] [1/15] Detecting faces: alya1_2_2_2.jpeg
-2025-11-21 14:35:36,756 [INFO] [FaceDetection] Found 1 faces in alya1_2_2_2.jpeg
-2025-11-21 14:35:36,822 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg: 1 faces
-[FaceDetection] [2/15] Detecting faces: alya1_3_2.jpeg
-2025-11-21 14:35:37,009 [INFO] [FaceDetection] Found 1 faces in alya1_3_2.jpeg
-2025-11-21 14:35:37,073 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg: 1 faces
-[FaceDetection] [3/15] Detecting faces: alya2_2_2_2_2.jpeg
-2025-11-21 14:35:37,206 [INFO] [FaceDetection] Found 1 faces in alya2_2_2_2_2.jpeg
-2025-11-21 14:35:37,223 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg: 1 faces
-[FaceDetection] [4/15] Detecting faces: alya3_2_2_2_2.jpeg
-2025-11-21 14:35:37,623 [INFO] [FaceDetection] Found 3 faces in alya3_2_2_2_2.jpeg
-2025-11-21 14:35:37,685 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg: 3 faces
-[FaceDetection] [5/15] Detecting faces: alya_2_2.jpeg
-2025-11-21 14:35:37,923 [INFO] [FaceDetection] Found 1 faces in alya_2_2.jpeg
-2025-11-21 14:35:37,939 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg: 1 faces
-[FaceDetection] [6/15] Detecting faces: alya_2_2_2_2.jpeg
-2025-11-21 14:35:38,190 [INFO] [FaceDetection] Found 1 faces in alya_2_2_2_2.jpeg
-2025-11-21 14:35:38,215 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg: 1 faces
-[FaceDetection] [7/15] Detecting faces: ammar-ref(1)_2_2.png
-2025-11-21 14:35:38,437 [INFO] [FaceDetection] Found 1 faces in ammar-ref(1)_2_2.png
-2025-11-21 14:35:38,456 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png: 1 faces
-[FaceDetection] [8/15] Detecting faces: ammar-ref_2_2_2.png
-2025-11-21 14:35:38,656 [INFO] [FaceDetection] Found 1 faces in ammar-ref_2_2_2.png
-2025-11-21 14:35:38,678 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png: 1 faces
-[FaceDetection] [9/15] Detecting faces: ammar-ref_3_2.png
-2025-11-21 14:35:38,889 [INFO] [FaceDetection] Found 1 faces in ammar-ref_3_2.png
-2025-11-21 14:35:38,917 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png: 1 faces
-[FaceDetection] [10/15] Detecting faces: ammar1_2_2_2.jpeg
-2025-11-21 14:35:39,189 [INFO] [FaceDetection] Found 1 faces in ammar1_2_2_2.jpeg
-2025-11-21 14:35:39,285 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg: 1 faces
-[FaceDetection] [11/15] Detecting faces: ammar2_2_2_2.jpeg
-2025-11-21 14:35:39,541 [INFO] [FaceDetection] Found 1 faces in ammar2_2_2_2.jpeg
-2025-11-21 14:35:39,606 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg: 1 faces
-[FaceDetection] [12/15] Detecting faces: ammar3_2_2_2_2.jpeg
-2025-11-21 14:35:39,909 [INFO] [FaceDetection] Found 2 faces in ammar3_2_2_2_2.jpeg
-2025-11-21 14:35:39,972 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg: 2 faces
-[FaceDetection] [13/15] Detecting faces: img_6850_2_2_2.jpeg
-2025-11-21 14:35:40,423 [INFO] [FaceDetection] Found 3 faces in img_6850_2_2_2.jpeg
-2025-11-21 14:35:40,627 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg: 3 faces
-[FaceDetection] [14/15] Detecting faces: img_6995_2_2_2.jpeg
-2025-11-21 14:35:40,923 [INFO] [FaceDetection] Found 1 faces in img_6995_2_2_2.jpeg
-2025-11-21 14:35:41,025 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg: 1 faces
-[FaceDetection] [15/15] Detecting faces: عليا_2_2_2.jpeg
-2025-11-21 14:35:41,275 [INFO] [FaceDetection] Found 1 faces in عليا_2_2_2.jpeg
-2025-11-21 14:35:41,329 [INFO] [FaceDetectionWorker] ✓ c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg: 1 faces
-2025-11-21 14:35:41,329 [INFO] [FaceDetectionWorker] Complete in 6.6s: 15 processed, 20 faces detected, 0 failed
-[FaceDetection] Complete: 15 photos, 20 faces detected
-2025-11-21 14:35:41,329 [INFO] [FaceClusterWorker] Starting face clustering for project 1
-[FaceCluster] Loading face embeddings...
-2025-11-21 14:35:41,329 [INFO] [FaceClusterWorker] Loaded 20 face embeddings
-[FaceCluster] Clustering 20 faces...
-2025-11-21 14:35:41,373 [INFO] [FaceClusterWorker] Found 4 clusters
-2025-11-21 14:35:41,373 [INFO] [FaceClusterWorker] Found 8 unclustered faces (will create 'Unidentified' branch)
-[FaceCluster] Found 4 person groups...
-2025-11-21 14:35:41,377 [INFO] [FaceClusterWorker] Cluster 0 → 4 faces
-[FaceCluster] Saving cluster 1/4: Person 1 (4 faces)
-2025-11-21 14:35:41,377 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
-[FaceCluster] Saving cluster 2/4: Person 2 (2 faces)
-2025-11-21 14:35:41,377 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
-[FaceCluster] Saving cluster 3/4: Person 3 (2 faces)
-2025-11-21 14:35:41,377 [INFO] [FaceClusterWorker] Cluster 3 → 4 faces
-[FaceCluster] Saving cluster 4/4: Person 4 (4 faces)
-[FaceCluster] Processing 8 unidentified faces...
-2025-11-21 14:35:41,377 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 8 faces from 5 photos
-2025-11-21 14:35:41,386 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 8 unidentified faces
-[FaceCluster] Clustering complete: 5 branches created
-[FaceCluster] Complete: 4 person groups created
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Processing pending events (model detached - safe)
-[Sidebar] Pending events processed
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=8] running for 1 targets...
-[Sidebar][counts worker gen=8] finished scanning targets, scheduling UI update
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_unidentified'
-[get_images_by_branch] Found 5 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/5 paths (project_id=1)
-[GRID] Fetched tags for 5 paths, got 5 entries
-[GRID] Loaded 5 thumbnails.
-[GRID] Reloaded 5 thumbnails in branch-mode (base=5)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-4 of 5
-[GRID] Queued 5 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_000'
-[get_images_by_branch] Found 4 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
-[GRID] Fetched tags for 4 paths, got 4 entries
-[GRID] Loaded 4 thumbnails.
-[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-3 of 4
-[GRID] Queued 4 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_003'
-[get_images_by_branch] Found 4 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
-[GRID] Fetched tags for 4 paths, got 4 entries
-[GRID] Loaded 4 thumbnails.
-[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-3 of 4
-[GRID] Queued 4 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_001'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_001'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_000'
-[get_images_by_branch] Found 4 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
-[GRID] Fetched tags for 4 paths, got 4 entries
-[GRID] Loaded 4 thumbnails.
-[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-3 of 4
-[GRID] Queued 4 new thumbnail workers
-[merge_face_clusters] project_id=1, target='face_002', sources=['face_000', 'face_001']
-[merge_face_clusters] Found 3 branches. Row type: <class 'sqlite3.Row'>
-[merge_face_clusters] Found 3 face_branch_reps rows
-[merge_face_clusters] Updated count for target 'face_002' (rowcount=1)
-[merge_face_clusters] SUCCESS: {'moved_faces': 6, 'moved_images': 6, 'deleted_reps': 2, 'sources': ['face_000', 'face_001'], 'target': 'face_002'}
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Processing pending events (model detached - safe)
-[Sidebar] Pending events processed
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002442F4CC950>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=10] running for 1 targets...
-[Sidebar][counts worker gen=11] running for 1 targets...
-[Sidebar][counts worker gen=10] finished scanning targets, scheduling UI update
-[Sidebar][counts worker gen=11] finished scanning targets, scheduling UI update
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 8 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/8 paths (project_id=1)
-[GRID] Fetched tags for 8 paths, got 8 entries
-[GRID] Loaded 8 thumbnails.
-[GRID] Reloaded 8 thumbnails in branch-mode (base=8)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-7 of 8
-[GRID] Queued 8 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 8 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/8 paths (project_id=1)
-[GRID] Fetched tags for 8 paths, got 8 entries
-[GRID] Loaded 8 thumbnails.
-[GRID] Reloaded 8 thumbnails in branch-mode (base=8)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-7 of 8
-[GRID] Queued 8 new thumbnail workers
-[Sidebar] Updating person name in tree: face_002 → Alya
-[Sidebar] Tabs view hidden, skipping tabs update
-2025-11-21 14:36:35,799 [INFO] Added tag 1 to 1 photos (out of 1 requested)
-2025-11-21 14:36:35,799 [INFO] Bulk assigned tag 'favorite' to 1 photos
-[Sidebar] reload_tags_only → got 1 tags for project_id=1
-[HoverActions] Favorite added for c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg
-[TAG FILTER] Showing all tagged photos for 'favorite' (1)
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 1 rows (1 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS] Found favorite tag: c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg
-[DB_TAGS] Retrieved 1 tags for 1/1 paths (project_id=1)
-[GRID] Fetched tags for 1 paths, got 1 entries
-[GRID] Loaded 1 thumbnails.
-[GRID] Reloaded 1/1 thumbnails in None-mode (tag=favorite)
-[TAG FILTER] Showing ALL photos with tag 'favorite' (no navigation context)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-0 of 1
-[GRID] Queued 1 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_003'
-[get_images_by_branch] Found 4 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-  DB path: 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg' tag: 'favorite'
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
-[GRID] Fetched tags for 4 paths, got 4 entries
-[GRID] Loaded 4 thumbnails.
-[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-3 of 4
-[GRID] Queued 4 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 8 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 1 rows (1 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS] Found favorite tag: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg
-[DB_TAGS] Retrieved 1 tags for 1/8 paths (project_id=1)
-[GRID] Fetched tags for 8 paths, got 8 entries
-[GRID] Loaded 8 thumbnails.
-[GRID] Reloaded 8 thumbnails in branch-mode (base=8)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-7 of 8
-[GRID] Queued 8 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 1 rows (1 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS] Found favorite tag: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg
-[DB_TAGS] Retrieved 1 tags for 1/9 paths (project_id=1)
-[GRID] Fetched tags for 9 paths, got 9 entries
-[GRID] Loaded 9 thumbnails.
-[GRID] Reloaded 9 thumbnails in date-mode (base=9)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-8 of 9
-[GRID] Queued 9 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-  DB path: 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg' tag: 'favorite'
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in date-mode (base=6)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 1 rows (1 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', tag='favorite'
-[DB_TAGS] Found favorite tag: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg
-[DB_TAGS] Retrieved 1 tags for 1/9 paths (project_id=1)
-[GRID] Fetched tags for 9 paths, got 9 entries
-[GRID] Loaded 9 thumbnails.
-[GRID] Reloaded 9 thumbnails in date-mode (base=9)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-8 of 9
-[GRID] Queued 9 new thumbnail workers
-[ContextMenu] Got tags for 1 path(s): {'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya3_2_2_2_2.jpeg': ['favorite']}
-[ContextMenu] present_tags = {'favorite'}
-2025-11-21 14:36:54,353 [INFO] Removed tag 'favorite' from photo: c:\users\suleimaa\downloads\photo-sorter\images\output6\alya3_2_2_2_2.jpeg
-[Tag] Cleared all tags → 1 photo(s)
-[TagCache] Refreshing tags for 1 paths, got 1 entries
-[TagCache] Updated 1 items, repaint complete
-[Sidebar] reload_tags_only → got 1 tags for project_id=1
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_unidentified'
-[get_images_by_branch] Found 5 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/5 paths (project_id=1)
-[GRID] Fetched tags for 5 paths, got 5 entries
-[GRID] Loaded 5 thumbnails.
-[GRID] Reloaded 5 thumbnails in branch-mode (base=5)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-4 of 5
-[GRID] Queued 5 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 8 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/8 paths (project_id=1)
-[GRID] Fetched tags for 8 paths, got 8 entries
-[GRID] Loaded 8 thumbnails.
-[GRID] Reloaded 8 thumbnails in branch-mode (base=8)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-7 of 8
-[GRID] Queued 8 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/9 paths (project_id=1)
-[GRID] Fetched tags for 9 paths, got 9 entries
-[GRID] Loaded 9 thumbnails.
-[GRID] Reloaded 9 thumbnails in date-mode (base=9)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-8 of 9
-[GRID] Queued 9 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in date-mode (base=6)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to folder
-[DB] get_images_by_folder(1, subfolders=True, project=1) -> 15 paths from 2 folders
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
-[GRID] Fetched tags for 15 paths, got 15 entries
-[GRID] Loaded 15 thumbnails.
-[GRID] Reloaded 15 thumbnails in folder-mode (base=15)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
-[GRID] Fetched tags for 15 paths, got 15 entries
-[GRID] Loaded 15 thumbnails.
-[GRID] Reloaded 15 thumbnails in date-mode (base=15)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[ThumbCacheDB] Closing cache gracefully...
-
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>
