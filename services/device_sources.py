@@ -248,6 +248,11 @@ class DeviceScanner:
 
                         # Try to access the device folder
                         try:
+                            # P2-30 FIX: Validate path exists before accessing
+                            if not item.Path:
+                                print(f"[DeviceScanner] Skipping device with null path")
+                                continue
+
                             device_folder = shell.Namespace(item.Path)
                             if device_folder:
                                 # Enumerate storage locations (Phone, Card, etc.)
@@ -431,8 +436,12 @@ class DeviceScanner:
                 print(f"[DeviceScanner]             REJECTED: No media folders with photos")
                 return None
 
-            # Create device ID
+            # P2-30 FIX: Validate storage path before creating device ID
             storage_path = storage_item.Path
+            if not storage_path:
+                print(f"[DeviceScanner]             Warning: Storage item has null path")
+                return None
+
             device_id = f"windows_mtp:{hash(storage_path) & 0xFFFFFFFF:08x}"
             print(f"[DeviceScanner]             Device ID: {device_id}")
 
@@ -621,6 +630,11 @@ class DeviceScanner:
                         if has_media:
                             display_name = self._get_folder_display_name(pattern)
                             if display_name:
+                                # P2-30 FIX: Validate storage path before building full path
+                                if not storage_item.Path:
+                                    print(f"[DeviceScanner] Warning: Storage item has null path for pattern {pattern}")
+                                    continue
+
                                 # Build full path for this folder
                                 pattern_windows = pattern.replace('/', '\\')
                                 full_path = f"{storage_item.Path}\\{pattern_windows}"
@@ -684,6 +698,11 @@ class DeviceScanner:
                         print(f"[DeviceScanner]   Checking device: {device_name}")
 
                         try:
+                            # P2-30 FIX: Validate path before accessing
+                            if not item.Path:
+                                print(f"[DeviceScanner] Skipping device with null path")
+                                continue
+
                             # Get device folder
                             device_folder = shell.Namespace(item.Path)
                             if not device_folder:
