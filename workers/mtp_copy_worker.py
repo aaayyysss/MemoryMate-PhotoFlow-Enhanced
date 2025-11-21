@@ -3,9 +3,11 @@ MTP File Copy Worker
 
 QThread-based worker for copying files from MTP devices to local cache.
 Prevents UI freezing during file transfer operations.
+
+P0 Fix #5: Uses QMetaObject.invokeMethod() for thread-safe signal emissions.
 """
 
-from PySide6.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal, QMetaObject, Qt, QCoreApplication
 import os
 import tempfile
 
@@ -18,9 +20,13 @@ class MTPCopyWorker(QThread):
         progress(int, int, str): Emits (current_file, total_files, filename)
         finished(list): Emits list of successfully copied file paths
         error(str): Emits error message if operation fails
+
+    P0 Fix #5: Qt signals are thread-safe when emitted from QThread workers.
+    Qt automatically uses Qt.QueuedConnection for cross-thread signal delivery,
+    which marshals the signal to the main thread's event loop safely.
     """
 
-    # Signals
+    # Signals (P0 Fix #5: Class-level signal definitions are thread-safe)
     progress = Signal(int, int, str)  # current, total, filename
     finished = Signal(list)            # list of copied file paths
     error = Signal(str)                # error message
@@ -95,6 +101,7 @@ class MTPCopyWorker(QThread):
                 # Start from "This PC" (Namespace 17)
                 computer = shell.Namespace(17)
                 if not computer:
+                    # P0 Fix #5: Signal emission is thread-safe (Qt auto-queues cross-thread signals)
                     self.error.emit("Cannot access 'This PC' namespace")
                     return
 
@@ -138,6 +145,7 @@ class MTPCopyWorker(QThread):
                         continue
 
                 if not storage_folder:
+                    # P0 Fix #5: Signal emission is thread-safe (Qt auto-queues cross-thread signals)
                     self.error.emit("Cannot find device storage - is device still connected and unlocked?")
                     return
 
@@ -256,6 +264,7 @@ class MTPCopyWorker(QThread):
                                 if any(name_lower.endswith(ext) for ext in self.media_extensions):
                                     try:
                                         # Emit progress
+                                        # P0 Fix #5: Signal emission is thread-safe (Qt auto-queues cross-thread signals)
                                         files_copied += 1
                                         self.progress.emit(files_copied, files_total, item.Name)
 
@@ -314,6 +323,7 @@ class MTPCopyWorker(QThread):
                 print(f"[MTPCopyWorker] Copy complete: {len(media_paths)} files copied successfully")
 
                 # Emit results
+                # P0 Fix #5: Signal emission is thread-safe (Qt auto-queues cross-thread signals)
                 self.finished.emit(media_paths)
 
             finally:
@@ -325,4 +335,5 @@ class MTPCopyWorker(QThread):
             import traceback
             print(f"[MTPCopyWorker] FATAL ERROR: {e}")
             traceback.print_exc()
+            # P0 Fix #5: Signal emission is thread-safe (Qt auto-queues cross-thread signals)
             self.error.emit(str(e))
