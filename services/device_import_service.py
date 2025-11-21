@@ -798,41 +798,62 @@ class DeviceImportService:
             local_photo_id = None
             try:
                 with self.db._connect() as conn:
-                    # Update hash and device info (Phase 2)
-                    conn.execute("""
-                        UPDATE photo_metadata
-                        SET file_hash = ?,
-                            device_id = ?,
-                            device_path = ?,
-                            device_folder = ?,
-                            import_session_id = ?
-                        WHERE project_id = ? AND path = ?
-                    """, (file_hash, self.device_id, device_path, device_folder,
-                          self.current_session_id, self.project_id, file_path))
+                    # P1-1 FIX: Wrap all database operations in transaction with proper rollback
+                    try:
+                        # P1-3 FIX: Check for duplicate hash atomically within transaction
+                        # This prevents race condition where two processes import same file
+                        cur = conn.execute("""
+                            SELECT id, path FROM photo_metadata
+                            WHERE project_id = ? AND file_hash = ? AND file_hash != ''
+                        """, (self.project_id, file_hash))
+                        existing = cur.fetchone()
 
-                    # Get the photo_id
-                    cur = conn.execute("""
-                        SELECT id FROM photo_metadata
-                        WHERE project_id = ? AND path = ?
-                    """, (self.project_id, file_path))
-                    row = cur.fetchone()
-                    if row:
-                        local_photo_id = row[0]
+                        if existing and existing[1] != file_path:
+                            # P1-3 FIX: File with same hash already exists - skip to prevent duplicate
+                            print(f"[DeviceImport] Duplicate detected: {file_path} matches existing {existing[1]} (hash: {file_hash[:8]}...)")
+                            return existing[0]  # Return existing photo_id
 
-                    conn.commit()
+                        # Update hash and device info (Phase 2)
+                        conn.execute("""
+                            UPDATE photo_metadata
+                            SET file_hash = ?,
+                                device_id = ?,
+                                device_path = ?,
+                                device_folder = ?,
+                                import_session_id = ?
+                            WHERE project_id = ? AND path = ?
+                        """, (file_hash, self.device_id, device_path, device_folder,
+                              self.current_session_id, self.project_id, file_path))
 
-                    # Update device_files table (Phase 2)
-                    if self.device_id and device_path and local_photo_id:
-                        self.db.track_device_file(
-                            device_id=self.device_id,
-                            device_path=device_path,
-                            device_folder=device_folder or "Unknown",
-                            file_hash=file_hash,
-                            file_size=0,  # Already tracked during scan
-                            file_mtime="",
-                            import_session_id=self.current_session_id,
-                            local_photo_id=local_photo_id
-                        )
+                        # Get the photo_id
+                        cur = conn.execute("""
+                            SELECT id FROM photo_metadata
+                            WHERE project_id = ? AND path = ?
+                        """, (self.project_id, file_path))
+                        row = cur.fetchone()
+                        if row:
+                            local_photo_id = row[0]
+
+                        # Update device_files table (Phase 2)
+                        if self.device_id and device_path and local_photo_id:
+                            self.db.track_device_file(
+                                device_id=self.device_id,
+                                device_path=device_path,
+                                device_folder=device_folder or "Unknown",
+                                file_hash=file_hash,
+                                file_size=0,  # Already tracked during scan
+                                file_mtime="",
+                                import_session_id=self.current_session_id,
+                                local_photo_id=local_photo_id
+                            )
+
+                        # P1-1 FIX: Commit only after ALL operations succeed
+                        conn.commit()
+
+                    except Exception as e:
+                        # P1-1 FIX: Explicit rollback on any failure
+                        conn.rollback()
+                        raise
 
             except Exception as e:
                 print(f"[DeviceImport] Warning: Could not update device tracking: {e}")

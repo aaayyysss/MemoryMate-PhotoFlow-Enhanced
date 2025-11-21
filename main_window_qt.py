@@ -358,7 +358,22 @@ class ScanController:
             self.thread.quit()
 
     def _cleanup(self):
+        """
+        Cleanup after scan completes.
+        P1-7 FIX: Ensure cleanup runs in main thread to avoid Qt thread violations.
+        """
         print("[ScanController] cleanup after scan")
+        # P1-7 FIX: Check if we're in the main thread
+        from PySide6.QtCore import QTimer, QApplication
+        if self.main.thread() != QApplication.instance().thread():
+            # Called from worker thread - marshal to main thread
+            QTimer.singleShot(0, self._cleanup_impl)
+        else:
+            # Already in main thread
+            self._cleanup_impl()
+
+    def _cleanup_impl(self):
+        """Actual cleanup implementation - must run in main thread."""
         try:
             self.main.act_cancel_scan.setEnabled(False)
             if self.main._scan_progress:

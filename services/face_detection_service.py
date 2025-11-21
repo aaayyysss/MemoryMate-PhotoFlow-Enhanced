@@ -570,6 +570,8 @@ class FaceDetectionService:
 
         results = {}
         total = len(image_paths)
+        # P1-4 FIX: Track failures to inform user
+        failed_count = 0
 
         logger.info(f"[FaceDetection] Processing {total} images with {max_workers} workers")
 
@@ -583,7 +585,7 @@ class FaceDetectionService:
             for future in as_completed(futures):
                 path = futures[future]
                 try:
-                    faces = future.result()
+                    faces = future.result(timeout=30)  # P1-4 FIX: Add timeout
                     results[path] = faces
                     processed += 1
 
@@ -591,10 +593,18 @@ class FaceDetectionService:
                         logger.info(f"[FaceDetection] Progress: {processed}/{total} images")
 
                 except Exception as e:
-                    logger.error(f"Error processing {path}: {e}")
+                    # P1-4 FIX: Use warning-level logging and track failures
+                    logger.warning(f"Face detection failed for {path}: {e}")
+                    failed_count += 1
                     results[path] = []
+                    processed += 1
 
-        logger.info(f"[FaceDetection] Batch complete: {processed}/{total} images processed")
+        # P1-4 FIX: Log failure summary for user awareness
+        if failed_count > 0:
+            logger.warning(f"[FaceDetection] Batch complete with {failed_count}/{total} failures")
+        else:
+            logger.info(f"[FaceDetection] Batch complete: {processed}/{total} images processed successfully")
+
         return results
 
 
