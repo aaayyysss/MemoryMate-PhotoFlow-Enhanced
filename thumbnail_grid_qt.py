@@ -998,21 +998,21 @@ class ThumbnailGridQt(QWidget):
 
                 if bottom_index.isValid() and bottom_index.row() > start:
                     end = bottom_index.row()
-            else:
-                # Calculate based on grid layout
-                first_item = self.model.item(max(0, start))
-                if first_item:
-                    item_width = first_item.sizeHint().width() + self._spacing
-                    item_height = first_item.sizeHint().height() + self._spacing
-                    if item_width > 0 and item_height > 0:
-                        items_per_row = max(1, rect.width() // item_width)
-                        visible_rows = (rect.height() // item_height) + 2  # +2 for partial rows
-                        visible_items = visible_rows * items_per_row
-                        end = min(self.model.rowCount() - 1, start + visible_items)
+                else:
+                    # Calculate based on grid layout
+                    first_item = self.model.item(max(0, start))
+                    if first_item:
+                        item_width = first_item.sizeHint().width() + self._spacing
+                        item_height = first_item.sizeHint().height() + self._spacing
+                        if item_width > 0 and item_height > 0:
+                            items_per_row = max(1, rect.width() // item_width)
+                            visible_rows = (rect.height() // item_height) + 2  # +2 for partial rows
+                            visible_items = visible_rows * items_per_row
+                            end = min(self.model.rowCount() - 1, start + visible_items)
+                        else:
+                            end = min(self.model.rowCount() - 1, start + 150)
                     else:
                         end = min(self.model.rowCount() - 1, start + 150)
-                else:
-                    end = min(self.model.rowCount() - 1, start + 150)
 
                 # P2-27 FIX: Store calculated range in cache
                 # (Store before prefetch expansion for accurate caching)
