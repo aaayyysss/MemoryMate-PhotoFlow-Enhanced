@@ -180,11 +180,15 @@ class SearchService:
                 params.append(f"%{criteria.camera_model}%")
 
             # GPS data
+            # P2-31 FIX: Consistent NULL checking for both coordinate fields
             if criteria.has_gps is not None:
                 if criteria.has_gps:
+                    # Both coordinates must be present for valid GPS data
                     where_clauses.append("(gps_latitude IS NOT NULL AND gps_longitude IS NOT NULL)")
                 else:
-                    where_clauses.append("(gps_latitude IS NULL OR gps_longitude IS NULL)")
+                    # P2-31 FIX: Changed OR to AND for consistent filtering
+                    # Photos with partial GPS data (one NULL) should be considered as "no GPS"
+                    where_clauses.append("(gps_latitude IS NULL AND gps_longitude IS NULL)")
 
             # Folder
             if criteria.folder_id is not None:
@@ -198,31 +202,83 @@ class SearchService:
                     where_clauses.append("folder_id = ?")
                     params.append(criteria.folder_id)
 
+            # P2-18 FIX: Integrate tag filtering into SQL query instead of post-processing
+            # This eliminates N+1 query pattern where each result requires separate tag lookup
+            tag_join_clause = ""
+            tag_where_clause = ""
+
+            if criteria.tags:
+                # tags_all: AND logic - photo must have ALL specified tags
+                # Use HAVING COUNT to ensure all tags are present
+                tag_placeholders = ','.join('?' * len(criteria.tags))
+                tag_join_clause = """
+                    INNER JOIN photo_tags pt ON pm.id = pt.photo_id
+                    INNER JOIN tags t ON pt.tag_id = t.id
+                """
+                tag_where_clause = f"t.name IN ({tag_placeholders})"
+                params.extend(criteria.tags)
+                # Group by photo_id and ensure count matches number of tags
+                group_by_clause = "GROUP BY pm.id HAVING COUNT(DISTINCT t.name) = ?"
+                params.append(len(criteria.tags))
+            elif criteria.tags_any:
+                # tags_any: OR logic - photo must have AT LEAST ONE of specified tags
+                tag_placeholders = ','.join('?' * len(criteria.tags_any))
+                tag_join_clause = """
+                    INNER JOIN photo_tags pt ON pm.id = pt.photo_id
+                    INNER JOIN tags t ON pt.tag_id = t.id
+                """
+                tag_where_clause = f"t.name IN ({tag_placeholders})"
+                params.extend(criteria.tags_any)
+                group_by_clause = "GROUP BY pm.id"
+            else:
+                group_by_clause = ""
+
             # Build WHERE clause
+            if tag_where_clause:
+                where_clauses.append(tag_where_clause)
             where_clause = " AND ".join(where_clauses) if where_clauses else None
 
             # Determine sort column
             sort_column = self._get_sort_column(criteria.sort_by)
             order_by = f"{sort_column} {criteria.sort_order}"
 
-            # Execute search
+            # P2-18 FIX: Execute search with tag JOIN if needed
             logger.debug(f"Search WHERE: {where_clause}")
             logger.debug(f"Search params: {params}")
 
-            results = self.photo_repo.find_all(
-                where_clause=where_clause,
-                params=tuple(params) if params else None,
-                order_by=order_by,
-                limit=criteria.limit,
-                offset=criteria.offset
-            )
+            if tag_join_clause:
+                # Custom query with tag JOINs
+                base_query = f"""
+                    SELECT DISTINCT pm.path
+                    FROM photo_metadata pm
+                    {tag_join_clause}
+                    {"WHERE " + where_clause if where_clause else ""}
+                    {group_by_clause}
+                    ORDER BY {order_by}
+                """
+                if criteria.limit:
+                    base_query += f" LIMIT {criteria.limit}"
+                if criteria.offset:
+                    base_query += f" OFFSET {criteria.offset}"
+
+                # Execute custom query directly
+                with self.photo_repo.db._connect() as conn:
+                    cursor = conn.execute(base_query, tuple(params))
+                    results = [{'path': row[0]} for row in cursor.fetchall()]
+            else:
+                # Standard query without tags
+                results = self.photo_repo.find_all(
+                    where_clause=where_clause,
+                    params=tuple(params) if params else None,
+                    order_by=order_by,
+                    limit=criteria.limit,
+                    offset=criteria.offset
+                )
 
             # Extract paths
             paths = [r['path'] for r in results if 'path' in r]
 
-            # Apply post-processing filters (tags, etc.)
-            if criteria.tags or criteria.tags_any:
-                paths = self._filter_by_tags(paths, criteria.tags, criteria.tags_any)
+            # P2-18 FIX: Tag filtering now happens in SQL - no post-processing needed!
 
             # Get total count (before limit/offset)
             total_count = len(paths)

@@ -786,6 +786,18 @@ class DeviceImportService:
             Photo ID if successfully registered
         """
         try:
+            # P2-20 FIX: Validate folder_id exists before proceeding
+            if folder_id is not None:
+                with self.db._connect() as conn:
+                    cursor = conn.execute(
+                        "SELECT id FROM folders WHERE id = ? AND project_id = ?",
+                        (folder_id, self.project_id)
+                    )
+                    if not cursor.fetchone():
+                        raise ValueError(
+                            f"Invalid folder_id={folder_id}: Folder does not exist in project {self.project_id}"
+                        )
+
             # Use existing add_project_image method
             if hasattr(self.db, 'add_project_image'):
                 self.db.add_project_image(

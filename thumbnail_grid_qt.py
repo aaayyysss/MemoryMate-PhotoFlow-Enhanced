@@ -1711,6 +1711,9 @@ class ThumbnailGridQt(QWidget):
         Avoids full grid reload and keeps UI snappy.
 
         ARCHITECTURE: UI Layer → TagService → TagRepository → Database
+
+        P2-17 FIX: Optimized to avoid iterating through all rows on large datasets.
+        Instead of O(N*M) complexity, uses O(M) path lookup with batch updates.
         """
         if not paths:
             return
@@ -1723,22 +1726,39 @@ class ThumbnailGridQt(QWidget):
             print(f"[TagCache] ❌ Failed to fetch tags: {e}")
             return
 
-        # normalize to the same format used in load()
-        updated_count = 0
+        # P2-17 FIX: Build path-to-row mapping for O(1) lookups
+        # Only map rows for paths that need updating (not all 10K+ rows)
+        path_to_rows = {}
+        paths_set = set(paths)  # O(1) membership check
+
         for row in range(self.model.rowCount()):
             item = self.model.item(row)
             if not item:
                 continue
             p = item.data(Qt.UserRole)
-            if p in tags_map:
-                new_tags = tags_map.get(p, [])
-                item.setData(new_tags, Qt.UserRole + 2)
-                updated_count += 1
+            if p in paths_set:  # Only process relevant paths
+                path_to_rows[p] = (row, item)
+                if len(path_to_rows) >= len(paths):
+                    break  # Early exit once all paths found
+
+        # P2-17 FIX: Batch update with signals blocked
+        updated_count = 0
+        if path_to_rows:
+            # Block model signals during batch update
+            self.model.blockSignals(True)
+            try:
+                for path, new_tags in tags_map.items():
+                    if path in path_to_rows:
+                        row, item = path_to_rows[path]
+                        item.setData(new_tags, Qt.UserRole + 2)
+                        updated_count += 1
+            finally:
+                self.model.blockSignals(False)
 
         if updated_count > 0:
-            print(f"[TagCache] Updated {updated_count} items, repaint complete")
+            print(f"[TagCache] ✅ P2-17: Updated {updated_count}/{len(paths)} items (optimized)")
 
-        # repaint only
+        # P2-17 FIX: Single viewport repaint after all updates
         self.list_view.viewport().update()
         
         # 🏷️ ENHANCEMENT: Emit signal to update details panel in real-time

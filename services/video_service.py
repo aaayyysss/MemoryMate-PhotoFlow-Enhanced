@@ -795,7 +795,9 @@ class VideoService:
 
             if min_duration is not None and duration < min_duration:
                 continue
-            if max_duration is not None and duration >= max_duration:
+            # P2-19 FIX: Changed >= to > for correct boundary handling
+            # Videos at exact max_duration should be INCLUDED, not excluded
+            if max_duration is not None and duration > max_duration:
                 continue
 
             filtered.append(video)
