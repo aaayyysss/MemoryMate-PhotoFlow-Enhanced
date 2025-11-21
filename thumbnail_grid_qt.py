@@ -776,6 +776,8 @@ class ThumbnailGridQt(QWidget):
         self._decode_timeout = 5.0    # seconds for watchdog
         # shared placeholder pixmap (reuse to avoid many allocations)
         self._placeholder_pixmap = make_placeholder_pixmap(QSize(self.thumb_height, self.thumb_height))
+        # P0 Fix #7: Cache scaled placeholder pixmaps by size to prevent memory leak
+        self._placeholder_cache = {}  # key: (width, height), value: QPixmap
         self._current_reload_token = self._reload_token  # initialize for safety
 
 
@@ -2529,13 +2531,24 @@ class ThumbnailGridQt(QWidget):
         placeholder_size = self._thumb_size_for_aspect(default_aspect)
 
         # optional placeholder pixmap (scale shared placeholder if needed)
-        placeholder_pix = self._placeholder_pixmap
-        if placeholder_pix.size() != placeholder_size:
-            try:
-                placeholder_pix = self._placeholder_pixmap.scaled(placeholder_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            except Exception:
-                placeholder_pix = QPixmap(placeholder_size)
-                placeholder_pix.fill(Qt.transparent)
+        # P0 Fix #7: Check cache before scaling to prevent memory leak
+        cache_key = (placeholder_size.width(), placeholder_size.height())
+        placeholder_pix = self._placeholder_cache.get(cache_key)
+
+        if placeholder_pix is None:
+            # Not in cache - check if base placeholder matches size
+            if self._placeholder_pixmap.size() == placeholder_size:
+                placeholder_pix = self._placeholder_pixmap
+            else:
+                # Create and cache new scaled version
+                try:
+                    placeholder_pix = self._placeholder_pixmap.scaled(placeholder_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                except Exception:
+                    placeholder_pix = QPixmap(placeholder_size)
+                    placeholder_pix.fill(Qt.transparent)
+
+            # Cache for future use
+            self._placeholder_cache[cache_key] = placeholder_pix
         
         token = self._reload_token
         for i, p in enumerate(sorted_paths):
@@ -2814,13 +2827,25 @@ class ThumbnailGridQt(QWidget):
 
         default_aspect = 1.5
         placeholder_size = self._thumb_size_for_aspect(default_aspect)
-        placeholder_pix = self._placeholder_pixmap
-        if placeholder_pix.size() != placeholder_size:
-            try:
-                placeholder_pix = self._placeholder_pixmap.scaled(placeholder_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            except Exception:
-                placeholder_pix = QPixmap(placeholder_size)
-                placeholder_pix.fill(Qt.transparent)
+
+        # P0 Fix #7: Check cache before scaling to prevent memory leak
+        cache_key = (placeholder_size.width(), placeholder_size.height())
+        placeholder_pix = self._placeholder_cache.get(cache_key)
+
+        if placeholder_pix is None:
+            # Not in cache - check if base placeholder matches size
+            if self._placeholder_pixmap.size() == placeholder_size:
+                placeholder_pix = self._placeholder_pixmap
+            else:
+                # Create and cache new scaled version
+                try:
+                    placeholder_pix = self._placeholder_pixmap.scaled(placeholder_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                except Exception:
+                    placeholder_pix = QPixmap(placeholder_size)
+                    placeholder_pix.fill(Qt.transparent)
+
+            # Cache for future use
+            self._placeholder_cache[cache_key] = placeholder_pix
 
         active_tag = self.context.get("tag_filter") if isinstance(self.context, dict) else None
 
