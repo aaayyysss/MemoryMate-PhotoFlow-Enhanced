@@ -6,6 +6,7 @@
 import os
 import io
 import time
+import threading
 from collections import OrderedDict
 from typing import Optional, Dict, Any
 from pathlib import Path
@@ -103,6 +104,8 @@ class LRUCache:
     the least recently used items when capacity or memory limit is exceeded.
 
     Phase 1B Enhancement: Added memory-aware eviction to prevent OOM situations.
+    P0 Fix #2: Added threading.RLock() to protect all cache operations from
+    concurrent GUI/worker thread access that could corrupt cache state.
     """
 
     def __init__(self, capacity: int = 200, max_memory_mb: float = 100.0):
@@ -121,6 +124,7 @@ class LRUCache:
         self.misses = 0
         self.evictions = 0
         self.memory_evictions = 0
+        self._lock = threading.RLock()  # P0 Fix #2: Thread-safe cache operations
         logger.info(f"LRUCache initialized with capacity={capacity}, max_memory={max_memory_mb}MB")
 
     def _estimate_pixmap_size(self, pixmap: QPixmap) -> int:
@@ -151,14 +155,15 @@ class LRUCache:
         Returns:
             Cached value or None if not found
         """
-        if key not in self.cache:
-            self.misses += 1
-            return None
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            if key not in self.cache:
+                self.misses += 1
+                return None
 
-        # Move to end (mark as recently used)
-        self.cache.move_to_end(key)
-        self.hits += 1
-        return self.cache[key]
+            # Move to end (mark as recently used)
+            self.cache.move_to_end(key)
+            self.hits += 1
+            return self.cache[key]
 
     def put(self, key: str, value: Dict[str, Any]):
         """
@@ -170,39 +175,40 @@ class LRUCache:
             key: Cache key
             value: Value to cache (must contain 'pixmap' key)
         """
-        pixmap = value.get("pixmap")
-        new_size = self._estimate_pixmap_size(pixmap) if pixmap else 0
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            pixmap = value.get("pixmap")
+            new_size = self._estimate_pixmap_size(pixmap) if pixmap else 0
 
-        if key in self.cache:
-            # Update existing entry - remove old size, add new size
-            old_entry = self.cache[key]
-            old_pixmap = old_entry.get("pixmap")
-            old_size = self._estimate_pixmap_size(old_pixmap) if old_pixmap else 0
-            self.current_memory_bytes -= old_size
-            self.cache.move_to_end(key)
-        else:
-            # Add new entry - check if eviction needed
-            # Evict based on entry count OR memory limit
-            while (len(self.cache) >= self.capacity or
-                   self.current_memory_bytes + new_size > self.max_memory_bytes):
-                if len(self.cache) == 0:
-                    break  # Safety: don't infinite loop
+            if key in self.cache:
+                # Update existing entry - remove old size, add new size
+                old_entry = self.cache[key]
+                old_pixmap = old_entry.get("pixmap")
+                old_size = self._estimate_pixmap_size(old_pixmap) if old_pixmap else 0
+                self.current_memory_bytes -= old_size
+                self.cache.move_to_end(key)
+            else:
+                # Add new entry - check if eviction needed
+                # Evict based on entry count OR memory limit
+                while (len(self.cache) >= self.capacity or
+                       self.current_memory_bytes + new_size > self.max_memory_bytes):
+                    if len(self.cache) == 0:
+                        break  # Safety: don't infinite loop
 
-                # Evict oldest (first) entry
-                evicted_key, evicted_value = self.cache.popitem(last=False)
-                evicted_pixmap = evicted_value.get("pixmap")
-                evicted_size = self._estimate_pixmap_size(evicted_pixmap) if evicted_pixmap else 0
-                self.current_memory_bytes -= evicted_size
-                self.evictions += 1
+                    # Evict oldest (first) entry
+                    evicted_key, evicted_value = self.cache.popitem(last=False)
+                    evicted_pixmap = evicted_value.get("pixmap")
+                    evicted_size = self._estimate_pixmap_size(evicted_pixmap) if evicted_pixmap else 0
+                    self.current_memory_bytes -= evicted_size
+                    self.evictions += 1
 
-                if self.current_memory_bytes + new_size > self.max_memory_bytes:
-                    self.memory_evictions += 1
-                    logger.debug(f"Memory-based eviction: {evicted_key} ({evicted_size / 1024:.1f}KB)")
-                else:
-                    logger.debug(f"Capacity-based eviction: {evicted_key}")
+                    if self.current_memory_bytes + new_size > self.max_memory_bytes:
+                        self.memory_evictions += 1
+                        logger.debug(f"Memory-based eviction: {evicted_key} ({evicted_size / 1024:.1f}KB)")
+                    else:
+                        logger.debug(f"Capacity-based eviction: {evicted_key}")
 
-        self.cache[key] = value
-        self.current_memory_bytes += new_size
+            self.cache[key] = value
+            self.current_memory_bytes += new_size
 
     def invalidate(self, key: str) -> bool:
         """
@@ -214,45 +220,51 @@ class LRUCache:
         Returns:
             True if entry was removed
         """
-        if key in self.cache:
-            entry = self.cache[key]
-            pixmap = entry.get("pixmap")
-            size = self._estimate_pixmap_size(pixmap) if pixmap else 0
-            self.current_memory_bytes -= size
-            del self.cache[key]
-            return True
-        return False
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            if key in self.cache:
+                entry = self.cache[key]
+                pixmap = entry.get("pixmap")
+                size = self._estimate_pixmap_size(pixmap) if pixmap else 0
+                self.current_memory_bytes -= size
+                del self.cache[key]
+                return True
+            return False
 
     def clear(self):
         """Clear all entries from cache and reset memory tracking."""
-        self.cache.clear()
-        self.current_memory_bytes = 0
-        self.hits = 0
-        self.misses = 0
-        self.evictions = 0
-        self.memory_evictions = 0
-        logger.info("LRUCache cleared")
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            self.cache.clear()
+            self.current_memory_bytes = 0
+            self.hits = 0
+            self.misses = 0
+            self.evictions = 0
+            self.memory_evictions = 0
+            logger.info("LRUCache cleared")
 
     def size(self) -> int:
         """Return current number of entries."""
-        return len(self.cache)
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            return len(self.cache)
 
     def memory_usage_mb(self) -> float:
         """Return current memory usage in MB."""
-        return self.current_memory_bytes / (1024 * 1024)
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            return self.current_memory_bytes / (1024 * 1024)
 
     def memory_usage_percent(self) -> float:
         """Return current memory usage as percentage of limit."""
-        if self.max_memory_bytes == 0:
-            return 0.0
-        return (self.current_memory_bytes / self.max_memory_bytes) * 100
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            if self.max_memory_bytes == 0:
+                return 0.0
+            return (self.current_memory_bytes / self.max_memory_bytes) * 100
 
     def hit_rate(self) -> float:
         """Calculate cache hit rate."""
-        total = self.hits + self.misses
-        if total == 0:
-            return 0.0
-        return self.hits / total
+        with self._lock:  # P0 Fix #2: Thread-safe access
+            total = self.hits + self.misses
+            if total == 0:
+                return 0.0
+            return self.hits / total
 
 
 class ThumbnailService:
@@ -297,9 +309,50 @@ class ThumbnailService:
 
         # Track files that failed to load (corrupted/unsupported)
         # This prevents infinite retries of broken images
+        # P0 Fix #3: Added automatic pruning to prevent unbounded growth
         self._failed_images: set[str] = set()
+        self._failed_images_max_size = 1000  # Maximum entries before pruning
+        self._failed_images_lock = threading.Lock()  # Thread-safe access
 
         logger.info(f"ThumbnailService initialized (L1 capacity={l1_capacity}, max_memory={l1_max_memory_mb}MB, timeout={default_timeout}s)")
+
+    def _prune_failed_images(self):
+        """
+        Prune _failed_images set to prevent unbounded growth.
+
+        P0 Fix #3: Clears the oldest half of entries when threshold is reached.
+        This prevents memory leaks while still maintaining recent failure info.
+        """
+        with self._failed_images_lock:
+            if len(self._failed_images) >= self._failed_images_max_size:
+                # Clear half of the entries (simple LRU approximation)
+                # Convert to list, clear, and keep newer half
+                failed_list = list(self._failed_images)
+                keep_count = self._failed_images_max_size // 2
+                self._failed_images.clear()
+                self._failed_images.update(failed_list[-keep_count:])
+                logger.info(f"Pruned _failed_images: {len(failed_list)} → {len(self._failed_images)} entries")
+
+    def _add_failed_image(self, path: str):
+        """
+        Add an image to the failed images set with automatic pruning.
+
+        P0 Fix #3: Thread-safe addition with automatic pruning at threshold.
+        """
+        with self._failed_images_lock:
+            self._failed_images.add(path)
+            # Prune if we've hit the threshold
+            if len(self._failed_images) >= self._failed_images_max_size:
+                self._prune_failed_images()
+
+    def _is_failed_image(self, path: str) -> bool:
+        """
+        Check if an image is in the failed images set.
+
+        P0 Fix #3: Thread-safe check.
+        """
+        with self._failed_images_lock:
+            return path in self._failed_images
 
     def _normalize_path(self, path: str) -> str:
         """
@@ -376,7 +429,7 @@ class ThumbnailService:
 
         # Check if this file previously failed to load (corrupted/unsupported)
         # This prevents infinite retries of broken images
-        if norm_path in self._failed_images:
+        if self._is_failed_image(norm_path):  # P0 Fix #3: Thread-safe check
             logger.debug(f"Skipping previously failed image: {path}")
             return QPixmap()
 
@@ -528,7 +581,7 @@ class ThumbnailService:
             except Exception as open_err:
                 # Image is corrupted or unsupported format
                 logger.warning(f"Cannot open image file {path}: {open_err}")
-                self._failed_images.add(self._normalize_path(path))
+                self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
                 logger.info(f"Marked as failed (will not retry): {path}")
                 return QPixmap()
 
@@ -541,7 +594,7 @@ class ThumbnailService:
                 # Check if image has a valid file pointer
                 if not hasattr(img, 'fp') or img.fp is None:
                     logger.warning(f"PIL image has no file pointer for: {path}")
-                    self._failed_images.add(self._normalize_path(path))
+                    self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
                     logger.info(f"Marked as failed (will not retry): {path}")
                     return QPixmap()
 
@@ -551,7 +604,7 @@ class ThumbnailService:
                 except Exception as e:
                     logger.warning(f"PIL failed to load image data for {path}: {e}")
                     # Mark as failed to prevent retries
-                    self._failed_images.add(self._normalize_path(path))
+                    self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
                     logger.info(f"Marked as failed (will not retry): {path}")
                     return QPixmap()
 
@@ -628,17 +681,17 @@ class ThumbnailService:
             return QPixmap()
         except PermissionError:
             logger.warning(f"Permission denied accessing file: {path}")
-            self._failed_images.add(self._normalize_path(path))
+            self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
             return QPixmap()
         except OSError as e:
             # Handle PIL-specific errors (corrupt files, unsupported formats, etc.)
             logger.warning(f"OS error processing {path}: {e}")
-            self._failed_images.add(self._normalize_path(path))
+            self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
             return QPixmap()
         except Exception as e:
             # Unexpected errors - log with details but don't spam with stack traces
             logger.warning(f"PIL thumbnail generation failed for {path}: {e}")
-            self._failed_images.add(self._normalize_path(path))
+            self._add_failed_image(self._normalize_path(path))  # P0 Fix #3: Thread-safe add
             return QPixmap()
 
     def invalidate(self, path: str):
@@ -661,9 +714,11 @@ class ThumbnailService:
         self.l2_cache.invalidate(path)
 
         # Remove from failed images (allow retry after file is fixed)
-        was_failed = norm_path in self._failed_images
-        if was_failed:
-            self._failed_images.discard(norm_path)
+        was_failed = False
+        with self._failed_images_lock:  # P0 Fix #3: Thread-safe access
+            was_failed = norm_path in self._failed_images
+            if was_failed:
+                self._failed_images.discard(norm_path)
 
         logger.info(f"Invalidated thumbnail: {path} (L1={'yes' if l1_removed else 'no'}, was_failed={was_failed})")
 
@@ -679,8 +734,9 @@ class ThumbnailService:
         self.l2_cache.purge_stale(max_age_days=0)  # Purge everything
 
         # Clear failed images list
-        failed_count = len(self._failed_images)
-        self._failed_images.clear()
+        with self._failed_images_lock:  # P0 Fix #3: Thread-safe access
+            failed_count = len(self._failed_images)
+            self._failed_images.clear()
 
         logger.info(f"All thumbnail caches cleared ({failed_count} failed images reset)")
 
@@ -770,6 +826,10 @@ class ThumbnailService:
         l2_stats = self.l2_cache.get_stats()
         l2_metrics = self.l2_cache.get_metrics()
 
+        # Get failed images count safely
+        with self._failed_images_lock:  # P0 Fix #3: Thread-safe access
+            failed_count = len(self._failed_images)
+
         return {
             "l1_memory_cache": l1_stats,
             "l2_database_cache": {
@@ -781,7 +841,7 @@ class ThumbnailService:
                 "total_entries": l1_stats["size"] + l2_stats.get("entries", 0),
                 "l1_memory_mb": l1_stats["memory_mb"],
                 "l1_memory_status": "OK" if l1_stats["memory_percent"] < 80 else "HIGH",
-                "failed_images": len(self._failed_images),
+                "failed_images": failed_count,
             }
         }
 
