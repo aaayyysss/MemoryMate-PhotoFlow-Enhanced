@@ -1,0 +1,3192 @@
+# preview_panel_qt.py
+# Version 09.16.01.11 dated 2025.10.22
+# 
+# one file for all photos preview / editing UI
+#
+# Photo-App/
+# ├─ main_window_qt.py
+# ├─ thumbnail_grid_qt.py
+# ├─ thumb_cache_db.py
+# ├─ settings_manager_qt.py
+# ├─ preview_panel_qt.py   👈 NEW (LightboxDialog + CollapsiblePanel + #  LabeledSlider)
+#  └─ assets/
+#     └─ icons/
+#
+# Final Layout Hierarchy Recap
+# QStackedWidget (mode_stack)
+# ├─ viewer_page
+# │  ├─ top_bar_viewer (arrows, edit, rotate, menu)
+# │  ├─ image_area (shared)
+# │  ├─ bottom_bar_viewer (zoom, info, tag_box, info button)
+# │  └─ right_info_panel
+# └─ editor_page
+#   ├─ top_bar_editor_row1 (back)
+#   ├─ top_bar_editor_row2 (save, save as, cancel)
+#   ├─ image_area (shared)
+#   ├─ bottom_bar_editor (context control slider)
+#   └─ right_editor_panel (tool palette)
+#
+
+import os, time, subprocess
+
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageQt,ExifTags
+from datetime import datetime
+
+from PySide6.QtCore import (
+    Qt, QParallelAnimationGroup, QPropertyAnimation,
+    QEasingCurve, QEvent, QTimer, QSize,
+    Signal, QRect, QPoint, QPointF, QUrl
+)
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+from PySide6.QtMultimediaWidgets import QVideoWidget
+
+
+from PySide6.QtWidgets import (
+    QApplication, QDialog, QLabel, QVBoxLayout, QHBoxLayout, QStackedWidget, QGridLayout,
+    QScrollArea, QSlider, QToolButton, QWidget, QPushButton, QMenu, QComboBox, QGraphicsDropShadowEffect,
+    QTextEdit, QGraphicsOpacityEffect, QFileDialog, QMessageBox, QRubberBand, QFrame, QStyle, QSizePolicy, QLineEdit
+)
+
+from PySide6.QtGui import (
+    QStandardItemModel, QStandardItem, QPixmap, QImage,
+    QPainter, QPen, QBrush, QColor, QFont, QAction, QCursor,
+    QIcon, QTransform, QDesktopServices
+) 
+
+from PySide6.QtSvg import QSvgRenderer
+
+from reference_db import ReferenceDB
+
+
+
+
+# ================================================================
+# Collapsible Panel
+# ================================================================
+class CollapsiblePanel(QWidget):
+    def __init__(self, title: str, parent=None):
+        super().__init__(parent)
+        self.toggle_button = QToolButton(text=title, checkable=True, checked=True)
+        self.toggle_button.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.toggle_button.setArrowType(Qt.DownArrow)
+        self.toggle_button.clicked.connect(self._toggle)
+
+        self.content_area = QWidget()
+        self.content_area.setMaximumHeight(0)
+        self.content_area.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        self.toggle_animation = QParallelAnimationGroup(self)
+        self.content_anim = QPropertyAnimation(self.content_area, b"maximumHeight")
+        self.content_anim.setEasingCurve(QEasingCurve.OutCubic)
+        self.content_anim.setDuration(200)
+        self.toggle_animation.addAnimation(self.content_anim)
+
+        self._content_layout = QVBoxLayout(self.content_area)
+        self._content_layout.setContentsMargins(0, 0, 0, 0)
+        self._content_layout.setSpacing(6)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.toggle_button)
+        layout.addWidget(self.content_area)
+
+    def addWidget(self, widget):
+        self._content_layout.addWidget(widget)
+        self.content_area.setMaximumHeight(self._content_layout.sizeHint().height())
+
+    def _toggle(self):
+        checked = self.toggle_button.isChecked()
+        self.toggle_button.setArrowType(Qt.DownArrow if checked else Qt.RightArrow)
+        target_height = self._content_layout.sizeHint().height() if checked else 0
+        self.content_anim.setStartValue(self.content_area.maximumHeight())
+        self.content_anim.setEndValue(target_height)
+        self.toggle_animation.start()
+
+
+# ================================================================
+# Labeled Slider (Icon + Label + Slider + % Value)
+# ================================================================
+class LabeledSlider(QWidget):
+    valueChanged = Signal(int)
+
+    def __init__(self, icon_path: str, label_text: str, min_val=-100, max_val=100, parent=None):
+        super().__init__(parent)
+
+        # --- Icon + label
+        icon_label = QLabel()
+        if icon_path:
+            icon_label.setPixmap(QIcon(icon_path).pixmap(16, 16))
+        self.text_label = QLabel(label_text)
+        self.text_label.setMinimumWidth(70)
+
+        # --- Slider and value
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setRange(min_val, max_val)
+        self.slider.setValue(0)
+
+        self.value_label = QLabel("0")
+        # make the value label a bit wider so it remains visible
+        self.value_label.setFixedWidth(52)
+        self.value_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.value_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+        # --- Layout
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(8)
+        layout.addWidget(icon_label)
+        layout.addWidget(self.text_label)
+        layout.addWidget(self.slider, 1)
+        layout.addWidget(self.value_label)
+
+        # Signal: slider → valueChanged proxy
+        self.slider.valueChanged.connect(self._update_value_label)
+        self.slider.valueChanged.connect(self.valueChanged.emit)
+
+    def _update_value_label(self, val: int):
+        self.value_label.setText(str(val))
+
+    def value(self) -> int:
+        return self.slider.value()
+
+    def setValue(self, v: int):
+        self.slider.setValue(v)
+
+    def connect_value_changed(self, fn: callable):
+        if callable(fn):
+            self.slider.valueChanged.connect(fn)
+        else:
+            raise TypeError(f"LabeledSlider.connect_value_changed expected a callable, got {type(fn)}")
+
+# ================================================================
+# LightboxDialog
+# ================================================================                
+class LightboxDialog(QDialog):
+    """
+    Minimal, reliable photo viewer built from scratch with a simple editor:
+    - Central canvas
+    - Right-side editor panel (Light / Color)
+    - Live preview using Pillow
+    """
+
+    # ---------- Icon helper ----------
+    def _icon(self, name: str) -> QIcon:
+        base_dir = os.path.join(os.path.dirname(__file__), "assets", "icons")
+        path = os.path.join(base_dir, f"{name}.svg")
+        theme = getattr(self, "_theme", "light")
+
+        if os.path.exists(path):
+            pm = QPixmap(48, 48)
+            pm.fill(Qt.transparent)
+            p = QPainter(pm)
+            renderer = QSvgRenderer(path)
+            renderer.render(p)
+            tint = QColor("#000000" if theme == "light" else "#ffffff")
+            p.setCompositionMode(QPainter.CompositionMode_SourceIn)
+            p.fillRect(pm.rect(), tint)
+            p.end()
+            return QIcon(pm)
+
+        emoji_map = {
+            "edit": "🖉", "rotate": "↻", "info": "ℹ️", "next": "▶", "prev": "◀",
+            "save": "💾", "crop": "✂️", "reset": "⟳", "zoom_in": "➕",
+            "zoom_out": "➖", "cancel": "✖", "brightness": "☀️", "contrast": "⚖️",
+            "copy": "📋"
+        }
+        ch = emoji_map.get(name, "⬜")
+        pm = QPixmap(48, 48)
+        pm.fill(Qt.transparent)
+        p = QPainter(pm)
+        font = QFont("Segoe UI Emoji", 28)
+        p.setFont(font)
+        p.drawText(pm.rect(), Qt.AlignCenter, ch)
+        p.end()
+        return QIcon(pm)
+
+    # ---------- Theme ----------
+    def _apply_theme(self, theme: str = "light"):
+        self._theme = theme
+        if theme == "dark":
+            bg = "#161616"; fg = "#ffffff"; panel = "#1f1f1f"; accent_start = "#0a84ff"
+            button_border = "#2f2f2f"; hover_bg = "#1a73e8"; disabled = "#555555"
+        else:
+            bg = "#ffffff"; fg = "#000000"; panel = "#ffffff"; accent_start = "#0078d4"
+            button_border = "#cccccc"; hover_bg = "#cde6ff"; disabled = "#bbbbbb"
+
+        self._palette_tokens = {
+            "bg": bg, "fg": fg, "panel": panel,
+            "accent_start": accent_start, "button_border": button_border,
+            "hover_bg": hover_bg, "disabled": disabled
+        }
+        pal = self.palette()
+        pal.setColor(self.backgroundRole(), QColor(bg))
+        pal.setColor(self.foregroundRole(), QColor(fg))
+        self.setPalette(pal)
+        self._toolbar_style = f"""
+        QToolButton, QPushButton {{
+            color: {fg};
+            background-color: {panel};
+            border: 1px solid {button_border};
+            border-radius: 8px;
+            padding: 6px 8px;
+        }}
+        QToolButton:hover, QPushButton:hover {{
+            background-color: {hover_bg};
+        }}
+        """
+
+    def _button_style(self) -> str:
+        t = getattr(self, "_palette_tokens", {"fg":"#000","accent_start":"#0078d4","button_border":"#ccc","hover_bg":"#cde6ff","disabled":"#bbb"})
+        return f"""
+        QToolButton, QPushButton {{
+            color: {t['fg']};
+            background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 {t['accent_start']},stop:1 #999);
+            border: 1px solid {t['button_border']};
+            border-radius: 8px;
+            padding: 8px 14px;
+        }}
+        QToolButton:hover, QPushButton:hover {{
+            background: {t['hover_bg']};
+        }}
+        QToolButton:disabled, QPushButton:disabled {{
+            background: {t['disabled']};
+            color: #888;
+        }}
+        """
+
+    # ---------- Inner canvas ----------
+    class _ImageCanvas(QWidget):
+        # emit whenever absolute scale changes
+        scaleChanged = Signal(float)
+        
+        def __init__(self, parent=None):
+            super().__init__(parent)
+            self.setAttribute(Qt.WA_OpaquePaintEvent, True)
+            self.setMouseTracking(True)
+            self._pixmap = None
+            self._img_size = QSize(0,0)
+            self._scale = 1.0
+            self._fit_scale = 1.0
+            self._offset = QPointF(0,0)
+            self._dragging = False
+            self._drag_start_pos = QPoint()
+            self._drag_start_offset = QPointF(0,0)
+            self._bg = QColor(16,16,16)
+            # crop
+            self._crop_mode = False
+            self._crop_rect = None
+            self._crop_dragging = False
+            self._crop_start = QPoint()
+
+        def set_pixmap(self, pm: QPixmap):
+            self._pixmap = pm
+            self._img_size = pm.size()
+            self._offset = QPointF(0,0)
+            self._recompute_fit_scale()
+            self._scale = self._fit_scale
+            # notify about the new scale
+            try:
+                self.scaleChanged.emit(self._scale)
+            except Exception:
+                pass            
+            self.update()
+
+        def reset_view(self):
+            self._offset = QPointF(0,0)
+            self._recompute_fit_scale()
+            self._scale = self._fit_scale
+            try:
+                self.scaleChanged.emit(self._scale)
+            except Exception:
+                pass            
+            self.update()
+ 
+        def zoom_to(self, scale: float, anchor_px: QPointF = None):
+            """Set absolute scale (not delta). Enforce min = fit. Keep anchor under cursor."""            
+            if self._pixmap is None:
+                return
+            new_scale = max(scale, self._fit_scale * 0.25)
+            
+            if anchor_px is None:
+                anchor_px = QPointF(self.width() / 2.0, self.height() / 2.0)
+
+            img_w, img_h = self._img_size.width(), self._img_size.height()
+            if img_w == 0 or img_h == 0:
+                return
+
+            ax = (anchor_px.x() - self._offset.x()) / self._scale
+            ay = (anchor_px.y() - self._offset.y()) / self._scale
+
+            # Update scale
+            self._scale = new_scale
+            
+            # Recompute offset so the same image point stays under the anchor
+            self._offset.setX(anchor_px.x() - ax * self._scale)
+            self._offset.setY(anchor_px.y() - ay * self._scale)
+
+            self._clamp_offset()
+            # notify subscriber(s) about scale change
+            try:
+                self.scaleChanged.emit(self._scale)
+            except Exception:
+                pass            
+            self.update()
+
+
+        def relative_zoom(self, factor: float, anchor_px: QPointF):
+            self.zoom_to(self._scale * factor, anchor_px)
+
+        def set_scale_from_slider(self, slider_value: int):
+            """
+            Slider contract:
+              0  -> fit scale
+              1..200 -> fit * (1 + value/100 * 4)  (up to 5x fit)
+              negative not used (kept simple)
+            """            
+            if self._pixmap is None:
+                return
+            if slider_value <= 0:
+                self.zoom_to(self._fit_scale)
+            else:
+                # max ~5x the fit scale
+                mult = 1.0 + (slider_value / 100.0) * 4.0
+                self.zoom_to(self._fit_scale * mult)
+
+
+        def paintEvent(self, ev):
+            p = QPainter(self)
+            p.fillRect(self.rect(), self._bg)
+            if self._pixmap and not self._pixmap.isNull():
+                p.translate(self._offset)
+                p.scale(self._scale, self._scale)
+                p.drawPixmap(0,0,self._pixmap.width(), self._pixmap.height(), self._pixmap)
+            if self._crop_mode and self._crop_rect:
+                p.resetTransform()
+                p.setRenderHint(QPainter.Antialiasing)
+                p.setPen(QPen(Qt.yellow,2,Qt.DashLine))
+                p.drawRect(self._crop_rect)
+                p.fillRect(self._crop_rect, QColor(255,255,0,50))
+            p.end()
+
+        def resizeEvent(self, ev):
+            super().resizeEvent(ev)
+            prev_fit = self._fit_scale
+            self._recompute_fit_scale()
+            if self._scale <= prev_fit + 1e-6:
+                self._scale = self._fit_scale
+                self._offset = QPointF((self.width()-self._img_size.width()*self._scale)/2.0,
+                                       (self.height()-self._img_size.height()*self._scale)/2.0)
+            self._clamp_offset()
+            self.update()
+
+        def mousePressEvent(self, ev):
+            if self._crop_mode:
+                if ev.button() == Qt.LeftButton:
+                    self._crop_dragging = True
+                    self._crop_start = ev.pos()
+                    self._crop_rect = QRect(self._crop_start, QSize())
+                    self.update()
+                return
+            if ev.button() == Qt.LeftButton and self._pixmap:
+                self._dragging = True
+                self._drag_start_pos = ev.pos()
+                self._drag_start_offset = QPointF(self._offset)
+                self.setCursor(Qt.ClosedHandCursor)
+
+        def mouseMoveEvent(self, ev):
+            if self._crop_mode and self._crop_dragging:
+                self._crop_rect = QRect(self._crop_start, ev.pos()).normalized()
+                self.update()
+                return
+            if self._dragging and self._pixmap:
+                delta = ev.pos() - self._drag_start_pos
+                self._offset = QPointF(self._drag_start_offset.x()+delta.x(), self._drag_start_offset.y()+delta.y())
+                self._clamp_offset()
+                self.update()
+
+        def mouseReleaseEvent(self, ev):
+            if self._crop_mode and ev.button() == Qt.LeftButton:
+                self._crop_dragging = False
+                self.update()
+                return
+            if ev.button() == Qt.LeftButton and self._dragging:
+                self._dragging = False
+                self.setCursor(Qt.OpenHandCursor)
+
+        def wheelEvent(self, ev):
+            if not self._pixmap:
+                return
+            steps = ev.angleDelta().y()/120.0
+            if steps == 0:
+                return
+            factor = 1.15 ** steps
+            self.relative_zoom(factor, QPointF(ev.position()))
+            ev.accept()
+
+        def _recompute_fit_scale(self):
+            if not self._pixmap or self._img_size.isEmpty() or self.width()<2 or self.height()<2:
+                self._fit_scale = 1.0
+                return
+            vw, vh = float(self.width()), float(self.height())
+            iw, ih = float(self._img_size.width()), float(self._img_size.height())
+            self._fit_scale = min(vw/iw, vh/ih)
+            self._offset = QPointF((vw - iw*self._fit_scale)/2.0, (vh - ih*self._fit_scale)/2.0)
+
+        def _clamp_offset(self):
+            if not self._pixmap:
+                return
+            vw, vh = float(self.width()), float(self.height())
+            iw, ih = float(self._img_size.width())*self._scale, float(self._img_size.height())*self._scale
+            if iw <= vw:
+                self._offset.setX((vw - iw)/2.0)
+            else:
+                min_x = vw - iw; max_x = 0.0
+                self._offset.setX(min(max(self._offset.x(), min_x), max_x))
+            if ih <= vh:
+                self._offset.setY((vh - ih)/2.0)
+            else:
+                min_y = vh - ih; max_y = 0.0
+                self._offset.setY(min(max(self._offset.y(), min_y), max_y))
+
+        def enter_crop_mode(self):
+            self._crop_mode = True
+            self._crop_rect = None
+            self.setCursor(Qt.CrossCursor)
+            self.update()
+
+        def exit_crop_mode(self):
+            self._crop_mode = False
+            self._crop_rect = None
+            self._crop_dragging = False
+            self.setCursor(Qt.OpenHandCursor)
+            self.update()
+
+        def mouseDoubleClickEvent(self, ev):
+            """Toggle between fit and 100% zoom, centered on click."""
+            if not self._pixmap:
+                return
+            anchor = QPointF(ev.position())
+            # If currently above fit (or near 100%), return to fit; otherwise go to 100%
+            if self._scale > self._fit_scale + 1e-6 or abs(self._scale - 1.0) < 1e-3:
+                self.zoom_to(self._fit_scale, anchor)
+            else:
+                self.zoom_to(1.0, anchor)
+            ev.accept()
+
+    # ---------- Dialog ----------
+    def __init__(self, image_path: str, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Photo Viewer")
+        self.resize(1200,800)
+
+        self._path = image_path
+        self._image_list = []
+        self._current_index = 0
+        
+        # 🔧 FIX: Store database reference and project_id from parent
+        # This fixes the "DB instance: None" issue
+        import logging
+        from reference_db import ReferenceDB
+        logger = logging.getLogger(__name__)
+        
+        self._shared_db_instance = None
+        self._project_id = None
+        
+        logger.info(f"[LightboxDialog.__init__] parent={parent}")
+        logger.info(f"[LightboxDialog.__init__] parent type={type(parent).__name__ if parent else 'None'}")
+        
+        if parent:
+            # Check for 'db' attribute
+            has_db = hasattr(parent, 'db')
+            has_ref_db = hasattr(parent, 'reference_db')
+            has_project_id = hasattr(parent, 'project_id')
+            
+            logger.info(f"[LightboxDialog.__init__] parent.db exists: {has_db}")
+            logger.info(f"[LightboxDialog.__init__] parent.reference_db exists: {has_ref_db}")
+            logger.info(f"[LightboxDialog.__init__] parent.project_id exists: {has_project_id}")
+            
+            # MainWindow uses 'db' attribute (not 'reference_db')
+            if has_db:
+                self._shared_db_instance = parent.db
+                logger.info(f"[LightboxDialog.__init__] Got db from parent.db: {self._shared_db_instance}")
+            elif has_ref_db:
+                self._shared_db_instance = parent.reference_db
+                logger.info(f"[LightboxDialog.__init__] Got db from parent.reference_db: {self._shared_db_instance}")
+            
+            if has_project_id:
+                self._project_id = parent.project_id
+                logger.info(f"[LightboxDialog.__init__] Got project_id: {self._project_id}")
+            
+            # If parent doesn't have db, create our own instance
+            if not self._shared_db_instance:
+                logger.warning(f"[LightboxDialog.__init__] Parent has NO db - creating new ReferenceDB instance")
+                self._shared_db_instance = ReferenceDB()
+                logger.info(f"[LightboxDialog.__init__] Created new db instance: {self._shared_db_instance}")
+            
+            # Get project_id from grid if not in parent
+            if not self._project_id:
+                if hasattr(parent, 'grid') and hasattr(parent.grid, 'project_id'):
+                    self._project_id = parent.grid.project_id
+                    logger.info(f"[LightboxDialog.__init__] Got project_id from parent.grid: {self._project_id}")
+                elif hasattr(parent, 'sidebar') and hasattr(parent.sidebar, 'project_id'):
+                    self._project_id = parent.sidebar.project_id
+                    logger.info(f"[LightboxDialog.__init__] Got project_id from parent.sidebar: {self._project_id}")
+        else:
+            logger.warning(f"[LightboxDialog.__init__] Parent is None - creating new ReferenceDB instance")
+            self._shared_db_instance = ReferenceDB()
+            logger.info(f"[LightboxDialog.__init__] Created new db instance: {self._shared_db_instance}")
+
+        # default light theme (metadata requested black text)
+        self._apply_theme("light")
+        
+        # --- Edit staging state (non-destructive editing) ---
+        # _orig_pil is set by _load_image; during edit we create _edit_base_pil
+        # which is the editable base (original copy preserved in _orig_pil).
+        # _working_pil is the last processed PIL image (preview).
+        self._orig_pil = None
+        self._edit_base_pil = None
+        self._working_pil = None
+        self._is_dirty = False  # true if there are unapplied edits
+
+        # metadata cache + preload control
+        self._meta_cache = {}
+        self._meta_preloader = None
+        self._preload_stop = False
+        
+        # processing state
+        self._orig_pil = None      # original PIL Image (RGBA)
+        self._working_pil = None   # last processed PIL Image
+        self.adjustments = {       # slider values -100..100
+            "brightness": 0,
+            "exposure": 0,
+            "contrast": 0,
+            "highlights": 0,
+            "shadows": 0,
+            "vignette": 0,
+            "saturation": 0,
+            "warmth": 0
+        }
+        self._apply_timer = QTimer(self)
+        self._apply_timer.setSingleShot(True)
+        self._apply_timer.setInterval(50)
+        self._apply_timer.timeout.connect(self._apply_adjustments)
+
+        # UI skeleton
+        self.stack = QStackedWidget(self)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0,0,0,0)
+        outer.addWidget(self.stack)
+
+        # === Viewer page ===
+        viewer = QWidget()
+        vbox = QVBoxLayout(viewer)
+        vbox.setContentsMargins(8,8,8,8)
+        vbox.setSpacing(8)
+
+        # top bar
+        self._top = self._build_top_bar()
+        vbox.addWidget(self._top, 0)
+
+        # central area
+        center = QWidget()
+        hbox = QHBoxLayout(center)
+        hbox.setContentsMargins(0,0,0,0)
+        hbox.setSpacing(0)
+
+        # === PHASE 1: Content stack for unified photo/video display ===
+        self.content_stack = QStackedWidget()
+
+        # Page 0: Image canvas (for photos)
+        self.canvas = LightboxDialog._ImageCanvas(self)
+        self.canvas.setCursor(Qt.OpenHandCursor)
+        # keep viewer & editor zoom controls synchronized whenever canvas scale changes
+        try:
+            self.canvas.scaleChanged.connect(self._on_canvas_scale_changed)
+        except Exception:
+            pass
+        self.content_stack.addWidget(self.canvas)  # index 0
+
+        # Page 1: Video player (for videos)
+        video_container = QWidget()
+        video_layout = QVBoxLayout(video_container)
+        video_layout.setContentsMargins(0, 0, 0, 0)
+        video_layout.setSpacing(0)
+
+        # Video widget with proper sizing
+        self.video_widget = QVideoWidget()
+        self.video_widget.setMinimumHeight(300)
+        self.video_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.video_widget.setStyleSheet("background-color: black;")
+        self.video_widget.installEventFilter(self)  # PHASE 2: Capture double-click for fullscreen
+        video_layout.addWidget(self.video_widget)
+
+        self.content_stack.addWidget(video_container)  # index 1
+
+        # Initialize media player for video playback
+        self.media_player = QMediaPlayer()
+        self.audio_output = QAudioOutput()
+        self.media_player.setAudioOutput(self.audio_output)
+        self.media_player.setVideoOutput(self.video_widget)
+
+        # Connect signals for video playback
+        try:
+            self.media_player.playbackStateChanged.connect(self._on_video_playback_state_changed)
+            self.media_player.errorOccurred.connect(self._on_video_error)
+            self.media_player.positionChanged.connect(self._on_video_position_changed)
+            self.media_player.durationChanged.connect(self._on_video_duration_changed)
+            print("[LightboxDialog] Video player signals connected successfully")
+        except Exception as e:
+            print(f"[LightboxDialog] WARNING: Failed to connect video signals: {e}")
+
+        # Video position update timer
+        self._video_duration = 0
+        self._timeline_seeking = False  # Track if user is dragging timeline
+        self._video_error_count = 0  # Track consecutive errors for recovery
+        self._last_video_path = None  # Track current video for recovery
+        self._gpu_warning_shown = False  # Track if we've shown GPU warning (show once)
+        self._gpu_error_timer = QTimer()  # Debounce GPU errors
+        self._gpu_error_timer.setSingleShot(True)
+        self._gpu_error_timer.timeout.connect(self._show_gpu_warning_once)
+
+        # Track current media type
+        self._current_media_type = "photo"  # "photo" or "video"
+        self._is_video = False
+
+        # === PHASE 2: Fullscreen mode support ===
+        self._is_fullscreen = False
+        self._pre_fullscreen_geometry = None
+        self._pre_fullscreen_state = None
+
+        hbox.addWidget(self.content_stack, 1)
+
+        # install event filter for canvas (if needed downstream)
+        self.canvas.installEventFilter(self)
+        
+        # meta placeholder (exists independently from editor panel)
+        self._meta_placeholder = QWidget()
+        self._meta_placeholder.setFixedWidth(0)
+        hbox.addWidget(self._meta_placeholder, 0)
+
+        vbox.addWidget(center, 1)
+
+        # bottom bar
+        self._bottom = self._build_bottom_bar()
+        vbox.addWidget(self._bottom, 0)
+
+        self.stack.addWidget(viewer)
+
+        # editor page
+        self.editor_page = self._build_edit_page()
+        self.stack.addWidget(self.editor_page)
+
+        # right editor panel (created but not added until edit mode)
+        self.right_editor_panel = self._build_right_editor_panel()
+
+        # load media file (photo or video)
+        if image_path:
+            self._load_media(image_path)
+
+        self._init_navigation_arrows()
+        self.stack.setCurrentIndex(0)
+
+    # -------------------------------
+    # Build Right-side editor panel
+    # -------------------------------
+    def _build_right_editor_panel(self) -> QWidget:
+        """Construct right-hand editor panel for Light & Color adjustments (collapsible)."""
+        panel = QWidget()
+        panel.setFixedWidth(380)
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(12,12,12,12)
+        layout.setSpacing(12)
+
+        # Light section
+        light_group = CollapsiblePanel("Light")
+        # brightness, exposure, contrast, highlights, shadows, vignette
+        sliders = [
+            ("brightness", "Brightness", "brightness", -100, 100),
+            ("exposure", "Exposure", "brightness", -100, 100),
+            ("contrast", "Contrast", "contrast", -100, 100),
+            ("highlights", "Highlights", "brightness", -100, 100),
+            ("shadows", "Shadows", "brightness", -100, 100),
+            ("vignette", "Vignette", "crop", -100, 100)
+        ]
+        for key, label, icon, lo, hi in sliders:
+            s = LabeledSlider("", label, lo, hi)
+            s.text_label.setText(label)
+            s.valueChanged.connect(lambda v, k=key: self._on_adjustment_changed(k, v))
+            light_group.addWidget(s)
+            # store widget for reset/sync
+            setattr(self, f"slider_{key}", s)
+
+        layout.addWidget(light_group)
+
+        # Color section
+        color_group = CollapsiblePanel("Color")
+        sliders_c = [
+            ("saturation", "Saturation", "brightness", -100, 100),
+            ("warmth", "Warmth", "brightness", -100, 100)
+        ]
+        for key,label,icon,lo,hi in sliders_c:
+            s = LabeledSlider("", label, lo, hi)
+            s.text_label.setText(label)
+            s.valueChanged.connect(lambda v, k=key: self._on_adjustment_changed(k, v))
+            color_group.addWidget(s)
+            setattr(self, f"slider_{key}", s)
+
+        layout.addWidget(color_group)
+
+        # Reset button
+        btn_reset = QPushButton("Reset")
+        btn_reset.setStyleSheet(self._button_style())
+        btn_reset.clicked.connect(self._reset_adjustments)
+        layout.addWidget(btn_reset)
+
+        layout.addStretch(1)
+        return panel
+
+    def _build_filters_panel(self) -> QWidget:
+        """Build a scrollable filters panel with thumbnails and preset filter actions."""
+        t = getattr(self, "_palette_tokens", {"panel": "#ffffff", "fg": "#000000", "button_border": "#ddd"})
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        container = QWidget()
+        v = QVBoxLayout(container)
+        v.setContentsMargins(12, 12, 12, 12)
+        v.setSpacing(10)
+
+        # Auto Enhance button
+        auto_btn = QPushButton("Auto Enhance")
+        auto_btn.setStyleSheet(self._button_style())
+        auto_btn.clicked.connect(lambda: self._apply_filter_preset("Auto Enhance"))
+        v.addWidget(auto_btn)
+
+        # Grid of presets (thumbnail buttons)
+        presets = [
+            ("Original", {}),
+            ("Punch", {"contrast": 25, "saturation": 20}),
+            ("Golden", {"warmth": 30, "saturation": 10}),
+            ("Radiate", {"highlights": 20, "contrast": 15}),
+            ("Warm Contrast", {"warmth": 20, "contrast": 15}),
+            ("Calm", {"saturation": -10, "contrast": -5}),
+            ("Cool Light", {"warmth": -15}),
+            ("Vivid Cool", {"saturation": 30, "contrast": 20, "warmth": -10}),
+            ("Dramatic Cool", {"contrast": 35, "saturation": 10, "warmth": -20}),
+            ("B&W", {"saturation": -100}),
+            ("B&W Cool", {"saturation": -100, "contrast": 20}),
+            ("Film", {"contrast": 10, "saturation": -5, "vignette": 10}),
+        ]
+
+        grid = QGridLayout()
+        grid.setHorizontalSpacing(10)
+        grid.setVerticalSpacing(10)
+
+        thumb_size = QSize(96, 72)
+        for i, (name, adj) in enumerate(presets):
+            btn = QPushButton(name)
+            btn.setFixedSize(thumb_size.width() + 24, thumb_size.height() + 24)
+            # attach closure with preset data
+            btn.clicked.connect(lambda _, n=name, a=adj: self._apply_filter_preset(n, preset_adjustments=a))
+            grid.addWidget(btn, i // 2, i % 2)
+
+        v.addLayout(grid)
+        v.addStretch(1)
+
+        scroll.setWidget(container)
+        w = QWidget()
+        w_layout = QVBoxLayout(w)
+        w_layout.setContentsMargins(0, 0, 0, 0)
+        w_layout.addWidget(scroll)
+        w.setMinimumWidth(360)
+        return w
+
+    def _on_adjustment_changed(self, key: str, val: int):
+        """Store slider value and schedule re-apply of adjustments (debounced)."""
+        self.adjustments[key] = int(val)
+        # schedule apply (debounced)
+        self._apply_timer.start()
+
+    def _reset_adjustments(self):
+        for k in self.adjustments.keys():
+            self.adjustments[k] = 0
+            slider = getattr(self, f"slider_{k}", None)
+            if slider:
+                slider.setValue(0)
+        # restore original
+        self._apply_adjustments()
+
+    # -------------------------------
+    # Image processing (Pillow)
+    # -------------------------------
+    
+    def _toggle_right_editor_panel(self):
+        """Show or hide the right-side adjustments panel inside the editor placeholder; hides filters if open."""
+        try:
+            if not hasattr(self, "_editor_right_placeholder"):
+                return
+            ph = self._editor_right_placeholder
+            layout = ph.layout()
+            visible = ph.width() > 0 and getattr(self, "_current_right_panel", None) == "adjustments"
+
+            if visible:
+                # hide
+                if layout:
+                    while layout.count():
+                        item = layout.takeAt(0)
+                        w = item.widget()
+                        if w:
+                            w.setParent(None)
+                ph.setFixedWidth(0)
+                self._current_right_panel = None
+                if hasattr(self, "btn_adjust") and getattr(self.btn_adjust, "setChecked", None):
+                    self.btn_adjust.setChecked(False)
+            else:
+                # if filters currently open, close them first
+                if getattr(self, "_current_right_panel", None) == "filters":
+                    self._toggle_filters_panel()
+
+                if layout is None:
+                    layout = QVBoxLayout(ph)
+                    layout.setContentsMargins(0, 0, 0, 0)
+                    layout.setSpacing(0)
+
+                while layout.count():
+                    item = layout.takeAt(0)
+                    if item.widget():
+                        item.widget().setParent(None)
+
+                # attach the panel widget (use existing instance)
+                if not hasattr(self, "right_editor_panel") or self.right_editor_panel is None:
+                    self.right_editor_panel = self._build_right_editor_panel()
+                layout.addWidget(self.right_editor_panel)
+                ph.setFixedWidth(self.right_editor_panel.minimumWidth() or 360)
+                self._current_right_panel = "adjustments"
+                if hasattr(self, "btn_adjust") and getattr(self.btn_adjust, "setChecked", None):
+                    self.btn_adjust.setChecked(True)
+        except Exception as e:
+            print(f"[toggle_right_editor_panel] error: {e}")    
+
+    def _apply_adjustments(self):
+        """Apply adjustments to the current edit-base (non-destructive) and update canvas preview."""
+        src = self._edit_base_pil or self._orig_pil
+        if src is None:
+            return
+        img = src.copy().convert("RGBA")
+
+        # apply exposure -> brightness -> contrast -> highlights/shadows -> saturation -> warmth -> vignette
+        exp = self.adjustments.get("exposure", 0)
+        if exp != 0:
+            exp_factor = 1.0 + (exp / 100.0) * 0.5
+            img = ImageEnhance.Brightness(img).enhance(exp_factor)
+
+        bri = self.adjustments.get("brightness", 0)
+        if bri != 0:
+            bri_factor = 1.0 + (bri / 100.0) * 1.0
+            img = ImageEnhance.Brightness(img).enhance(bri_factor)
+
+        ctr = self.adjustments.get("contrast", 0)
+        if ctr != 0:
+            ctr_factor = 1.0 + (ctr / 100.0) * 1.2
+            img = ImageEnhance.Contrast(img).enhance(ctr_factor)
+
+        # Highlights/shadows (approx)
+        try:
+            luma = img.convert("L")
+            highlights_val = self.adjustments.get("highlights", 0)
+            if highlights_val != 0:
+                def high_map(v):
+                    return max(0, min(255, int((v - 128) * 2))) if v > 128 else 0
+                mask_h = luma.point(high_map)
+                h_factor = 1.0 + (highlights_val / 100.0) * 0.8
+                bright_img = ImageEnhance.Brightness(img).enhance(h_factor)
+                img = Image.composite(bright_img, img, mask_h)
+            shadows_val = self.adjustments.get("shadows", 0)
+            if shadows_val != 0:
+                def low_map(v):
+                    return max(0, min(255, int((128 - v) * 2))) if v < 128 else 0
+                mask_s = luma.point(low_map)
+                s_factor = 1.0 + (shadows_val / 100.0) * 0.6
+                dark_img = ImageEnhance.Brightness(img).enhance(s_factor)
+                img = Image.composite(dark_img, img, mask_s)
+        except Exception:
+            pass
+
+        sat = self.adjustments.get("saturation", 0)
+        if sat != 0:
+            sat_factor = 1.0 + (sat / 100.0) * 1.5
+            img = ImageEnhance.Color(img).enhance(sat_factor)
+
+        warmth = self.adjustments.get("warmth", 0)
+        if warmth != 0:
+            w = warmth / 100.0
+            r_mult = 1.0 + (0.6 * w)
+            b_mult = 1.0 - (0.6 * w)
+            try:
+                r, g, b, a = img.split()
+                r = r.point(lambda v: max(0, min(255, int(v * r_mult))))
+                b = b.point(lambda v: max(0, min(255, int(v * b_mult))))
+                img = Image.merge("RGBA", (r, g, b, a))
+            except Exception:
+                pass
+
+        vign = self.adjustments.get("vignette", 0)
+        if vign != 0:
+            strength = abs(vign) / 100.0
+            w, h = img.size
+            mask = Image.new("L", (w, h), 0)
+            cx = w/2.0; cy = h/2.0
+            maxrad = ((cx*cx + cy*cy) ** 0.5)
+            pix = mask.load()
+            for yi in range(h):
+                for xi in range(w):
+                    dx = xi - cx; dy = yi - cy
+                    d = (dx*dx + dy*dy) ** 0.5
+                    v = int(255 * min(1.0, max(0.0, (d - (maxrad * (1.0 - 0.6*strength))) / (maxrad * (0.6*strength + 1e-6)))))
+                    pix[xi, yi] = v
+            dark = Image.new("RGBA", img.size, (0,0,0,int(255 * 0.5 * strength)))
+            img = Image.composite(dark, img, mask.convert("L").point(lambda v: v))
+
+        # store working preview and flag dirty if different from edit base
+        self._working_pil = img
+        # mark as dirty if any adjustment non-zero OR if edit_base differs from orig
+        self._is_dirty = any(v != 0 for v in self.adjustments.values()) or (self._edit_base_pil is not None and getattr(self._edit_base_pil, "mode", None) is not None and self._edit_base_pil.tobytes() != self._orig_pil.tobytes() if self._orig_pil is not None else False)
+
+        # update Save action enablement
+        if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
+            self._save_action_overwrite.setEnabled(self._is_dirty and bool(self._path))
+
+        # update canvas preview
+        try:
+            pm = self._pil_to_qpixmap(self._working_pil)
+            self.canvas.set_pixmap(pm)
+            self._update_info(pm)
+        except Exception as e:
+            print("[_apply_adjustments] error:", e)
+
+    def _apply_filter_preset(self, name: str, preset_adjustments: dict = None):
+        """Apply a filter preset: set adjustments and re-run pipeline. Name visible in status/log."""
+        # For Auto Enhance do a simple heuristic: small contrast + brightness + saturation bump
+        if name == "Auto Enhance":
+            presets = {"contrast": 10, "brightness": 5, "saturation": 8}
+            self.adjustments.update({k: presets.get(k, 0) for k in self.adjustments.keys()})
+        elif preset_adjustments is None:
+            # "Original" -> reset adjustments to 0
+            for k in self.adjustments.keys():
+                self.adjustments[k] = 0
+        else:
+            # update only keys provided
+            for k in self.adjustments.keys():
+                self.adjustments[k] = int(preset_adjustments.get(k, 0))
+
+        # reflect on sliders if available
+        for k, v in self.adjustments.items():
+            slider = getattr(self, f"slider_{k}", None)
+            if slider:
+                slider.blockSignals(True)
+                slider.setValue(int(v))
+                slider.blockSignals(False)
+
+        # schedule reapply
+        self._apply_timer.start()
+        # mark dirty
+        self._is_dirty = True
+        if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
+            self._save_action_overwrite.setEnabled(bool(self._path))
+
+    def _toggle_filters_panel(self):
+        """Show/hide filters panel in the right placeholder; ensure adjustments panel hidden when filters shown."""
+        # if right panel placeholder missing, do nothing
+        if not hasattr(self, "_editor_right_placeholder"):
+            return
+        ph = self._editor_right_placeholder
+        layout = ph.layout()
+        visible = ph.width() > 0 and getattr(self, "_current_right_panel", None) == "filters"
+
+        if visible:
+            # hide
+            if layout:
+                while layout.count():
+                    item = layout.takeAt(0)
+                    w = item.widget()
+                    if w:
+                        w.setParent(None)
+            ph.setFixedWidth(0)
+            self._current_right_panel = None
+            if hasattr(self, "btn_filter") and getattr(self.btn_filter, "setChecked", None):
+                self.btn_filter.setChecked(False)
+        else:
+            # ensure adjustments panel is hidden first
+            if getattr(self, "_current_right_panel", None) == "adjustments":
+                self._toggle_right_editor_panel()
+            # mount filters
+            if layout is None:
+                layout = QVBoxLayout(ph)
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.setSpacing(0)
+            while layout.count():
+                item = layout.takeAt(0)
+                if item.widget():
+                    item.widget().setParent(None)
+            # create panel if needed
+            if not hasattr(self, "right_filters_panel") or self.right_filters_panel is None:
+                self.right_filters_panel = self._build_filters_panel()
+            layout.addWidget(self.right_filters_panel)
+            ph.setFixedWidth(self.right_filters_panel.minimumWidth() or 360)
+            self._current_right_panel = "filters"
+            if hasattr(self, "btn_filter") and getattr(self.btn_filter, "setChecked", None):
+                self.btn_filter.setChecked(True)
+            
+    # -------------------------------
+    # Top/bottom/editor builders (unchanged style but integrated)
+    # -------------------------------
+
+    def _build_edit_page(self) -> QWidget:
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(10,10,10,10)
+        layout.setSpacing(8)
+
+        # === Row 1: Back + Filename ===
+        row1 = QHBoxLayout()
+        self.btn_back = QToolButton()
+        self.btn_back.setIcon(self._icon("prev"))
+        self.btn_back.setText("Back")
+        self.btn_back.setToolTip("Return to viewer")
+        self.btn_back.setStyleSheet(self._button_style())
+        self.btn_back.clicked.connect(self._return_to_viewer)
+
+        self.lbl_edit_title = QLabel(os.path.basename(self._path) if self._path else "")
+        self.lbl_edit_title.setStyleSheet("color:#333;font-weight:bold;")
+        row1.addWidget(self.btn_back)
+        row1.addWidget(self.lbl_edit_title)
+        row1.addStretch(1)
+        layout.addLayout(row1)
+        
+        # === Row 2: Edit toolbar ===
+        row2 = QHBoxLayout()
+        
+        def make_btn(txt, tip, icon_name=None) -> QToolButton:
+            b = QToolButton()
+            b.setText(txt)
+            b.setToolTip(tip)
+            b.setStyleSheet(self._button_style())
+            if icon_name:
+                b.setIcon(self._icon(icon_name))
+            return b
+
+        self.btn_zoom_in = make_btn("+","Zoom in")
+        self.btn_zoom_out = make_btn("−","Zoom out")
+
+        # wire the editor toolbar zoom buttons to the shared nudge (adjusts the shared slider)
+        self.btn_zoom_in.clicked.connect(lambda: (self._nudge_zoom(+1), self._sync_zoom_controls()))
+        self.btn_zoom_out.clicked.connect(lambda: (self._nudge_zoom(-1), self._sync_zoom_controls()))        
+
+        self.edit_zoom_field = QLineEdit("100%")
+        self.edit_zoom_field.setFixedWidth(60)
+        self.edit_zoom_field.setAlignment(Qt.AlignCenter)
+        self.edit_zoom_field.setStyleSheet("color:#000;background:#eee;border:1px solid #ccc;")
+
+        self.btn_reset = make_btn("","Reset","reset")
+
+        # Adjustments toggle (replaces brightness quick button)
+        self.btn_adjust = make_btn("", "Adjustments", "brightness")
+        self.btn_adjust.setToolTip("Open adjustments panel")
+        self.btn_adjust.setCheckable(True)
+        self.btn_adjust.clicked.connect(self._toggle_right_editor_panel)
+                
+        # Filters toggle (replaces contrast quick button)
+        self.btn_filter = make_btn("", "Filters", "contrast")
+        self.btn_filter.setToolTip("Open filters panel")
+        self.btn_filter.setCheckable(True)
+        self.btn_filter.clicked.connect(self._toggle_filters_panel)
+    
+        self.btn_crop = make_btn("","Crop","crop")
+        self.btn_crop.setCheckable(True)
+        self.btn_crop.toggled.connect(self._toggle_crop_mode)
+
+        # Crop apply/cancel buttons (initially hidden)
+        self.btn_crop_apply = make_btn("Apply","Apply crop")
+        self.btn_crop_cancel = make_btn("Cancel","Cancel crop")
+        self.btn_crop_apply.hide()
+        self.btn_crop_cancel.hide()
+        self.btn_crop_apply.clicked.connect(self._apply_crop)
+        self.btn_crop_cancel.clicked.connect(lambda: (self.canvas.exit_crop_mode(), self._show_crop_controls(False)))
+
+        self.btn_rotate = make_btn("","Rotate clockwise","rotate")
+#        self.btn_brightness = make_btn("", "Brightness", "brightness")  # kept for compatibility
+#        self.btn_contrast = make_btn("", "Contrast", "contrast")        
+
+
+        # Save menu (updated elsewhere to provide Save as copy / Save / Copy to clipboard)
+        self.btn_save = make_btn("Save options", "Save options", "save")
+        self.btn_save.setPopupMode(QToolButton.InstantPopup)
+        # menu wiring is done during page construction in previous code
+        # Cancel button will both cancel edits and return to viewer
+        menu = QMenu(self.btn_save)
+
+        act_save_copy = QAction("Save as copy...", self)
+        act_save_over = QAction("Save", self)
+        act_copy_clip = QAction("Copy to clipboard", self)
+
+        act_save_copy.triggered.connect(self._save_as_copy)
+        act_save_over.triggered.connect(self._save_overwrite)
+        act_copy_clip.triggered.connect(self._copy_working_to_clipboard)
+
+        # "Save" should only be enabled when we have an existing path and a dirty working image
+        act_save_over.setEnabled(False)
+
+        menu.addAction(act_save_copy)
+        menu.addAction(act_save_over)
+        menu.addAction(act_copy_clip)
+        self.btn_save.setMenu(menu)
+        self._save_action_overwrite = act_save_over  # keep reference to enable/disable based on state
+
+
+        self.btn_cancel = make_btn("","Cancel","cancel")
+#        self.btn_cancel.clicked.connect(self._return_to_viewer)
+        # Cancel: discard edits and return
+        self.btn_cancel.clicked.connect(lambda: (self._cancel_edits(), self._return_to_viewer()))
+
+        # Assemble toolbar
+        for w in [
+            self.btn_zoom_in,
+            self.btn_zoom_out,
+            self.edit_zoom_field,
+            self.btn_reset,
+            self.btn_adjust,
+            self.btn_filter,
+            self.btn_crop,
+            self.btn_crop_apply,
+            self.btn_crop_cancel,
+            self.btn_rotate,
+#            self.btn_brightness,
+#            self.btn_contrast,
+            self.btn_save,
+            self.btn_cancel
+        ]:
+            row2.addWidget(w)
+        row2.addStretch(1)
+        layout.addLayout(row2)
+
+        # === Canvas container (shared) + right-side placeholder for editor/filter panels ===
+        # Host both canvas container and right placeholder side-by-side so right panel never underlaps canvas.
+        self.edit_canvas_container = QWidget()
+        edit_lay = QVBoxLayout(self.edit_canvas_container)
+        edit_lay.setContentsMargins(0, 0, 0, 0)
+        edit_lay.setSpacing(0)
+        
+        # create a placeholder widget on the right where the adjustments / filters panel will be attached
+        self._editor_right_placeholder = QWidget()
+        self._editor_right_placeholder.setFixedWidth(0)  # hidden by default
+        self._editor_right_placeholder.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        
+        # host both in a horizontal row so the right panel sits to the right of the canvas
+        content_row = QWidget()
+        content_row_layout = QHBoxLayout(content_row)
+        content_row_layout.setContentsMargins(0, 0, 0, 0)
+        content_row_layout.setSpacing(16)
+        content_row_layout.addWidget(self.edit_canvas_container, 1)
+        content_row_layout.addWidget(self._editor_right_placeholder, 0)
+
+        layout.addWidget(content_row, 1)
+        
+        # Create edit_canvas_container inner layout now (this is where the canvas will be reparented on mode switch)
+        inner = QVBoxLayout()
+        inner.setContentsMargins(8, 8, 8, 8)   # add a small right margin so canvas content doesn't touch placeholder
+        inner.setSpacing(0)
+        self.edit_canvas_container.setLayout(inner)
+    
+               
+        return page
+
+
+    def _build_top_bar(self) -> QWidget:
+        bar = QWidget()
+        bar.setFixedHeight(40)
+        h = QHBoxLayout(bar)
+        h.setContentsMargins(8,0,8,0)
+        h.setSpacing(10)
+
+        self.btn_edit = QPushButton("Edit Photo")
+        self.btn_edit.setIcon(self._icon("edit"))
+        self.btn_edit.setToolTip("Edit photo")
+        self.btn_edit.setStyleSheet(self._button_style())
+        self.btn_edit.clicked.connect(self._enter_edit_mode)
+
+        self.btn_rotate = QToolButton()
+        self.btn_rotate.setIcon(self._icon("rotate"))
+        self.btn_rotate.setToolTip("Rotate clockwise")
+        self.btn_rotate.setStyleSheet(self._button_style())
+        self.btn_rotate.clicked.connect(self._rotate_image)
+
+        self.btn_more = QToolButton()
+        self.btn_more.setText("...")
+        self.btn_more.setToolTip("More actions")
+        self.btn_more.setStyleSheet(self._button_style())
+        self.btn_more.setPopupMode(QToolButton.InstantPopup)
+        menu = QMenu(self.btn_more)
+        act_save = QAction("💾 Save As...", self)
+        act_copy = QAction("📋 Copy to Clipboard", self)
+        act_open = QAction("📂 Open in Explorer", self)
+        menu.addActions([act_save, act_copy, act_open])
+        act_save.triggered.connect(self._save_as)
+        act_copy.triggered.connect(self._copy_to_clipboard)
+        act_open.triggered.connect(self._open_in_explorer)
+        self.btn_more.setMenu(menu)
+
+        self.title_label = QLabel(os.path.basename(self._path) if self._path else "")
+        self.title_label.setStyleSheet("color:#000;font-size:14px;")
+
+        h.addWidget(self.btn_edit)
+        h.addWidget(self.btn_rotate)
+        h.addWidget(self.btn_more)
+        h.addStretch(1)
+        h.addWidget(self.title_label)
+        h.addStretch(2)
+
+        bar.setStyleSheet(self._button_style() + """
+            QWidget {
+                background-color: rgba(240,240,240,220);
+                border-radius: 8px;
+            }
+        """)
+        bar.setGraphicsEffect(QGraphicsDropShadowEffect(blurRadius=12, offset=QPointF(0,2)))
+        return bar
+
+    def _build_bottom_bar(self) -> QWidget:
+        bar = QWidget()
+        bar.setFixedHeight(46)
+        h = QHBoxLayout(bar)
+        h.setContentsMargins(0,0,0,0)
+        h.setSpacing(6)
+
+        # Photo zoom controls
+        self.btn_zoom_minus = QToolButton()
+        self.btn_zoom_minus.setText("−")
+        self.btn_zoom_minus.setStyleSheet("color:#000; font-size:16px; font-weight:bold;")
+        self.btn_zoom_minus.setToolTip("Zoom out")
+        self.btn_zoom_minus.clicked.connect(lambda: self._nudge_zoom(-1))
+
+        self.zoom_slider = QSlider(Qt.Horizontal)
+        self.zoom_slider.setRange(-100,200)
+        self.zoom_slider.setValue(0)
+        self.zoom_slider.setFixedWidth(120)
+        self.zoom_slider.valueChanged.connect(self._on_slider_changed)
+
+        self.btn_zoom_plus = QToolButton()
+        self.btn_zoom_plus.setText("+")
+        self.btn_zoom_plus.setStyleSheet("color:#000; font-size:16px; font-weight:bold;")
+        self.btn_zoom_plus.setToolTip("Zoom in")
+        self.btn_zoom_plus.clicked.connect(lambda: self._nudge_zoom(+1))
+
+        self.zoom_combo = QComboBox()
+        self.zoom_combo.setEditable(True)
+        self.zoom_combo.setFixedWidth(80)
+        for z in [10,25,50,75,100,200,300,400,500,600,700,800]:
+            self.zoom_combo.addItem(f"{z}%")
+        self.zoom_combo.setCurrentText("100%")
+        self.zoom_combo.editTextChanged.connect(self._on_zoom_combo_changed)
+        self.zoom_combo.activated.connect(lambda _: self._on_zoom_combo_changed())
+
+        # === PHASE 1: Professional Video Controls ===
+
+        # Video playback button
+        self.btn_play_pause = QPushButton("▶ Play")
+        self.btn_play_pause.setStyleSheet(self._button_style())
+        self.btn_play_pause.clicked.connect(self._toggle_video_playback)
+        self.btn_play_pause.setFixedWidth(80)
+        self.btn_play_pause.hide()
+
+        # Video timeline slider (for seeking)
+        self.video_timeline_slider = QSlider(Qt.Horizontal)
+        self.video_timeline_slider.setRange(0, 1000)  # 0-1000 for smooth seeking
+        self.video_timeline_slider.setValue(0)
+        self.video_timeline_slider.setFixedWidth(300)
+        self.video_timeline_slider.setToolTip("Seek through video")
+        try:
+            self.video_timeline_slider.sliderMoved.connect(self._on_timeline_slider_moved)
+            self.video_timeline_slider.sliderPressed.connect(self._on_timeline_slider_pressed)
+            self.video_timeline_slider.sliderReleased.connect(self._on_timeline_slider_released)
+        except Exception as e:
+            print(f"[LightboxDialog] WARNING: Failed to connect timeline slider signals: {e}")
+        self.video_timeline_slider.hide()
+
+        # Video time label
+        self.video_position_label = QLabel("0:00 / 0:00")
+        self.video_position_label.setStyleSheet("color:#000;font-size:12px;")
+        self.video_position_label.setMinimumWidth(90)
+        self.video_position_label.hide()
+
+        # Volume mute button
+        self.btn_mute = QToolButton()
+        self.btn_mute.setText("🔊")
+        self.btn_mute.setToolTip("Mute/Unmute (M)")
+        self.btn_mute.setCheckable(True)
+        self.btn_mute.clicked.connect(self._toggle_mute)
+        self.btn_mute.setStyleSheet(self._button_style())
+        self.btn_mute.hide()
+
+        # Volume slider
+        self.video_volume_slider = QSlider(Qt.Horizontal)
+        self.video_volume_slider.setRange(0, 100)
+        self.video_volume_slider.setValue(100)  # Default 100%
+        self.video_volume_slider.setFixedWidth(80)
+        self.video_volume_slider.setToolTip("Volume")
+        self.video_volume_slider.valueChanged.connect(self._on_volume_changed)
+        self.video_volume_slider.hide()
+
+        # === PHASE 2: Playback Speed Controls ===
+        self.btn_playback_speed = QToolButton()
+        self.btn_playback_speed.setText("1x")
+        self.btn_playback_speed.setToolTip("Playback speed")
+        self.btn_playback_speed.setStyleSheet(self._button_style())
+        self.btn_playback_speed.setPopupMode(QToolButton.InstantPopup)
+        self.btn_playback_speed.setFixedWidth(50)
+        self.btn_playback_speed.hide()
+
+        # Speed menu
+        speed_menu = QMenu(self.btn_playback_speed)
+        self._playback_speeds = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]
+        for speed in self._playback_speeds:
+            action = QAction(f"{speed}x", self)
+            action.setCheckable(True)
+            action.setChecked(speed == 1.0)  # Default 1x
+            action.triggered.connect(lambda checked, s=speed: self._set_playback_speed(s))
+            speed_menu.addAction(action)
+        self.btn_playback_speed.setMenu(speed_menu)
+        self._speed_menu = speed_menu
+        self._current_playback_speed = 1.0
+
+        # Common info controls
+        self.info_label = QLabel()
+        self.info_label.setStyleSheet("color:#000;font-size:12px;")
+        self.info_label.setText("🖼️ — × —   💾 — KB")
+
+        self.btn_info_toggle = QToolButton()
+        self.btn_info_toggle.setIcon(self._icon("info"))
+        self.btn_info_toggle.setToolTip("Show detailed info")
+        self.btn_info_toggle.setCheckable(True)
+        self.btn_info_toggle.toggled.connect(self._toggle_metadata_panel)
+        self.btn_info_toggle.setStyleSheet(self._button_style())
+
+        # Add photo controls
+        h.addWidget(self.btn_zoom_minus)
+        h.addWidget(self.zoom_slider)
+        h.addWidget(self.btn_zoom_plus)
+        h.addWidget(self.zoom_combo)
+
+        # Add video controls (Apple/Google Photos style layout)
+        h.addWidget(self.btn_play_pause)
+        h.addWidget(self.video_timeline_slider)
+        h.addWidget(self.video_position_label)
+        h.addWidget(self.btn_mute)
+        h.addWidget(self.video_volume_slider)
+        h.addWidget(self.btn_playback_speed)  # PHASE 2
+
+        h.addStretch(1)
+        h.addWidget(self.info_label, 0)
+        h.addWidget(self.btn_info_toggle, 0)
+
+        bar.setStyleSheet(self._button_style() + """
+            QWidget {
+                background-color: rgba(240,240,240,220);
+                border-radius: 8px;
+            }
+        """)
+        bar.setGraphicsEffect(QGraphicsDropShadowEffect(blurRadius=12, offset=QPointF(0,2)))
+        return bar
+
+    # ---------- Metadata panel (polished) ----------
+    def _build_metadata_panel(self, data_dict: dict) -> QWidget:
+        """
+        Metadata panel:
+         - black text (as requested)
+         - file path wraps over multiple lines
+         - copy button on right side for path-like values
+        """
+        t = getattr(self, "_palette_tokens", {
+            "panel": "#ffffff", "fg": "#000000",
+            "accent_start": "#0078d4", "button_border": "#dddddd"
+        })
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        container = QWidget()
+        container.setObjectName("metaContainer")
+        vlayout = QVBoxLayout(container)
+        vlayout.setContentsMargins(12, 12, 12, 12)
+        vlayout.setSpacing(10)
+
+        container.setStyleSheet(f"""
+            QWidget#metaContainer {{ background-color: {t['panel']}; }}
+            QLabel.metaTitle {{ color: {t['fg']}; font-weight: 700; font-size: 14px; }}
+            QLabel.metaKey {{ color: {t['fg']}; font-weight: 600; font-size: 12px; }}
+            QLabel.metaVal {{ color: {t['fg']}; font-size: 12px; }}
+            QToolButton.metaCopy {{ border: none; padding: 4px; }}
+        """)
+
+        # Header
+        header = QWidget()
+        hh = QHBoxLayout(header)
+        hh.setContentsMargins(0, 0, 0, 0)
+        hh.setSpacing(8)
+        title = QLabel("Info")
+        title.setObjectName("metaTitle")
+        title.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        close_btn = QToolButton()
+        close_btn.setAutoRaise(True)
+        close_btn.setToolTip("Close")
+        try:
+            close_btn.setIcon(self._icon("cancel"))
+        except Exception:
+            close_btn.setText("✖")
+        close_btn.clicked.connect(lambda: self.btn_info_toggle.setChecked(False))
+        hh.addWidget(title)
+        hh.addStretch(1)
+        hh.addWidget(close_btn)
+        vlayout.addWidget(header)
+
+        # Thumbnail + filename
+        top_row = QWidget()
+        tr = QHBoxLayout(top_row)
+        tr.setContentsMargins(0, 0, 0, 0)
+        tr.setSpacing(8)
+        thumb_lbl = QLabel()
+        thumb_lbl.setFixedSize(120, 90)  # Larger for video thumbnails
+        thumb_lbl.setStyleSheet("background: rgba(0,0,0,0.03); border-radius:4px;")
+        thumb_lbl.setAlignment(Qt.AlignCenter)
+        
+        # 🎬 ENHANCEMENT: Load video thumbnail or photo preview
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        try:
+            logger.debug(f"Building thumbnail - is_video: {self._is_video}, path: {os.path.basename(self._path) if self._path else 'None'}")
+            
+            if self._is_video:
+                # 🎬 Load video thumbnail using VideoThumbnailService
+                # (thumbnails are in .thumb_cache, NOT in database thumbnail_path field)
+                try:
+                    from services.video_thumbnail_service import get_video_thumbnail_service
+                    thumb_service = get_video_thumbnail_service()
+                    
+                    # Get expected thumbnail path (doesn't query DB)
+                    thumb_path = thumb_service.get_thumbnail_path(self._path)
+                    
+                    logger.info(f"Expected thumbnail path: {thumb_path}")
+                    logger.info(f"Thumbnail exists: {thumb_path.exists()}")
+                    
+                    if thumb_path.exists():
+                        logger.info(f"Loading video thumbnail from cache: {thumb_path.name}")
+                        thumb_img = Image.open(str(thumb_path))
+                        # Convert PIL Image to QPixmap
+                        from PIL.ImageQt import ImageQt as pil_to_qimage
+                        qimg = pil_to_qimage(thumb_img)
+                        thumb_pm = QPixmap.fromImage(qimg)
+                        if not thumb_pm.isNull():
+                            scaled_pm = thumb_pm.scaled(120, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                            thumb_lbl.setPixmap(scaled_pm)
+                            # Add play icon overlay style
+                            thumb_lbl.setStyleSheet(
+                                "background: rgba(0,0,0,0.8); border-radius:4px; "
+                                "border: 2px solid rgba(255,255,255,0.1);"
+                            )
+                            logger.debug("✅ Video thumbnail loaded successfully")
+                        else:
+                            logger.warning("QPixmap is null after loading thumbnail")
+                            # Show placeholder
+                            thumb_lbl.setText("🎬")
+                            thumb_lbl.setStyleSheet(
+                                "background: rgba(50,50,50,0.9); border-radius:4px; "
+                                "border: 2px solid rgba(100,100,100,0.5); "
+                                "color: white; font-size: 48px;"
+                            )
+                            thumb_lbl.setAlignment(Qt.AlignCenter)
+                    else:
+                        # No thumbnail - show generic video icon
+                        logger.info(f"No thumbnail file found - showing placeholder")
+                        thumb_lbl.setText("🎬")
+                        thumb_lbl.setStyleSheet(
+                            "background: rgba(50,50,50,0.9); border-radius:4px; "
+                            "border: 2px solid rgba(100,100,100,0.5); "
+                            "color: white; font-size: 48px;"
+                        )
+                        thumb_lbl.setAlignment(Qt.AlignCenter)
+                except Exception as e:
+                    logger.error(f"Failed to load video thumbnail: {e}")
+                    # Show placeholder
+                    thumb_lbl.setText("🎬")
+                    thumb_lbl.setStyleSheet(
+                        "background: rgba(50,50,50,0.9); border-radius:4px; "
+                        "border: 2px solid rgba(100,100,100,0.5); "
+                        "color: white; font-size: 48px;"
+                    )
+                    thumb_lbl.setAlignment(Qt.AlignCenter)
+            else:
+                # Load photo preview
+                if getattr(self.canvas, "_pixmap", None):
+                    pm = self.canvas._pixmap
+                    if not pm.isNull():
+                        tpm = pm.scaled(120, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                        thumb_lbl.setPixmap(tpm)
+                        logger.debug("Photo thumbnail loaded from canvas")
+        except Exception as e:
+            logger.error(f"Failed to load thumbnail: {e}", exc_info=True)
+        name_val = data_dict.get("File", os.path.basename(self._path) if self._path else "")
+        name_widget = QWidget()
+        nw = QVBoxLayout(name_widget)
+        nw.setContentsMargins(0, 0, 0, 0)
+        nw.setSpacing(4)
+        name_lbl = QLabel(str(name_val))
+        name_lbl.setObjectName("metaKey")
+        name_lbl.setWordWrap(False)
+        name_lbl.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        desc_field = QLineEdit()
+        desc_field.setPlaceholderText("Add a description")
+        desc_field.setFixedHeight(28)
+        desc_field.setStyleSheet(f"color: {t['fg']}; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); padding-left:6px;")
+        nw.addWidget(name_lbl)
+        nw.addWidget(desc_field)
+        tr.addWidget(thumb_lbl)
+        tr.addWidget(name_widget, 1)
+        vlayout.addWidget(top_row)
+
+        # Grid rows
+        grid = QGridLayout()
+        grid.setColumnStretch(0, 0)
+        grid.setColumnMinimumWidth(0, 28)
+        grid.setColumnMinimumWidth(1, 120)
+        grid.setColumnStretch(2, 1)
+        grid.setHorizontalSpacing(8)
+        grid.setVerticalSpacing(12)
+        grid.setContentsMargins(0, 8, 0, 0)
+
+        icons = {
+            "File": "📄", "Folder": "📁", "Size": "📏", "Modified": "🕓",
+            "Created": "🗓️", "Captured": "🕰️", "Camera Make": "🏭",
+            "Camera Model": "📷", "Lens": "🔍", "Aperture": "ƒ",
+            "Exposure": "⏱", "ISO": "ISO", "Focal Length": "🔭",
+            "Software": "💻", "Tags": "🏷️", "Database": "💾", "Info": "•",
+            # 🎬 Video metadata icons
+            "Duration": "⏱️", "Resolution": "📺", "Frame Rate": "🎬",
+            "Codec": "🎬", "Bitrate": "📊", "Date Taken": "📅",
+            "Video Metadata": "🎬", "Metadata": "✅", "Thumbnail": "🖼️"
+        }
+
+        row = 0
+        for key, val in data_dict.items():
+            if key == "File":
+                continue
+            icon_text = icons.get(key, "•")
+            icon_lbl = QLabel(icon_text)
+            icon_lbl.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+            icon_lbl.setFixedWidth(28)
+            key_lbl = QLabel(f"{key}")
+            key_lbl.setObjectName("metaKey")
+            key_lbl.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            val_widget = QWidget()
+            vbox = QHBoxLayout(val_widget)
+            vbox.setContentsMargins(0, 0, 0, 0)
+            vbox.setSpacing(6)
+            val_lbl = QLabel(str(val))
+            val_lbl.setObjectName("metaVal")
+            val_lbl.setWordWrap(True)  # enable wrapping for long paths
+            val_lbl.setTextInteractionFlags(Qt.TextSelectableByMouse)
+            val_lbl.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+            vbox.addWidget(val_lbl, 1)
+            val_str = str(val)
+            if "\\" in val_str or "/" in val_str or ":" in val_str:
+                vbox.addStretch(1)
+                copy_btn = QToolButton()
+                copy_btn.setAutoRaise(True)
+                copy_btn.setObjectName("metaCopy")
+                copy_btn.setToolTip("Copy to clipboard")
+                try:
+                    copy_btn.setIcon(self._icon("copy"))
+                except Exception:
+                    copy_btn.setText("📋")
+                copy_btn.clicked.connect(lambda _, s=val_str: QApplication.clipboard().setText(s))
+                vbox.addWidget(copy_btn)
+            grid.addWidget(icon_lbl, row, 0, Qt.AlignTop)
+            grid.addWidget(key_lbl, row, 1, Qt.AlignTop)
+            grid.addWidget(val_widget, row, 2, Qt.AlignTop)
+            row += 1
+
+        vlayout.addLayout(grid)
+        vlayout.addStretch(1)
+
+        scroll.setWidget(container)
+        scroll.setMinimumWidth(360)
+        scroll.setStyleSheet(f"QScrollArea {{ background-color: {t['panel']}; border-left: 1px solid {t['button_border']}; }}")
+
+        return scroll
+
+    def _toggle_metadata_panel(self, show: bool):
+        """Toggle right metadata panel (polished) with video support."""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        if show:
+            meta_dict = self._parse_metadata_to_dict(self._get_metadata_text())
+            panel = self._build_metadata_panel(meta_dict)
+            panel.setMinimumWidth(360)
+            panel.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+            self._meta_panel = panel
+
+            layout = self._meta_placeholder.layout()
+            if layout is None:
+                layout = QVBoxLayout(self._meta_placeholder)
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.setSpacing(0)
+
+            while layout.count():
+                item = layout.takeAt(0)
+                if item.widget():
+                    item.widget().setParent(None)
+
+            layout.addWidget(panel)
+            self._meta_placeholder.setFixedWidth(360)
+            self.btn_info_toggle.setToolTip("Hide detailed info")
+            
+            logger.info(f"Showing metadata panel (is_video={self._is_video}, {len(meta_dict)} fields)")
+        else:
+            if hasattr(self, "_meta_placeholder"):
+                self._meta_placeholder.setFixedWidth(0)
+            self.btn_info_toggle.setToolTip("Show detailed info")
+
+    def _get_metadata_text(self):
+        if self._path in self._meta_cache:
+            return self._meta_cache[self._path]
+        text = self._load_metadata(self._path)
+        self._meta_cache[self._path] = text
+        self._preload_metadata_async()
+        return text
+
+    def _parse_metadata_to_dict(self, text: str) -> dict:
+        """Parse metadata text into dictionary, handling video metadata correctly."""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        meta = {}
+        logger.debug(f"Parsing metadata text ({len(text)} chars)")
+        logger.debug(f"First 500 chars: {text[:500]}")
+        
+        for line in text.splitlines():
+            line = line.strip()
+            if not line or line.startswith("⚠️"):
+                continue
+            
+            # Skip section headers and category labels (no colon) and indented notes
+            if not ":" in line or line.startswith("   "):
+                continue
+            
+            line = line.lstrip("•").strip()
+            key, val = line.split(":", 1)
+            key, val = key.strip(), val.strip()
+            
+            # Clean up emoji prefixes from keys
+            key = (
+                key.replace("📄", "File")
+                   .replace("📁", "Folder")
+                   .replace("📏", "Size")
+                   .replace("🕓", "Modified")
+                   .replace("🗓️", "Created")
+                   .replace("🕰️", "Captured")
+                   .replace("🏭", "Camera Make")
+                   .replace("📷", "Camera Model")
+                   .replace("🔍", "Lens")
+                   .replace("ƒ", "Aperture")
+                   .replace("⏱", "Duration")  # Video duration
+                   .replace("ISO", "ISO")
+                   .replace("🔭", "Focal Length")
+                   .replace("💻", "Software")
+                   .replace("💾", "Database")
+                   .replace("🏷️", "Tags")
+                   .replace("🎬", "Video")
+                   .replace("📐", "Resolution")
+                   .replace("🎞️", "Frame Rate")
+                   .replace("🎥", "Codec")
+                   .replace("📊", "Bitrate")
+                   .replace("📅", "Date Taken")
+                   .replace("✅", "")
+                   .replace("⏳", "")
+                   .replace("❌", "")
+                   .replace("❓", "")
+                   .strip()
+            )
+            
+            # Deduplicate words in key
+            words = key.split()
+            key = " ".join(sorted(set(words), key=words.index))
+            
+            meta[key] = val
+        
+        logger.debug(f"Final metadata dict has {len(meta)} entries: {list(meta.keys())}")
+        return meta
+
+    def _load_metadata(self, path: str) -> str:
+        lines = []
+        base = os.path.basename(path) if path else ""
+        folder = os.path.dirname(path) if path else ""
+        lines.append(f"📄 {base}")
+        lines.append(f"📁 {folder}")
+        lines.append("")
+
+        # Check if this is a video file
+        is_video = self._is_video_file(path)
+
+        try:
+            st = os.stat(path)
+            dt_mod = datetime.fromtimestamp(st.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+            dt_crt = datetime.fromtimestamp(st.st_ctime).strftime("%Y-%m-%d %H:%M:%S")
+            lines += [
+                f"📏 File size: {st.st_size/1024:.1f} KB",
+                f"🕓 Modified: {dt_mod}",
+                f"🗓️ Created: {dt_crt}"
+            ]
+        except Exception as e:
+            lines.append(f"⚠️ File info error: {e}")
+        lines.append("")
+
+        if is_video:
+            # 🎬 Load COMPREHENSIVE video metadata from database
+            import logging
+            logger = logging.getLogger(__name__)
+            
+            try:
+                db = self._shared_db_instance
+                if not db and self.parent():
+                    # Try 'db' first (MainWindow), then 'reference_db' (fallback)
+                    db = getattr(self.parent(), "db", None) or getattr(self.parent(), "reference_db", None)
+                
+                logger.info(f"Video detected: {os.path.basename(path)}")
+                logger.debug(f"DB instance: {db}")
+                
+                if db:
+                    # Get project_id from stored reference or parent
+                    project_id = self._project_id
+                    if not project_id and self.parent():
+                        project_id = getattr(self.parent(), "project_id", None)
+                    logger.debug(f"Project ID: {project_id}")
+                    
+                    if project_id:
+                        video_meta = db.get_video_by_path(path, project_id)
+                        logger.info(f"Video metadata from DB: {bool(video_meta)}")
+                        logger.debug(f"Video metadata keys: {list(video_meta.keys()) if video_meta else None}")
+                        
+                        if video_meta:
+                            lines.append("🎬 Video Metadata:")
+
+                            # Duration (formatted as MM:SS or H:MM:SS)
+                            if video_meta.get('duration_seconds'):
+                                duration_str = self._format_duration(video_meta['duration_seconds'])
+                                lines.append(f"⏱ Duration: {duration_str}")
+
+                            # Resolution
+                            if video_meta.get('width') and video_meta.get('height'):
+                                res = f"{video_meta['width']}×{video_meta['height']}"
+                                lines.append(f"📐 Resolution: {res}")
+                                
+                                # Add resolution category
+                                w, h = video_meta['width'], video_meta['height']
+                                if w >= 3840 and h >= 2160:
+                                    lines.append(f"   (4K Ultra HD)")
+                                elif w >= 1920 and h >= 1080:
+                                    lines.append(f"   (Full HD 1080p)")
+                                elif w >= 1280 and h >= 720:
+                                    lines.append(f"   (HD 720p)")
+                                else:
+                                    lines.append(f"   (SD)")
+
+                            # FPS
+                            if video_meta.get('fps'):
+                                lines.append(f"🎞️ Frame Rate: {video_meta['fps']:.2f} fps")
+
+                            # Codec
+                            if video_meta.get('codec'):
+                                lines.append(f"🎥 Codec: {video_meta['codec']}")
+
+                            # Bitrate
+                            if video_meta.get('bitrate'):
+                                bitrate_mbps = video_meta['bitrate'] / 1_000_000
+                                lines.append(f"📊 Bitrate: {bitrate_mbps:.2f} Mbps")
+
+                            # Date taken
+                            if video_meta.get('date_taken'):
+                                lines.append(f"📅 Date Taken: {video_meta['date_taken']}")
+                            
+                            # 📂 Folder info
+                            if video_meta.get('folder_id'):
+                                lines.append(f"📂 Folder ID: {video_meta['folder_id']}")
+                            
+                            # 🔖 Metadata status
+                            if video_meta.get('metadata_status'):
+                                status_emoji = {'ready': '✅', 'pending': '⏳', 'error': '❌'}.get(video_meta['metadata_status'], '❓')
+                                lines.append(f"{status_emoji} Metadata: {video_meta['metadata_status']}")
+                            
+                            # 🖼️ Thumbnail status
+                            if video_meta.get('thumbnail_status'):
+                                thumb_emoji = {'ready': '✅', 'pending': '⏳', 'error': '❌'}.get(video_meta['thumbnail_status'], '❓')
+                                lines.append(f"{thumb_emoji} Thumbnail: {video_meta['thumbnail_status']}")
+                            
+                            logger.info(f"Added {len(lines)-7} video metadata lines")  # -7 for file info + empty
+                        else:
+                            logger.warning(f"No video metadata found in database for: {os.path.basename(path)}")
+                            lines.append("⚠️ No video metadata found in database.")
+                            lines.append("   (Video may need to be scanned)")
+                    else:
+                        logger.warning("No project context available")
+                        lines.append("⚠️ No project context available.")
+                else:
+                    logger.warning("No database instance available")
+                    lines.append("⚠️ No database connection available.")
+            except Exception as e:
+                logger.error(f"ERROR loading video metadata: {e}", exc_info=True)
+                lines.append(f"⚠️ Video metadata error: {e}")
+        else:
+            # Load photo EXIF metadata
+            try:
+                img = Image.open(path)
+                exif = img._getexif() or {}
+                if exif:
+                    exif_tags = {ExifTags.TAGS.get(k, k): v for k, v in exif.items()}
+                    wanted = [
+                        ("DateTimeOriginal", "🕰️ Captured"),
+                        ("Make", "🏭 Camera Make"),
+                        ("Model", "📷 Camera Model"),
+                        ("LensModel", "🔍 Lens"),
+                        ("FNumber", "ƒ Aperture"),
+                        ("ExposureTime", "⏱ Exposure"),
+                        ("ISOSpeedRatings", "ISO"),
+                        ("FocalLength", "🔭 Focal Length"),
+                        ("Software", "💻 Processed by"),
+                    ]
+                    for key, label in wanted:
+                        if key in exif_tags:
+                            lines.append(f"{label}: {exif_tags[key]}")
+                else:
+                    lines.append("⚠️ No EXIF metadata found.")
+            except Exception:
+                lines.append("⚠️ Failed to read EXIF info.")
+
+        lines.append("")
+        try:
+            db = getattr(self, "_shared_db_instance", None)
+            if not db and hasattr(self.parent(), "reference_db"):
+                db = self.parent().reference_db
+            if db and not is_video:  # Only for photos (videos handled above)
+                record = db.get_photo_metadata_by_path(path)
+                if record:
+                    lines.append("💾 Database Metadata:")
+                    for k, v in record.items():
+                        lines.append(f"   • {k}: {v}")
+                else:
+                    lines.append("⚠️ No record found in database.")
+        except Exception as e:
+            lines.append(f"⚠️ DB error: {e}")
+
+        return "\n".join(lines)
+
+    def _is_video_file(self, path: str) -> bool:
+        """Check if file is a video based on extension."""
+        if not path:
+            return False
+        ext = os.path.splitext(path)[1].lower()
+        video_exts = {'.mp4', '.m4v', '.mov', '.mpeg', '.mpg', '.mpe', '.wmv',
+                      '.avi', '.mkv', '.flv', '.webm', '.3gp', '.ogv', '.ts', '.mts'}
+        return ext in video_exts
+
+    def _format_duration(self, seconds: float) -> str:
+        """Format duration as MM:SS or H:MM:SS."""
+        if not seconds or seconds < 0:
+            return "0:00"
+
+        total_seconds = int(seconds)
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        secs = total_seconds % 60
+
+        if hours > 0:
+            return f"{hours}:{minutes:02d}:{secs:02d}"
+        else:
+            return f"{minutes}:{secs:02d}"
+
+    def _preload_metadata_async(self):
+        if self._meta_preloader and self._meta_preloader.is_alive():
+            return
+        from threading import Thread
+        def worker():
+            try:
+                radius = 5
+                total = len(self._image_list)
+                for offset in range(-radius, radius + 1):
+                    if self._preload_stop:
+                        break
+                    idx = self._current_index + offset
+                    if idx < 0 or idx >= total:
+                        continue
+                    path = self._image_list[idx]
+                    if path not in self._meta_cache:
+                        text = self._load_metadata(path)
+                        self._meta_cache[path] = text
+                if len(self._meta_cache) > 2000:
+                    to_remove = list(self._meta_cache.keys())[:200]
+                    for k in to_remove:
+                        self._meta_cache.pop(k, None)
+            except Exception as e:
+                print(f"[Preload] Error: {e}")
+        self._meta_preloader = Thread(target=worker, daemon=True)
+        self._meta_preloader.start()
+
+    # -------------------------------
+    # Load image and store original PIL image
+    # -------------------------------
+    def _load_media(self, path: str):
+        """Unified media loader: detects media type and routes to appropriate handler."""
+        if self._is_video_file(path):
+            self._is_video = True
+            self._current_media_type = "video"
+            self._load_video(path)
+            self._update_controls_visibility()
+        else:
+            self._is_video = False
+            self._current_media_type = "photo"
+            self._load_photo(path)
+            self._update_controls_visibility()
+
+    def _load_video(self, path: str):
+        """Load and display video in the unified preview panel with thumbnail preview."""
+        try:
+            print(f"[LightboxDialog] Loading video: {path}")
+
+            # Ensure path is valid
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"Video file not found: {path}")
+
+            # 🔧 Store video path for GPU crash recovery
+            self._last_video_path = path
+            self._video_error_count = 0  # Reset error count for new video
+            self._gpu_warning_shown = False  # Reset warning flag for new video
+
+            # 🎬 IMPROVEMENT 1: Show thumbnail preview while video loads
+            self._show_video_loading_state(path)
+
+            # Switch to video widget page
+            self.content_stack.setCurrentIndex(1)
+            print(f"[LightboxDialog] Switched to video widget (index 1)")
+
+            # Stop any currently playing video
+            if hasattr(self, 'media_player'):
+                self.media_player.stop()
+
+            # Load video - use absolute path
+            abs_path = os.path.abspath(path)
+            video_url = QUrl.fromLocalFile(abs_path)
+            print(f"[LightboxDialog] Video URL: {video_url.toString()}")
+
+            self.media_player.setSource(video_url)
+
+            # Update window title
+            filename = os.path.basename(path)
+            if self._image_list:
+                idx_display = self._current_index + 1
+                total = len(self._image_list)
+                self.setWindowTitle(f"📹 {filename} ({idx_display} of {total})")
+            else:
+                self.setWindowTitle(f"📹 {filename}")
+
+            # 🎬 IMPROVEMENT 3: Enhanced video info display with metadata
+            self._update_video_info_label(path)
+
+            # Auto-play video
+            self.media_player.play()
+            print(f"[LightboxDialog] Video playback started")
+
+        except Exception as e:
+            print(f"[LightboxDialog] Error loading video: {e}")
+            import traceback
+            traceback.print_exc()
+            QMessageBox.warning(self, "Load failed", f"Couldn't load video: {e}")
+
+    def _load_photo(self, path: str):
+        """Load and display photo (renamed from _load_image for consistency)."""
+        try:
+            print(f"[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: {path}")
+            # Switch to image canvas page
+            self.content_stack.setCurrentIndex(0)
+
+            img = Image.open(path)
+            img = ImageOps.exif_transpose(img).convert("RGBA")
+            self._orig_pil = img.copy()
+            print(f"[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: {self._orig_pil.size}")
+            qimg = ImageQt.ImageQt(img)
+            pm = QPixmap.fromImage(qimg)
+            self.canvas.set_pixmap(pm)
+            self._update_info(pm)
+        except Exception as e:
+            print(f"[PhotoLoad] ❌ DIAGNOSTIC: Failed to load photo: {e}")
+            self._orig_pil = None  # Ensure it's None on failure
+            QMessageBox.warning(self, "Load failed", f"Couldn't load image: {e}")
+
+    def _load_image(self, path: str):
+        """Legacy wrapper for backwards compatibility - calls _load_photo()."""
+        self._load_photo(path)
+
+    def _update_controls_visibility(self):
+        """Hide/show controls based on current media type."""
+        is_photo = self._current_media_type == "photo"
+        is_video = self._current_media_type == "video"
+
+        # Top bar controls (photo-only)
+        if hasattr(self, 'btn_edit'):
+            self.btn_edit.setVisible(is_photo)
+        if hasattr(self, 'btn_rotate'):
+            self.btn_rotate.setVisible(is_photo)
+
+        # Bottom bar zoom controls (photo-only)
+        if hasattr(self, 'btn_zoom_minus'):
+            self.btn_zoom_minus.setVisible(is_photo)
+        if hasattr(self, 'zoom_slider'):
+            self.zoom_slider.setVisible(is_photo)
+        if hasattr(self, 'btn_zoom_plus'):
+            self.btn_zoom_plus.setVisible(is_photo)
+        if hasattr(self, 'zoom_combo'):
+            self.zoom_combo.setVisible(is_photo)
+
+        # Bottom bar video controls (video-only) - PHASE 1 & 2 ENHANCED
+        if hasattr(self, 'btn_play_pause'):
+            self.btn_play_pause.setVisible(is_video)
+        if hasattr(self, 'video_timeline_slider'):
+            self.video_timeline_slider.setVisible(is_video)
+        if hasattr(self, 'video_position_label'):
+            self.video_position_label.setVisible(is_video)
+        if hasattr(self, 'btn_mute'):
+            self.btn_mute.setVisible(is_video)
+        if hasattr(self, 'video_volume_slider'):
+            self.video_volume_slider.setVisible(is_video)
+        if hasattr(self, 'btn_playback_speed'):  # PHASE 2
+            self.btn_playback_speed.setVisible(is_video)
+
+    def _toggle_video_playback(self):
+        """Toggle video play/pause."""
+        if not hasattr(self, 'media_player'):
+            return
+
+        if self.media_player.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
+            self.media_player.pause()
+            self.btn_play_pause.setText("▶ Play")
+        else:
+            self.media_player.play()
+            self.btn_play_pause.setText("⏸ Pause")
+
+    def _on_video_playback_state_changed(self, state):
+        """Handle video playback state changes."""
+        state_names = {
+            QMediaPlayer.PlaybackState.StoppedState: "Stopped",
+            QMediaPlayer.PlaybackState.PlayingState: "Playing",
+            QMediaPlayer.PlaybackState.PausedState: "Paused"
+        }
+        state_name = state_names.get(state, "Unknown")
+        print(f"[LightboxDialog] Video playback state: {state_name}")
+
+        # Update button text based on state
+        if hasattr(self, 'btn_play_pause'):
+            if state == QMediaPlayer.PlaybackState.PlayingState:
+                self.btn_play_pause.setText("⏸ Pause")
+            else:
+                self.btn_play_pause.setText("▶ Play")
+
+    def _on_video_error(self, error, error_string):
+        """Handle media player errors with GPU crash recovery."""
+        
+        # 🔧 GPU CRASH RECOVERY: Detect GPU device loss
+        is_gpu_crash = (
+            "GPU device instance has been suspended" in error_string or
+            "Device loss detected" in error_string or
+            "COM error 0x887a0005" in error_string or
+            "Unable to copy frame from decoder pool" in error_string or
+            "failed to get textures for frame" in error_string or
+            "Failed to create QRhiTexture" in error_string
+        )
+        
+        if is_gpu_crash:
+            # 🔇 Suppress Qt spam - only log once and show clean message
+            if self._video_error_count == 0:
+                print(f"[LightboxDialog] ⚠️ GPU device error detected - attempting recovery...")
+            
+            self._video_error_count += 1
+            
+            # Debounce: wait for errors to stop before showing message
+            if not self._gpu_warning_shown:
+                self._gpu_error_timer.start(1000)  # Wait 1 second of silence
+            
+            # Try to recover by recreating the media player
+            if self._video_error_count <= 3 and self._last_video_path:
+                # Silent recovery attempt (no spam)
+                if self._video_error_count == 1:
+                    QTimer.singleShot(500, lambda: self._recover_from_gpu_crash(self._last_video_path))
+                return
+        else:
+            # Regular playback error (not GPU)
+            print(f"[LightboxDialog] Video error: {error} - {error_string}")
+            QMessageBox.critical(
+                self,
+                "Video Playback Error",
+                f"Failed to play video:\n{error_string}\n\nError code: {error}"
+            )
+    
+    def _show_gpu_warning_once(self):
+        """Show GPU warning once after errors have stopped (debounced)."""
+        if self._gpu_warning_shown:
+            return
+        
+        self._gpu_warning_shown = True
+        
+        if self._video_error_count > 3:
+            # Multiple errors - show warning
+            print(f"[LightboxDialog] 🚫 GPU recovery failed after {self._video_error_count} errors")
+            QMessageBox.warning(
+                self,
+                "GPU Performance Warning",
+                f"⚠️ Video playback experienced GPU issues.\n\n"
+                f"💡 Possible solutions:\n"
+                f"  • Update your GPU drivers\n"
+                f"  • Close other GPU-intensive applications\n"
+                f"  • Reduce video quality settings\n"
+                f"  • Try a different video codec\n\n"
+                f"🔄 The player attempted automatic recovery.\n"
+                f"If issues persist, please restart the application."
+            )
+        else:
+            # Few errors - silent recovery was likely successful
+            print(f"[LightboxDialog] ✅ GPU recovered after {self._video_error_count} errors (silent recovery)")
+    
+    def _recover_from_gpu_crash(self, video_path: str):
+        """Attempt to recover from GPU crash by recreating the media player."""
+        try:
+            print(f"[LightboxDialog] 🔧 Recreating media player for GPU recovery...")
+            
+            # Remember playback state
+            was_playing = hasattr(self, 'media_player') and \
+                         self.media_player.playbackState() == QMediaPlayer.PlaybackState.PlayingState
+            current_position = self.media_player.position() if hasattr(self, 'media_player') else 0
+            
+            # Stop and cleanup old player
+            if hasattr(self, 'media_player'):
+                try:
+                    self.media_player.stop()
+                    self.media_player.setSource(QUrl())
+                except Exception as e:
+                    print(f"[LightboxDialog] Error stopping player: {e}")
+            
+            # Small delay to let GPU driver recover
+            QTimer.singleShot(100, lambda: self._recreate_media_player(video_path, current_position, was_playing))
+            
+        except Exception as e:
+            print(f"[LightboxDialog] GPU recovery failed: {e}")
+            import traceback
+            traceback.print_exc()
+    
+    def _recreate_media_player(self, video_path: str, position: int, was_playing: bool):
+        """Recreate media player and resume playback."""
+        try:
+            # Recreate media player
+            self.media_player = QMediaPlayer()
+            self.audio_output = QAudioOutput()
+            self.media_player.setAudioOutput(self.audio_output)
+            self.media_player.setVideoOutput(self.video_widget)
+            
+            # Reconnect signals
+            self.media_player.playbackStateChanged.connect(self._on_video_playback_state_changed)
+            self.media_player.errorOccurred.connect(self._on_video_error)
+            self.media_player.positionChanged.connect(self._on_video_position_changed)
+            self.media_player.durationChanged.connect(self._on_video_duration_changed)
+            
+            # Reload video
+            abs_path = os.path.abspath(video_path)
+            video_url = QUrl.fromLocalFile(abs_path)
+            self.media_player.setSource(video_url)
+            
+            # Restore position and playback state
+            def restore_state():
+                try:
+                    if position > 0:
+                        self.media_player.setPosition(position)
+                    if was_playing:
+                        self.media_player.play()
+                    print(f"[LightboxDialog] ✅ GPU recovery successful!")
+                    self._video_error_count = 0  # Reset error count on success
+                except Exception as e:
+                    print(f"[LightboxDialog] Failed to restore playback state: {e}")
+            
+            QTimer.singleShot(200, restore_state)
+            
+        except Exception as e:
+            print(f"[LightboxDialog] Failed to recreate media player: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def _on_video_position_changed(self, position):
+        """Update video position display and timeline slider (Apple/Google-style)."""
+        if not self._is_video:
+            return
+
+        # Update time label
+        if hasattr(self, 'video_position_label'):
+            current = self._format_time(position)
+            total = self._format_time(self._video_duration)
+            self.video_position_label.setText(f"{current} / {total}")
+
+        # Update timeline slider position (only if not being dragged by user)
+        if hasattr(self, 'video_timeline_slider') and not getattr(self, '_timeline_seeking', False):
+            if self._video_duration > 0:
+                # Map position to slider range (0-1000)
+                slider_position = int((position / self._video_duration) * 1000)
+                self.video_timeline_slider.blockSignals(True)
+                self.video_timeline_slider.setValue(slider_position)
+                self.video_timeline_slider.blockSignals(False)
+
+    def _on_video_duration_changed(self, duration):
+        """Store video duration when loaded."""
+        self._video_duration = duration
+        print(f"[LightboxDialog] Video duration: {self._format_time(duration)}")
+
+    # === PHASE 1: Timeline Slider (Seeking) Functionality ===
+
+    def _on_timeline_slider_pressed(self):
+        """User started dragging timeline slider."""
+        self._timeline_seeking = True
+        print("[LightboxDialog] Timeline seeking started")
+
+    def _on_timeline_slider_moved(self, value):
+        """User is dragging timeline slider - show preview time."""
+        if not self._is_video or self._video_duration <= 0:
+            return
+
+        # Calculate target position in milliseconds
+        target_position = int((value / 1000.0) * self._video_duration)
+
+        # Update time label to show where we'll seek to
+        if hasattr(self, 'video_position_label'):
+            current = self._format_time(target_position)
+            total = self._format_time(self._video_duration)
+            self.video_position_label.setText(f"{current} / {total}")
+
+    def _on_timeline_slider_released(self):
+        """User released timeline slider - perform seek."""
+        self._timeline_seeking = False
+
+        if not self._is_video or not hasattr(self, 'media_player'):
+            return
+
+        # Get slider value (0-1000) and map to video position
+        slider_value = self.video_timeline_slider.value()
+        target_position = int((slider_value / 1000.0) * self._video_duration)
+
+        # Seek to target position
+        self.media_player.setPosition(target_position)
+        print(f"[LightboxDialog] Seeked to {self._format_time(target_position)}")
+
+    # === PHASE 1: Volume Control Functionality ===
+
+    def _toggle_mute(self):
+        """Toggle audio mute (Apple/Google Photos style)."""
+        if not hasattr(self, 'audio_output'):
+            return
+
+        is_muted = self.audio_output.isMuted()
+        self.audio_output.setMuted(not is_muted)
+
+        # Update button icon
+        if hasattr(self, 'btn_mute'):
+            self.btn_mute.setText("🔇" if not is_muted else "🔊")
+            self.btn_mute.setChecked(not is_muted)
+
+        print(f"[LightboxDialog] Audio {'muted' if not is_muted else 'unmuted'}")
+
+    def _on_volume_changed(self, value):
+        """Update video volume (0-100)."""
+        if not hasattr(self, 'audio_output'):
+            return
+
+        # Convert 0-100 to 0.0-1.0
+        volume = value / 100.0
+        self.audio_output.setVolume(volume)
+
+        # Auto-unmute if volume increased from 0
+        if value > 0 and self.audio_output.isMuted():
+            self.audio_output.setMuted(False)
+            if hasattr(self, 'btn_mute'):
+                self.btn_mute.setText("🔊")
+                self.btn_mute.setChecked(False)
+
+        print(f"[LightboxDialog] Volume set to {value}%")
+
+    # === PHASE 2: Playback Speed Control Functionality ===
+
+    def _set_playback_speed(self, speed: float):
+        """Set video playback speed (0.25x to 2x)."""
+        if not hasattr(self, 'media_player'):
+            return
+
+        self._current_playback_speed = speed
+        self.media_player.setPlaybackRate(speed)
+
+        # Update button text
+        if hasattr(self, 'btn_playback_speed'):
+            self.btn_playback_speed.setText(f"{speed}x")
+
+        # Update menu checkmarks
+        if hasattr(self, '_speed_menu'):
+            for action in self._speed_menu.actions():
+                # Extract speed from action text (e.g., "1.5x" -> 1.5)
+                action_speed = float(action.text().replace('x', ''))
+                action.setChecked(abs(action_speed - speed) < 0.01)
+
+        print(f"[LightboxDialog] Playback speed set to {speed}x")
+
+    def _format_time(self, milliseconds):
+        """Format milliseconds to M:SS or H:MM:SS."""
+        if milliseconds <= 0:
+            return "0:00"
+
+        seconds = int(milliseconds / 1000)
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        secs = seconds % 60
+
+        if hours > 0:
+            return f"{hours}:{minutes:02d}:{secs:02d}"
+        else:
+            return f"{minutes}:{secs:02d}"
+
+    # === PHASE 2: Fullscreen Mode Functionality ===
+
+    def eventFilter(self, obj, event):
+        """Capture double-click on video widget for fullscreen toggle."""
+        if obj == self.video_widget and event.type() == QEvent.MouseButtonDblClick:
+            self._toggle_fullscreen()
+            return True  # Event handled
+        return super().eventFilter(obj, event)
+
+    def _toggle_fullscreen(self):
+        """Toggle fullscreen mode (F key or double-click on video)."""
+        if self._is_fullscreen:
+            # Exit fullscreen - restore window state
+            self.showNormal()
+
+            # Restore previous geometry if available
+            if self._pre_fullscreen_geometry:
+                self.setGeometry(self._pre_fullscreen_geometry)
+
+            # Show all UI elements
+            if hasattr(self, '_top_bar'):
+                self._top_bar.show()
+            if hasattr(self, '_bottom'):
+                self._bottom.show()
+
+            self._is_fullscreen = False
+            print("[LightboxDialog] Exited fullscreen mode")
+        else:
+            # Enter fullscreen - save current state
+            self._pre_fullscreen_geometry = self.geometry()
+
+            # Hide UI elements for immersive experience
+            if hasattr(self, '_top_bar'):
+                self._top_bar.hide()
+            if hasattr(self, '_bottom'):
+                self._bottom.hide()
+
+            # Go fullscreen
+            self.showFullScreen()
+            self._is_fullscreen = True
+            print("[LightboxDialog] Entered fullscreen mode")
+
+    # === PHASE 2: Frame-by-frame Navigation ===
+
+    def _step_frame(self, direction: int):
+        """Step forward (+1) or backward (-1) by one frame when video is paused."""
+        if not self._is_video or not hasattr(self, 'media_player'):
+            return
+
+        # Only allow frame stepping when paused
+        if self.media_player.playbackState() != QMediaPlayer.PlaybackState.PausedState:
+            return
+
+        # Estimate frame duration (assuming 30fps = ~33ms per frame)
+        # For more accuracy, could extract from video metadata
+        frame_duration_ms = 33  # ~30 FPS
+
+        current_pos = self.media_player.position()
+        new_pos = current_pos + (direction * frame_duration_ms)
+
+        # Clamp to valid range
+        new_pos = max(0, min(self._video_duration, new_pos))
+
+        self.media_player.setPosition(new_pos)
+        print(f"[LightboxDialog] Frame step {direction}: {self._format_time(new_pos)}")
+
+    # === IMPROVEMENT 1: Thumbnail Preview While Loading ===
+
+    def _show_video_loading_state(self, path: str):
+        """Show thumbnail preview with loading indicator while video loads."""
+        try:
+            # Get database instance
+            db = self._shared_db_instance
+            if not db and self.parent():
+                # Try 'db' first (MainWindow), then 'reference_db' (fallback)
+                db = getattr(self.parent(), "db", None) or getattr(self.parent(), "reference_db", None)
+            if not db:
+                return
+
+            # Get video metadata from database
+            project_id = self._project_id
+            if not project_id and self.parent():
+                project_id = getattr(self.parent(), 'project_id', None)
+            if not project_id:
+                return
+
+            # Try to get thumbnail from database
+            video_meta = db.get_video_by_path(path, project_id)
+            if not video_meta:
+                return
+
+            thumbnail_status = video_meta.get('thumbnail_status')
+            thumbnail_path = video_meta.get('thumbnail_path')
+
+            if thumbnail_status == 'ok' and thumbnail_path and os.path.exists(thumbnail_path):
+                # Load thumbnail and show it temporarily
+                thumb_img = Image.open(thumbnail_path)
+                qimg = ImageQt(thumb_img)
+                thumb_pixmap = QPixmap.fromImage(qimg)
+
+                # Temporarily switch to image canvas to show thumbnail
+                self.content_stack.setCurrentIndex(0)
+                self.canvas.set_pixmap(thumb_pixmap)
+
+                # Show "Loading video..." in info label
+                if hasattr(self, 'info_label'):
+                    self.info_label.setText("🎬 Loading video...")
+
+                print(f"[LightboxDialog] Showing video thumbnail preview: {thumbnail_path}")
+
+        except Exception as e:
+            print(f"[LightboxDialog] Could not show thumbnail preview: {e}")
+
+    # === IMPROVEMENT 3: Enhanced Video Info Display ===
+
+    def _update_video_info_label(self, path: str):
+        """Update info label with enhanced video metadata (resolution, codec, bitrate, etc.)."""
+        try:
+            if not hasattr(self, 'info_label'):
+                return
+
+            # Get database instance
+            db = self._shared_db_instance
+            if not db and self.parent():
+                # Try 'db' first (MainWindow), then 'reference_db' (fallback)
+                db = getattr(self.parent(), "db", None) or getattr(self.parent(), "reference_db", None)
+
+            # Get video metadata from database
+            project_id = self._project_id
+            if not project_id and self.parent():
+                project_id = getattr(self.parent(), 'project_id', None)
+            
+            if not project_id or not db:
+                # Fallback: show basic file size only
+                file_size = os.path.getsize(path) / (1024 * 1024)  # MB
+                self.info_label.setText(f"🎬 Video   💾 {file_size:.1f} MB")
+                return
+
+            video_meta = db.get_video_by_path(path, project_id)
+            if not video_meta:
+                # Fallback: show basic file size only
+                file_size = os.path.getsize(path) / (1024 * 1024)  # MB
+                self.info_label.setText(f"🎬 Video   💾 {file_size:.1f} MB")
+                return
+
+            # Build enhanced info string with metadata
+            info_parts = []
+
+            # Resolution with quality badge
+            width = video_meta.get('width')
+            height = video_meta.get('height')
+            if width and height:
+                # Determine quality label
+                if height >= 2160:
+                    quality = "4K"
+                elif height >= 1080:
+                    quality = "FHD"
+                elif height >= 720:
+                    quality = "HD"
+                else:
+                    quality = "SD"
+                info_parts.append(f"📺 {width}×{height} ({quality})")
+
+            # Codec
+            codec = video_meta.get('codec')
+            if codec:
+                codec_display = codec.upper()
+                info_parts.append(f"🎬 {codec_display}")
+
+            # FPS
+            fps = video_meta.get('fps')
+            if fps:
+                info_parts.append(f"🎬 {fps:.0f}fps")
+
+            # Bitrate
+            bitrate = video_meta.get('bitrate')
+            if bitrate:
+                bitrate_mbps = bitrate / 1_000_000
+                info_parts.append(f"📊 {bitrate_mbps:.1f}Mbps")
+
+            # File size
+            size_kb = video_meta.get('size_kb')
+            if size_kb:
+                size_mb = size_kb / 1024
+                if size_mb >= 1024:
+                    size_str = f"{size_mb / 1024:.1f}GB"
+                else:
+                    size_str = f"{size_mb:.0f}MB"
+                info_parts.append(f"💾 {size_str}")
+
+            # Combine all parts
+            if info_parts:
+                self.info_label.setText("   ".join(info_parts))
+            else:
+                # Fallback if no metadata available
+                file_size = os.path.getsize(path) / (1024 * 1024)  # MB
+                self.info_label.setText(f"🎬 Video   💾 {file_size:.1f} MB")
+
+            print(f"[LightboxDialog] Updated video info: {self.info_label.text()}")
+
+        except Exception as e:
+            print(f"[LightboxDialog] Error updating video info: {e}")
+            # Fallback: show basic file size
+            try:
+                file_size = os.path.getsize(path) / (1024 * 1024)  # MB
+                self.info_label.setText(f"🎬 Video   💾 {file_size:.1f} MB")
+            except Exception:
+                pass
+
+    def keyPressEvent(self, event):
+        """Handle keyboard shortcuts - Apple/Google Photos style."""
+        # PHASE 1: Enhanced keyboard shortcuts for video
+        if self._is_video:
+            # Space bar: Play/Pause
+            if event.key() == Qt.Key_Space:
+                self._toggle_video_playback()
+                event.accept()
+                return
+
+            # M key: Mute/Unmute
+            if event.key() == Qt.Key_M:
+                self._toggle_mute()
+                event.accept()
+                return
+
+            # PHASE 2: F key - Fullscreen toggle
+            if event.key() == Qt.Key_F:
+                self._toggle_fullscreen()
+                event.accept()
+                return
+
+            # Up/Down arrows: Volume control
+            if event.key() == Qt.Key_Up and hasattr(self, 'video_volume_slider'):
+                current = self.video_volume_slider.value()
+                self.video_volume_slider.setValue(min(100, current + 5))
+                event.accept()
+                return
+
+            if event.key() == Qt.Key_Down and hasattr(self, 'video_volume_slider'):
+                current = self.video_volume_slider.value()
+                self.video_volume_slider.setValue(max(0, current - 5))
+                event.accept()
+                return
+
+            # 🎬 IMPROVEMENT 2: Enhanced keyboard shortcuts (YouTube-style)
+            
+            # J key: Rewind 10 seconds (YouTube-style)
+            if event.key() == Qt.Key_J:
+                if hasattr(self, 'media_player'):
+                    pos = self.media_player.position()
+                    self.media_player.setPosition(max(0, pos - 10000))
+                    event.accept()
+                    return
+            
+            # K key: Play/Pause (YouTube-style)
+            if event.key() == Qt.Key_K:
+                self._toggle_video_playback()
+                event.accept()
+                return
+            
+            # L key: Fast forward 10 seconds (YouTube-style)
+            if event.key() == Qt.Key_L:
+                if hasattr(self, 'media_player'):
+                    pos = self.media_player.position()
+                    self.media_player.setPosition(min(self._video_duration, pos + 10000))
+                    event.accept()
+                    return
+            
+            # Comma (,): Previous frame when paused
+            if event.key() == Qt.Key_Comma:
+                if hasattr(self, 'media_player') and self.media_player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
+                    self._step_frame(-1)
+                    event.accept()
+                    return
+            
+            # Period (.): Next frame when paused
+            if event.key() == Qt.Key_Period:
+                if hasattr(self, 'media_player') and self.media_player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
+                    self._step_frame(+1)
+                    event.accept()
+                    return
+            
+            # Number keys 0-9: Jump to 0%-90% of video
+            if Qt.Key_0 <= event.key() <= Qt.Key_9:
+                digit = event.key() - Qt.Key_0
+                if hasattr(self, 'media_player') and self._video_duration > 0:
+                    target_position = int((digit / 10.0) * self._video_duration)
+                    self.media_player.setPosition(target_position)
+                    event.accept()
+                    return
+
+            # PHASE 2: Left/Right arrows - Frame-by-frame when paused, seek when playing
+            if event.key() == Qt.Key_Left:
+                if event.modifiers() == Qt.ShiftModifier:
+                    # Shift+Left: Seek backward 5 seconds (always)
+                    if hasattr(self, 'media_player'):
+                        pos = self.media_player.position()
+                        self.media_player.setPosition(max(0, pos - 5000))
+                        event.accept()
+                        return
+                else:
+                    # Plain Left: Frame-by-frame backward when paused, or navigate to prev media
+                    if hasattr(self, 'media_player') and self.media_player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
+                        self._step_frame(-1)
+                        event.accept()
+                        return
+                    # Otherwise let parent handle navigation
+
+            if event.key() == Qt.Key_Right:
+                if event.modifiers() == Qt.ShiftModifier:
+                    # Shift+Right: Seek forward 5 seconds (always)
+                    if hasattr(self, 'media_player'):
+                        pos = self.media_player.position()
+                        self.media_player.setPosition(min(self._video_duration, pos + 5000))
+                        event.accept()
+                        return
+                else:
+                    # Plain Right: Frame-by-frame forward when paused, or navigate to next media
+                    if hasattr(self, 'media_player') and self.media_player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
+                        self._step_frame(+1)
+                        event.accept()
+                        return
+                    # Otherwise let parent handle navigation
+
+        # Call parent implementation for other keys (arrow navigation, etc.)
+        super().keyPressEvent(event)
+
+    def _pil_to_qpixmap(self, pil_img):
+        """Convert a Pillow Image (RGBA) to QPixmap safely."""
+        try:
+            qimg = ImageQt.ImageQt(pil_img.convert("RGBA"))
+            return QPixmap.fromImage(qimg)
+        except Exception as e:
+            print("[_pil_to_qpixmap] conversion failed:", e)
+            return QPixmap()
+            
+    # ---------- Fit / Zoom ----------
+    def _on_zoom_combo_changed(self, *_):
+        text = self.zoom_combo.currentText().strip().replace("%", "")
+        try:
+            pct = max(1, min(800, int(text)))
+        except ValueError:
+            return
+        new_scale = self.canvas._fit_scale * (pct / 100.0)
+        self.canvas.zoom_to(new_scale)
+        self._sync_zoom_controls()
+
+    def _fit_to_window(self):
+        self.zoom_slider.blockSignals(True)
+        self.zoom_slider.setValue(0)
+        self.zoom_slider.blockSignals(False)
+        self.canvas.reset_view()
+
+    def _on_slider_changed(self, v: int):
+        if not self.canvas._pixmap:
+            return
+        if v == 0:
+            self.canvas.zoom_to(self.canvas._fit_scale)
+        elif v > 0:
+            mult = 1.0 + (v / 200.0) * 4.0
+            self.canvas.zoom_to(self.canvas._fit_scale * mult)
+        else:
+            mult = 1.0 + (v / 100.0) * 0.9
+            self.canvas.zoom_to(self.canvas._fit_scale * mult)
+        self._sync_zoom_controls()
+
+    def _nudge_zoom(self, direction: int):
+        val = self.zoom_slider.value()
+        step = 10 * direction
+        val = max(self.zoom_slider.minimum(), min(self.zoom_slider.maximum(), val + step))
+        self.zoom_slider.setValue(val)
+        self._sync_zoom_controls()
+
+    def _sync_zoom_controls(self):
+        if not self.canvas._pixmap:
+            return
+        zoom_pct = int(round(self.canvas._scale / self.canvas._fit_scale * 100))
+        zoom_pct = max(1, min(zoom_pct, 800))
+        self.zoom_combo.blockSignals(True)
+        self.zoom_combo.setCurrentText(f"{zoom_pct}%")
+        self.zoom_combo.blockSignals(False)
+        rel = self.canvas._scale / self.canvas._fit_scale
+        if rel >= 1.0:
+            slider_val = int((rel - 1.0) / 4.0 * 200.0)
+        else:
+            slider_val = int((rel - 1.0) / 0.9 * 100.0)
+        slider_val = max(-100, min(200, slider_val))
+        self.zoom_slider.blockSignals(True)
+        self.zoom_slider.setValue(slider_val)
+        self.zoom_slider.blockSignals(False)
+
+    def _rotate_image(self):
+        """Rotate image clockwise and refresh all metadata + info."""
+        if not self.canvas._pixmap:
+            return
+        tr = QTransform().rotate(90)
+        pm = self.canvas._pixmap.transformed(tr)
+        self.canvas.set_pixmap(pm)
+        self._update_info(pm)
+        self._update_titles_and_meta()  # 🔄 refresh title + meta
+        self.canvas.update()
+        self._refresh_metadata_panel()
+
+    # -------------------------------
+    # Navigation arrows (simplified)
+    # -------------------------------
+    def _init_navigation_arrows(self):
+        self.btn_prev = QToolButton(self)
+        self.btn_next = QToolButton(self)
+        for b,name,tip in [(self.btn_prev,"prev","Previous photo"),(self.btn_next,"next","Next photo")]:
+            b.setAutoRaise(True)
+            b.setIcon(self._icon(name))
+            b.setIconSize(QSize(40,40))
+            b.setCursor(Qt.PointingHandCursor)
+            b.setToolTip(tip)
+            b.setStyleSheet("""
+                QToolButton { color: black; background-color: rgba(0,0,0,0.06); border-radius:20px; border:1px solid rgba(0,0,0,0.06); }
+                QToolButton:hover { background-color: rgba(0,0,0,0.12); }
+            """)
+        self.btn_prev.clicked.connect(self._go_prev)
+        self.btn_next.clicked.connect(self._go_next)
+        QTimer.singleShot(0, self._position_nav_buttons)
+
+    def _position_nav_buttons(self):
+        if not hasattr(self, "btn_prev") or not hasattr(self, "canvas"):
+            return
+        if self.canvas.width()==0 or self.canvas.height()==0:
+            QTimer.singleShot(50, self._position_nav_buttons)
+            return
+        try:
+            canvas_tl = self.canvas.mapTo(self, QPoint(0,0))
+        except Exception:
+            canvas_tl = QPoint(8, self._top.height()+8)
+        cw = self.canvas.width(); ch = self.canvas.height()
+        btn_w = self.btn_prev.width() or 48; btn_h = self.btn_prev.height() or 48
+        y = canvas_tl.y() + (ch//2) - (btn_h//2)
+        left_x = canvas_tl.x() + 12
+        right_x = canvas_tl.x() + cw - btn_w - 12
+        if left_x < 0: left_x = 12
+        if right_x + btn_w > self.width(): right_x = max(12, self.width()-btn_w-12)
+        self.btn_prev.move(left_x, max(8,y))
+        self.btn_next.move(right_x, max(8,y))
+        self.btn_prev.show(); self.btn_next.show()
+
+    def resizeEvent(self, ev):
+        super().resizeEvent(ev)
+        self._position_nav_buttons()
+
+    # -------------------------------
+    # Enter edit mode -> attach right panel
+    # -------------------------------
+    def _enter_edit_mode(self):
+        """Switch UI to edit mode (reuse main canvas). Prepare edit staging but do not auto-open the panel."""
+        print(f"[EditMode] 🔍 DIAGNOSTIC: Entering edit mode, _orig_pil={'exists' if self._orig_pil else 'None'}")
+
+        # CRITICAL FIX: If _orig_pil is None, try to reload from current path
+        if not self._orig_pil and hasattr(self, 'current_path') and self.current_path:
+            print(f"[EditMode] 🔄 DIAGNOSTIC: _orig_pil is None, attempting to reload from {self.current_path}")
+            try:
+                img = Image.open(self.current_path)
+                img = ImageOps.exif_transpose(img).convert("RGBA")
+                self._orig_pil = img.copy()
+                print(f"[EditMode] ✅ DIAGNOSTIC: Successfully reloaded image, size: {self._orig_pil.size}")
+            except Exception as e:
+                print(f"[EditMode] ❌ DIAGNOSTIC: Failed to reload image: {e}")
+                QMessageBox.warning(self, "Edit Error", f"Cannot enter edit mode: Image not loaded.\n\nError: {e}")
+                return
+
+        # Prepare edit staging
+        if self._orig_pil:
+            self._edit_base_pil = self._orig_pil.copy()
+            print(f"[EditMode] ✅ DIAGNOSTIC: Created _edit_base_pil copy")
+        else:
+            print(f"[EditMode] ❌ DIAGNOSTIC: Cannot enter edit mode - no image loaded")
+            QMessageBox.warning(self, "Edit Error", "Cannot enter edit mode: No image loaded.")
+            return
+        self._working_pil = self._edit_base_pil.copy() if self._edit_base_pil else None
+
+        # Reset adjustments values & sliders
+        for k in self.adjustments.keys():
+            self.adjustments[k] = 0
+            slider = getattr(self, f"slider_{k}", None)
+            if slider:
+                slider.blockSignals(True)
+                slider.setValue(0)
+                slider.blockSignals(False)
+
+        # Show editor view and move content_stack into editor container
+        # CRITICAL FIX: Reparent content_stack (not just canvas) to avoid Qt visibility inheritance bug
+        self.stack.setCurrentIndex(1)
+        if hasattr(self, "edit_canvas_container"):
+            container_layout = self.edit_canvas_container.layout()
+            # Reparent the entire content_stack so canvas becomes visible in editor page
+            if self.content_stack.parent() is not self.edit_canvas_container:
+                container_layout.addWidget(self.content_stack)
+        self.canvas.reset_view()
+
+        # Make Save & Cancel visible in toolbar row (they are already created in page)
+        if hasattr(self, "btn_save"):
+            self.btn_save.show()
+        if hasattr(self, "btn_cancel"):
+            self.btn_cancel.show()
+
+        # Ensure placeholder exists but keep it collapsed (panel shown via Adjustments button)
+        if not hasattr(self, "_editor_right_placeholder"):
+            # placeholder will have been created by _build_edit_page; if not, nothing to do
+            pass
+
+        # Render the working base as the initial preview
+        if self._edit_base_pil:
+            pm = self._pil_to_qpixmap(self._edit_base_pil)
+            self.canvas.set_pixmap(pm)
+            self._update_info(pm)
+
+    def _return_to_viewer(self):
+        reply = QMessageBox.question(self, "Return to viewer", "Do you want to save changes before returning?",
+                                     QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        if reply == QMessageBox.Cancel:
+            return
+        if reply == QMessageBox.Yes:
+            QMessageBox.information(self, "Saved", "Changes saved.")
+        # CRITICAL FIX: Reparent content_stack back to viewer page
+        viewer_page = self.stack.widget(0)
+        viewer_layout = viewer_page.layout()
+        center_widget = viewer_layout.itemAt(1).widget() if viewer_layout.count() > 1 else None
+        if center_widget:
+            hbox_layout = center_widget.layout()
+        else:
+            hbox_layout = None
+
+        # Reparent content_stack back to viewer page (not just canvas)
+        if hbox_layout and self.content_stack.parent() is not center_widget:
+            hbox_layout.insertWidget(0, self.content_stack, 1)
+
+        self.stack.setCurrentIndex(0)
+        self.canvas.reset_view()
+
+    # ---------- Navigation / list ----------
+    def set_image_list(self, image_list, start_index=0):
+        self._image_list = list(image_list or [])
+        self._current_index = max(0, min(start_index, len(self._image_list) - 1))
+        if self._image_list:
+            self._path = self._image_list[self._current_index]
+            self._load_media(self._path)  # FIX: Use unified loader for videos and photos
+
+    def _update_titles_and_meta(self):
+        base = os.path.basename(self._path) if self._path else ""
+
+        # Update title based on media type
+        if self._is_video:
+            self.setWindowTitle(f"📹 {base}")
+        else:
+            self.setWindowTitle(f"Photo Viewer – {base}")
+
+        if hasattr(self, "title_label"):
+            self.title_label.setText(base)
+        if hasattr(self, "lbl_edit_title"):
+            self.lbl_edit_title.setText(base)
+
+        # Only update info for photos (videos don't have pixmaps)
+        if not self._is_video and hasattr(self, "canvas") and self.canvas._pixmap:
+            self._update_info(self.canvas._pixmap)
+        if hasattr(self, "_meta_panel") and self._meta_panel.isVisible():
+            meta_dict = self._parse_metadata_to_dict(self._get_metadata_text())
+            new_panel = self._build_metadata_panel(meta_dict)
+            layout = self._meta_placeholder.layout()
+            if layout:
+                while layout.count():
+                    item = layout.takeAt(0)
+                    if item.widget():
+                        item.widget().setParent(None)
+                layout.addWidget(new_panel)
+                self._meta_panel = new_panel
+        if self.stack.currentIndex() == 1 and hasattr(self, "edit_canvas_container"):
+            parent_layout = self.edit_canvas_container.layout()
+            if self.canvas.parent() is not self.edit_canvas_container:
+                parent_layout.addWidget(self.canvas)
+            self.canvas.reset_view()
+
+    def _go_prev(self):
+        if self._image_list and self._current_index > 0:
+            # PHASE 2: Stop video playback when navigating
+            if self._is_video and hasattr(self, 'media_player'):
+                self.media_player.stop()
+
+            self._current_index -= 1
+            self._path = self._image_list[self._current_index]
+            self._load_media(self._path)  # Unified loader handles both photos and videos
+            self._update_titles_and_meta()
+
+            # Only fit to window for photos
+            if self._current_media_type == "photo":
+                self._fit_to_window()
+
+            self._refresh_metadata_panel()
+
+    def _go_next(self):
+        if self._image_list and self._current_index < len(self._image_list) - 1:
+            # PHASE 2: Stop video playback when navigating
+            if self._is_video and hasattr(self, 'media_player'):
+                self.media_player.stop()
+
+            self._current_index += 1
+            self._path = self._image_list[self._current_index]
+            self._load_media(self._path)  # Unified loader handles both photos and videos
+            self._update_titles_and_meta()
+
+            # Only fit to window for photos
+            if self._current_media_type == "photo":
+                self._fit_to_window()
+
+            self._refresh_metadata_panel()
+    
+    # ---------- Utilities ----------
+    def _update_info(self, pm: QPixmap):
+        kb = round(pm.width() * pm.height() * 4 / 1024)
+        self.info_label.setText(f"🖼️ {pm.width()}×{pm.height()}   💾 {kb:,} KB")
+
+    def _toggle_crop_mode(self, enabled):
+        if not hasattr(self, "canvas"):
+            return
+        if enabled:
+            self.canvas.enter_crop_mode()
+            self._show_crop_controls(True)
+        else:
+            self.canvas.exit_crop_mode()
+            self._show_crop_controls(False)
+
+    # -------------------------------
+    # Crop functions (use canvas methods)
+    # -------------------------------
+    def get_crop_box(self):
+        rect = getattr(self.canvas, "_crop_rect", None)
+        if not rect or not getattr(self.canvas, "_pixmap", None): return None
+        left = rect.left(); top = rect.top(); w = rect.width(); h = rect.height()
+        ox = self.canvas._offset.x(); oy = self.canvas._offset.y(); scale = self.canvas._scale
+        rx = (left - ox) / scale; ry = (top - oy) / scale
+        rw = w / scale; rh = h / scale
+        iw = max(1, self.canvas._img_size.width()); ih = max(1, self.canvas._img_size.height())
+        x = int(max(0, min(iw-1, round(rx))))
+        y = int(max(0, min(ih-1, round(ry))))
+        w2 = int(max(1, min(iw-x, round(rw))))
+        h2 = int(max(1, min(ih-y, round(rh))))
+        return (x,y,w2,h2)
+
+    def _apply_crop(self):
+        """Apply crop to the edit base (staged); do NOT write file. Mark dirty."""
+        if not hasattr(self.canvas, "_crop_rect") or not self.canvas._crop_rect:
+            QMessageBox.warning(self, "Crop", "No crop area selected.")
+            return
+        if self._edit_base_pil is None:
+            QMessageBox.warning(self, "Crop", "No image loaded for editing.")
+            return
+        box = self.get_crop_box()
+        if not box:
+            QMessageBox.warning(self, "Crop", "Invalid crop selection.")
+            return
+        try:
+            x, y, w, h = box
+            cropped = self._edit_base_pil.crop((x, y, x + w, y + h))
+            self._edit_base_pil = cropped
+            # after changing base, reapply adjustments to produce preview
+            self._apply_adjustments()
+            self._is_dirty = True
+            # keep crop UI state: exit crop mode and hide buttons
+            if hasattr(self.canvas, "exit_crop_mode"):
+                self.canvas.exit_crop_mode()
+            self._show_crop_controls(False)
+        except Exception as e:
+            QMessageBox.warning(self, "Crop failed", str(e))
+
+    def _show_crop_controls(self, show: bool):
+        if show:
+            if hasattr(self, "btn_crop_apply") and hasattr(self, "btn_crop_cancel"):
+                self.btn_crop_apply.show(); self.btn_crop_cancel.show()
+        else:
+            if hasattr(self, "btn_crop_apply"): self.btn_crop_apply.hide()
+            if hasattr(self, "btn_crop_cancel"): self.btn_crop_cancel.hide()
+            if hasattr(self, "btn_crop") and hasattr(self.btn_crop, "setChecked"):
+                self.btn_crop.setChecked(False)
+
+    # -------------------------------
+    # Save / other helpers
+    # -------------------------------
+    def _save_as(self):
+        if not self._path: return
+        dest, _ = QFileDialog.getSaveFileName(self, "Save As", self._path, "Images (*.png *.jpg *.jpeg *.bmp)")
+        if not dest: return
+        try:
+            img = Image.open(self._path)
+            img.save(dest)
+            self._path = dest
+            QMessageBox.information(self, "Saved", f"Photo saved as:\n{dest}")
+            self._update_titles_and_meta()
+            self._refresh_metadata_panel()
+        except Exception as e:
+            QMessageBox.warning(self, "Save failed", f"Error: {e}")
+
+    def _copy_to_clipboard(self):
+        if self.canvas._pixmap:
+            QApplication.clipboard().setPixmap(self.canvas._pixmap)
+            QMessageBox.information(self, "Copied", "Photo copied to clipboard.")
+
+    def _save_as_copy(self):
+        """Save working image as a new file (Save as copy)."""
+        if not self._working_pil:
+            QMessageBox.information(self, "Save as copy", "Nothing to save.")
+            return
+        dest, _ = QFileDialog.getSaveFileName(self, "Save As Copy", self._path or "", "Images (*.png *.jpg *.jpeg *.bmp)")
+        if not dest:
+            return
+        try:
+            self._working_pil.save(dest)
+            QMessageBox.information(self, "Saved", f"Saved copy to:\n{dest}")
+            # optional: keep edit open; do not overwrite original
+            self._is_dirty = False
+            if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
+                self._save_action_overwrite.setEnabled(False)
+        except Exception as e:
+            QMessageBox.warning(self, "Save failed", f"Error: {e}")
+
+    def _save_overwrite(self):
+        """Overwrite the original file with the working image (make edits permanent)."""
+        if not self._path:
+            QMessageBox.warning(self, "Save", "No original path to save to.")
+            return
+        if not self._working_pil:
+            QMessageBox.information(self, "Save", "Nothing to save.")
+            return
+        try:
+            self._working_pil.save(self._path)
+            # update original and edit base to reflect saved file
+            self._orig_pil = self._working_pil.copy()
+            self._edit_base_pil = self._orig_pil.copy()
+            self._is_dirty = False
+            if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
+                self._save_action_overwrite.setEnabled(False)
+            QMessageBox.information(self, "Saved", f"Saved changes to:\n{self._path}")
+        except Exception as e:
+            QMessageBox.warning(self, "Save failed", f"Error: {e}")
+
+    def _copy_working_to_clipboard(self):
+        """Copy the working preview to clipboard as a pixmap."""
+        if self._working_pil is None:
+            QMessageBox.information(self, "Copy", "Nothing to copy.")
+            return
+        try:
+            pm = self._pil_to_qpixmap(self._working_pil)
+            QApplication.clipboard().setPixmap(pm)
+            QMessageBox.information(self, "Copied", "Working image copied to clipboard.")
+        except Exception as e:
+            QMessageBox.warning(self, "Copy failed", f"Error: {e}")
+
+    def _cancel_edits(self):
+        """Reset staged edits and restore original image in viewer/editor."""
+        # discard staged images
+        self._edit_base_pil = None
+        self._working_pil = None
+        # reset adjustments and sliders
+        for k in self.adjustments.keys():
+            self.adjustments[k] = 0
+            slider = getattr(self, f"slider_{k}", None)
+            if slider:
+                slider.blockSignals(True)
+                slider.setValue(0)
+                slider.blockSignals(False)
+        # restore original image on canvas
+        if self._orig_pil:
+            pm = self._pil_to_qpixmap(self._orig_pil)
+            self.canvas.set_pixmap(pm)
+            self._update_info(pm)
+        # reset dirty flag and save action
+        self._is_dirty = False
+        if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
+            self._save_action_overwrite.setEnabled(False)
+        # hide crop controls and uncheck crop toggle
+        self._show_crop_controls(False)
+        if hasattr(self, "btn_crop") and getattr(self.btn_crop, "setChecked", None):
+            self.btn_crop.setChecked(False)
+    
+    def _open_in_explorer(self):
+        if self._path and os.path.exists(self._path):
+            subprocess.run(["explorer", "/select,", os.path.normpath(self._path)])
+
+    def closeEvent(self, ev):
+        """Clean up resources when closing - professional resource management."""
+        self._preload_stop = True
+
+        # Stop video playback and release media player resources
+        if hasattr(self, 'media_player') and self._is_video:
+            self.media_player.stop()
+            self.media_player.setSource(QUrl())  # Release file handle
+            print("[LightboxDialog] Video playback stopped and resources released")
+
+        super().closeEvent(ev)
+
+    # -------------------------------
+    # Metadata helpers (unchanged)
+    # -------------------------------
+    def _refresh_metadata_panel(self):
+        if hasattr(self, "_meta_panel") and self._meta_panel.isVisible():
+            try:
+                meta_dict = self._parse_metadata_to_dict(self._get_metadata_text())
+                new_panel = self._build_metadata_panel(meta_dict)
+                layout = self._meta_placeholder.layout()
+                if layout:
+                    while layout.count():
+                        item = layout.takeAt(0)
+                        if item.widget(): item.widget().setParent(None)
+                    layout.addWidget(new_panel)
+                self._meta_panel = new_panel
+            except Exception as e:
+                print(f"[Metadata Refresh Error] {e}")
+                
+    def _on_canvas_scale_changed(self, new_scale: float):
+        """
+        Called when the canvas scale changes (wheel / programmatic).
+        Ensure the zoom slider and combo reflect the new scale.
+        """
+        try:
+            # _sync_zoom_controls reads current canvas._scale, so just call it
+            self._sync_zoom_controls()
+        except Exception:
+            pass
