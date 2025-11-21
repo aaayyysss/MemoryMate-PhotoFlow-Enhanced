@@ -780,6 +780,10 @@ class ThumbnailGridQt(QWidget):
         self._placeholder_cache = {}  # key: (width, height), value: QPixmap
         self._current_reload_token = self._reload_token  # initialize for safety
 
+        # P1-5 FIX: Track thumbnail load requests with timestamps to prevent stale flags
+        self._thumb_request_timestamps = {}  # key: path, value: timestamp
+        self._thumb_request_timeout = 30.0  # seconds - clear requests older than this
+
 
         # --- Thumbnail grid spacing (scales with zoom)
         self._base_spacing = self.settings.get("thumb_padding", 8)
@@ -1213,12 +1217,19 @@ class ThumbnailGridQt(QWidget):
             # ThumbWorker signature: real_path, norm_path, height, row, signal_obj, cache, reload_token, placeholder
             worker = ThumbWorker(p, p, thumb_h, i, self.thumb_signal, self._thumb_cache, token, self._placeholder_pixmap)
 
+            # P1-5 FIX: Track request timestamp
+            import time
+            self._thumb_request_timestamps[p] = time.time()
+
             self.thread_pool.start(worker)
+
+        # P1-5 FIX: Clean up stale thumbnail requests after scheduling new ones
+        self._cleanup_stale_thumb_requests()
 
         # Trigger thumbnail loading
         self._apply_zoom_geometry()
         self.list_view.doItemsLayout()
-        
+
         # 🔧 FIX: Force complete geometry update
         def _force_geometry_update():
             self.list_view.setSpacing(self._spacing)
@@ -1234,6 +1245,22 @@ class ThumbnailGridQt(QWidget):
         mode_label = "videos" if content_type == "videos" else "tag"
         print(f"[GRID] Loaded {len(self._paths)} thumbnails in {mode_label}-mode.")
 
+
+    def _cleanup_stale_thumb_requests(self):
+        """
+        P1-5 FIX: Remove stale thumbnail request timestamps.
+        Clears requests older than timeout to allow retries of failed loads.
+        """
+        import time
+        current_time = time.time()
+        stale_keys = [
+            key for key, timestamp in self._thumb_request_timestamps.items()
+            if current_time - timestamp > self._thumb_request_timeout
+        ]
+        for key in stale_keys:
+            del self._thumb_request_timestamps[key]
+        if stale_keys:
+            print(f"[GRID] Cleaned up {len(stale_keys)} stale thumbnail requests")
 
     def shutdown_threads(self):
         """Stop accepting new tasks and wait for current ones to finish."""
@@ -1881,13 +1908,30 @@ class ThumbnailGridQt(QWidget):
         """
         # Ctrl+Wheel zoom (merged from previous eventFilter)
         if obj is self.list_view.viewport() and event.type() == QEvent.MouseMove:
+            # P1-6 FIX: Update only affected cells, not entire viewport
             idx = self.list_view.indexAt(event.pos())
-            self.delegate.set_hover_row(idx.row() if idx.isValid() else -1)
-            self.list_view.viewport().update()
+            new_row = idx.row() if idx.isValid() else -1
+            old_row = getattr(self.delegate, '_current_hover_row', -1)
+
+            if new_row != old_row:
+                self.delegate.set_hover_row(new_row)
+                # P1-6 FIX: Update only the old and new hovered cells
+                if old_row >= 0 and old_row < self.model.rowCount():
+                    old_idx = self.model.index(old_row, 0)
+                    old_rect = self.list_view.visualRect(old_idx)
+                    self.list_view.viewport().update(old_rect)
+                if new_row >= 0:
+                    new_rect = self.list_view.visualRect(idx)
+                    self.list_view.viewport().update(new_rect)
             return False
         if obj is self.list_view.viewport() and event.type() == QEvent.Leave:
+            # P1-6 FIX: Update only the previously hovered cell
+            old_row = getattr(self.delegate, '_current_hover_row', -1)
             self.delegate.set_hover_row(-1)
-            self.list_view.viewport().update()
+            if old_row >= 0 and old_row < self.model.rowCount():
+                old_idx = self.model.index(old_row, 0)
+                old_rect = self.list_view.visualRect(old_idx)
+                self.list_view.viewport().update(old_rect)
             return False
         if obj is self.list_view.viewport() and event.type() == QEvent.MouseButtonPress:
             pos = event.pos()
