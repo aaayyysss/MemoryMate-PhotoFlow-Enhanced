@@ -789,18 +789,21 @@ class ThumbnailGridQt(QWidget):
         self._base_spacing = self.settings.get("thumb_padding", 8)
         self._spacing = self._base_spacing
         self.cell_width_factor = 1.25
-        
-        # Use the global thread pool for better reuse across grid instances.
-        self.thread_pool = QThreadPool.globalInstance()
+
+        # P2-26 FIX: Use dedicated thread pool instead of global instance
+        # This prevents thumbnail operations from interfering with unrelated threaded tasks
+        # Global pool may have contention from face detection, photo scan, device imports, etc.
+        self.thread_pool = QThreadPool()
         # Respect user setting for worker count
         try:
             workers = int(self.settings.get("thumbnail_workers", 4))
         except Exception:
             workers = 4
-        
-        # set a reasonable cap
+
+        # P2-26 FIX: Apply reasonable cap and configure dedicated pool
         workers = max(1, min(workers, 8))
         self.thread_pool.setMaxThreadCount(workers)
+        print(f"[GRID] P2-26: Created dedicated thumbnail thread pool with {workers} workers")
 
         self.thumb_signal = ThumbSignal()
         self.thumb_signal.preview.connect(self._on_thumb_loaded)  # show asap
@@ -957,34 +960,44 @@ class ThumbnailGridQt(QWidget):
                 QTimer.singleShot(100, self.request_visible_thumbnails)
                 return
 
-            # CRITICAL FIX: Use scrollbar position instead of indexAt() for reliability
-            # indexAt() doesn't work well in IconMode when scrolled
+            # P2-27 FIX: Cache indexAt() results using scroll position as key
+            # This avoids expensive layout calculations on every scroll pixel
             scrollbar = self.list_view.verticalScrollBar()
             scroll_value = scrollbar.value()
             scroll_max = scrollbar.maximum()
 
-            # Calculate approximate start position based on scroll percentage
-            if scroll_max > 0:
-                scroll_fraction = scroll_value / scroll_max
-                approx_start = int(scroll_fraction * self.model.rowCount())
+            # P2-27 FIX: Use cached viewport range if scroll position unchanged
+            cache_key = (scroll_value, rect.height(), self.model.rowCount())
+            if not hasattr(self, '_viewport_range_cache'):
+                self._viewport_range_cache = {}
+
+            if cache_key in self._viewport_range_cache:
+                start, end = self._viewport_range_cache[cache_key]
+                # Silently use cache (no print to avoid spam)
             else:
-                approx_start = 0
+                # Calculate viewport range with indexAt() fallback
+                # Calculate approximate start position based on scroll percentage
+                if scroll_max > 0:
+                    scroll_fraction = scroll_value / scroll_max
+                    approx_start = int(scroll_fraction * self.model.rowCount())
+                else:
+                    approx_start = 0
 
-            # Try indexAt() first, but fall back to scroll-based calculation
-            top_index = self.list_view.indexAt(QPoint(rect.left(), rect.top()))
-            if top_index.isValid() and top_index.row() > approx_start - 50:
-                # indexAt() is working and gives reasonable result
-                start = top_index.row()
-            else:
-                # indexAt() failed or unreliable, use scroll-based estimate
-                start = max(0, approx_start - 20)  # Start a bit before scroll position
-                print(f"[GRID] Using scroll-based start position: {start} (scroll: {scroll_value}/{scroll_max})")
+                # Try indexAt() first, but fall back to scroll-based calculation
+                top_index = self.list_view.indexAt(QPoint(rect.left(), rect.top()))
+                if top_index.isValid() and top_index.row() > approx_start - 50:
+                    # indexAt() is working and gives reasonable result
+                    start = top_index.row()
+                else:
+                    # indexAt() failed or unreliable, use scroll-based estimate
+                    start = max(0, approx_start - 20)  # Start a bit before scroll position
+                    print(f"[GRID] Using scroll-based start position: {start} (scroll: {scroll_value}/{scroll_max})")
 
-            # Calculate end position
-            bottom_index = self.list_view.indexAt(QPoint(rect.left(), rect.bottom() - 1))
+                # Calculate end position
+                bottom_index = self.list_view.indexAt(QPoint(rect.left(), rect.bottom() - 1))
 
-            if bottom_index.isValid() and bottom_index.row() > start:
-                end = bottom_index.row()
+                if bottom_index.isValid() and bottom_index.row() > start:
+                    end = bottom_index.row()
             else:
                 # Calculate based on grid layout
                 first_item = self.model.item(max(0, start))
@@ -1000,6 +1013,15 @@ class ThumbnailGridQt(QWidget):
                         end = min(self.model.rowCount() - 1, start + 150)
                 else:
                     end = min(self.model.rowCount() - 1, start + 150)
+
+                # P2-27 FIX: Store calculated range in cache
+                # (Store before prefetch expansion for accurate caching)
+                self._viewport_range_cache[cache_key] = (start, end)
+                # P2-27 FIX: Limit cache size to prevent unbounded growth
+                if len(self._viewport_range_cache) > 20:
+                    # Remove oldest entries (FIFO)
+                    oldest_key = next(iter(self._viewport_range_cache))
+                    del self._viewport_range_cache[oldest_key]
 
             # Expand range by prefetch radius
             start = max(0, start - self._prefetch_radius)

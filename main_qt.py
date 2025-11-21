@@ -11,7 +11,8 @@ from main_window_qt import MainWindow
 from logging_config import setup_logging, get_logger, disable_external_logging
 from settings_manager_qt import SettingsManager
 
-# Initialize settings to get log level
+# P2-25 FIX: Initialize settings once (will be reused at line 67)
+# This prevents potential state inconsistencies from multiple instantiations
 settings = SettingsManager()
 log_level = settings.get("log_level", "INFO")
 log_to_console = settings.get("log_to_console", True)
@@ -64,7 +65,8 @@ if __name__ == "__main__":
     splash.show()
 
     # 2️: Initialize settings and startup worker
-    settings = SettingsManager()
+    # P2-25 FIX: Reuse the global settings instance created at line 15
+    # (settings is already initialized above for logging configuration)
 
     worker = StartupWorker(settings)
     worker.progress.connect(splash.update_progress)
@@ -108,10 +110,14 @@ if __name__ == "__main__":
 
         # Check FFmpeg availability and notify user if needed
         try:
-            from utils.ffmpeg_check import show_ffmpeg_status_once
-            ffmpeg_message = show_ffmpeg_status_once()
-            if ffmpeg_message and "⚠️" in ffmpeg_message:
-                # Only show warning if FFmpeg/FFprobe are missing or misconfigured
+            # P2-24 FIX: Use structured status returns instead of emoji string matching
+            # This avoids issues with localization, encoding, or format changes
+            from utils.ffmpeg_check import check_ffmpeg_availability
+            ffmpeg_ok, ffprobe_ok, ffmpeg_message = check_ffmpeg_availability()
+
+            # P2-24 FIX: Check boolean status instead of parsing message string
+            if not (ffmpeg_ok and ffprobe_ok):
+                # FFmpeg/FFprobe are missing or misconfigured - show warning
                 print(ffmpeg_message)
                 from PySide6.QtWidgets import QMessageBox
                 msg_box = QMessageBox(win)
