@@ -220,12 +220,12 @@ def _get_insightface_app():
                     supports_providers = 'providers' in sig.parameters
 
                     # Initialize FaceAnalysis with version-appropriate parameters
-                    # CRITICAL FIX: InsightFace expects root to be PARENT of buffalo_l directory
-                    # When name='buffalo_l', it looks for root/buffalo_l/models
-                    # So if buffalo_dir is /path/to/models/buffalo_l, root should be /path/to/models
-                    parent_dir = os.path.dirname(buffalo_dir)
-                    init_params = {'name': 'buffalo_l', 'root': parent_dir}
-                    logger.info(f"✓ Setting InsightFace root={parent_dir}, name=buffalo_l")
+                    # CRITICAL FIX (2025-11-24 v2): Don't pass 'name' parameter, just use root
+                    # When you pass name='buffalo_l', InsightFace tries to find subdirectories
+                    # Instead, pass the buffalo_l directory directly as root without name
+                    # This matches how InsightFace works with standalone model directories
+                    init_params = {'root': buffalo_dir}
+                    logger.info(f"✓ Setting InsightFace root={buffalo_dir} (no name parameter)")
 
                     if supports_providers:
                         # NEWER VERSION: Pass providers for optimal performance
