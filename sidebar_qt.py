@@ -6033,10 +6033,20 @@ class SidebarQt(QWidget):
         try:
             from services.device_sources import scan_mobile_devices
 
-            # Quick scan for devices (with device registration)
+            # OPTIMIZATION: Progress callback to show status in UI
+            def show_progress(message: str):
+                """Show scan progress in status bar."""
+                try:
+                    main_window = self.window()
+                    if main_window and hasattr(main_window, 'statusBar'):
+                        main_window.statusBar().showMessage(message, 2000)
+                except (RuntimeError, AttributeError):
+                    pass  # Ignore if window is being closed
+
+            # Quick scan for devices (with device registration and progress feedback)
             print("\n[Sidebar] ===== Auto-refresh device check =====")
             print(f"[Sidebar] Previous device count: {self._last_device_count}")
-            devices = scan_mobile_devices(db=self.db, register_devices=True)
+            devices = scan_mobile_devices(db=self.db, register_devices=True, progress_callback=show_progress)
             current_count = len(devices)
             print(f"[Sidebar] Current device count: {current_count}")
 
