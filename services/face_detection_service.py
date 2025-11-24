@@ -207,10 +207,11 @@ def _get_insightface_app():
                     except Exception as e:
                         logger.debug(f"Could not save model path to settings: {e}")
 
-                    # CRITICAL: Pass buffalo_l directory DIRECTLY as root
-                    # This matches the proof of concept approach from OldPy/photo_sorter.py
-                    # Do NOT pass parent directory, pass the buffalo_l directory itself!
-                    logger.info(f"✓ Initializing InsightFace with buffalo_l directory: {buffalo_dir}")
+                    # CRITICAL FIX (2025-11-24): InsightFace requires PARENT directory as root
+                    # When you pass name='buffalo_l', InsightFace looks for root/buffalo_l/
+                    # So we must pass the parent of buffalo_l as root, not buffalo_l itself
+                    # This fixes "assert 'detection' in self.models" error
+                    logger.info(f"✓ Found buffalo_l models at: {buffalo_dir}")
 
                     # Version detection: Check if FaceAnalysis supports providers parameter
                     # This ensures compatibility with BOTH old and new InsightFace versions
@@ -219,7 +220,12 @@ def _get_insightface_app():
                     supports_providers = 'providers' in sig.parameters
 
                     # Initialize FaceAnalysis with version-appropriate parameters
-                    init_params = {'name': 'buffalo_l', 'root': buffalo_dir}
+                    # CRITICAL FIX: InsightFace expects root to be PARENT of buffalo_l directory
+                    # When name='buffalo_l', it looks for root/buffalo_l/models
+                    # So if buffalo_dir is /path/to/models/buffalo_l, root should be /path/to/models
+                    parent_dir = os.path.dirname(buffalo_dir)
+                    init_params = {'name': 'buffalo_l', 'root': parent_dir}
+                    logger.info(f"✓ Setting InsightFace root={parent_dir}, name=buffalo_l")
 
                     if supports_providers:
                         # NEWER VERSION: Pass providers for optimal performance
