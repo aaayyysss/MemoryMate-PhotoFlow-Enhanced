@@ -462,18 +462,18 @@ class PeopleListView(QWidget):
         # Try loading from file path with EXIF correction
         if rep_path and os.path.exists(rep_path):
             try:
-                # Load with PIL and apply EXIF orientation correction
-                pil_image = Image.open(rep_path)
-                pil_image = ImageOps.exif_transpose(pil_image)  # Auto-rotate based on EXIF
+                # BUG-C2 FIX: Use context manager to prevent resource leak
+                with Image.open(rep_path) as pil_image:
+                    pil_image = ImageOps.exif_transpose(pil_image)  # Auto-rotate based on EXIF
 
-                # Convert PIL Image to QPixmap
-                if pil_image.mode != 'RGB':
-                    pil_image = pil_image.convert('RGB')
+                    # Convert PIL Image to QPixmap
+                    if pil_image.mode != 'RGB':
+                        pil_image = pil_image.convert('RGB')
 
-                # Convert to bytes and load into QImage
-                buffer = BytesIO()
-                pil_image.save(buffer, format='PNG')
-                image = QImage.fromData(buffer.getvalue())
+                    # Convert to bytes and load into QImage
+                    buffer = BytesIO()
+                    pil_image.save(buffer, format='PNG')
+                    image = QImage.fromData(buffer.getvalue())
 
                 if not image.isNull():
                     pixmap = QPixmap.fromImage(image)
@@ -485,8 +485,9 @@ class PeopleListView(QWidget):
                     pixmap = QPixmap(rep_path)
                     if not pixmap.isNull():
                         return pixmap
-                except:
-                    pass
+                except Exception as e:
+                    # BUG-H7 FIX: Log QPixmap loading failures
+                    print(f"[PeopleListView] Failed to load QPixmap from {rep_path}: {e}")
 
         return pixmap
 

@@ -319,7 +319,9 @@ def get_hardware_info():
         import onnxruntime as ort
         available = ort.get_available_providers()
         cuda_available = 'CUDAExecutionProvider' in available
-    except:
+    except (ImportError, AttributeError) as e:
+        # BUG-H5 FIX: Log CUDA detection failures
+        print(f"[FaceDetection] Failed to detect CUDA: {e}")
         cuda_available = False
 
     return {
@@ -529,67 +531,70 @@ class FaceDetectionService:
             True if successful, False otherwise
         """
         try:
-            # Load original image
-            img = Image.open(image_path)
+            # BUG-C2 FIX: Use context manager to prevent resource leak
+            with Image.open(image_path) as img:
+                # Extract bounding box
+                bbox_x = face['bbox_x']
+                bbox_y = face['bbox_y']
+                bbox_w = face['bbox_w']
+                bbox_h = face['bbox_h']
 
-            # Extract bounding box
-            bbox_x = face['bbox_x']
-            bbox_y = face['bbox_y']
-            bbox_w = face['bbox_w']
-            bbox_h = face['bbox_h']
+                # Add padding (10% on each side)
+                padding = int(min(bbox_w, bbox_h) * 0.1)
+                x1 = max(0, bbox_x - padding)
+                y1 = max(0, bbox_y - padding)
+                x2 = min(img.width, bbox_x + bbox_w + padding)
+                y2 = min(img.height, bbox_y + bbox_h + padding)
 
-            # Add padding (10% on each side)
-            padding = int(min(bbox_w, bbox_h) * 0.1)
-            x1 = max(0, bbox_x - padding)
-            y1 = max(0, bbox_y - padding)
-            x2 = min(img.width, bbox_x + bbox_w + padding)
-            y2 = min(img.height, bbox_y + bbox_h + padding)
+                # Crop face
+                face_img = img.crop((x1, y1, x2, y2))
 
-            # Crop face
-            face_img = img.crop((x1, y1, x2, y2))
+                # Convert RGBA to RGB if necessary (required for JPEG)
+                # This handles PNG files with transparency
+                if face_img.mode == 'RGBA':
+                    # Create white background
+                    rgb_img = Image.new('RGB', face_img.size, (255, 255, 255))
+                    # Paste using alpha channel as mask
+                    rgb_img.paste(face_img, mask=face_img.split()[3])
+                    face_img = rgb_img
+                    logger.debug(f"Converted RGBA to RGB for JPEG compatibility")
+                elif face_img.mode not in ('RGB', 'L'):
+                    # Convert any other modes to RGB
+                    face_img = face_img.convert('RGB')
+                    logger.debug(f"Converted {img.mode} to RGB")
 
-            # Convert RGBA to RGB if necessary (required for JPEG)
-            # This handles PNG files with transparency
-            if face_img.mode == 'RGBA':
-                # Create white background
-                rgb_img = Image.new('RGB', face_img.size, (255, 255, 255))
-                # Paste using alpha channel as mask
-                rgb_img.paste(face_img, mask=face_img.split()[3])
-                face_img = rgb_img
-                logger.debug(f"Converted RGBA to RGB for JPEG compatibility")
-            elif face_img.mode not in ('RGB', 'L'):
-                # Convert any other modes to RGB
-                face_img = face_img.convert('RGB')
-                logger.debug(f"Converted {img.mode} to RGB")
+                # Resize to standard size for consistency
+                # Get crop size from config (default 160x160 for better quality)
+                try:
+                    cfg = get_face_config()
+                    crop_size = int(cfg.get('crop_size', 160))
+                except Exception:
+                    crop_size = 160
+                face_img = face_img.resize((crop_size, crop_size), Image.Resampling.LANCZOS)
 
-            # Resize to standard size for consistency
-            try:
-                cfg = get_face_config()
-                crop_size = int(cfg.get('crop_size', 160))
-            except Exception:
-                crop_size = 160
-            face_img = face_img.resize((crop_size, crop_size), Image.Resampling.LANCZOS)
+                # Ensure directory exists
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-            # Ensure directory exists
-            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                # Save with explicit format based on extension
+                # Get quality setting from config
+                try:
+                    cfg = get_face_config()
+                    crop_quality = int(cfg.get('crop_quality', 95))
+                except Exception:
+                    crop_quality = 95
 
-            # Save with explicit format based on extension
-            file_ext = os.path.splitext(output_path)[1].lower()
-            try:
-                cfg = get_face_config()
-                crop_quality = int(cfg.get('crop_quality', 95))
-            except Exception:
-                crop_quality = 95
-            if file_ext in ['.jpg', '.jpeg']:
-                face_img.save(output_path, format='JPEG', quality=crop_quality)
-            elif file_ext == '.png':
-                face_img.save(output_path, format='PNG')
-            else:
-                # Default to JPEG
-                face_img.save(output_path, format='JPEG', quality=crop_quality)
+                file_ext = os.path.splitext(output_path)[1].lower()
+                if file_ext in ['.jpg', '.jpeg']:
+                    face_img.save(output_path, format='JPEG', quality=crop_quality)
+                elif file_ext == '.png':
+                    face_img.save(output_path, format='PNG')
+                else:
+                    # Default to JPEG
+                    face_img.save(output_path, format='JPEG', quality=crop_quality)
 
-            logger.debug(f"Saved face crop to {output_path}")
-            return True
+                logger.debug(f"Saved face crop to {output_path}")
+                return True
+            # BUG-C2 FIX: img automatically closed by context manager
 
         except Exception as e:
             logger.error(f"Failed to save face crop: {e}")

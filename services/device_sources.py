@@ -1282,7 +1282,9 @@ class DeviceScanner:
             try:
                 # Try to get friendly name from folder
                 device_label = folder.Title or folder.Self.Name or "Mobile Device"
-            except:
+            except (AttributeError, OSError, RuntimeError) as e:
+                # BUG-H2 FIX: Log COM property access failures
+                print(f"[DeviceScanner] Failed to get device label: {e}")
                 # Fallback: parse from path
                 if "samsung" in shell_path.lower():
                     device_label = "Samsung Device"
