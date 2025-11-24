@@ -12,6 +12,8 @@ import logging
 import cv2
 import threading
 
+from config.face_detection_config import get_face_config
+
 logger = logging.getLogger(__name__)
 
 # Lazy import InsightFace (only load when needed)
@@ -409,7 +411,7 @@ class FaceDetectionService:
         except Exception:
             return False
 
-    def detect_faces(self, image_path: str) -> List[dict]:
+    def detect_faces(self, image_path: str, project_id: Optional[int] = None) -> List[dict]:
         """
         Detect all faces in an image and generate embeddings.
 
@@ -455,7 +457,21 @@ class FaceDetectionService:
                 return []
 
             # Detect faces and extract embeddings
+            cfg = get_face_config()
+            params = cfg.get_detection_params(project_id)
+            conf_th = float(params.get('confidence_threshold', 0.65))
+            min_face_size = int(params.get('min_face_size', 20))
+            show_low_conf = bool(cfg.get('show_low_confidence', False))
             # Returns list of Face objects with bbox, embedding, det_score, etc.
+            # Optional downscale for very large images to improve speed/memory
+            try:
+                max_dim = max(img.shape[0], img.shape[1])
+                if max_dim > 3000:
+                    scale = 2000.0 / max_dim
+                    img = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+                    logger.debug(f"Downscaled image for detection: scale={scale:.3f}")
+            except Exception:
+                pass
             detected_faces = self.app.get(img)
 
             if not detected_faces:
@@ -491,6 +507,10 @@ class FaceDetectionService:
                     'confidence': confidence
                 })
 
+            if show_low_conf:
+                faces = [f for f in faces if min(f['bbox_w'], f['bbox_h']) >= min_face_size]
+            else:
+                faces = [f for f in faces if f['confidence'] >= conf_th and min(f['bbox_w'], f['bbox_h']) >= min_face_size]
             logger.info(f"[FaceDetection] Found {len(faces)} faces in {os.path.basename(image_path)}")
             return faces
 
@@ -543,21 +563,34 @@ class FaceDetectionService:
                     face_img = face_img.convert('RGB')
                     logger.debug(f"Converted {img.mode} to RGB")
 
-                # Resize to standard size for consistency (160x160 for better quality)
-                face_img = face_img.resize((160, 160), Image.Resampling.LANCZOS)
+                # Resize to standard size for consistency
+                # Get crop size from config (default 160x160 for better quality)
+                try:
+                    cfg = get_face_config()
+                    crop_size = int(cfg.get('crop_size', 160))
+                except Exception:
+                    crop_size = 160
+                face_img = face_img.resize((crop_size, crop_size), Image.Resampling.LANCZOS)
 
                 # Ensure directory exists
                 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
                 # Save with explicit format based on extension
+                # Get quality setting from config
+                try:
+                    cfg = get_face_config()
+                    crop_quality = int(cfg.get('crop_quality', 95))
+                except Exception:
+                    crop_quality = 95
+
                 file_ext = os.path.splitext(output_path)[1].lower()
                 if file_ext in ['.jpg', '.jpeg']:
-                    face_img.save(output_path, format='JPEG', quality=95)
+                    face_img.save(output_path, format='JPEG', quality=crop_quality)
                 elif file_ext == '.png':
                     face_img.save(output_path, format='PNG')
                 else:
                     # Default to JPEG
-                    face_img.save(output_path, format='JPEG', quality=95)
+                    face_img.save(output_path, format='JPEG', quality=crop_quality)
 
                 logger.debug(f"Saved face crop to {output_path}")
                 return True

@@ -1,5 +1,5 @@
 # reference_db.py
-# Version 09.20.00.01 dated 20251103
+# Version 09.32.01.01 dated 20251122
 # FIX: Convert db_file to absolute path in __init__ for consistency with DatabaseConnection
 # PHASE 4 CLEANUP: Removed unnecessary ensure_created_date_fields() calls
 # UPDATED: Now uses repository layer for schema management
@@ -3293,7 +3293,195 @@ class ReferenceDB:
             conn.commit()
 
 
-    # >>> FIX 1: get_tags_for_paths — chunked to avoid SQLite 999 param cap
+    # --- GPS & Location methods ---
+    
+    def update_photo_gps(self, path: str, latitude: float, longitude: float, location_name: str | None = None):
+        """Store GPS coordinates for a photo (extracted from EXIF)."""
+        with self._connect() as conn:
+            cur = conn.cursor()
+            # Add GPS columns if they don't exist yet
+            existing_cols = [r[1] for r in cur.execute("PRAGMA table_info(photo_metadata)")]
+            if 'gps_latitude' not in existing_cols:
+                cur.execute("ALTER TABLE photo_metadata ADD COLUMN gps_latitude REAL")
+            if 'gps_longitude' not in existing_cols:
+                cur.execute("ALTER TABLE photo_metadata ADD COLUMN gps_longitude REAL")
+            if 'location_name' not in existing_cols:
+                cur.execute("ALTER TABLE photo_metadata ADD COLUMN location_name TEXT")
+            
+            # Update the photo record
+            cur.execute("""
+                UPDATE photo_metadata 
+                SET gps_latitude = ?, gps_longitude = ?, location_name = ?
+                WHERE path = ?
+            """, (latitude, longitude, location_name, path))
+            conn.commit()
+    
+    def get_photos_by_location(self, project_id: int | None = None, radius_km: float = 5.0) -> dict[str, list[dict]]:
+        """Group photos by location proximity.
+        
+        Returns:
+            dict mapping location_key to list of photo dicts with path, lat, lon, location_name
+        """
+        with self._connect() as conn:
+            cur = conn.cursor()
+            # First check if GPS columns exist
+            existing_cols = [r[1] for r in cur.execute("PRAGMA table_info(photo_metadata)")]
+            if 'gps_latitude' not in existing_cols or 'gps_longitude' not in existing_cols:
+                return {}
+            
+            # Query all photos with GPS data
+            if project_id:
+                cur.execute("""
+                    SELECT p.path, p.gps_latitude, p.gps_longitude, p.location_name, f.path as folder_path
+                    FROM photo_metadata p
+                    JOIN photo_folders f ON f.id = p.folder_id
+                    WHERE p.gps_latitude IS NOT NULL 
+                      AND p.gps_longitude IS NOT NULL
+                      AND f.path LIKE (SELECT folder || '%' FROM projects WHERE id = ?)
+                    ORDER BY p.gps_latitude, p.gps_longitude
+                """, (project_id,))
+            else:
+                cur.execute("""
+                    SELECT path, gps_latitude, gps_longitude, location_name, folder_path
+                    FROM photo_metadata
+                    WHERE gps_latitude IS NOT NULL AND gps_longitude IS NOT NULL
+                    ORDER BY gps_latitude, gps_longitude
+                """)
+            
+            rows = cur.fetchall()
+            
+            # Group by proximity using simple clustering
+            locations = {}
+            for row in rows:
+                photo = {
+                    'path': row[0],
+                    'lat': row[1],
+                    'lon': row[2],
+                    'location_name': row[3] or 'Unknown Location'
+                }
+                
+                # Find nearest existing cluster
+                found_cluster = None
+                for loc_key, photos in locations.items():
+                    first = photos[0]
+                    dist = self._haversine_distance(
+                        photo['lat'], photo['lon'],
+                        first['lat'], first['lon']
+                    )
+                    if dist <= radius_km:
+                        found_cluster = loc_key
+                        break
+                
+                if found_cluster:
+                    locations[found_cluster].append(photo)
+                else:
+                    # Create new cluster
+                    loc_name = photo['location_name']
+                    loc_key = f"{loc_name}_{len(locations)}"
+                    locations[loc_key] = [photo]
+            
+            return locations
+    
+    def _haversine_distance(self, lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+        """Calculate distance between two GPS coordinates in kilometers."""
+        import math
+        
+        # Earth radius in kilometers
+        R = 6371.0
+        
+        # Convert to radians
+        lat1_rad = math.radians(lat1)
+        lon1_rad = math.radians(lon1)
+        lat2_rad = math.radians(lat2)
+        lon2_rad = math.radians(lon2)
+        
+        # Haversine formula
+        dlat = lat2_rad - lat1_rad
+        dlon = lon2_rad - lon1_rad
+        a = math.sin(dlat/2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon/2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+        
+        return R * c
+    
+    def get_location_clusters(self, project_id: int | None = None) -> list[dict]:
+        """Get location cluster summaries for sidebar display.
+        
+        Returns:
+            list of {name, count, lat, lon, paths}
+        """
+        from settings_manager_qt import SettingsManager
+        sm = SettingsManager()
+        radius_km = float(sm.get("gps_clustering_radius_km", 5.0))
+        
+        locations = self.get_photos_by_location(project_id, radius_km=radius_km)
+        clusters = []
+        
+        for loc_key, photos in locations.items():
+            # Calculate center point (average)
+            avg_lat = sum(p['lat'] for p in photos) / len(photos)
+            avg_lon = sum(p['lon'] for p in photos) / len(photos)
+            
+            # Use most common location name
+            name = photos[0]['location_name']
+            
+            clusters.append({
+                'name': name,
+                'count': len(photos),
+                'lat': avg_lat,
+                'lon': avg_lon,
+                'paths': [p['path'] for p in photos]
+            })
+        
+        # Sort by photo count (descending)
+        clusters.sort(key=lambda x: x['count'], reverse=True)
+        return clusters
+    
+    def cache_location_name(self, latitude: float, longitude: float, location_name: str):
+        """Cache a reverse-geocoded location name to reduce API calls."""
+        with self._connect() as conn:
+            cur = conn.cursor()
+            # Create cache table if it doesn't exist
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS gps_location_cache (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    latitude REAL NOT NULL,
+                    longitude REAL NOT NULL,
+                    location_name TEXT NOT NULL,
+                    cached_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE(latitude, longitude)
+                )
+            """)
+            # Insert or update
+            cur.execute("""
+                INSERT OR REPLACE INTO gps_location_cache (latitude, longitude, location_name)
+                VALUES (?, ?, ?)
+            """, (latitude, longitude, location_name))
+            conn.commit()
+    
+    def get_cached_location_name(self, latitude: float, longitude: float, tolerance: float = 0.001) -> str | None:
+        """Get cached location name for coordinates (within tolerance)."""
+        with self._connect() as conn:
+            cur = conn.cursor()
+            # Check if cache table exists
+            cur.execute("""
+                SELECT name FROM sqlite_master 
+                WHERE type='table' AND name='gps_location_cache'
+            """)
+            if not cur.fetchone():
+                return None
+            
+            # Find nearest cached location within tolerance
+            cur.execute("""
+                SELECT location_name FROM gps_location_cache
+                WHERE ABS(latitude - ?) < ? AND ABS(longitude - ?) < ?
+                ORDER BY (ABS(latitude - ?) + ABS(longitude - ?))
+                LIMIT 1
+            """, (latitude, tolerance, longitude, tolerance, latitude, longitude))
+            row = cur.fetchone()
+            return row[0] if row else None
+
+    # --- End GPS & Location methods ---
+
     def get_tags_for_paths(self, paths: list[str], project_id: int | None = None) -> dict[str, list[str]]:
         if not paths:
             return {}

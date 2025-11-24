@@ -2,6 +2,7 @@
   "skip_unchanged_photos": true,
   "use_exif_for_date": true,
   "dark_mode": false,
+  "language": "en",
   "thumbnail_cache_enabled": false,
   "cache_size_mb": 500,
   "show_decoder_warnings": false,
@@ -11,6 +12,15 @@
   "cache_auto_cleanup": true,
   "ffprobe_path": "C:\\ffmpeg\\bin\\ffprobe.exe",
   "scan_exclude_folders": [],
+  "badge_overlays_enabled": true,
+  "badge_size_px": 29,
+  "badge_shape": "rounded",
+  "badge_max_count": 4,
+  "badge_shadow": true,
+  "gps_clustering_radius_km": 5.0,
+  "gps_reverse_geocoding_enabled": true,
+  "gps_geocoding_timeout_sec": 2.0,
+  "gps_cache_location_names": true,
   "log_level": "INFO",
   "log_to_console": true,
   "log_colored_output": true,
@@ -40,5 +50,5 @@
     "ActionCenterCache"
   ],
   "device_auto_refresh": false,
-  "insightface_model_path": ""
+  "insightface_model_path": "C:\\Users\\ASUS/.insightface\\models\\buffalo_l"
 }

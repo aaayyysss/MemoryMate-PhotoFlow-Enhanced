@@ -63,6 +63,8 @@ class FaceDetectionConfig:
         # Privacy
         "anonymize_untagged": False,
         "require_confirmation": True,  # Confirm before starting face detection
+        "show_low_confidence": False,
+        "project_overrides": {}
     }
 
     def __init__(self, config_path: Optional[str] = None):
@@ -132,11 +134,46 @@ class FaceDetectionConfig:
         """Get selected backend."""
         return self.config.get("backend", "insightface")
 
-    def get_clustering_params(self) -> Dict[str, Any]:
-        """Get clustering parameters."""
+    def get_clustering_params(self, project_id: Optional[int] = None) -> Dict[str, Any]:
+        """Get clustering parameters, honoring per-project overrides if provided."""
+        if project_id is not None:
+            po = self.config.get("project_overrides", {})
+            ov = po.get(str(project_id), None)
+            if ov:
+                return {
+                    "eps": ov.get("clustering_eps", self.config.get("clustering_eps", 0.35)),
+                    "min_samples": ov.get("clustering_min_samples", self.config.get("clustering_min_samples", 2)),
+                }
         return {
             "eps": self.config.get("clustering_eps", 0.35),
             "min_samples": self.config.get("clustering_min_samples", 2),
+        }
+
+    def set_project_overrides(self, project_id: int, overrides: Dict[str, Any]) -> None:
+        """Set per-project overrides for detection/clustering thresholds."""
+        po = self.config.get("project_overrides", {})
+        po[str(project_id)] = {
+            "min_face_size": int(overrides.get("min_face_size", self.config.get("min_face_size", 20))),
+            "confidence_threshold": float(overrides.get("confidence_threshold", self.config.get("confidence_threshold", 0.65))),
+            "clustering_eps": float(overrides.get("clustering_eps", self.config.get("clustering_eps", 0.35))),
+            "clustering_min_samples": int(overrides.get("clustering_min_samples", self.config.get("clustering_min_samples", 2))),
+        }
+        self.config["project_overrides"] = po
+        self.save()
+
+    def get_detection_params(self, project_id: Optional[int] = None) -> Dict[str, Any]:
+        """Get detection parameters, honoring per-project overrides if provided."""
+        if project_id is not None:
+            po = self.config.get("project_overrides", {})
+            ov = po.get(str(project_id), None)
+            if ov:
+                return {
+                    "min_face_size": ov.get("min_face_size", self.config.get("min_face_size", 20)),
+                    "confidence_threshold": ov.get("confidence_threshold", self.config.get("confidence_threshold", 0.65)),
+                }
+        return {
+            "min_face_size": self.config.get("min_face_size", 20),
+            "confidence_threshold": self.config.get("confidence_threshold", 0.65),
         }
 
     def get_face_cache_dir(self) -> Path:

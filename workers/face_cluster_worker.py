@@ -14,6 +14,7 @@ from sklearn.cluster import DBSCAN
 from PySide6.QtCore import QRunnable, QObject, Signal, Slot
 from reference_db import ReferenceDB
 from workers.progress_writer import write_status
+from config.face_detection_config import get_face_config
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +141,14 @@ class FaceClusterWorker(QRunnable):
                 # Step 2: Run DBSCAN clustering
                 self.signals.progress.emit(10, 100, f"Clustering {total_faces} faces...")
 
-                dbscan = DBSCAN(eps=self.eps, min_samples=self.min_samples, metric='cosine')
+                try:
+                    params = get_face_config().get_clustering_params(project_id=self.project_id)
+                    eps = float(params.get('eps', self.eps))
+                    min_samples = int(params.get('min_samples', self.min_samples))
+                except Exception:
+                    eps = self.eps
+                    min_samples = self.min_samples
+                dbscan = DBSCAN(eps=eps, min_samples=min_samples, metric='cosine')
                 labels = dbscan.fit_predict(X)
 
                 unique_labels = sorted([l for l in set(labels) if l != -1])
@@ -173,8 +181,15 @@ class FaceClusterWorker(QRunnable):
                     cluster_image_paths = np.array(image_paths)[mask].tolist()
                     cluster_ids = np.array(ids)[mask].tolist()
 
-                    centroid = np.mean(cluster_vecs, axis=0).astype(np.float32).tobytes()
-                    rep_path = cluster_paths[0]
+                    centroid_vec = np.mean(cluster_vecs, axis=0).astype(np.float32)
+                    # Choose representative closest to centroid (medoid)
+                    try:
+                        dists = np.linalg.norm(cluster_vecs - centroid_vec, axis=1)
+                        rep_idx = int(np.argmin(dists))
+                        rep_path = cluster_paths[rep_idx]
+                    except Exception:
+                        rep_path = cluster_paths[0]
+                    centroid = centroid_vec.tobytes()
                     branch_key = f"face_{cid:03d}"
                     display_name = f"Person {cid+1}"
                     member_count = len(cluster_paths)

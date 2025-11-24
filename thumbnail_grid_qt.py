@@ -22,6 +22,7 @@ from typing import Optional
 from settings_manager_qt import SettingsManager
 from thumb_cache_db import get_cache
 from services import get_thumbnail_service
+from translation_manager import tr
 
 # create module-level settings instance (used in __init__ safely)
 settings = SettingsManager()
@@ -369,48 +370,81 @@ class CenteredThumbnailDelegate(QStyledItemDelegate):
             if not mask_applied:
                 painter.fillRect(rect, QColor(100, 100, 100, 40))  # Subtle gray for other tags
             
-            # Draw tag badge in top-right corner
-            overlay_rect = QRect(rect.right() - 26, rect.top() + 4, 22, 22)
-            
-            # Special badge for specific tag types
-            if "favorite" in tags:
+            # Draw stacked tag badges in top-right corner (up to 4), with '+n' overflow
+            from settings_manager_qt import SettingsManager
+            sm = SettingsManager()
+            if not sm.get("badge_overlays_enabled", True):
+                painter.restore()
+                # ... keep existing code ...
+                
+                painter.restore()
+            badge_size = int(sm.get("badge_size_px", 22))
+            max_badges_setting = int(sm.get("badge_max_count", 4))
+            badge_shape = str(sm.get("badge_shape", "circle")).lower()
+            badge_margin = 4
+            x_right = rect.right() - badge_margin - badge_size
+            y_top = rect.top() + badge_margin
+
+            # Map tags to icons and colors
+            icons = []
+            for t in (tags or []):
+                tl = str(t).lower().strip()
+                if tl == 'favorite':
+                    icons.append(('★', QColor(255, 215, 0, 230), Qt.black))
+                elif tl == 'face':
+                    icons.append(('👤', QColor(70, 130, 180, 220), Qt.white))
+                elif tl in ('important', 'flag'):
+                    icons.append(('⚑', QColor(255, 69, 0, 220), Qt.white))
+                elif tl in ('work',):
+                    icons.append(('💼', QColor(0, 128, 255, 220), Qt.white))
+                elif tl in ('travel',):
+                    icons.append(('✈', QColor(34, 139, 34, 220), Qt.white))
+                else:
+                    icons.append(('🏷', QColor(150, 150, 150, 230), Qt.white))
+
+            painter.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing)
+            max_badges = min(len(icons), max_badges_setting)
+            for i in range(max_badges):
+                by = y_top + i * (badge_size + 4)
+                badge_rect = QRect(x_right, by, badge_size, badge_size)
+                # subtle shadow
                 painter.setPen(Qt.NoPen)
-                painter.setBrush(QColor(255, 215, 0, 220))  # Bright gold badge
-                painter.drawEllipse(overlay_rect)
-                painter.setPen(QPen(Qt.black))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "★")
-            elif "face" in tags:
-                painter.setBrush(QColor(70, 130, 180, 200))
+                if sm.get("badge_shadow", True):
+                    painter.setBrush(QColor(0, 0, 0, 100))
+                    painter.drawEllipse(badge_rect.adjusted(2, 2, 2, 2))
+                ch, bg, fg = icons[i]
+                painter.setBrush(bg)
+                if badge_shape == 'square':
+                    painter.drawRect(badge_rect)
+                elif badge_shape == 'rounded':
+                    painter.drawRoundedRect(badge_rect, 4, 4)
+                else:
+                    painter.drawEllipse(badge_rect)
+                painter.setPen(QPen(fg))
+                f = QFont()
+                f.setPointSize(11)
+                f.setBold(True)
+                painter.setFont(f)
+                painter.drawText(badge_rect, Qt.AlignCenter, ch)
+
+            if len(icons) > max_badges:
+                by = y_top + max_badges * (badge_size + 4)
+                more_rect = QRect(x_right, by, badge_size, badge_size)
                 painter.setPen(Qt.NoPen)
-                painter.drawEllipse(overlay_rect)
+                painter.setBrush(QColor(60, 60, 60, 220))
+                if badge_shape == 'square':
+                    painter.drawRect(more_rect)
+                elif badge_shape == 'rounded':
+                    painter.drawRoundedRect(more_rect, 4, 4)
+                else:
+                    painter.drawEllipse(more_rect)
                 painter.setPen(QPen(Qt.white))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "👤")
-            elif "important" in tags:
-                painter.setBrush(QColor(255, 69, 0, 220))
-                painter.setPen(Qt.NoPen)
-                painter.drawEllipse(overlay_rect)
-                painter.setPen(QPen(Qt.white))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "!")
-            elif "work" in tags:
-                painter.setBrush(QColor(0, 128, 255, 220))
-                painter.setPen(Qt.NoPen)
-                painter.drawEllipse(overlay_rect)
-                painter.setPen(QPen(Qt.white))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "💼")
-            elif "travel" in tags:
-                painter.setBrush(QColor(34, 139, 34, 220))
-                painter.setPen(Qt.NoPen)
-                painter.drawEllipse(overlay_rect)
-                painter.setPen(QPen(Qt.white))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "✈")
-            else:
-                # Generic tag indicator for other tags
-                painter.setBrush(QColor(150, 150, 150, 200))
-                painter.setPen(Qt.NoPen)
-                painter.drawEllipse(overlay_rect)
-                painter.setPen(QPen(Qt.white))
-                painter.drawText(overlay_rect, Qt.AlignCenter, "🏷")
-            
+                f2 = QFont()
+                f2.setPointSize(10)
+                f2.setBold(True)
+                painter.setFont(f2)
+                painter.drawText(more_rect, Qt.AlignCenter, f"+{len(icons) - max_badges}")
+
             painter.restore()
 
 
@@ -512,27 +546,76 @@ class CenteredThumbnailDelegate(QStyledItemDelegate):
                         badge_size
                     )
                     
-                    # Draw circular background with slight shadow effect
-                    painter.setPen(Qt.NoPen)
-                    
-                    # Shadow
-                    shadow_rect = badge_rect.adjusted(2, 2, 2, 2)
-                    painter.setBrush(QColor(0, 0, 0, 100))
-                    painter.drawEllipse(shadow_rect)
-                    
-                    # Main badge circle
-                    painter.setBrush(badge_config['bg_color'])
-                    painter.drawEllipse(badge_rect)
-                    
-                    # Draw icon/text in badge
-                    painter.setPen(QPen(badge_config['icon_color']))
-                    badge_font = QFont()
-                    badge_font.setPointSize(12)
-                    badge_font.setBold(True)
-                    painter.setFont(badge_font)
-                    painter.drawText(badge_rect, Qt.AlignCenter, badge_config['icon'])
-                    
                     painter.restore()
+
+                    painter.save()
+                    from settings_manager_qt import SettingsManager
+                    sm = SettingsManager()
+                    if not sm.get("badge_overlays_enabled", True):
+                        painter.restore()
+                    else:
+                        badge_size = int(sm.get("badge_size_px", 22))
+                        max_badges_setting = int(sm.get("badge_max_count", 4))
+                        badge_shape = str(sm.get("badge_shape", "circle")).lower()
+                        badge_margin = 4
+                        x_right = rect.right() - badge_margin - badge_size
+                        y_top = rect.top() + badge_margin
+                        icons = []
+                        for t in (tags or []):
+                            tl = str(t).lower().strip()
+                            if tl == 'favorite':
+                                icons.append(('★', QColor(255, 215, 0, 230), Qt.black))
+                            elif tl == 'face':
+                                icons.append(('👤', QColor(70, 130, 180, 220), Qt.white))
+                            elif tl in ('important', 'flag'):
+                                icons.append(('⚑', QColor(255, 69, 0, 220), Qt.white))
+                            elif tl in ('work',):
+                                icons.append(('💼', QColor(0, 128, 255, 220), Qt.white))
+                            elif tl in ('travel',):
+                                icons.append(('✈', QColor(34, 139, 34, 220), Qt.white))
+                            else:
+                                icons.append(('🏷', QColor(150, 150, 150, 230), Qt.white))
+                        painter.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing)
+                        max_badges = min(len(icons), max_badges_setting)
+                        for i in range(max_badges):
+                            by = y_top + i * (badge_size + 4)
+                            badge_rect = QRect(x_right, by, badge_size, badge_size)
+                            painter.setPen(Qt.NoPen)
+                            if sm.get("badge_shadow", True):
+                                painter.setBrush(QColor(0, 0, 0, 100))
+                                painter.drawEllipse(badge_rect.adjusted(2, 2, 2, 2))
+                            ch, bg, fg = icons[i]
+                            painter.setBrush(bg)
+                            if badge_shape == 'square':
+                                painter.drawRect(badge_rect)
+                            elif badge_shape == 'rounded':
+                                painter.drawRoundedRect(badge_rect, 4, 4)
+                            else:
+                                painter.drawEllipse(badge_rect)
+                            painter.setPen(QPen(fg))
+                            f = QFont()
+                            f.setPointSize(11)
+                            f.setBold(True)
+                            painter.setFont(f)
+                            painter.drawText(badge_rect, Qt.AlignCenter, ch)
+                        if len(icons) > max_badges:
+                            by = y_top + max_badges * (badge_size + 4)
+                            more_rect = QRect(x_right, by, badge_size, badge_size)
+                            painter.setPen(Qt.NoPen)
+                            painter.setBrush(QColor(60, 60, 60, 220))
+                            if badge_shape == 'square':
+                                painter.drawRect(more_rect)
+                            elif badge_shape == 'rounded':
+                                painter.drawRoundedRect(more_rect, 4, 4)
+                            else:
+                                painter.drawEllipse(more_rect)
+                            painter.setPen(QPen(Qt.white))
+                            f2 = QFont()
+                            f2.setPointSize(10)
+                            f2.setBold(True)
+                            painter.setFont(f2)
+                            painter.drawText(more_rect, Qt.AlignCenter, f"+{len(icons) - max_badges}")
+                        painter.restore()
 
                 # 🔹 Hover action strip (Favorite, Info, Delete) + checkbox
                 try:
@@ -818,12 +901,12 @@ class ThumbnailGridQt(QWidget):
 
         # --- Toolbar (Face Grouping + Zoom controls)
         # Phase 8: Face grouping buttons (moved from People tab for global access)
-        self.btn_detect_and_group = QPushButton("⚡ Detect & Group Faces")
+        self.btn_detect_and_group = QPushButton(tr('toolbar.detect_group_faces'))
         self.btn_detect_and_group.setToolTip("Automatically detect faces and group them into person albums")
         self.btn_detect_and_group.setStyleSheet("QPushButton{padding:5px 12px; font-weight:bold;}")
         # Handler will be connected from main_window_qt.py after grid is created
 
-        self.btn_recluster = QPushButton("🔁 Re-Cluster")
+        self.btn_recluster = QPushButton(tr('toolbar.recluster'))
         self.btn_recluster.setToolTip("Re-group detected faces (without re-detecting)")
         self.btn_recluster.setStyleSheet("QPushButton{padding:5px 12px;}")
         # Handler will be connected from main_window_qt.py after grid is created
@@ -1205,6 +1288,7 @@ class ThumbnailGridQt(QWidget):
             item.setEditable(False)
             item.setData(p, Qt.UserRole)
             item.setData(tag_map.get(p, []), Qt.UserRole + 2)  # 🏷️ store tags for paint()
+            item.setToolTip(", ".join([t for t in (tag_map.get(p, []) or []) if t]))
 
             # 🗓️ Date-group header (only for photos)
             if use_date_headers:
@@ -1421,8 +1505,9 @@ class ThumbnailGridQt(QWidget):
         # Build dynamic tag info
         all_tags = []
         try:
-            if hasattr(db, "get_all_tags"):
-                all_tags = db.get_all_tags()
+            from services.tag_service import get_tag_service
+            tag_service = get_tag_service()
+            all_tags = tag_service.get_all_tags(self.project_id)
         except Exception:
             pass
 
@@ -1444,20 +1529,20 @@ class ThumbnailGridQt(QWidget):
 
         # Menu
         m = QMenu(self)
-        act_open = m.addAction("Open")
-        act_reveal = m.addAction("Reveal in Explorer")
+        act_open = m.addAction(tr('context_menu.open'))
+        act_reveal = m.addAction(tr('context_menu.reveal_explorer'))
         m.addSeparator()
 
         # Single unified Tags submenu with toggle behavior
-        tag_menu = m.addMenu("🏷️ Tags")
+        tag_menu = m.addMenu(tr('context_menu.tags'))
 
         # Quick presets (favorite and face) - always shown
-        act_fav = tag_menu.addAction("⭐ Favorite")
+        act_fav = tag_menu.addAction(tr('context_menu.favorite'))
         act_fav.setCheckable(True)
         if "favorite" in present_tags:
             act_fav.setChecked(True)
 
-        act_face = tag_menu.addAction("🧍 Face")
+        act_face = tag_menu.addAction(tr('context_menu.face'))
         act_face.setCheckable(True)
         if "face" in present_tags:
             act_face.setChecked(True)
@@ -1478,16 +1563,16 @@ class ThumbnailGridQt(QWidget):
             toggle_actions[act] = t
 
         tag_menu.addSeparator()
-        act_new_tag = tag_menu.addAction("➕ New Tag…")
+        act_new_tag = tag_menu.addAction(tr('context_menu.new_tag'))
 
         # Clear All Tags - top level for visibility
-        act_clear_all = m.addAction("❌ Clear All Tags")
+        act_clear_all = m.addAction(tr('context_menu.clear_all_tags'))
         if not present_tags:
             act_clear_all.setEnabled(False)  # Disable if no tags present
 
         m.addSeparator()
-        act_export = m.addAction("Export…")
-        act_delete = m.addAction("🗑 Delete")
+        act_export = m.addAction(tr('context_menu.export'))
+        act_delete = m.addAction(tr('context_menu.delete'))
 
         chosen = m.exec(self.list_view.viewport().mapToGlobal(pos))
         if not chosen:
@@ -1516,8 +1601,8 @@ class ThumbnailGridQt(QWidget):
             if not paths:
                 QMessageBox.information(
                     self,
-                    "No Photos Selected",
-                    "Please select one or more photos before toggling a tag."
+                    tr('message_boxes.no_selection_title'),
+                    tr('message_boxes.no_selection_message')
                 )
                 return
 
@@ -1569,8 +1654,8 @@ class ThumbnailGridQt(QWidget):
             if not paths:
                 QMessageBox.information(
                     self,
-                    "No Photos Selected",
-                    "Please select one or more photos before toggling a tag."
+                    tr('message_boxes.no_selection_title'),
+                    tr('message_boxes.no_selection_message')
                 )
                 return
 
@@ -1622,8 +1707,8 @@ class ThumbnailGridQt(QWidget):
             if not paths:
                 QMessageBox.information(
                     self,
-                    "No Photos Selected",
-                    "Please select one or more photos before toggling a tag."
+                    tr('message_boxes.no_selection_title'),
+                    tr('message_boxes.no_selection_message')
                 )
                 return
 
@@ -1773,6 +1858,7 @@ class ThumbnailGridQt(QWidget):
                     if path in path_to_rows:
                         row, item = path_to_rows[path]
                         item.setData(new_tags, Qt.UserRole + 2)
+                        item.setToolTip(", ".join([t for t in (new_tags or []) if t]))
                         updated_count += 1
             finally:
                 self.model.blockSignals(False)
@@ -2012,6 +2098,7 @@ class ThumbnailGridQt(QWidget):
                         item = self.model.item(idx.row())
                         if item:
                             item.setData(new_tags, Qt.UserRole + 2)
+                        item.setToolTip(", ".join([t for t in (new_tags or []) if t]))
                         
                         # Refresh sidebar tags without full grid reload
                         try:
@@ -2165,13 +2252,25 @@ class ThumbnailGridQt(QWidget):
 
     def set_branch(self, branch_key: str):
         """Called when a branch node is clicked."""
-        self.navigation_mode = "branch"
-        self.navigation_key = branch_key
-        self.active_tag_filter = None
+        print(f"\n[GRID] >>>>>> set_branch('{branch_key}') CALLED")
+        print(f"[GRID]   Current state: project_id={self.project_id}, load_mode={self.load_mode}")
+        
+        try:
+            self.navigation_mode = "branch"
+            self.navigation_key = branch_key
+            self.active_tag_filter = None
 
-        self.load_mode = "branch"
-        self.branch_key = branch_key
-        self.reload()
+            self.load_mode = "branch"
+            self.branch_key = branch_key
+            print(f"[GRID]   State updated, calling reload()...")
+            self.reload()
+            print(f"[GRID] <<<<<< set_branch('{branch_key}') COMPLETED\n")
+        except Exception as e:
+            print(f"[GRID] !!!!! set_branch('{branch_key}') CRASHED: {e}")
+            import traceback
+            traceback.print_exc()
+            print(f"[GRID] <<<<<< set_branch('{branch_key}') FAILED\n")
+            raise
 
     def set_date(self, date_key: str):
         """Called when a date node (YYYY / YYYY-MM / YYYY-MM-DD) is clicked."""
@@ -2396,20 +2495,26 @@ class ThumbnailGridQt(QWidget):
         Centralized reload logic combining navigation context + optional tag overlay.
         Includes user feedback via status bar and detailed console logs.
         """
+        print(f"\n[GRID] ====== reload() CALLED ======")
+        print(f"[GRID] project_id={self.project_id}, load_mode={self.load_mode}")
+        
         # CRITICAL: Prevent concurrent reloads that cause crashes
         # Similar to sidebar._refreshing flag pattern
         if getattr(self, '_reloading', False):
             print("[GRID] reload() blocked - already reloading (prevents concurrent reload crash)")
+            print(f"[GRID] ====== reload() BLOCKED ======\n")
             return
         
         # CRITICAL FIX: Validate project_id before database operations
         if self.project_id is None:
             print("[GRID] ⚠️ Warning: project_id is None, skipping reload to prevent crash")
             print("[GRID] This usually means the project hasn't been initialized yet")
+            print(f"[GRID] ====== reload() ABORTED (no project_id) ======\n")
             return
 
         try:
             self._reloading = True
+            print(f"[GRID] Step 1: Setting _reloading=True")
 
             import os
             from PySide6.QtCore import QSize
@@ -2527,11 +2632,21 @@ class ThumbnailGridQt(QWidget):
             else:
                 print(f"[GRID] Reloaded {final_count} thumbnails in {mode}-mode (base={base_count})")
 
+            print(f"[GRID] Step 5: Emitting gridReloaded signal...")
             # Phase 2.3: Emit signal for status bar update
             self.gridReloaded.emit()
+            print(f"[GRID] Step 5: ✓ gridReloaded signal emitted")
 
+            print(f"[GRID] ====== reload() COMPLETED SUCCESSFULLY ======\n")
+        except Exception as reload_error:
+            print(f"[GRID] ✗✗✗ EXCEPTION in reload(): {reload_error}")
+            import traceback
+            traceback.print_exc()
+            print(f"[GRID] ====== reload() FAILED WITH EXCEPTION ======\n")
+            raise
         finally:
             # Always reset flag even if exception occurs
+            print(f"[GRID] Finally block: Setting _reloading=False")
             self._reloading = False
 
     # ============================================================
@@ -2650,6 +2765,7 @@ class ThumbnailGridQt(QWidget):
 
             # 🏷️ CRITICAL FIX: tag_map is keyed by original path, not normalized!
             item.setData(tag_map.get(p, []), Qt.UserRole + 2)
+            item.setToolTip(", ".join([t for t in (tag_map.get(p, []) or []) if t]))
             # Group header label for first item in each date group
             if use_date_headers:
                 try:
@@ -2945,6 +3061,7 @@ class ThumbnailGridQt(QWidget):
             
             item.setData(p, Qt.UserRole)
             item.setData(tag_map.get(np, []), Qt.UserRole + 2)
+            item.setToolTip(", ".join([t for t in (tag_map.get(np, []) or []) if t]))
             item.setData(default_aspect, Qt.UserRole + 1)
 
             # --- Tag badge overlay on placeholder

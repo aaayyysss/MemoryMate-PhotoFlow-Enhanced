@@ -253,10 +253,11 @@ class TagRepository(BaseRepository):
                     FROM tags t
                     LEFT JOIN photo_tags pt ON pt.tag_id = t.id
                     LEFT JOIN photo_metadata pm ON pm.id = pt.photo_id
-                    WHERE pm.project_id = ? OR pm.id IS NULL
+                    WHERE t.project_id = ?
+                      AND (pm.project_id = ? OR pm.id IS NULL)
                     GROUP BY t.id, t.name
                     ORDER BY t.name COLLATE NOCASE
-                """, (project_id,))
+                """, (project_id, project_id))
             else:
                 # No project filter - get all tags globally
                 cur.execute("""
@@ -315,6 +316,15 @@ class TagRepository(BaseRepository):
             if cur.fetchone():
                 return False  # Already exists
 
+            # Validate project consistency (prevent cross-project leakage)
+            cur.execute("SELECT project_id FROM photo_metadata WHERE id = ?", (photo_id,))
+            photo_proj_row = cur.fetchone()
+            cur.execute("SELECT project_id FROM tags WHERE id = ?", (tag_id,))
+            tag_proj_row = cur.fetchone()
+            if photo_proj_row and tag_proj_row:
+                if photo_proj_row['project_id'] != tag_proj_row['project_id']:
+                    raise ValueError(f"Cannot assign tag_id={tag_id} from project {tag_proj_row['project_id']} to photo_id={photo_id} in project {photo_proj_row['project_id']}")
+
             # Add association
             cur.execute("""
                 INSERT INTO photo_tags (photo_id, tag_id)
@@ -366,7 +376,9 @@ class TagRepository(BaseRepository):
                 SELECT t.id, t.name
                 FROM tags t
                 JOIN photo_tags pt ON pt.tag_id = t.id
+                JOIN photo_metadata pm ON pm.id = pt.photo_id
                 WHERE pt.photo_id = ?
+                  AND t.project_id = pm.project_id
                 ORDER BY t.name COLLATE NOCASE
             """, (photo_id,))
             return cur.fetchall()
@@ -391,12 +403,13 @@ class TagRepository(BaseRepository):
             """, (tag_id,))
             return [row['photo_id'] for row in cur.fetchall()]
 
-    def get_photo_ids_by_tag_name(self, tag_name: str) -> List[int]:
+    def get_photo_ids_by_tag_name(self, tag_name: str, project_id: int) -> List[int]:
         """
-        Get all photo IDs that have this tag (by name).
+        Get all photo IDs within a project that have this tag (by name).
 
         Args:
             tag_name: Tag name
+            project_id: Project ID to scope tag lookup
 
         Returns:
             List of photo IDs
@@ -407,9 +420,12 @@ class TagRepository(BaseRepository):
                 SELECT pt.photo_id
                 FROM photo_tags pt
                 JOIN tags t ON t.id = pt.tag_id
+                JOIN photo_metadata pm ON pm.id = pt.photo_id
                 WHERE t.name = ? COLLATE NOCASE
+                  AND t.project_id = ?
+                  AND pm.project_id = ?
                 ORDER BY pt.photo_id
-            """, (tag_name,))
+            """, (tag_name, project_id, project_id))
             return [row['photo_id'] for row in cur.fetchall()]
 
     # ========================================================================
@@ -446,7 +462,9 @@ class TagRepository(BaseRepository):
                     SELECT pt.photo_id, t.id, t.name
                     FROM photo_tags pt
                     JOIN tags t ON t.id = pt.tag_id
+                    JOIN photo_metadata pm ON pm.id = pt.photo_id
                     WHERE pt.photo_id IN ({placeholders})
+                      AND t.project_id = pm.project_id
                     ORDER BY pt.photo_id, t.name COLLATE NOCASE
                 """, chunk)
 

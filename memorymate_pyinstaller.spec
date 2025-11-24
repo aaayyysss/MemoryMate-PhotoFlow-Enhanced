@@ -30,16 +30,33 @@ else:
 
 # Additional data files
 datas = [
-    # Add your project data files here
-    ('reference_data.db', '.'),  # if you want to bundle the database
-    # Add any other resources (icons, config files, etc.)
+    # Language files (both directories)
+    ('lang', 'lang'),
+    ('locales', 'locales'),
+    
+    # Configuration files
+    ('config', 'config'),
+    
+    # SQL migration files
+    ('migrations', 'migrations'),
+    
+    # Python package directories (required for imports)
+    ('repository', 'repository'),
+    ('services', 'services'),
+    ('workers', 'workers'),
+    ('ui', 'ui'),
+    ('utils', 'utils'),
+    
+    # Note: Databases are excluded as requested (reference_data.db, thumb_cache_db, etc.)
+    # Users will create fresh databases on first run
 ]
 
 # Add model files
 datas.extend(model_datas)
 
-# Hidden imports for ML libraries
+# Hidden imports for ML libraries and project modules
 hiddenimports = [
+    # ML/AI libraries
     'insightface',
     'insightface.app',
     'insightface.model_zoo',
@@ -51,13 +68,87 @@ hiddenimports = [
     'PIL',
     'PIL.Image',
     'PIL.ImageOps',
+    'PIL.ImageQt',
     'sklearn',
     'sklearn.cluster',
     'sklearn.preprocessing',
+    
+    # Qt framework
     'PySide6',
     'PySide6.QtCore',
     'PySide6.QtGui',
     'PySide6.QtWidgets',
+    'PySide6.QtMultimedia',
+    'PySide6.QtMultimediaWidgets',
+    
+    # Windows COM support (pywin32)
+    'win32com',
+    'win32com.client',
+    'win32com.shell',
+    'win32api',
+    'win32con',
+    'pythoncom',
+    'pywintypes',
+    
+    # HEIF/HEIC image support
+    'pillow_heif',
+    
+    # Project modules
+    'repository',
+    'repository.base_repository',
+    'repository.folder_repository',
+    'repository.photo_repository',
+    'repository.project_repository',
+    'repository.tag_repository',
+    'repository.video_repository',
+    'repository.migrations',
+    'repository.schema',
+    
+    'services',
+    'services.device_id_extractor',
+    'services.device_import_service',
+    'services.device_sources',
+    'services.exif_parser',
+    'services.face_detection_service',
+    'services.metadata_service',
+    'services.mtp_import_adapter',
+    'services.photo_deletion_service',
+    'services.photo_scan_service',
+    'services.search_service',
+    'services.tag_service',
+    'services.thumbnail_service',
+    'services.video_metadata_service',
+    'services.video_service',
+    'services.video_thumbnail_service',
+    
+    'workers',
+    'workers.face_cluster_worker',
+    'workers.face_detection_worker',
+    'workers.meta_backfill_pool',
+    'workers.meta_backfill_single',
+    'workers.mtp_copy_worker',
+    'workers.progress_writer',
+    'workers.video_metadata_worker',
+    'workers.video_thumbnail_worker',
+    
+    'ui',
+    'ui.device_import_dialog',
+    'ui.face_settings_dialog',
+    'ui.mtp_deep_scan_dialog',
+    'ui.mtp_import_dialog',
+    'ui.people_list_view',
+    'ui.people_manager_dialog',
+    
+    'utils',
+    'utils.translation_manager',
+    
+    # Core app modules
+    'config.face_detection_config',
+    'logging_config',
+    'db_config',
+    'db_writer',
+    'settings_manager_qt',
+    'app_services',
 ]
 
 a = Analysis(
@@ -72,6 +163,12 @@ a = Analysis(
     excludes=[
         'matplotlib',  # Exclude if not needed
         'tkinter',     # Exclude if not needed
+        'pytest',      # Test framework not needed in production
+        'tests',       # Test files not needed
+        'utils.test_insightface_models',  # Test utility, not needed in production
+        'utils.diagnose_insightface',     # Diagnostic utility, not needed in production
+        'utils.insightface_check',        # Check utility, not needed in production
+        'utils.ffmpeg_check',             # Check utility, not needed in production
     ],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
@@ -86,12 +183,12 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='MemoryMate-PhotoFlow',
+    name='MemoryMate-PhotoFlow-v2.0.1',  # Updated version for device fix
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,  # Set to False for windowed app (no console)
+    console=True,  # Set to True for debugging, False for production windowed app
     disable_windowing_traceback=False,
     argv_emulation=False,
     target_arch=None,

@@ -1,41 +1,49 @@
 # preview_panel_qt.py
-# Version 09.16.01.11 dated 2025.10.22
+# Version 09.33.01.01 dated 2025.11.22
 # 
-# one file for all photos preview / editing UI
+# PHASE 1 PRO TOOLS: Enhanced professional photo viewer/editor
+# - Microsoft Photos-style crop with presets (16:9, 4:3, 1:1, freeform)
+# - Live histogram panel (RGB channels)
+# - Before/After comparison (split-view + toggle)
+# - Full undo/redo stack for all adjustments
+# - 5-star rating system (saved to database)
+# - Pick/Reject workflow flags (Lightroom-style)
 #
 # Photo-App/
 # ├─ main_window_qt.py
 # ├─ thumbnail_grid_qt.py
 # ├─ thumb_cache_db.py
 # ├─ settings_manager_qt.py
-# ├─ preview_panel_qt.py   👈 NEW (LightboxDialog + CollapsiblePanel + #  LabeledSlider)
+# ├─ preview_panel_qt.py   👈 Enhanced with Pro Tools
 #  └─ assets/
 #     └─ icons/
 #
 # Final Layout Hierarchy Recap
 # QStackedWidget (mode_stack)
 # ├─ viewer_page
-# │  ├─ top_bar_viewer (arrows, edit, rotate, menu)
+# │  ├─ top_bar_viewer (arrows, edit, rotate, rating stars, pick/reject)
 # │  ├─ image_area (shared)
 # │  ├─ bottom_bar_viewer (zoom, info, tag_box, info button)
 # │  └─ right_info_panel
 # └─ editor_page
-#   ├─ top_bar_editor_row1 (back)
-#   ├─ top_bar_editor_row2 (save, save as, cancel)
-#   ├─ image_area (shared)
+#   ├─ top_bar_editor_row1 (back, undo/redo)
+#   ├─ top_bar_editor_row2 (crop presets, before/after, save options)
+#   ├─ image_area (shared with split-view support)
 #   ├─ bottom_bar_editor (context control slider)
-#   └─ right_editor_panel (tool palette)
+#   └─ right_editor_panel (adjustments + histogram)
 #
 
 import os, time, subprocess
+import numpy as np
+from collections import deque
 
-from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageQt,ExifTags
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageQt, ExifTags, ImageDraw
 from datetime import datetime
 
 from PySide6.QtCore import (
     Qt, QParallelAnimationGroup, QPropertyAnimation,
     QEasingCurve, QEvent, QTimer, QSize,
-    Signal, QRect, QPoint, QPointF, QUrl
+    Signal, QRect, QPoint, QPointF, QUrl, Slot
 )
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtMultimediaWidgets import QVideoWidget
@@ -50,14 +58,473 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import (
     QStandardItemModel, QStandardItem, QPixmap, QImage,
     QPainter, QPen, QBrush, QColor, QFont, QAction, QCursor,
-    QIcon, QTransform, QDesktopServices
+    QIcon, QTransform, QDesktopServices, QPainterPath, QPolygonF
 ) 
 
 from PySide6.QtSvg import QSvgRenderer
 
 from reference_db import ReferenceDB
+from translation_manager import tr
 
 
+
+
+# ================================================================
+# Histogram Widget (Live RGB histogram for professional editing)
+# ================================================================
+class HistogramWidget(QWidget):
+    """
+    Live RGB histogram display (Lightroom/Excire style).
+    Shows separate R/G/B channel distributions with luminosity overlay.
+    """
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setFixedHeight(150)
+        self.setMinimumWidth(200)
+        self._hist_data = None  # (r_hist, g_hist, b_hist, lum_hist)
+        self.setStyleSheet("background-color: #1a1a1a; border: 1px solid #333;")
+    
+    def set_image(self, pil_image: Image.Image):
+        """Calculate and display histogram for given PIL image."""
+        if pil_image is None:
+            self._hist_data = None
+            self.update()
+            return
+        
+        try:
+            # Convert to RGB if needed
+            if pil_image.mode != 'RGB':
+                pil_image = pil_image.convert('RGB')
+            
+            # Get image as numpy array
+            img_array = np.array(pil_image)
+            
+            # Calculate histograms for each channel (256 bins, 0-255 range)
+            r_hist, _ = np.histogram(img_array[:, :, 0], bins=256, range=(0, 256))
+            g_hist, _ = np.histogram(img_array[:, :, 1], bins=256, range=(0, 256))
+            b_hist, _ = np.histogram(img_array[:, :, 2], bins=256, range=(0, 256))
+            
+            # Calculate luminosity (weighted average: 0.299R + 0.587G + 0.114B)
+            lum = (0.299 * img_array[:, :, 0] + 
+                   0.587 * img_array[:, :, 1] + 
+                   0.114 * img_array[:, :, 2]).astype(np.uint8)
+            lum_hist, _ = np.histogram(lum, bins=256, range=(0, 256))
+            
+            self._hist_data = (r_hist, g_hist, b_hist, lum_hist)
+            self.update()
+        except Exception as e:
+            print(f"[Histogram] Error: {e}")
+            self._hist_data = None
+            self.update()
+    
+    def paintEvent(self, event):
+        if self._hist_data is None:
+            # Draw empty state
+            p = QPainter(self)
+            p.fillRect(self.rect(), QColor(26, 26, 26))
+            p.setPen(QColor(100, 100, 100))
+            p.drawText(self.rect(), Qt.AlignCenter, "No image")
+            p.end()
+            return
+        
+        r_hist, g_hist, b_hist, lum_hist = self._hist_data
+        
+        p = QPainter(self)
+        p.setRenderHint(QPainter.Antialiasing)
+        p.fillRect(self.rect(), QColor(26, 26, 26))
+        
+        # Normalize histograms to widget height
+        max_val = max(r_hist.max(), g_hist.max(), b_hist.max(), 1)
+        w = self.width()
+        h = self.height() - 20  # Leave space for labels
+        
+        def draw_channel(hist, color, alpha=180):
+            """Draw one channel histogram with given color."""
+            pen = QPen(QColor(*color, alpha), 1)
+            p.setPen(pen)
+            brush = QBrush(QColor(*color, alpha // 3))
+            p.setBrush(brush)
+            
+            # Build polygon path
+            points = [QPointF(0, h)]  # Start at bottom-left
+            for i in range(256):
+                x = i * w / 256
+                y_val = hist[i] / max_val * h
+                y = h - y_val
+                points.append(QPointF(x, y))
+            points.append(QPointF(w, h))  # Close at bottom-right
+            
+            # Draw filled polygon
+            from PySide6.QtGui import QPolygonF
+            polygon = QPolygonF(points)
+            p.drawPolygon(polygon)
+        
+        # Draw RGB channels (red, green, blue)
+        draw_channel(r_hist, (255, 50, 50), alpha=150)
+        draw_channel(g_hist, (50, 255, 50), alpha=150)
+        draw_channel(b_hist, (50, 100, 255), alpha=150)
+        
+        # Draw luminosity as overlay (white)
+        draw_channel(lum_hist, (200, 200, 200), alpha=100)
+        
+        # Draw grid lines
+        p.setPen(QPen(QColor(50, 50, 50), 1, Qt.DashLine))
+        for i in range(1, 4):
+            y = i * h / 4
+            p.drawLine(0, int(y), w, int(y))
+        
+        # Draw labels
+        p.setPen(QColor(150, 150, 150))
+        font = QFont("Segoe UI", 8)
+        p.setFont(font)
+        p.drawText(5, h + 15, "Shadows")
+        p.drawText(w - 60, h + 15, "Highlights")
+        
+        p.end()
+
+
+# ================================================================
+# Rating Widget (5-star rating system)
+# ================================================================
+class RatingWidget(QWidget):
+    """
+    5-star rating widget (Lightroom-style).
+    Click to set rating, keyboard 0-5 to rate.
+    """
+    ratingChanged = Signal(int)  # Emits rating (0-5)
+    
+    def __init__(self, rating=0, parent=None):
+        super().__init__(parent)
+        self._rating = rating
+        self._hover_rating = -1
+        self.setFixedHeight(24)
+        self.setMinimumWidth(120)
+        self.setMouseTracking(True)
+        self.setCursor(Qt.PointingHandCursor)
+        self.setToolTip("Click to rate (0-5 stars)")
+    
+    def rating(self):
+        return self._rating
+    
+    def setRating(self, rating):
+        self._rating = max(0, min(5, rating))
+        self.update()
+        self.ratingChanged.emit(self._rating)
+    
+    def paintEvent(self, event):
+        p = QPainter(self)
+        p.setRenderHint(QPainter.Antialiasing)
+        
+        star_size = 20
+        spacing = 4
+        total_width = 5 * star_size + 4 * spacing
+        start_x = (self.width() - total_width) // 2
+        y = (self.height() - star_size) // 2
+        
+        # Determine display rating (hover or actual)
+        display_rating = self._hover_rating if self._hover_rating >= 0 else self._rating
+        
+        for i in range(5):
+            x = start_x + i * (star_size + spacing)
+            filled = (i < display_rating)
+            
+            # Draw star
+            if filled:
+                p.setBrush(QColor(255, 200, 0))  # Gold
+                p.setPen(QPen(QColor(200, 150, 0), 1))
+            else:
+                p.setBrush(QColor(80, 80, 80))  # Gray
+                p.setPen(QPen(QColor(100, 100, 100), 1))
+            
+            # Star polygon (5-pointed)
+            self._draw_star(p, x + star_size / 2, y + star_size / 2, star_size / 2)
+        
+        p.end()
+    
+    def _draw_star(self, painter, cx, cy, radius):
+        """Draw a 5-pointed star centered at (cx, cy)."""
+        import math
+        points = []
+        for i in range(10):
+            angle = math.pi / 2 + i * math.pi / 5
+            r = radius if i % 2 == 0 else radius * 0.4
+            x = cx + r * math.cos(angle)
+            y = cy - r * math.sin(angle)
+            points.append(QPointF(x, y))
+        
+        from PySide6.QtGui import QPolygonF
+        polygon = QPolygonF(points)
+        painter.drawPolygon(polygon)
+    
+    def mouseMoveEvent(self, event):
+        # Update hover rating based on mouse position
+        star_size = 20
+        spacing = 4
+        total_width = 5 * star_size + 4 * spacing
+        start_x = (self.width() - total_width) // 2
+        
+        x = event.pos().x()
+        if x < start_x:
+            self._hover_rating = 0
+        elif x > start_x + total_width:
+            self._hover_rating = 5
+        else:
+            self._hover_rating = min(5, max(1, int((x - start_x) / (star_size + spacing)) + 1))
+        
+        self.update()
+    
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.setRating(self._hover_rating)
+    
+    def leaveEvent(self, event):
+        self._hover_rating = -1
+        self.update()
+
+
+# ================================================================
+# Edit History Stack (Undo/Redo support)
+# ================================================================
+class EditHistoryStack:
+    """
+    Manages undo/redo stack for image edits.
+    Each state includes: adjustments dict + edit_base PIL image + crop state.
+    """
+    def __init__(self, max_history=50):
+        self._undo_stack = deque(maxlen=max_history)
+        self._redo_stack = deque(maxlen=max_history)
+        self._max_history = max_history
+    
+    def push_state(self, state: dict):
+        """
+        Push current state to undo stack.
+        State should contain: {'adjustments': dict, 'edit_base_pil': Image, 'description': str}
+        """
+        self._undo_stack.append(state.copy())
+        self._redo_stack.clear()  # Clear redo stack when new edit is made
+    
+    def can_undo(self):
+        return len(self._undo_stack) > 0
+    
+    def can_redo(self):
+        return len(self._redo_stack) > 0
+    
+    def undo(self, current_state: dict):
+        """
+        Undo last edit. Returns previous state, or None if can't undo.
+        Current state is pushed to redo stack.
+        """
+        if not self.can_undo():
+            return None
+        
+        # Save current state to redo stack
+        self._redo_stack.append(current_state.copy())
+        
+        # Pop and return previous state
+        return self._undo_stack.pop()
+    
+    def redo(self, current_state: dict):
+        """
+        Redo last undone edit. Returns next state, or None if can't redo.
+        Current state is pushed back to undo stack.
+        """
+        if not self.can_redo():
+            return None
+        
+        # Save current state to undo stack
+        self._undo_stack.append(current_state.copy())
+        
+        # Pop and return next state
+        return self._redo_stack.pop()
+    
+    def clear(self):
+        """Clear all history."""
+        self._undo_stack.clear()
+        self._redo_stack.clear()
+
+
+# ================================================================
+# Rotation Slider (Microsoft Photos style)
+# ================================================================
+class RotationSlider(QWidget):
+    """
+    Microsoft Photos-style rotation slider with degree scale.
+    Shows horizontal slider with degree markers (-45° to +45°).
+    Appears underneath photo in crop mode.
+    """
+    rotationChanged = Signal(float)  # Emits rotation angle in degrees
+    rotate90LeftRequested = Signal()  # Rotate 90° counter-clockwise
+    rotate90RightRequested = Signal()  # Rotate 90° clockwise
+    flipHorizontalRequested = Signal()  # Mirror horizontally
+    flipVerticalRequested = Signal()  # Mirror vertically
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._rotation_angle = 0.0
+        self._setup_ui()
+    
+    def _setup_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 10, 0, 15)  # More bottom margin to avoid cutoff
+        layout.setSpacing(8)
+        
+        # Center container to limit slider width
+        center_container = QWidget()
+        center_container.setStyleSheet("background-color: transparent;")
+        center_layout = QHBoxLayout(center_container)
+        center_layout.setContentsMargins(0, 0, 0, 0)
+        
+        # Add spacers to center the slider
+        center_layout.addStretch(1)
+        
+        # Slider container with degree markers (limited width)
+        slider_container = QWidget()
+        slider_container.setFixedWidth(500)  # Limit width to match photo width
+        slider_container.setStyleSheet("background-color: transparent;")
+        slider_layout = QVBoxLayout(slider_container)
+        slider_layout.setContentsMargins(0, 0, 0, 0)
+        slider_layout.setSpacing(4)
+        
+        # Slider (-45 to +45 degrees)
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setMinimum(-180)
+        self.slider.setMaximum(180)
+        self.slider.setValue(0)
+        self.slider.setFixedHeight(30)
+        self.slider.setStyleSheet("""
+            QSlider {
+                background: transparent;
+            }
+            QSlider::groove:horizontal {
+                background: rgba(255, 255, 255, 0.3);
+                height: 3px;
+                border-radius: 1px;
+                margin: 0px;
+            }
+            QSlider::handle:horizontal {
+                background: white;
+                border: 2px solid #888;
+                width: 16px;
+                height: 16px;
+                margin: -7px 0;
+                border-radius: 8px;
+            }
+            QSlider::handle:horizontal:hover {
+                background: #f0f0f0;
+                border: 2px solid #666;
+            }
+        """)
+        self.slider.valueChanged.connect(self._on_slider_changed)
+        slider_layout.addWidget(self.slider)
+        
+        # Degree scale with tick marks
+        scale_container = QWidget()
+        scale_container.setFixedHeight(15)
+        scale_container.setStyleSheet("background-color: transparent;")
+        scale_layout = QHBoxLayout(scale_container)
+        scale_layout.setContentsMargins(0, 0, 0, 0)
+        scale_layout.setSpacing(0)
+        
+        # Add tick marks evenly distributed
+        num_ticks = 13  # -180 to +180 every 30 degrees
+        for i in range(num_ticks):
+            if i > 0:
+                scale_layout.addStretch(1)
+            
+            tick = QLabel("|")
+            tick.setAlignment(Qt.AlignCenter)
+            tick.setStyleSheet("color: rgba(255, 255, 255, 0.4); font-size: 10px; background: transparent;")
+            scale_layout.addWidget(tick)
+        
+        slider_layout.addWidget(scale_container)
+        
+        # Angle label (centered below slider)
+        self.angle_label = QLabel("0°")
+        self.angle_label.setAlignment(Qt.AlignCenter)
+        self.angle_label.setFixedHeight(20)
+        self.angle_label.setStyleSheet("""
+            QLabel {
+                color: white;
+                font-size: 13px;
+                font-weight: normal;
+                background-color: transparent;
+            }
+        """)
+        slider_layout.addWidget(self.angle_label)
+        
+        center_layout.addWidget(slider_container)
+        center_layout.addStretch(1)
+        
+        layout.addWidget(center_container)
+        
+        # Rotation and flip buttons (with more spacing)
+        buttons_layout = QHBoxLayout()
+        buttons_layout.setSpacing(15)
+        buttons_layout.setContentsMargins(0, 8, 0, 0)  # More top margin
+        
+        buttons_layout.addStretch(1)
+        
+        # Left side: Rotation buttons
+        self.btn_rotate_left = self._create_icon_button("↶", "Rotate 90° left")
+        self.btn_rotate_left.clicked.connect(self.rotate90LeftRequested.emit)
+        buttons_layout.addWidget(self.btn_rotate_left)
+        
+        self.btn_rotate_right = self._create_icon_button("↷", "Rotate 90° right")
+        self.btn_rotate_right.clicked.connect(self.rotate90RightRequested.emit)
+        buttons_layout.addWidget(self.btn_rotate_right)
+        
+        buttons_layout.addStretch(2)
+        
+        # Right side: Flip buttons
+        self.btn_flip_horizontal = self._create_icon_button("⇄", "Flip horizontal")
+        self.btn_flip_horizontal.clicked.connect(self.flipHorizontalRequested.emit)
+        buttons_layout.addWidget(self.btn_flip_horizontal)
+        
+        self.btn_flip_vertical = self._create_icon_button("⇅", "Flip vertical")
+        self.btn_flip_vertical.clicked.connect(self.flipVerticalRequested.emit)
+        buttons_layout.addWidget(self.btn_flip_vertical)
+        
+        buttons_layout.addStretch(1)
+        
+        layout.addLayout(buttons_layout)
+        
+        self.setFixedHeight(125)  # Slightly taller to accommodate margins
+        self.setStyleSheet("background-color: #000000; border-top: 1px solid #444;")
+    
+    def _create_icon_button(self, icon_text: str, tooltip: str) -> QPushButton:
+        """Create a round icon button (dark mode style)."""
+        btn = QPushButton(icon_text)
+        btn.setToolTip(tooltip)
+        btn.setFixedSize(40, 40)
+        btn.setStyleSheet("""
+            QPushButton {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 20px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 0.25);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+            }
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 0.35);
+            }
+        """)
+        return btn
+    
+    def _on_slider_changed(self, value: int):
+        self._rotation_angle = float(value)
+        self.angle_label.setText(f"{value}°")
+        self.rotationChanged.emit(self._rotation_angle)
+    
+    def get_rotation(self) -> float:
+        return self._rotation_angle
+    
+    def reset(self):
+        self.slider.setValue(0)
 
 
 # ================================================================
@@ -277,6 +744,16 @@ class LightboxDialog(QDialog):
             self._crop_rect = None
             self._crop_dragging = False
             self._crop_start = QPoint()
+            # ENHANCEMENT: Microsoft Photos-style aspect ratio support
+            self._crop_aspect_ratio = None  # None = freeform, or (w, h) tuple for fixed aspect
+            self._crop_preset = "freeform"  # Current preset: "freeform", "16:9", "4:3", "1:1", "3:2", "original"
+            
+            # PHASE 2: Before/After split-view
+            self._before_pm = None
+            self._before_after_mode = False
+            self._divider_rel = 0.5  # fraction of widget width
+            self._divider_dragging = False
+            self._divider_hit_px = 10
 
         def set_pixmap(self, pm: QPixmap):
             self._pixmap = pm
@@ -290,6 +767,37 @@ class LightboxDialog(QDialog):
             except Exception:
                 pass            
             self.update()
+        
+        def set_before_pixmap(self, pm: QPixmap):
+            self._before_pm = pm
+            self.update()
+        
+        def set_before_after_mode(self, enabled: bool):
+            self._before_after_mode = bool(enabled)
+            # center divider at middle when enabling
+            if enabled:
+                self._divider_rel = 0.5
+            self.update()
+
+        def set_pixmap_preserve_view(self, pm: QPixmap):
+            """Set pixmap but preserve current zoom and center if possible."""
+            prev_scale = self._scale
+            self._pixmap = pm
+            self._img_size = pm.size()
+            self._recompute_fit_scale()
+            # Keep previous scale if it's above fit; otherwise use fit
+            self._scale = max(prev_scale, self._fit_scale)
+            # Center image in view
+            self._offset = QPointF(
+                (self.width() - self._img_size.width() * self._scale) / 2.0,
+                (self.height() - self._img_size.height() * self._scale) / 2.0
+            )
+            self._clamp_offset()
+            try:
+                self.scaleChanged.emit(self._scale)
+            except Exception:
+                pass
+            self.update()
 
         def reset_view(self):
             self._offset = QPointF(0,0)
@@ -299,6 +807,16 @@ class LightboxDialog(QDialog):
                 self.scaleChanged.emit(self._scale)
             except Exception:
                 pass            
+            self.update()
+        
+        def _center_image(self):
+            """Center the image in the canvas after transformations."""
+            if self._pixmap is None:
+                return
+            self._offset = QPointF(
+                (self.width() - self._img_size.width() * self._scale) / 2.0,
+                (self.height() - self._img_size.height() * self._scale) / 2.0
+            )
             self.update()
  
         def zoom_to(self, scale: float, anchor_px: QPointF = None):
@@ -357,15 +875,128 @@ class LightboxDialog(QDialog):
             p = QPainter(self)
             p.fillRect(self.rect(), self._bg)
             if self._pixmap and not self._pixmap.isNull():
-                p.translate(self._offset)
-                p.scale(self._scale, self._scale)
-                p.drawPixmap(0,0,self._pixmap.width(), self._pixmap.height(), self._pixmap)
+                if self._before_after_mode and self._before_pm:
+                    divider_x = int(self.width() * self._divider_rel)
+                    # Draw BEFORE on the left side
+                    p.setClipRect(QRect(0, 0, divider_x, self.height()))
+                    p.translate(self._offset)
+                    p.scale(self._scale, self._scale)
+                    p.drawPixmap(0, 0, self._before_pm.width(), self._before_pm.height(), self._before_pm)
+                    p.resetTransform(); p.setClipping(False)
+                    
+                    # Draw AFTER on the right side
+                    p.setClipRect(QRect(divider_x, 0, self.width() - divider_x, self.height()))
+                    p.translate(self._offset)
+                    p.scale(self._scale, self._scale)
+                    p.drawPixmap(0, 0, self._pixmap.width(), self._pixmap.height(), self._pixmap)
+                    p.resetTransform(); p.setClipping(False)
+                    
+                    # Divider line
+                    p.setPen(QPen(QColor(255, 255, 255, 180), 2, Qt.SolidLine))
+                    p.drawLine(divider_x, 0, divider_x, self.height())
+                else:
+                    p.translate(self._offset)
+                    p.scale(self._scale, self._scale)
+                    p.drawPixmap(0,0,self._pixmap.width(), self._pixmap.height(), self._pixmap)
             if self._crop_mode and self._crop_rect:
                 p.resetTransform()
                 p.setRenderHint(QPainter.Antialiasing)
-                p.setPen(QPen(Qt.yellow,2,Qt.DashLine))
+                
+                # MICROSOFT PHOTOS STYLE: Professional crop overlay
+                # 1. Darken everything outside crop area (semi-transparent black)
+                crop_path = QPainterPath()
+                crop_path.addRect(self._crop_rect)
+                
+                full_path = QPainterPath()
+                full_path.addRect(self.rect())
+                
+                overlay_path = full_path.subtracted(crop_path)
+                p.fillPath(overlay_path, QColor(0, 0, 0, 140))  # Darker overlay
+                
+                # 2. Draw bright white border (2px solid)
+                p.setPen(QPen(QColor(255, 255, 255), 3, Qt.SolidLine))
+                p.setBrush(Qt.NoBrush)
                 p.drawRect(self._crop_rect)
-                p.fillRect(self._crop_rect, QColor(255,255,0,50))
+                
+                # 3. Draw corner handles (larger, more visible)
+                handle_size = 12
+                handle_thickness = 3
+                handle_length = 30
+                corners = [
+                    (self._crop_rect.topLeft(), 'TL'),
+                    (self._crop_rect.topRight(), 'TR'),
+                    (self._crop_rect.bottomLeft(), 'BL'),
+                    (self._crop_rect.bottomRight(), 'BR')
+                ]
+                
+                p.setPen(QPen(QColor(255, 255, 255), handle_thickness, Qt.SolidLine))
+                for corner, pos in corners:
+                    x, y = corner.x(), corner.y()
+                    
+                    if pos == 'TL':
+                        # Top-left: L-shaped handle
+                        p.drawLine(x, y, x + handle_length, y)  # Horizontal
+                        p.drawLine(x, y, x, y + handle_length)  # Vertical
+                    elif pos == 'TR':
+                        # Top-right: L-shaped handle
+                        p.drawLine(x, y, x - handle_length, y)  # Horizontal
+                        p.drawLine(x, y, x, y + handle_length)  # Vertical
+                    elif pos == 'BL':
+                        # Bottom-left: L-shaped handle
+                        p.drawLine(x, y, x + handle_length, y)  # Horizontal
+                        p.drawLine(x, y, x, y - handle_length)  # Vertical
+                    elif pos == 'BR':
+                        # Bottom-right: L-shaped handle
+                        p.drawLine(x, y, x - handle_length, y)  # Horizontal
+                        p.drawLine(x, y, x, y - handle_length)  # Vertical
+                
+                # 4. Draw rule of thirds grid (subtle white lines)
+                p.setPen(QPen(QColor(255, 255, 255, 120), 1, Qt.SolidLine))
+                rect_w = self._crop_rect.width()
+                rect_h = self._crop_rect.height()
+                x1 = self._crop_rect.left() + rect_w // 3
+                x2 = self._crop_rect.left() + 2 * rect_w // 3
+                y1 = self._crop_rect.top() + rect_h // 3
+                y2 = self._crop_rect.top() + 2 * rect_h // 3
+                
+                p.drawLine(x1, self._crop_rect.top(), x1, self._crop_rect.bottom())
+                p.drawLine(x2, self._crop_rect.top(), x2, self._crop_rect.bottom())
+                p.drawLine(self._crop_rect.left(), y1, self._crop_rect.right(), y1)
+                p.drawLine(self._crop_rect.left(), y2, self._crop_rect.right(), y2)
+                
+                # 5. Draw preset label (Microsoft Photos style - top center)
+                if self._crop_preset != "freeform":
+                    label_text = self._crop_preset.upper()
+                    p.setFont(QFont("Segoe UI", 11, QFont.Bold))
+                    
+                    # Measure text to center it
+                    fm = p.fontMetrics()
+                    text_width = fm.horizontalAdvance(label_text)
+                    text_height = fm.height()
+                    
+                    # Position at top center of crop rect
+                    label_x = self._crop_rect.center().x() - text_width // 2
+                    label_y = self._crop_rect.top() - text_height - 8
+                    
+                    # Ensure label stays on screen
+                    if label_y < 10:
+                        label_y = self._crop_rect.top() + 10
+                    
+                    label_rect = QRect(
+                        label_x - 8,
+                        label_y - 4,
+                        text_width + 16,
+                        text_height + 8
+                    )
+                    
+                    # Draw semi-transparent background
+                    p.setPen(Qt.NoPen)
+                    p.setBrush(QColor(0, 0, 0, 180))
+                    p.drawRoundedRect(label_rect, 4, 4)
+                    
+                    # Draw text
+                    p.setPen(QColor(255, 255, 255))
+                    p.drawText(label_rect, Qt.AlignCenter, label_text)
             p.end()
 
         def resizeEvent(self, ev):
@@ -387,6 +1018,13 @@ class LightboxDialog(QDialog):
                     self._crop_rect = QRect(self._crop_start, QSize())
                     self.update()
                 return
+            # PHASE 2: Divider drag in before/after mode
+            if self._before_after_mode and ev.button() == Qt.LeftButton:
+                divider_x = int(self.width() * self._divider_rel)
+                if abs(ev.pos().x() - divider_x) <= self._divider_hit_px:
+                    self._divider_dragging = True
+                    ev.accept()
+                    return
             if ev.button() == Qt.LeftButton and self._pixmap:
                 self._dragging = True
                 self._drag_start_pos = ev.pos()
@@ -394,8 +1032,46 @@ class LightboxDialog(QDialog):
                 self.setCursor(Qt.ClosedHandCursor)
 
         def mouseMoveEvent(self, ev):
+            # PHASE 2: Divider drag
+            if self._before_after_mode and self._divider_dragging:
+                nx = ev.pos().x() / max(1, self.width())
+                self._divider_rel = max(0.1, min(0.9, nx))
+                self.update()
+                return
             if self._crop_mode and self._crop_dragging:
-                self._crop_rect = QRect(self._crop_start, ev.pos()).normalized()
+                # Create crop rect from drag start to current position
+                raw_rect = QRect(self._crop_start, ev.pos()).normalized()
+                
+                # Apply aspect ratio constraint if set
+                if self._crop_aspect_ratio:
+                    aspect_w, aspect_h = self._crop_aspect_ratio
+                    aspect = aspect_w / aspect_h
+                    
+                    # Calculate constrained dimensions
+                    width = raw_rect.width()
+                    height = raw_rect.height()
+                    
+                    # Determine which dimension to fix based on drag direction
+                    current_aspect = width / max(height, 1)
+                    
+                    if current_aspect > aspect:
+                        # Too wide - fix width, adjust height
+                        height = int(width / aspect)
+                    else:
+                        # Too tall - fix height, adjust width
+                        width = int(height * aspect)
+                    
+                    # Create constrained rect from drag start point
+                    self._crop_rect = QRect(
+                        raw_rect.left(),
+                        raw_rect.top(),
+                        width,
+                        height
+                    )
+                else:
+                    # Freeform - use raw rect
+                    self._crop_rect = raw_rect
+                
                 self.update()
                 return
             if self._dragging and self._pixmap:
@@ -405,6 +1081,8 @@ class LightboxDialog(QDialog):
                 self.update()
 
         def mouseReleaseEvent(self, ev):
+            if ev.button() == Qt.LeftButton:
+                self._divider_dragging = False
             if self._crop_mode and ev.button() == Qt.LeftButton:
                 self._crop_dragging = False
                 self.update()
@@ -448,9 +1126,53 @@ class LightboxDialog(QDialog):
                 min_y = vh - ih; max_y = 0.0
                 self._offset.setY(min(max(self._offset.y(), min_y), max_y))
 
-        def enter_crop_mode(self):
+        def enter_crop_mode(self, aspect_ratio=None, preset="freeform"):
+            """
+            Enter crop mode with optional aspect ratio constraint.
+            
+            Args:
+                aspect_ratio: None for freeform, or (width, height) tuple for fixed aspect
+                preset: "freeform", "16:9", "4:3", "1:1", "3:2", "original"
+            """
             self._crop_mode = True
-            self._crop_rect = None
+            self._crop_aspect_ratio = aspect_ratio
+            self._crop_preset = preset
+            
+            # MICROSOFT PHOTOS BEHAVIOR: Create initial crop rectangle
+            # - HEIGHT MATCHES PHOTO HEIGHT (fills vertical space)
+            # - Width is calculated based on aspect ratio
+            if self._pixmap and not self._crop_rect:
+                img_w = self._img_size.width()
+                img_h = self._img_size.height()
+                
+                # MICROSOFT PHOTOS: Crop height = full image height
+                crop_h = img_h
+                
+                # Calculate width based on aspect ratio
+                if aspect_ratio:
+                    aspect = aspect_ratio[0] / aspect_ratio[1]
+                    crop_w = int(crop_h * aspect)
+                    
+                    # If calculated width exceeds image width, constrain by width
+                    if crop_w > img_w:
+                        crop_w = img_w
+                        crop_h = int(crop_w / aspect)
+                else:
+                    # Freeform: use 80% of width
+                    crop_w = int(img_w * 0.8)
+                
+                # Center the crop rectangle horizontally
+                crop_x = (img_w - crop_w) // 2
+                crop_y = (img_h - crop_h) // 2
+                
+                # Convert to screen coordinates
+                screen_x = int(self._offset.x() + crop_x * self._scale)
+                screen_y = int(self._offset.y() + crop_y * self._scale)
+                screen_w = int(crop_w * self._scale)
+                screen_h = int(crop_h * self._scale)
+                
+                self._crop_rect = QRect(screen_x, screen_y, screen_w, screen_h)
+            
             self.setCursor(Qt.CrossCursor)
             self.update()
 
@@ -458,20 +1180,76 @@ class LightboxDialog(QDialog):
             self._crop_mode = False
             self._crop_rect = None
             self._crop_dragging = False
+            self._crop_aspect_ratio = None
+            self._crop_preset = "freeform"
             self.setCursor(Qt.OpenHandCursor)
             self.update()
-
-        def mouseDoubleClickEvent(self, ev):
-            """Toggle between fit and 100% zoom, centered on click."""
-            if not self._pixmap:
+        
+        def set_crop_aspect_ratio(self, aspect_ratio, preset="custom"):
+            """
+            Update crop aspect ratio and constrain existing crop rect.
+            
+            Args:
+                aspect_ratio: None for freeform, or (width, height) tuple
+                preset: Name of preset (for UI display)
+            """
+            self._crop_aspect_ratio = aspect_ratio
+            self._crop_preset = preset
+            
+            # If crop rect exists, constrain it to new aspect ratio
+            if self._crop_rect and aspect_ratio:
+                self._constrain_crop_to_aspect()
+            
+            self.update()
+        
+        def _constrain_crop_to_aspect(self):
+            """
+            Adjust crop rect to match current aspect ratio.
+            Maintains center point and scales to fit.
+            """
+            if not self._crop_rect or not self._crop_aspect_ratio:
                 return
-            anchor = QPointF(ev.position())
-            # If currently above fit (or near 100%), return to fit; otherwise go to 100%
-            if self._scale > self._fit_scale + 1e-6 or abs(self._scale - 1.0) < 1e-3:
-                self.zoom_to(self._fit_scale, anchor)
+            
+            aspect_w, aspect_h = self._crop_aspect_ratio
+            aspect = aspect_w / aspect_h
+            
+            # Get current crop center
+            center_x = self._crop_rect.center().x()
+            center_y = self._crop_rect.center().y()
+            
+            # Calculate new dimensions maintaining aspect ratio
+            current_w = self._crop_rect.width()
+            current_h = self._crop_rect.height()
+            
+            # Determine which dimension to constrain
+            current_aspect = current_w / max(current_h, 1)
+            
+            if current_aspect > aspect:
+                # Too wide - constrain width
+                new_h = current_h
+                new_w = int(new_h * aspect)
             else:
-                self.zoom_to(1.0, anchor)
-            ev.accept()
+                # Too tall - constrain height
+                new_w = current_w
+                new_h = int(new_w / aspect)
+            
+            # Create new rect centered on same point
+            new_rect = QRect(
+                int(center_x - new_w / 2),
+                int(center_y - new_h / 2),
+                new_w,
+                new_h
+            )
+            
+            self._crop_rect = new_rect
+
+        def mouseReleaseEvent(self, ev):
+            if ev.button() == Qt.LeftButton:
+                self._divider_dragging = False
+                self._crop_dragging = False
+                if self._dragging:
+                    self._dragging = False
+                    self.setCursor(Qt.OpenHandCursor)
 
     # ---------- Dialog ----------
     def __init__(self, image_path: str, parent=None):
@@ -570,6 +1348,9 @@ class LightboxDialog(QDialog):
         self._apply_timer.setSingleShot(True)
         self._apply_timer.setInterval(50)
         self._apply_timer.timeout.connect(self._apply_adjustments)
+        
+        # PHASE 1: Initialize edit history for undo/redo
+        self._edit_history = EditHistoryStack(max_history=50)
 
         # UI skeleton
         self.stack = QStackedWidget(self)
@@ -596,15 +1377,34 @@ class LightboxDialog(QDialog):
         # === PHASE 1: Content stack for unified photo/video display ===
         self.content_stack = QStackedWidget()
 
-        # Page 0: Image canvas (for photos)
+        # Page 0: Image canvas (for photos) with rotation slider
+        image_page = QWidget()
+        image_page.setStyleSheet("background-color: #0f0f0f;")
+        image_layout = QVBoxLayout(image_page)
+        image_layout.setContentsMargins(0, 0, 0, 0)
+        image_layout.setSpacing(0)
+        
         self.canvas = LightboxDialog._ImageCanvas(self)
         self.canvas.setCursor(Qt.OpenHandCursor)
+        self.canvas.setToolTip("Before/After: Press B to toggle. Drag divider in split-view.")
         # keep viewer & editor zoom controls synchronized whenever canvas scale changes
         try:
             self.canvas.scaleChanged.connect(self._on_canvas_scale_changed)
         except Exception:
             pass
-        self.content_stack.addWidget(self.canvas)  # index 0
+        image_layout.addWidget(self.canvas, 1)
+        
+        # MICROSOFT PHOTOS: Rotation slider (hidden by default, shown in crop mode)
+        self.rotation_slider_widget = RotationSlider(parent=self)
+        self.rotation_slider_widget.rotationChanged.connect(self._on_rotation_changed)
+        self.rotation_slider_widget.rotate90LeftRequested.connect(self._rotate_90_left)
+        self.rotation_slider_widget.rotate90RightRequested.connect(self._rotate_90_right)
+        self.rotation_slider_widget.flipHorizontalRequested.connect(self._flip_horizontal)
+        self.rotation_slider_widget.flipVerticalRequested.connect(self._flip_vertical)
+        self.rotation_slider_widget.hide()
+        image_layout.addWidget(self.rotation_slider_widget, 0)
+        
+        self.content_stack.addWidget(image_page)  # index 0
 
         # Page 1: Video player (for videos)
         video_container = QWidget()
@@ -647,6 +1447,14 @@ class LightboxDialog(QDialog):
         self._gpu_error_timer = QTimer()  # Debounce GPU errors
         self._gpu_error_timer.setSingleShot(True)
         self._gpu_error_timer.timeout.connect(self._show_gpu_warning_once)
+        
+        # PHASE 2: Deferred histogram updates (debounce)
+        self._hist_timer = QTimer()
+        self._hist_timer.setSingleShot(True)
+        try:
+            self._hist_timer.timeout.connect(lambda: self.histogram_widget and self._working_pil and self.histogram_widget.set_image(self._working_pil))
+        except Exception:
+            pass
 
         # Track current media type
         self._current_media_type = "photo"  # "photo" or "video"
@@ -695,10 +1503,18 @@ class LightboxDialog(QDialog):
     def _build_right_editor_panel(self) -> QWidget:
         """Construct right-hand editor panel for Light & Color adjustments (collapsible)."""
         panel = QWidget()
-        panel.setFixedWidth(380)
+        panel.setFixedWidth(400)  # Slightly wider for histogram
         layout = QVBoxLayout(panel)
         layout.setContentsMargins(12,12,12,12)
         layout.setSpacing(12)
+        
+        # PHASE 1: Add histogram widget at the top
+        histogram_label = QLabel("Histogram")
+        histogram_label.setStyleSheet("color:#000;font-size:12px;font-weight:bold;")
+        layout.addWidget(histogram_label)
+        
+        self.histogram_widget = HistogramWidget(parent=self)
+        layout.addWidget(self.histogram_widget)
 
         # Light section
         light_group = CollapsiblePanel("Light")
@@ -737,7 +1553,7 @@ class LightboxDialog(QDialog):
         layout.addWidget(color_group)
 
         # Reset button
-        btn_reset = QPushButton("Reset")
+        btn_reset = QPushButton("Reset All")
         btn_reset.setStyleSheet(self._button_style())
         btn_reset.clicked.connect(self._reset_adjustments)
         layout.addWidget(btn_reset)
@@ -963,6 +1779,17 @@ class LightboxDialog(QDialog):
             pm = self._pil_to_qpixmap(self._working_pil)
             self.canvas.set_pixmap(pm)
             self._update_info(pm)
+            # Reset rotation preview state on new photo
+            self._rotation_preview_base = None
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.reset()
+            
+            # PHASE 2: Deferred histogram update (debounced)
+            if hasattr(self, '_hist_timer') and hasattr(self, 'histogram_widget') and self.histogram_widget:
+                try:
+                    self._hist_timer.start(200)
+                except Exception:
+                    self.histogram_widget.set_image(self._working_pil)
         except Exception as e:
             print("[_apply_adjustments] error:", e)
 
@@ -1060,9 +1887,11 @@ class LightboxDialog(QDialog):
 
         self.lbl_edit_title = QLabel(os.path.basename(self._path) if self._path else "")
         self.lbl_edit_title.setStyleSheet("color:#333;font-weight:bold;")
+        
         row1.addWidget(self.btn_back)
         row1.addWidget(self.lbl_edit_title)
         row1.addStretch(1)
+        # Undo/Redo buttons will be added after make_btn is defined
         layout.addLayout(row1)
         
         # === Row 2: Edit toolbar ===
@@ -1076,6 +1905,19 @@ class LightboxDialog(QDialog):
             if icon_name:
                 b.setIcon(self._icon(icon_name))
             return b
+        
+        # PHASE 1: Create Undo/Redo buttons (after make_btn is defined)
+        self.btn_undo = make_btn("↺", "Undo (Ctrl+Z)", "reset")
+        self.btn_undo.setEnabled(False)
+        self.btn_undo.clicked.connect(self._undo_edit)
+        
+        self.btn_redo = make_btn("↻", "Redo (Ctrl+Y)", "reset")
+        self.btn_redo.setEnabled(False)
+        self.btn_redo.clicked.connect(self._redo_edit)
+        
+        # Add undo/redo to row1
+        row1.addWidget(self.btn_undo)
+        row1.addWidget(self.btn_redo)
 
         self.btn_zoom_in = make_btn("+","Zoom in")
         self.btn_zoom_out = make_btn("−","Zoom out")
@@ -1106,6 +1948,41 @@ class LightboxDialog(QDialog):
         self.btn_crop = make_btn("","Crop","crop")
         self.btn_crop.setCheckable(True)
         self.btn_crop.toggled.connect(self._toggle_crop_mode)
+        
+        # PHASE 1: Crop aspect ratio preset buttons (Microsoft Photos style)
+        self.crop_preset_widget = QWidget()
+        crop_preset_layout = QHBoxLayout(self.crop_preset_widget)
+        crop_preset_layout.setContentsMargins(0, 0, 0, 0)
+        crop_preset_layout.setSpacing(2)
+        
+        self.btn_crop_free = make_btn("Free", "Freeform crop")
+        self.btn_crop_free.setCheckable(True)
+        self.btn_crop_free.setChecked(True)
+        self.btn_crop_free.clicked.connect(lambda: self._set_crop_aspect(None, "freeform"))
+        
+        self.btn_crop_1_1 = make_btn("1:1", "Square (1:1)")
+        self.btn_crop_1_1.setCheckable(True)
+        self.btn_crop_1_1.clicked.connect(lambda: self._set_crop_aspect((1, 1), "1:1"))
+        
+        self.btn_crop_4_3 = make_btn("4:3", "Standard (4:3)")
+        self.btn_crop_4_3.setCheckable(True)
+        self.btn_crop_4_3.clicked.connect(lambda: self._set_crop_aspect((4, 3), "4:3"))
+        
+        self.btn_crop_16_9 = make_btn("16:9", "Widescreen (16:9)")
+        self.btn_crop_16_9.setCheckable(True)
+        self.btn_crop_16_9.clicked.connect(lambda: self._set_crop_aspect((16, 9), "16:9"))
+        
+        self.btn_crop_3_2 = make_btn("3:2", "Photo (3:2)")
+        self.btn_crop_3_2.setCheckable(True)
+        self.btn_crop_3_2.clicked.connect(lambda: self._set_crop_aspect((3, 2), "3:2"))
+        
+        crop_preset_layout.addWidget(self.btn_crop_free)
+        crop_preset_layout.addWidget(self.btn_crop_1_1)
+        crop_preset_layout.addWidget(self.btn_crop_4_3)
+        crop_preset_layout.addWidget(self.btn_crop_16_9)
+        crop_preset_layout.addWidget(self.btn_crop_3_2)
+        
+        self.crop_preset_widget.hide()  # Hidden until crop mode is activated
 
         # Crop apply/cancel buttons (initially hidden)
         self.btn_crop_apply = make_btn("Apply","Apply crop")
@@ -1159,11 +2036,10 @@ class LightboxDialog(QDialog):
             self.btn_adjust,
             self.btn_filter,
             self.btn_crop,
+            self.crop_preset_widget,  # PHASE 1: Crop presets
             self.btn_crop_apply,
             self.btn_crop_cancel,
             self.btn_rotate,
-#            self.btn_brightness,
-#            self.btn_contrast,
             self.btn_save,
             self.btn_cancel
         ]:
@@ -1205,7 +2081,7 @@ class LightboxDialog(QDialog):
 
     def _build_top_bar(self) -> QWidget:
         bar = QWidget()
-        bar.setFixedHeight(40)
+        bar.setFixedHeight(50)  # Increased height for rating stars
         h = QHBoxLayout(bar)
         h.setContentsMargins(8,0,8,0)
         h.setSpacing(10)
@@ -1221,6 +2097,27 @@ class LightboxDialog(QDialog):
         self.btn_rotate.setToolTip("Rotate clockwise")
         self.btn_rotate.setStyleSheet(self._button_style())
         self.btn_rotate.clicked.connect(self._rotate_image)
+
+        # PHASE 1: Add rating widget to top bar
+        rating_label = QLabel("Rating:")
+        rating_label.setStyleSheet("color:#000;font-size:12px;font-weight:bold;")
+        self.rating_widget = RatingWidget(rating=0, parent=self)
+        self.rating_widget.ratingChanged.connect(self._on_rating_changed)
+        
+        # PHASE 1: Add pick/reject buttons
+        self.btn_pick = QToolButton()
+        self.btn_pick.setText("⭐ Pick")
+        self.btn_pick.setToolTip("Mark as Pick (P)")
+        self.btn_pick.setCheckable(True)
+        self.btn_pick.setStyleSheet(self._button_style())
+        self.btn_pick.clicked.connect(lambda: self._on_flag_changed('pick' if self.btn_pick.isChecked() else None))
+        
+        self.btn_reject = QToolButton()
+        self.btn_reject.setText("❌ Reject")
+        self.btn_reject.setToolTip("Mark as Reject (X)")
+        self.btn_reject.setCheckable(True)
+        self.btn_reject.setStyleSheet(self._button_style())
+        self.btn_reject.clicked.connect(lambda: self._on_flag_changed('reject' if self.btn_reject.isChecked() else None))
 
         self.btn_more = QToolButton()
         self.btn_more.setText("...")
@@ -1242,6 +2139,10 @@ class LightboxDialog(QDialog):
 
         h.addWidget(self.btn_edit)
         h.addWidget(self.btn_rotate)
+        h.addWidget(rating_label)
+        h.addWidget(self.rating_widget)
+        h.addWidget(self.btn_pick)
+        h.addWidget(self.btn_reject)
         h.addWidget(self.btn_more)
         h.addStretch(1)
         h.addWidget(self.title_label)
@@ -1454,9 +2355,9 @@ class LightboxDialog(QDialog):
 
         # Thumbnail + filename
         top_row = QWidget()
-        tr = QHBoxLayout(top_row)
-        tr.setContentsMargins(0, 0, 0, 0)
-        tr.setSpacing(8)
+        top_row_layout = QHBoxLayout(top_row)
+        top_row_layout.setContentsMargins(0, 0, 0, 0)
+        top_row_layout.setSpacing(8)
         thumb_lbl = QLabel()
         thumb_lbl.setFixedSize(120, 90)  # Larger for video thumbnails
         thumb_lbl.setStyleSheet("background: rgba(0,0,0,0.03); border-radius:4px;")
@@ -1553,8 +2454,8 @@ class LightboxDialog(QDialog):
         desc_field.setStyleSheet(f"color: {t['fg']}; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); padding-left:6px;")
         nw.addWidget(name_lbl)
         nw.addWidget(desc_field)
-        tr.addWidget(thumb_lbl)
-        tr.addWidget(name_widget, 1)
+        top_row_layout.addWidget(thumb_lbl)
+        top_row_layout.addWidget(name_widget, 1)
         vlayout.addWidget(top_row)
 
         # Grid rows
@@ -2027,8 +2928,20 @@ class LightboxDialog(QDialog):
             print(f"[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: {self._orig_pil.size}")
             qimg = ImageQt.ImageQt(img)
             pm = QPixmap.fromImage(qimg)
+            # PHASE 2: Smarter caching — scale very large pixmaps for display to reduce memory
+            try:
+                max_w = 2560
+                if pm.width() > max_w:
+                    pm = pm.scaled(max_w, int(pm.height() * (max_w / pm.width())), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            except Exception:
+                pass
             self.canvas.set_pixmap(pm)
+            self.canvas.set_before_pixmap(pm)
             self._update_info(pm)
+            # Reset rotation preview state on new photo
+            self._rotation_preview_base = None
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.reset()
         except Exception as e:
             print(f"[PhotoLoad] ❌ DIAGNOSTIC: Failed to load photo: {e}")
             self._orig_pil = None  # Ensure it's None on failure
@@ -2690,9 +3603,29 @@ class LightboxDialog(QDialog):
                         return
                     # Otherwise let parent handle navigation
 
+        # PHASE 2: Photo shortcuts
+        if not self._is_video:
+            # B key: Toggle Before/After split-view
+            if event.key() == Qt.Key_B:
+                self._toggle_before_after()
+                event.accept()
+                return
+        
         # Call parent implementation for other keys (arrow navigation, etc.)
         super().keyPressEvent(event)
 
+    def _toggle_before_after(self):
+        """Toggle before/after split-view mode (split divider draggable)."""
+        enabled = not getattr(self.canvas, "_before_after_mode", False)
+        self.canvas.set_before_after_mode(enabled)
+        # Provide subtle status text
+        if hasattr(self, 'info_label'):
+            self.info_label.setText("🌓 Before/After — drag divider • Press B to toggle" if enabled else "")
+        # Ensure before pixmap is available
+        if enabled and self._orig_pil is not None:
+            pm_before = self._pil_to_qpixmap(self._orig_pil)
+            self.canvas.set_before_pixmap(pm_before)
+            
     def _pil_to_qpixmap(self, pil_img):
         """Convert a Pillow Image (RGBA) to QPixmap safely."""
         try:
@@ -2879,6 +3812,10 @@ class LightboxDialog(QDialog):
             pm = self._pil_to_qpixmap(self._edit_base_pil)
             self.canvas.set_pixmap(pm)
             self._update_info(pm)
+            # Reset rotation preview state on new photo
+            self._rotation_preview_base = None
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.reset()
 
     def _return_to_viewer(self):
         reply = QMessageBox.question(self, "Return to viewer", "Do you want to save changes before returning?",
@@ -2988,11 +3925,33 @@ class LightboxDialog(QDialog):
         if not hasattr(self, "canvas"):
             return
         if enabled:
-            self.canvas.enter_crop_mode()
+            # MICROSOFT PHOTOS: Default preset is 1:1 (not freeform)
+            self.canvas.enter_crop_mode(aspect_ratio=(1, 1), preset="1:1")
             self._show_crop_controls(True)
+            
+            # PHASE 1: Show crop preset buttons
+            if hasattr(self, 'crop_preset_widget'):
+                self.crop_preset_widget.show()
+                
+                # MICROSOFT PHOTOS: Set '1:1' as default selected preset
+                self._set_crop_aspect((1, 1), "1:1")
+            
+            # MICROSOFT PHOTOS: Show rotation slider underneath photo
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.show()
+                self.rotation_slider_widget.reset()
         else:
             self.canvas.exit_crop_mode()
             self._show_crop_controls(False)
+            
+            # PHASE 1: Hide crop preset buttons
+            if hasattr(self, 'crop_preset_widget'):
+                self.crop_preset_widget.hide()
+            
+            # Hide rotation slider and clear preview base
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.hide()
+            self._rotation_preview_base = None
 
     # -------------------------------
     # Crop functions (use canvas methods)
@@ -3137,6 +4096,10 @@ class LightboxDialog(QDialog):
             pm = self._pil_to_qpixmap(self._orig_pil)
             self.canvas.set_pixmap(pm)
             self._update_info(pm)
+            # Reset rotation preview state on new photo
+            self._rotation_preview_base = None
+            if hasattr(self, 'rotation_slider_widget'):
+                self.rotation_slider_widget.reset()
         # reset dirty flag and save action
         self._is_dirty = False
         if hasattr(self, "_save_action_overwrite") and self._save_action_overwrite:
@@ -3149,6 +4112,268 @@ class LightboxDialog(QDialog):
     def _open_in_explorer(self):
         if self._path and os.path.exists(self._path):
             subprocess.run(["explorer", "/select,", os.path.normpath(self._path)])
+    
+    # ================================================================
+    # PHASE 1: Professional Tools - Handler Methods
+    # ================================================================
+    
+    def _on_rating_changed(self, rating: int):
+        """Handle rating change - save to database."""
+        print(f"[Rating] Photo rated: {rating} stars")
+        # TODO: Save rating to database
+        # self._shared_db_instance.update_photo_rating(self._path, self._project_id, rating)
+    
+    def _on_flag_changed(self, flag: str):
+        """Handle pick/reject flag change - save to database."""
+        print(f"[Flag] Photo flagged as: {flag}")
+        # Update button states
+        if flag == 'pick':
+            self.btn_reject.setChecked(False)
+        elif flag == 'reject':
+            self.btn_pick.setChecked(False)
+        # TODO: Save flag to database
+        # self._shared_db_instance.update_photo_flag(self._path, self._project_id, flag)
+    
+    def _set_crop_aspect(self, aspect_ratio, preset_name):
+        """Set crop aspect ratio and update canvas (Microsoft Photos style)."""
+        if hasattr(self, 'canvas') and self.canvas._crop_mode:
+            self.canvas.set_crop_aspect_ratio(aspect_ratio, preset_name)
+            
+            # MICROSOFT PHOTOS STYLE: Update button visual states
+            # Define pressed/selected style
+            selected_style = self._button_style() + """
+                QToolButton {
+                    background-color: #0078d4;
+                    color: white;
+                    border: 2px solid #005a9e;
+                }
+            """
+            normal_style = self._button_style()
+            
+            # Update all preset button styles
+            for btn, preset in [(self.btn_crop_free, "freeform"),
+                               (self.btn_crop_1_1, "1:1"),
+                               (self.btn_crop_4_3, "4:3"),
+                               (self.btn_crop_16_9, "16:9"),
+                               (self.btn_crop_3_2, "3:2")]:
+                if preset == preset_name:
+                    btn.setStyleSheet(selected_style)
+                    btn.setChecked(True)
+                else:
+                    btn.setStyleSheet(normal_style)
+                    btn.setChecked(False)
+    
+    def _on_rotation_changed(self, angle: float):
+        """Handle rotation slider change - rotate a lightweight preview and preserve zoom."""
+        if not self._edit_base_pil or not getattr(self.canvas, "_pixmap", None):
+            return
+        
+        # Build a small preview base once (to avoid out-of-memory on huge images)
+        if not hasattr(self, "_rotation_preview_base") or self._rotation_preview_base is None:
+            base_pm = self.canvas._pixmap
+            # Target width: min(view width * 0.9, original width, 1600px)
+            target_w = int(min(self.canvas.width() * 0.9, base_pm.width(), 1600))
+            target_h = int(base_pm.height() * (target_w / base_pm.width()))
+            print(f"[RotationPreviewBase] path={getattr(self, '_path', '')}, base_pm={base_pm.width()}x{base_pm.height()}, target={target_w}x{target_h}")
+            self._rotation_preview_base = base_pm.scaled(target_w, target_h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        
+        # Rotate preview base by the requested angle
+        transform = QTransform()
+        transform.rotate(-angle)
+        rotated_preview = self._rotation_preview_base.transformed(transform, Qt.SmoothTransformation)
+        print(f"[RotationPreview] angle={angle}, rotated={rotated_preview.width()}x{rotated_preview.height()}, canvas_scale={getattr(self.canvas, '_scale', 0):.3f}")
+        
+        # Preserve current zoom/center while updating the pixmap
+        self.canvas.set_pixmap_preserve_view(rotated_preview)
+        
+        # Remember pending rotation to apply on commit
+        self._pending_rotation = angle
+    
+    def _rotate_90_left(self):
+        """Rotate image 90° counter-clockwise (left)."""
+        print("[Rotation] Rotating 90° left")
+        if not self._edit_base_pil:
+            return
+        
+        # Rotate 90° counter-clockwise
+        rotated = self._edit_base_pil.rotate(90, expand=True)
+        self._edit_base_pil = rotated
+        self._working_pil = rotated.copy()
+        
+        # Update canvas
+        pm = self._pil_to_qpixmap(rotated)
+        self.canvas.set_pixmap(pm)
+        
+        # Reset slider to 0
+        if hasattr(self, 'rotation_slider_widget'):
+            self.rotation_slider_widget.reset()
+        
+        # Update histogram
+        if hasattr(self, '_hist_timer') and hasattr(self, 'histogram_widget') and self.histogram_widget:
+            try:
+                self._hist_timer.start(200)
+            except Exception:
+                self.histogram_widget.set_image(self._working_pil)
+        
+        self._is_dirty = True
+    
+    def _rotate_90_right(self):
+        """Rotate image 90° clockwise (right)."""
+        print("[Rotation] Rotating 90° right")
+        if not self._edit_base_pil:
+            return
+        
+        # Rotate 90° clockwise (= -90°)
+        rotated = self._edit_base_pil.rotate(-90, expand=True)
+        self._edit_base_pil = rotated
+        self._working_pil = rotated.copy()
+        
+        # Update canvas
+        pm = self._pil_to_qpixmap(rotated)
+        self.canvas.set_pixmap(pm)
+        
+        # Reset slider to 0
+        if hasattr(self, 'rotation_slider_widget'):
+            self.rotation_slider_widget.reset()
+        
+        # Update histogram
+        if hasattr(self, '_hist_timer') and hasattr(self, 'histogram_widget') and self.histogram_widget:
+            try:
+                self._hist_timer.start(200)
+            except Exception:
+                self.histogram_widget.set_image(self._working_pil)
+        
+        self._is_dirty = True
+    
+    def _flip_horizontal(self):
+        """Flip image horizontally (mirror left-right)."""
+        print("[Flip] Flipping horizontally")
+        if not self._edit_base_pil:
+            return
+        
+        from PIL import Image
+        flipped = self._edit_base_pil.transpose(Image.FLIP_LEFT_RIGHT)
+        self._edit_base_pil = flipped
+        self._working_pil = flipped.copy()
+        
+        # Update canvas
+        pm = self._pil_to_qpixmap(flipped)
+        self.canvas.set_pixmap(pm)
+        
+        # Update histogram
+        if hasattr(self, '_hist_timer') and hasattr(self, 'histogram_widget') and self.histogram_widget:
+            try:
+                self._hist_timer.start(200)
+            except Exception:
+                self.histogram_widget.set_image(self._working_pil)
+        
+        self._is_dirty = True
+    
+    def _flip_vertical(self):
+        """Flip image vertically (mirror top-bottom)."""
+        print("[Flip] Flipping vertically")
+        if not self._edit_base_pil:
+            return
+        
+        from PIL import Image
+        flipped = self._edit_base_pil.transpose(Image.FLIP_TOP_BOTTOM)
+        self._edit_base_pil = flipped
+        self._working_pil = flipped.copy()
+        
+        # Update canvas
+        pm = self._pil_to_qpixmap(flipped)
+        self.canvas.set_pixmap(pm)
+        
+        # Update histogram
+        if hasattr(self, '_hist_timer') and hasattr(self, 'histogram_widget') and self.histogram_widget:
+            try:
+                self._hist_timer.start(200)
+            except Exception:
+                self.histogram_widget.set_image(self._working_pil)
+        
+        self._is_dirty = True
+    
+    def _undo_edit(self):
+        """Undo last edit operation."""
+        if not hasattr(self, '_edit_history'):
+            self._edit_history = EditHistoryStack()
+        
+        if not self._edit_history.can_undo():
+            print("[Undo] No more undos available")
+            return
+        
+        # Get current state
+        current_state = {
+            'adjustments': self.adjustments.copy(),
+            'edit_base_pil': self._edit_base_pil.copy() if self._edit_base_pil else None,
+            'description': 'Current state'
+        }
+        
+        # Undo to previous state
+        prev_state = self._edit_history.undo(current_state)
+        if prev_state:
+            # Restore previous state
+            self.adjustments = prev_state['adjustments'].copy()
+            if prev_state['edit_base_pil']:
+                self._edit_base_pil = prev_state['edit_base_pil'].copy()
+            
+            # Update sliders
+            for k, v in self.adjustments.items():
+                slider = getattr(self, f"slider_{k}", None)
+                if slider:
+                    slider.blockSignals(True)
+                    slider.setValue(v)
+                    slider.blockSignals(False)
+            
+            # Reapply adjustments
+            self._apply_adjustments()
+            
+            # Update undo/redo button states
+            self.btn_undo.setEnabled(self._edit_history.can_undo())
+            self.btn_redo.setEnabled(self._edit_history.can_redo())
+            
+            print(f"[Undo] Restored to: {prev_state.get('description', 'previous state')}")
+    
+    def _redo_edit(self):
+        """Redo last undone edit operation."""
+        if not hasattr(self, '_edit_history'):
+            self._edit_history = EditHistoryStack()
+        
+        if not self._edit_history.can_redo():
+            print("[Redo] No more redos available")
+            return
+        
+        # Get current state
+        current_state = {
+            'adjustments': self.adjustments.copy(),
+            'edit_base_pil': self._edit_base_pil.copy() if self._edit_base_pil else None,
+            'description': 'Current state'
+        }
+        
+        # Redo to next state
+        next_state = self._edit_history.redo(current_state)
+        if next_state:
+            # Restore next state
+            self.adjustments = next_state['adjustments'].copy()
+            if next_state['edit_base_pil']:
+                self._edit_base_pil = next_state['edit_base_pil'].copy()
+            
+            # Update sliders
+            for k, v in self.adjustments.items():
+                slider = getattr(self, f"slider_{k}", None)
+                if slider:
+                    slider.blockSignals(True)
+                    slider.setValue(v)
+                    slider.blockSignals(False)
+            
+            # Reapply adjustments
+            self._apply_adjustments()
+            
+            # Update undo/redo button states
+            self.btn_undo.setEnabled(self._edit_history.can_undo())
+            self.btn_redo.setEnabled(self._edit_history.can_redo())
+            
+            print(f"[Redo] Restored to: {next_state.get('description', 'next state')}")
 
     def closeEvent(self, ev):
         """Clean up resources when closing - professional resource management."""

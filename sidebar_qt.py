@@ -1,5 +1,5 @@
 # sidebar_qt.py
-# Version 09.18.01.13 dated 20251031
+# Version 09_32.01.01 dated 202511122
 # Tab-based sidebar with per-tab status labels, improved timeout handling,
 # and dynamic branch/folder/date/tag loading.
 
@@ -20,6 +20,7 @@ from app_services import list_branches, export_branch
 from reference_db import ReferenceDB
 from services.tag_service import get_tag_service
 from ui.people_list_view import PeopleListView, make_circular_pixmap
+from translation_manager import tr
 
 import threading
 import traceback
@@ -528,7 +529,7 @@ class SidebarTabs(QWidget):
             norm.append((str(key), str(name), count))
 
         tab = self.tab_widget.widget(idx)
-        tab.layout().addWidget(QLabel("<b>Branches</b>"))
+        tab.layout().addWidget(QLabel(f"<b>{tr('sidebar.branches')}</b>"))
 
         # Create 2-column table: Branch/Folder | Photos
         table = QTableWidget()
@@ -602,11 +603,11 @@ class SidebarTabs(QWidget):
         self._clear_tab(idx)
 
         tab = self.tab_widget.widget(idx)
-        tab.layout().addWidget(QLabel("<b>Folders</b>"))
+        tab.layout().addWidget(QLabel(f"<b>{tr('sidebar.by_folder')}</b>"))
 
         # Create tree widget matching List view's Folders-Branch appearance
         tree = QTreeWidget()
-        tree.setHeaderLabels(["Folder", "Photos"])
+        tree.setHeaderLabels([tr('sidebar.header_folder'), tr('sidebar.header_photos')])
         tree.setColumnCount(2)
         tree.setSelectionMode(QTreeWidget.SingleSelection)
         tree.setEditTriggers(QTreeWidget.NoEditTriggers)
@@ -726,7 +727,7 @@ class SidebarTabs(QWidget):
         self._clear_tab(idx)
 
         tab = self.tab_widget.widget(idx)
-        tab.layout().addWidget(QLabel("<b>Dates</b>"))
+        tab.layout().addWidget(QLabel(f"<b>{tr('sidebar.by_date')}</b>"))
 
         # Extract hierarchy and counts from result
         if isinstance(rows, dict):
@@ -741,7 +742,7 @@ class SidebarTabs(QWidget):
         else:
             # Create tree widget: Years → Months → Days
             tree = QTreeWidget()
-            tree.setHeaderLabels(["Year/Month/Day", "Photos"])
+            tree.setHeaderLabels([tr('sidebar.header_year_month_day'), tr('sidebar.header_photos')])
             tree.setColumnCount(2)
             tree.setSelectionMode(QTreeWidget.SingleSelection)
             tree.setEditTriggers(QTreeWidget.NoEditTriggers)
@@ -768,8 +769,10 @@ class SidebarTabs(QWidget):
 
                 # Months (children of year)
                 months_dict = hier[year]
-                month_names = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                month_names = ["", tr('sidebar.month_jan'), tr('sidebar.month_feb'), tr('sidebar.month_mar'), 
+                               tr('sidebar.month_apr'), tr('sidebar.month_may'), tr('sidebar.month_jun'),
+                               tr('sidebar.month_jul'), tr('sidebar.month_aug'), tr('sidebar.month_sep'), 
+                               tr('sidebar.month_oct'), tr('sidebar.month_nov'), tr('sidebar.month_dec')]
 
                 for month in sorted(months_dict.keys(), reverse=True):
                     days_list = months_dict[month]
@@ -858,7 +861,7 @@ class SidebarTabs(QWidget):
         if not layout:
             self._dbg(f"_finish_tags - layout is None at idx={idx}, aborting")
             return
-        layout.addWidget(QLabel("<b>Tags</b>"))
+        layout.addWidget(QLabel(f"<b>{tr('sidebar.tags')}</b>"))
 
         # Process rows which can be: tuples (tag, count), dicts, or strings
         tag_items = []  # list of (tag_name, count)
@@ -885,7 +888,7 @@ class SidebarTabs(QWidget):
             # Create 2-column table: Tag | Photos
             table = QTableWidget()
             table.setColumnCount(2)
-            table.setHorizontalHeaderLabels(["Tag", "Photos"])
+            table.setHorizontalHeaderLabels([tr('sidebar.tag'), tr('sidebar.header_photos')])
             table.setRowCount(len(tag_items))
             table.setSelectionBehavior(QTableWidget.SelectRows)
             table.setSelectionMode(QTableWidget.SingleSelection)
@@ -901,12 +904,12 @@ class SidebarTabs(QWidget):
                 item_name.setData(Qt.UserRole, tag_name)
                 table.setItem(row, 0, item_name)
 
-                # Column 1: Count (right-aligned, grey color like List view)
+                # Column 1: Count badge (right-aligned, badge style)
                 count_str = str(count) if count else ""
-                item_count = QTableWidgetItem(count_str)
-                item_count.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-                item_count.setForeground(QColor("#888888"))
-                table.setItem(row, 1, item_count)
+                badge = QLabel(count_str)
+                badge.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                badge.setStyleSheet("QLabel { background-color: #E8F4FD; color: #245; border: 1px solid #B3D9F2; border-radius: 10px; padding: 2px 6px; min-width: 24px; }")
+                table.setCellWidget(row, 1, badge)
 
             table.cellDoubleClicked.connect(lambda row, col: self.selectTag.emit(table.item(row, 0).data(Qt.UserRole)))
             if tab.layout():
@@ -950,7 +953,7 @@ class SidebarTabs(QWidget):
         self._clear_tab(idx)
 
         tab = self.tab_widget.widget(idx)
-        tab.layout().addWidget(QLabel("<b>Quick Dates</b>"))
+        tab.layout().addWidget(QLabel(f"<b>{tr('sidebar.quick_dates')}</b>"))
 
         # Normalize rows to (key, label, count)
         quick_items = []
@@ -990,11 +993,11 @@ class SidebarTabs(QWidget):
                 item_name.setData(Qt.UserRole, key)
                 table.setItem(row, 0, item_name)
 
-                # Column 1: Count (right-aligned, light grey like List view)
-                item_count = QTableWidgetItem(str(count))
-                item_count.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-                item_count.setForeground(QColor("#BBBBBB"))
-                table.setItem(row, 1, item_count)
+                # Column 1: Count badge (right-aligned, light badge)
+                badge = QLabel(str(count))
+                badge.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                badge.setStyleSheet("QLabel { background-color: #F0F6FF; color: #456; border: 1px solid #C7DAF7; border-radius: 10px; padding: 2px 6px; min-width: 24px; }")
+                table.setCellWidget(row, 1, badge)
 
             table.cellDoubleClicked.connect(lambda row, col: self.selectDate.emit(table.item(row, 0).data(Qt.UserRole)))
             tab.layout().addWidget(self._wrap_in_scroll_area(table), 1)
@@ -1422,6 +1425,8 @@ class SidebarTabs(QWidget):
 
 class SidebarQt(QWidget):
     folderSelected = Signal(int)
+    # Signal for thread-safe counts update from worker thread
+    _countsReady = Signal(list, int)  # (results, generation)
 
     def __init__(self, project_id=None):
         super().__init__()
@@ -1463,16 +1468,22 @@ class SidebarQt(QWidget):
             self._device_refresh_timer.start()
 
 
-        # Header
+        # Header with prominent action buttons (Google Photos / Apple Photos inspired)
         header_bar = QWidget()
-        header_layout = QHBoxLayout(header_bar)
-        header_layout.setContentsMargins(2, 2, 2, 2)
-        header_layout.setSpacing(4)
+        header_layout = QVBoxLayout(header_bar)
+        header_layout.setContentsMargins(4, 4, 4, 8)
+        header_layout.setSpacing(6)
 
-        title_lbl = QLabel("📁 Sidebar")
-        title_lbl.setStyleSheet("font-weight: bold; padding-left: 4px;")
-        header_layout.addWidget(title_lbl)
-        header_layout.addStretch(1)
+        # Top row: Title + Mode toggle + Collapse
+        top_row = QWidget()
+        top_layout = QHBoxLayout(top_row)
+        top_layout.setContentsMargins(0, 0, 0, 0)
+        top_layout.setSpacing(4)
+
+        title_lbl = QLabel("📁 Library")
+        title_lbl.setStyleSheet("font-weight: bold; font-size: 11pt; padding-left: 4px;")
+        top_layout.addWidget(title_lbl)
+        top_layout.addStretch(1)
 
         # Mode toggle
         self.btn_mode_toggle = QPushButton("")
@@ -1482,23 +1493,70 @@ class SidebarQt(QWidget):
         self._update_mode_toggle_text()
         self.btn_mode_toggle.setToolTip("Toggle Sidebar Mode: List / Tabs")
         self.btn_mode_toggle.clicked.connect(self._on_mode_toggled)
-        header_layout.addWidget(self.btn_mode_toggle)
-
-        # Refresh
-        self.btn_refresh = QPushButton("")
-        self.btn_refresh.setFixedSize(28, 24)
-        self.btn_refresh.setIcon(QIcon(self._base_pm))
-        self.btn_refresh.setIconSize(self._base_pm.size())
-        self.btn_refresh.setToolTip("Reload folder tree and scan for mobile devices")
-        header_layout.addWidget(self.btn_refresh)
-        self.btn_refresh.clicked.connect(self._on_refresh_clicked)
+        self.btn_mode_toggle.setStyleSheet("""
+            QPushButton {
+                background: #E8E8E8;
+                border: 1px solid #C0C0C0;
+                border-radius: 3px;
+                padding: 3px 8px;
+                font-size: 9pt;
+            }
+            QPushButton:hover { background: #D0D0D0; }
+            QPushButton:pressed { background: #B8B8B8; }
+        """)
+        top_layout.addWidget(self.btn_mode_toggle)
 
         # collapse/expand
         self.btn_collapse = QPushButton("⇵")
         self.btn_collapse.setFixedSize(28, 24)
         self.btn_collapse.setToolTip("Collapse/Expand main sections")
-        header_layout.addWidget(self.btn_collapse)
+        self.btn_collapse.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                border: 1px solid transparent;
+                border-radius: 3px;
+            }
+            QPushButton:hover { background: #E0E0E0; border: 1px solid #C0C0C0; }
+        """)
+        top_layout.addWidget(self.btn_collapse)
         self.btn_collapse.clicked.connect(self._on_collapse_clicked)
+
+        header_layout.addWidget(top_row)
+
+        # Prominent Scan Repository button (Google Photos inspired)
+        self.btn_scan_repo = QPushButton("📸 Scan Repository")
+        self.btn_scan_repo.setToolTip("Scan a folder to add photos to your library")
+        self.btn_scan_repo.setStyleSheet("""
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                                            stop:0 #4A90E2, stop:1 #357ABD);
+                color: white;
+                border: 1px solid #2E6BA6;
+                border-radius: 5px;
+                padding: 8px 12px;
+                font-weight: bold;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                                            stop:0 #5AA0F2, stop:1 #4A90E2);
+            }
+            QPushButton:pressed {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                                            stop:0 #357ABD, stop:1 #2E6BA6);
+            }
+        """)
+        self.btn_scan_repo.clicked.connect(self._on_scan_repo_clicked)
+        header_layout.addWidget(self.btn_scan_repo)
+
+        # Secondary action buttons row
+        actions_row = QWidget()
+        actions_layout = QHBoxLayout(actions_row)
+        actions_layout.setContentsMargins(0, 0, 0, 0)
+        actions_layout.setSpacing(4)
+
+        actions_layout.addStretch()
+        header_layout.addWidget(actions_row)
 
         # Tree (list mode) - Phase 3: Use DroppableTreeView for drag & drop support
         self.tree = DroppableTreeView(self)
@@ -1512,9 +1570,40 @@ class SidebarQt(QWidget):
         self.model.setHorizontalHeaderLabels(["Folder / Branch", "Photos"])
         self.tree.setModel(self.model)
         header = self.tree.header()
-        header.setStretchLastSection(True)
-        header.setSectionResizeMode(0, QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setStretchLastSection(False)  # Don't stretch last column
+        header.setSectionResizeMode(0, QHeaderView.Stretch)  # Name column stretches
+        header.setSectionResizeMode(1, QHeaderView.Fixed)  # Count column fixed width
+        header.resizeSection(1, 70)  # Set count column to 70px
+        header.setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        # Professional styling for tree rows
+        self.tree.setStyleSheet("""
+            QTreeView {
+                background-color: white;
+                border: 1px solid #E0E0E0;
+                border-radius: 4px;
+                font-size: 10pt;
+            }
+            QTreeView::item {
+                padding: 4px 2px;
+                border-bottom: 1px solid #F5F5F5;
+            }
+            QTreeView::item:hover {
+                background-color: #F0F8FF;
+            }
+            QTreeView::item:selected {
+                background-color: #E3F2FD;
+                color: #1976D2;
+            }
+            QHeaderView::section {
+                background-color: #FAFAFA;
+                border: none;
+                border-bottom: 2px solid #E0E0E0;
+                padding: 6px 8px;
+                font-weight: bold;
+                font-size: 9pt;
+                color: #666;
+            }
+        """)
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree.customContextMenuRequested.connect(self._show_menu)
         
@@ -1533,7 +1622,7 @@ class SidebarQt(QWidget):
 
         search_label = QLabel("🔍")
         self.tree_search_box = QLineEdit()
-        self.tree_search_box.setPlaceholderText("Filter sidebar...")
+        self.tree_search_box.setPlaceholderText(tr('search.placeholder_filter_sidebar'))
         self.tree_search_box.setClearButtonEnabled(True)
         self.tree_search_box.textChanged.connect(self._on_tree_search_changed)
         search_layout.addWidget(search_label)
@@ -1558,7 +1647,10 @@ class SidebarQt(QWidget):
         self.tabs_controller.selectDate.connect(lambda key: self._set_grid_context("date", key))
         self.tabs_controller.selectTag.connect(
             lambda name: self.window()._apply_tag_filter(name) if hasattr(self.window(), "_apply_tag_filter") else None
-        )        
+        )
+        
+        # Connect counts update signal from worker thread to UI handler
+        self._countsReady.connect(self._apply_counts_defensive, Qt.QueuedConnection)        
         
         
         # Build the tree (counts update async)
@@ -1648,6 +1740,22 @@ class SidebarQt(QWidget):
         self._start_spinner()
         self.reload()
         QTimer.singleShot(150, self._stop_spinner)
+
+    def _on_scan_repo_clicked(self):
+        """Handle Scan Repository button click."""
+        mw = self.window()
+        if hasattr(mw, '_on_scan_repository'):
+            mw._on_scan_repository()
+        else:
+            print("[Sidebar] No scan handler found in main window")
+
+    def _on_detect_faces_clicked(self):
+        """Handle Detect & Group Faces button click."""
+        mw = self.window()
+        if hasattr(mw, '_on_detect_and_group_faces'):
+            mw._on_detect_and_group_faces()
+        else:
+            print("[Sidebar] No face detection handler found in main window")
 
     def _on_tree_search_changed(self, text):
         """
@@ -2316,6 +2424,68 @@ class SidebarQt(QWidget):
             return
 
         # ==========================================================
+        # Location (GPS-based grouping)
+        # ==========================================================
+        if mode == "location" and value:
+            _clear_tag_if_needed()
+            try:
+                loc_data = value  # dict with lat, lon, name, paths
+                paths = loc_data.get('paths', [])
+                lat = loc_data.get('lat')
+                lon = loc_data.get('lon')
+                name = loc_data.get('name')
+                
+                if paths:
+                    # Filter out non-existent files
+                    import os
+                    valid_paths = [p for p in paths if os.path.exists(p)]
+                    
+                    # Load photos in grid
+                    mw.grid.model.clear()
+                    mw.grid.load_custom_paths(valid_paths, content_type="mixed")
+                    
+                    # Show static map in details panel if available
+                    if hasattr(mw, 'details') and lat and lon:
+                        self._show_location_map(lat, lon, name, len(valid_paths))
+                    
+                    mw.statusBar().showMessage(f"📍 Showing {len(valid_paths)} photos from {name}")
+                else:
+                    mw.statusBar().showMessage(f"⚠️ No photos found for location {name}")
+            except Exception as e:
+                print(f"[LOCATION] Error loading location photos: {e}")
+                import traceback
+                traceback.print_exc()
+                mw.statusBar().showMessage(f"⚠️ Error loading location: {e}")
+            return
+        
+        # Location root - show all GPS photos
+        if mode == "locations_root":
+            _clear_tag_if_needed()
+            try:
+                # Get all location clusters and combine paths
+                clusters = self.db.get_location_clusters(self.project_id)
+                all_paths = []
+                for cluster in clusters:
+                    all_paths.extend(cluster['paths'])
+                
+                # Remove duplicates
+                all_paths = list(dict.fromkeys(all_paths))
+                
+                # Filter out non-existent files
+                import os
+                valid_paths = [p for p in all_paths if os.path.exists(p)]
+                
+                mw.grid.model.clear()
+                mw.grid.load_custom_paths(valid_paths, content_type="mixed")
+                mw.statusBar().showMessage(f"🗺️ Showing {len(valid_paths)} photos with GPS data")
+            except Exception as e:
+                print(f"[LOCATION] Error loading all GPS photos: {e}")
+                import traceback
+                traceback.print_exc()
+                mw.statusBar().showMessage(f"⚠️ Error loading GPS photos: {e}")
+            return
+
+        # ==========================================================
         # DEEP SCAN — Recursive scan of MTP device for all media folders
         # ==========================================================
         if mode == "device_deep_scan":
@@ -2749,11 +2919,10 @@ class SidebarQt(QWidget):
             # CRITICAL FIX: Only process events if initialized AND model is detached
             # Reduced to single pass to minimize re-entrancy window
             # This ensures pending deleteLater() and worker callbacks complete
-            if self._initialized:
-                from PySide6.QtCore import QCoreApplication
-                print("[Sidebar] Processing pending events (model detached - safe)")
-                QCoreApplication.processEvents()
-                print("[Sidebar] Pending events processed")
+            # CRITICAL FIX: Avoid forcing event processing here to prevent re-entrant crashes
+            # Let Qt process deleteLater() naturally via the event loop
+            # Previously: QCoreApplication.processEvents() caused instability during project switches
+            print("[Sidebar] Pending events processed (skipped explicit processEvents)")
 
             # CRITICAL FIX: Create a completely fresh model instead of clearing the old one
             # This is safer than model.clear() which can cause Qt C++ segfaults
@@ -2796,7 +2965,7 @@ class SidebarQt(QWidget):
                     item.setForeground(QColor("#BBBBBB"))
                     return item
 
-                branch_root = QStandardItem("🌿 Branches")
+                branch_root = QStandardItem(tr("sidebar.branches"))
                 branch_root.setEditable(False)
                 branch_count_item = _make_count_item(total_photos)
                 self.model.appendRow([branch_root, branch_count_item])
@@ -2832,7 +3001,7 @@ class SidebarQt(QWidget):
 #                    self._count_targets.append(("branch", b["branch_key"], name_item, count_item))
                     self._count_targets.append(("branch", branch_key, name_item, count_item))
 
-                quick_root = QStandardItem("📅 Quick Dates")
+                quick_root = QStandardItem(tr("sidebar.quick_dates"))
                 quick_root.setEditable(False)
                 quick_count_item = _make_count_item(total_photos)
                 self.model.appendRow([quick_root, quick_count_item])
@@ -2853,7 +3022,7 @@ class SidebarQt(QWidget):
 
                 # IMPORTANT FIX: use synchronous folder population as in the previous working version,
                 # so folder counts are calculated and displayed immediately.
-                folder_root = QStandardItem("📁 Folders")
+                folder_root = QStandardItem(tr("sidebar.folders"))
                 folder_root.setEditable(False)
                 folder_count_item = _make_count_item(total_photos)
                 self.model.appendRow([folder_root, folder_count_item])
@@ -2882,14 +3051,14 @@ class SidebarQt(QWidget):
 
                 if videos:
                     # Build Videos section with all subsections
-                    root_name_item = QStandardItem("🎬 Videos")
+                    root_name_item = QStandardItem(tr("sidebar.videos"))
                     root_cnt_item = _make_count_item(total_videos)
                     root_name_item.setEditable(False)
                     root_cnt_item.setEditable(False)
                     self.model.appendRow([root_name_item, root_cnt_item])
 
                     # Add "All Videos" option
-                    all_videos_item = QStandardItem("All Videos")
+                    all_videos_item = QStandardItem(tr("sidebar.all_videos"))
                     all_videos_item.setEditable(False)
                     all_videos_item.setData("videos", Qt.UserRole)
                     all_videos_item.setData("all", Qt.UserRole + 1)
@@ -2900,7 +3069,7 @@ class SidebarQt(QWidget):
                     root_name_item.appendRow([all_videos_item, all_count])
 
                     # 🎯 Filter by Duration
-                    duration_parent = QStandardItem("⏱️ By Duration")
+                    duration_parent = QStandardItem(tr("sidebar.by_duration"))
                     duration_parent.setEditable(False)
                     # 🐞 FIX: Set mode data so clicking header shows all videos with duration metadata
                     duration_parent.setData("videos_duration_header", Qt.UserRole)
@@ -2920,7 +3089,7 @@ class SidebarQt(QWidget):
                     root_name_item.appendRow([duration_parent, duration_count])
 
                     # Short videos (< 30s)
-                    short_item = QStandardItem("Short (< 30s)")
+                    short_item = QStandardItem(tr("sidebar.duration_short"))
                     short_item.setEditable(False)
                     short_item.setData("videos_duration", Qt.UserRole)
                     short_item.setData("short", Qt.UserRole + 1)
@@ -2931,7 +3100,7 @@ class SidebarQt(QWidget):
                     duration_parent.appendRow([short_item, short_count])
 
                     # Medium videos (30s - 5min)
-                    medium_item = QStandardItem("Medium (30s - 5min)")
+                    medium_item = QStandardItem(tr("sidebar.duration_medium"))
                     medium_item.setEditable(False)
                     medium_item.setData("videos_duration", Qt.UserRole)
                     medium_item.setData("medium", Qt.UserRole + 1)
@@ -2942,7 +3111,7 @@ class SidebarQt(QWidget):
                     duration_parent.appendRow([medium_item, medium_count])
 
                     # Long videos (> 5min)
-                    long_item = QStandardItem("Long (> 5min)")
+                    long_item = QStandardItem(tr("sidebar.duration_long"))
                     long_item.setEditable(False)
                     long_item.setData("videos_duration", Qt.UserRole)
                     long_item.setData("long", Qt.UserRole + 1)
@@ -3258,6 +3427,59 @@ class SidebarQt(QWidget):
 
                     print(f"[Sidebar] Added 🎬 Videos section with {total_videos} videos and filters.")
                 # <<< NEW
+                
+                # ---------------------------------------------------------
+                # 🗺️ LOCATIONS SECTION — GPS-based photo grouping
+                # ---------------------------------------------------------
+                try:
+                    location_clusters = self.db.get_location_clusters(self.project_id)
+                    
+                    if location_clusters:
+                        locations_root = QStandardItem("🗺️ Locations")
+                        locations_root.setEditable(False)
+                        locations_root.setData("locations_root", Qt.UserRole)
+                        locations_count_item = QStandardItem("")
+                        locations_count_item.setEditable(False)
+                        self.model.appendRow([locations_root, locations_count_item])
+                        
+                        total_gps_photos = 0
+                        
+                        for cluster in location_clusters:
+                            name = cluster['name']
+                            count = cluster['count']
+                            lat = cluster['lat']
+                            lon = cluster['lon']
+                            paths = cluster['paths']
+                            
+                            total_gps_photos += count
+                            
+                            # Location item
+                            loc_item = QStandardItem(f"📍 {name}")
+                            loc_item.setEditable(False)
+                            loc_item.setData("location", Qt.UserRole)
+                            # Store location data for filtering and map display
+                            loc_item.setData({
+                                'lat': lat,
+                                'lon': lon,
+                                'name': name,
+                                'paths': paths
+                            }, Qt.UserRole + 1)
+                            
+                            # Count item
+                            count_item = QStandardItem(str(count))
+                            count_item.setEditable(False)
+                            count_item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+                            count_item.setForeground(QColor("#888888"))
+                            
+                            locations_root.appendRow([loc_item, count_item])
+                        
+                        # Update root count
+                        locations_count_item.setText(str(total_gps_photos))
+                        print(f"[Sidebar] Added 🗺️ Locations section with {len(location_clusters)} locations, {total_gps_photos} photos.")
+                except Exception as e:
+                    print(f"[Sidebar] Failed to load GPS locations: {e}")
+                    import traceback
+                    traceback.print_exc()
 
                 # ---------------------------------------------------------
                 # 👥 PEOPLE SECTION — CLEAN, FIXED, UNIFIED
@@ -3756,7 +3978,11 @@ class SidebarQt(QWidget):
             except Exception:
                 traceback.print_exc()
             # Schedule UI update in main thread with generation check
-            QTimer.singleShot(0, lambda: self._apply_counts_defensive(results, current_gen))
+            # CRITICAL: Emit signal to safely post from worker thread to main thread
+            try:
+                self._countsReady.emit(results, current_gen)
+            except Exception as e:
+                print(f"[Sidebar][counts] Failed to emit counts update signal: {e}")
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -3776,13 +4002,27 @@ class SidebarQt(QWidget):
 
         # CRITICAL SAFETY: Check if model is detached (being rebuilt)
         # If model is not attached to tree view, skip update to prevent crashes
-        if self.tree.model() != self.model:
+        try:
+            if self.tree is None or self.model is None:
+                print("[Sidebar][counts] Tree or model is None, skipping count update")
+                return
+            tree_model = self.tree.model()
+        except (RuntimeError, AttributeError) as e:
+            # RuntimeError: wrapped C/C++ object has been deleted
+            # AttributeError: tree/model not available
+            print(f"[Sidebar][counts] Tree/model not available (likely rebuilding): {e}")
+            return
+        if tree_model != self.model:
             print("[Sidebar][counts] Model is detached (rebuilding), skipping count update")
             return
 
         # Safety check: ensure model is valid before accessing
-        if not self.model or self.model.rowCount() == 0:
-            print("[Sidebar][counts] Model is empty or invalid, skipping count update")
+        try:
+            if not self.model or self.model.rowCount() == 0:
+                print("[Sidebar][counts] Model is empty or invalid, skipping count update")
+                return
+        except (RuntimeError, AttributeError) as e:
+            print(f"[Sidebar][counts] Model access failed: {e}")
             return
 
         try:
@@ -4001,10 +4241,8 @@ class SidebarQt(QWidget):
 
     def _build_tag_section(self):
         try:
-            if hasattr(self.db, "get_all_tags_with_counts"):
-                tag_rows = self.db.get_all_tags_with_counts()
-            else:
-                tag_rows = [(t, 0) for t in self.db.get_all_tags()]
+            tag_service = get_tag_service()
+            tag_rows = tag_service.get_all_tags_with_counts(self.project_id)
         except Exception:
             tag_rows = []
 
@@ -4125,9 +4363,9 @@ class SidebarQt(QWidget):
             # Extract current name from label (remove count if present)
             current_name = label.split("(")[0].strip() if "(" in label else label
 
-            act_rename = menu.addAction("✏️ Rename Person…")
+            act_rename = menu.addAction(tr('context_menu.rename_person'))
             menu.addSeparator()
-            act_export = menu.addAction("📁 Export Photos to Folder…")
+            act_export = menu.addAction(tr('context_menu.export_photos'))
 
             chosen = menu.exec(self.tree.viewport().mapToGlobal(pos))
             if chosen is act_rename:
@@ -4168,8 +4406,8 @@ class SidebarQt(QWidget):
             tag_name = value
             act_filter = menu.addAction(f"Filter by tag: {tag_name}")
             menu.addSeparator()
-            act_rename = menu.addAction("✏️ Rename Tag…")
-            act_delete = menu.addAction("🗑 Delete Tag")
+            act_rename = menu.addAction(tr('context_menu.rename_tag'))
+            act_delete = menu.addAction(tr('context_menu.delete_tag'))
 
             chosen = menu.exec(self.tree.viewport().mapToGlobal(pos))
             if chosen is act_filter:
@@ -4180,8 +4418,8 @@ class SidebarQt(QWidget):
                 new_name, ok = QInputDialog.getText(self, "Rename Tag", "New name:", text=tag_name)
                 if ok and new_name.strip() and new_name.strip() != tag_name:
                     try:
-                        if hasattr(db, "rename_tag"):
-                            db.rename_tag(tag_name, new_name.strip())
+                        tag_service = get_tag_service()
+                        tag_service.rename_tag(tag_name, new_name.strip(), self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Rename Failed", str(e))
@@ -4191,8 +4429,8 @@ class SidebarQt(QWidget):
                                            QMessageBox.Yes | QMessageBox.No)
                 if ret == QMessageBox.Yes:
                     try:
-                        if hasattr(db, "delete_tag"):
-                            db.delete_tag(tag_name)
+                        tag_service = get_tag_service()
+                        tag_service.delete_tag(tag_name, self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Delete Failed", str(e))
@@ -4206,8 +4444,8 @@ class SidebarQt(QWidget):
                 name, ok = QInputDialog.getText(self, "New Tag", "Tag name:")
                 if ok and name.strip():
                     try:
-                        if hasattr(db, "ensure_tag"):
-                            db.ensure_tag(name.strip())
+                        tag_service = get_tag_service()
+                        tag_service.ensure_tag_exists(name.strip(), self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Create Failed", str(e))
@@ -4225,15 +4463,15 @@ class SidebarQt(QWidget):
         """
         menu = QMenu(self)
 
-        act_refresh_all = menu.addAction("🔄 Refresh All")
+        act_refresh_all = menu.addAction(tr('context_menu.refresh_all'))
         act_refresh_all.setToolTip("Reload folders, tags, people, and scan for mobile devices")
 
-        act_refresh_devices = menu.addAction("📱 Refresh Devices")
+        act_refresh_devices = menu.addAction(tr('context_menu.refresh_devices'))
         act_refresh_devices.setToolTip("Scan for newly connected mobile devices")
 
         menu.addSeparator()
 
-        act_help_devices = menu.addAction("❓ Mobile Device Troubleshooting...")
+        act_help_devices = menu.addAction(tr('context_menu.device_troubleshooting'))
         act_help_devices.setToolTip("Help with connecting Android/iOS devices")
 
         chosen = menu.exec(global_pos)
@@ -4280,8 +4518,8 @@ class SidebarQt(QWidget):
 
         # Mobile Devices root context menu
         if mode == "mobile_devices_root":
-            act_refresh = menu.addAction("🔄 Refresh Devices")
-            act_help = menu.addAction("❓ Device Troubleshooting...")
+            act_refresh = menu.addAction(tr('context_menu.refresh_devices'))
+            act_help = menu.addAction(tr('context_menu.device_troubleshooting'))
 
             chosen = menu.exec(global_pos)
             if chosen == act_refresh:
@@ -4292,8 +4530,8 @@ class SidebarQt(QWidget):
 
         # Help/error items in Mobile Devices section
         if mode in ("no_devices", "no_devices_help", "device_error"):
-            act_refresh = menu.addAction("🔄 Scan for Devices")
-            act_help = menu.addAction("❓ Troubleshooting Help...")
+            act_refresh = menu.addAction(tr('context_menu.scan_devices'))
+            act_help = menu.addAction(tr('context_menu.device_troubleshooting'))
 
             chosen = menu.exec(global_pos)
             if chosen == act_refresh:
@@ -4334,8 +4572,8 @@ class SidebarQt(QWidget):
             tag_name = value
             act_filter = menu.addAction(f"Filter by tag: {tag_name}")
             menu.addSeparator()
-            act_rename = menu.addAction("✏️ Rename Tag…")
-            act_delete = menu.addAction("🗑 Delete Tag")
+            act_rename = menu.addAction(tr('context_menu.rename_tag'))
+            act_delete = menu.addAction(tr('context_menu.delete_tag'))
 
             chosen = menu.exec(self.tree.viewport().mapToGlobal(pos))
             if chosen is act_filter:
@@ -4346,8 +4584,8 @@ class SidebarQt(QWidget):
                 new_name, ok = QInputDialog.getText(self, "Rename Tag", "New name:", text=tag_name)
                 if ok and new_name.strip() and new_name.strip() != tag_name:
                     try:
-                        if hasattr(db, "rename_tag"):
-                            db.rename_tag(tag_name, new_name.strip())
+                        tag_service = get_tag_service()
+                        tag_service.rename_tag(tag_name, new_name.strip(), self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Rename Failed", str(e))
@@ -4357,8 +4595,8 @@ class SidebarQt(QWidget):
                                            QMessageBox.Yes | QMessageBox.No)
                 if ret == QMessageBox.Yes:
                     try:
-                        if hasattr(db, "delete_tag"):
-                            db.delete_tag(tag_name)
+                        tag_service = get_tag_service()
+                        tag_service.delete_tag(tag_name, self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Delete Failed", str(e))
@@ -4372,8 +4610,8 @@ class SidebarQt(QWidget):
                 name, ok = QInputDialog.getText(self, "New Tag", "Tag name:")
                 if ok and name.strip():
                     try:
-                        if hasattr(db, "ensure_tag"):
-                            db.ensure_tag(name.strip())
+                        tag_service = get_tag_service()
+                        tag_service.ensure_tag_exists(name.strip(), self.project_id)
                         self.reload_tags_only()
                     except Exception as e:
                         QMessageBox.critical(self, "Create Failed", str(e))
@@ -5996,4 +6234,71 @@ class SidebarQt(QWidget):
             print(f"[Sidebar] Detached worker launched: {script_path}")
         except Exception as e:
             print(f"[Sidebar] Failed to launch worker: {e}")
+    
+    def _show_location_map(self, lat: float, lon: float, name: str, photo_count: int):
+        """Display a static map in the details panel for a location."""
+        try:
+            # Get the details panel
+            mw = self.window()
+            if not hasattr(mw, 'details'):
+                return
+            
+            details = mw.details
+            
+            # Generate static map HTML using OpenStreetMap tiles
+            # We'll use a simple HTML/CSS map representation with a link
+            map_url = f"https://www.openstreetmap.org/?mlat={lat}&mlon={lon}&zoom=13"
+            
+            # Create HTML for map display
+            map_html = f"""
+                <div style='padding: 12px; background: #f8f9fa; border-radius: 8px; margin: 8px 0;'>
+                    <div style='font-size: 14pt; font-weight: 700; color: #0078d4; margin-bottom: 8px;'>
+                        🗺️ {name}
+                    </div>
+                    <div style='color: #666; margin-bottom: 8px;'>
+                        📍 {lat:.6f}, {lon:.6f}
+                    </div>
+                    <div style='background: #e8f4f8; padding: 12px; border-radius: 4px; border-left: 4px solid #0078d4; margin-bottom: 8px;'>
+                        <div style='font-weight: 600; color: #0078d4; margin-bottom: 4px;'>
+                            📷 {photo_count} photo{"s" if photo_count != 1 else ""} from this location
+                        </div>
+                        <div style='font-size: 9pt; color: #666;'>
+                            Click map link below to view on OpenStreetMap
+                        </div>
+                    </div>
+                    <a href='{map_url}' style='display: inline-block; padding: 8px 16px; background: #0078d4; 
+                                                 color: white; text-decoration: none; border-radius: 4px; 
+                                                 font-weight: 600;'>
+                        🗺️ View on OpenStreetMap
+                    </a>
+                    <div style='margin-top: 12px; padding: 8px; background: white; border-radius: 4px;'>
+                        <div style='font-size: 9pt; color: #888;'>
+                            💡 <b>Tip:</b> Photos are grouped within {int(self.db.get_cached_location_name.__defaults__[0] if hasattr(self.db.get_cached_location_name, '__defaults__') else 5)} km radius
+                        </div>
+                    </div>
+                </div>
+            """
+            
+            # Display in meta label
+            details.meta.setText(map_html)
+            
+            # Clear thumbnail to show map info prominently
+            details.thumb.setText("🗺️\nMap View")
+            details.thumb.setStyleSheet("""
+                QLabel {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                              stop:0 #667eea, stop:1 #764ba2);
+                    color: white;
+                    font-size: 18pt;
+                    font-weight: bold;
+                    border-radius: 8px;
+                    padding: 20px;
+                }
+            """)
+            
+            print(f"[LOCATION] Displayed map for {name} at {lat}, {lon}")
+        except Exception as e:
+            print(f"[LOCATION] Failed to show location map: {e}")
+            import traceback
+            traceback.print_exc()
 

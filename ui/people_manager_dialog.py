@@ -28,6 +28,7 @@ from PySide6.QtCore import Qt, Signal, QSize, QTimer
 from PySide6.QtGui import QPixmap, QImage, QAction, QIcon
 
 from reference_db import ReferenceDB
+from translation_manager import tr
 
 
 class FaceClusterCard(QFrame):
@@ -233,7 +234,7 @@ class PeopleManagerDialog(QDialog):
         search_layout.addWidget(search_label)
 
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search people by name...")
+        self.search_input.setPlaceholderText(tr('search.placeholder_filter_people'))
         self.search_input.textChanged.connect(self.filter_clusters)
         search_layout.addWidget(self.search_input)
 

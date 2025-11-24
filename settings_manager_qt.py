@@ -14,6 +14,7 @@ DEFAULT_SETTINGS = {
     "skip_unchanged_photos": True,  # ✅ incremental scanning
     "use_exif_for_date": True,
     "dark_mode": False,
+    "language": "en",  # Language code (en, ar, es, etc.)
     "thumbnail_cache_enabled": True,
     "cache_size_mb": 500,
     "show_decoder_warnings": False,  # if True, Qt + Pillow warnings are visible
@@ -28,6 +29,18 @@ DEFAULT_SETTINGS = {
     # Non-empty list = override defaults with custom exclusions
     "scan_exclude_folders": [],  # Example: ["node_modules", ".git", "my_private_folder"]
 
+    # --- Badge overlay settings ---
+    "badge_overlays_enabled": True,
+    "badge_size_px": 22,
+    "badge_shape": "circle",  # circle | rounded | square
+    "badge_max_count": 4,
+    "badge_shadow": True,
+    
+    # --- GPS & Location settings ---
+    "gps_clustering_radius_km": 5.0,  # Cluster photos within this radius (1-50 km)
+    "gps_reverse_geocoding_enabled": True,  # Auto-fetch location names from coordinates
+    "gps_geocoding_timeout_sec": 2.0,  # Timeout for reverse geocoding API calls
+    "gps_cache_location_names": True,  # Cache location names to reduce API calls
 }
 
 

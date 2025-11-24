@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 
 from services import SearchService, SearchCriteria
 from logging_config import get_logger
+from translation_manager import tr
 
 logger = get_logger(__name__)
 
@@ -47,7 +48,7 @@ class SearchBarWidget(QWidget):
 
         # Search input
         self.search_input = QLineEdit()
-        self.search_input.setPlaceholderText("Search photos (filename, path, tags...)")
+        self.search_input.setPlaceholderText(tr('search.placeholder_main'))
         self.search_input.setClearButtonEnabled(True)
         self.search_input.returnPressed.connect(self._on_search)
         self.search_input.textChanged.connect(self._on_text_changed)
@@ -119,11 +120,11 @@ class AdvancedSearchDialog(QDialog):
         file_layout = QFormLayout()
 
         self.filename_input = QLineEdit()
-        self.filename_input.setPlaceholderText("e.g., vacation, IMG_2024")
+        self.filename_input.setPlaceholderText(tr('search.placeholder_filename'))
         file_layout.addRow("Filename contains:", self.filename_input)
 
         self.path_input = QLineEdit()
-        self.path_input.setPlaceholderText("e.g., /photos/2024")
+        self.path_input.setPlaceholderText(tr('search.placeholder_path'))
         file_layout.addRow("Path contains:", self.path_input)
 
         file_group.setLayout(file_layout)
