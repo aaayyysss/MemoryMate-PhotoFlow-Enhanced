@@ -1,461 +1,55 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08>python main_qt.py
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02> python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\locales\en.json
+✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\locales\en.json
 🌍 Language initialized: en
-2025-11-24 17:12:48,553 [INFO] ================================================================================
-2025-11-24 17:12:48,553 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-24 17:12:48,553 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\app_log.txt
-2025-11-24 17:12:48,553 [INFO] ================================================================================
-2025-11-24 17:12:48,611 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-24 17:12:48,611 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-24 19:26:38,079 [INFO] ================================================================================
+2025-11-24 19:26:38,079 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-24 19:26:38,079 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\app_log.txt
+2025-11-24 19:26:38,079 [INFO] ================================================================================
+2025-11-24 19:26:38,110 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-24 19:26:38,116 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.36.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-08\\thumbnails_cache.db', 'last_updated': '2025-11-24 17:12'}
-2025-11-24 17:12:48,856 [INFO] SearchService initialized
+[Cache] {'entries': 17, 'size_mb': 0.05, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-02\\thumbnails_cache.db', 'last_updated': '2025-11-24 19:26'}
+[ThumbCacheDB] Purged 17 stale thumbnails (> 30 days).
+2025-11-24 19:26:38,339 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-24 17:12:48,866 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-24 17:12:48,866 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-24 17:12:48,866 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-24 19:26:38,339 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-24 19:26:38,339 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-24 19:26:38,339 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-24 17:12:48,881 [INFO] SearchService initialized
-[17:12:49.464] [Tabs] __init__ started
-[17:12:49.501] [Tabs] _build_tabs → building tab widgets
-[17:12:49.515] [Tabs] _on_tab_changed(idx=0)
-[17:12:49.531] [Tabs] _start_timeout idx=0 type=branches
-[17:12:49.531] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:12:49.531] [Tabs]   populated=False, loading=False
-[17:12:49.531] [Tabs]   Starting load for branches
-[17:12:49.531] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:12:49.531] [Tabs] _clear_tab idx=0
-[17:12:49.544] [Tabs] _on_tab_changed → tab_type=branches
-[17:12:49.560] [Tabs] _build_tabs → added 6 tabs
-[17:12:49.560] [Tabs] __init__ completed
-[SidebarQt] _build_tree_model() called with project_id=None
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 0 branches
-[Sidebar] Loading videos for project_id=None
-[Sidebar] Found 0 videos in project None
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001F83FD4EC90>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[SidebarQt] switch_display_mode(list) - canceling old workers
-[SidebarQt] Hiding tabs controller
-[17:12:50.048] [Tabs] hide_tabs() called - canceling pending workers
-[SidebarQt] Canceled tab workers via hide_tabs()
-[SidebarQt] Clearing tree view selection before rebuild
-[SidebarQt] Showing tree view
-[SidebarQt] Calling _build_tree_model()
-[SidebarQt] _build_tree_model() called with project_id=None
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 0 branches
-[Sidebar] Loading videos for project_id=None
-[Sidebar] Found 0 videos in project None
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001F83FD4EC90>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[SidebarQt] _build_tree_model() completed
-[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
-[Startup] Database schema initialized successfully
-[17:12:50.754] [Tabs] _finish_branches (stale gen=1) — ignoring
-[17:12:50.754] [Tabs] _on_tab_changed(idx=0)
-[17:12:50.754] [Tabs] _start_timeout idx=0 type=branches
-[17:12:50.754] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:12:50.754] [Tabs]   populated=False, loading=False
-[17:12:50.754] [Tabs]   Starting load for branches
-[17:12:50.754] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:12:50.754] [Tabs] _clear_tab idx=0
-[17:12:50.754] [Tabs] _on_tab_changed → tab_type=branches
-[17:12:50.754] [Tabs] _clear_tab idx=0
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=None
-[Breadcrumb] Added project segment: My Photos
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 0 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: My Photos
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\models\buffalo_l
-[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-🌍 Language switched to: en
-⚠️ Missing translation key: preferences.nav.gps_location
-2025-11-24 17:13:08,098 [INFO] ======================================================================
-2025-11-24 17:13:08,098 [INFO] InsightFace Model Path Test
-2025-11-24 17:13:08,104 [INFO] ======================================================================
-2025-11-24 17:13:08,104 [INFO] Testing path: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models
-
-2025-11-24 17:13:08,104 [INFO] ✓ Detected: buffalo_l/ subdirectory (detector: det_10g.onnx)
-2025-11-24 17:13:08,115 [INFO]
-Verifying model files...
-2025-11-24 17:13:08,115 [INFO]   ✓ det_10g.onnx (16.1 MB) [DETECTOR]
-2025-11-24 17:13:08,115 [INFO]   ✓ w600k_r50.onnx (166.3 MB) [RECOGNITION]
-2025-11-24 17:13:08,115 [INFO]
-Testing InsightFace initialization...
-2025-11-24 17:13:08,131 [INFO]   ✓ Detected: CPU only
-2025-11-24 17:13:08,131 [INFO]
-  Initializing with buffalo_l directory: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l
-find model: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l\buffalo_l\scrfd_10g_bnkps.onnx detection
-input mean and std: 127.5 127.5
-find model: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l\buffalo_l\w600k_r50.onnx recognition
-2025-11-24 17:13:08,957 [INFO]   Using CPU (ctx_id=-1)
-set det-size: (640, 640)
-2025-11-24 17:13:09,440 [INFO]
-✅ SUCCESS! InsightFace initialized successfully
-2025-11-24 17:13:09,441 [INFO] ======================================================================
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\suleimaa\.memorymate\face_detection_config.json
-✅ Face detection settings saved: model=buffalo_l, eps=35%, min_samples=2
-🔄 InsightFace check flag cleared - will re-check on next startup
-🧑 InsightFace model path configured: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models
-🎬 FFprobe path configured: (using system PATH)
-🔄 Restarting application...
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[Main] Qt event loop exited with code: 0
-[ThumbCacheDB] Closing cache gracefully...
-
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08>[Startup] pillow_heif available — HEIC/HEIF support enabled.
-🔇 Decoder warnings suppressed per settings.
-🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\locales\en.json
-🌍 Language initialized: en
-2025-11-24 17:13:16,202 [INFO] ================================================================================
-2025-11-24 17:13:16,202 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-24 17:13:16,202 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\app_log.txt
-2025-11-24 17:13:16,206 [INFO] ================================================================================
-2025-11-24 17:13:16,274 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-24 17:13:16,274 [INFO] Qt message handler installed to suppress TIFF warnings
-[Main] Starting Qt event loop...
-[Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.36.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-08\\thumbnails_cache.db', 'last_updated': '2025-11-24 17:13'}
-2025-11-24 17:13:16,516 [INFO] SearchService initialized
-[Startup] SearchService initialized
-2025-11-24 17:13:16,516 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-24 17:13:16,529 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-24 17:13:16,529 [INFO] Global ThumbnailService created with Phase 1B memory limits
-[Startup] ThumbnailService initialized
-🌍 Language switched to: en
-[MainWindow] Language loaded from settings: en
-🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-24 17:13:16,531 [INFO] SearchService initialized
-[17:13:16.962] [Tabs] __init__ started
-[17:13:17.048] [Tabs] _build_tabs → building tab widgets
-[17:13:17.081] [Tabs] _on_tab_changed(idx=0)
-[17:13:17.098] [Tabs] _start_timeout idx=0 type=branches
-[17:13:17.106] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:13:17.113] [Tabs]   populated=False, loading=False
-[17:13:17.113] [Tabs]   Starting load for branches
-[17:13:17.113] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:13:17.113] [Tabs] _clear_tab idx=0
-[17:13:17.115] [Tabs] _on_tab_changed → tab_type=branches
-[17:13:17.115] [Tabs] _build_tabs → added 6 tabs
-[17:13:17.115] [Tabs] __init__ completed
-[SidebarQt] _build_tree_model() called with project_id=None
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 0 branches
-[Sidebar] Loading videos for project_id=None
-[Sidebar] Found 0 videos in project None
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000241DD79A2D0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[SidebarQt] switch_display_mode(list) - canceling old workers
-[SidebarQt] Hiding tabs controller
-[17:13:17.505] [Tabs] hide_tabs() called - canceling pending workers
-[SidebarQt] Canceled tab workers via hide_tabs()
-[SidebarQt] Clearing tree view selection before rebuild
-[SidebarQt] Showing tree view
-[SidebarQt] Calling _build_tree_model()
-[SidebarQt] _build_tree_model() called with project_id=None
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 0 branches
-[Sidebar] Loading videos for project_id=None
-[Sidebar] Found 0 videos in project None
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000241DD79A2D0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[SidebarQt] _build_tree_model() completed
-[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
-[Startup] Database schema initialized successfully
-[17:13:18.164] [Tabs] _finish_branches (stale gen=1) — ignoring
-[17:13:18.164] [Tabs] _on_tab_changed(idx=0)
-[17:13:18.164] [Tabs] _start_timeout idx=0 type=branches
-[17:13:18.164] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:13:18.164] [Tabs]   populated=False, loading=False
-[17:13:18.164] [Tabs]   Starting load for branches
-[17:13:18.164] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:13:18.164] [Tabs] _clear_tab idx=0
-[17:13:18.164] [Tabs] _on_tab_changed → tab_type=branches
-[17:13:18.164] [Tabs] _clear_tab idx=0
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=None
-[Breadcrumb] Added project segment: My Photos
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 0 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: My Photos
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-💾 Saved FFprobe path to settings: C:\ffmpeg\bin\ffprobe.exe
-✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-08\models\buffalo_l
-[Breadcrumb] _show_project_menu() called
-[Breadcrumb] Refreshed project list: 0 projects
-[Breadcrumb] No projects found in main_window._projects
-[Breadcrumb] Showing menu...
-[Breadcrumb] _switch_project(1) called
-
-[MainWindow] ========== _on_project_changed_by_id(1) STARTED ==========
-[MainWindow] Current project_id: None
-[MainWindow] Step 1: Updating grid.project_id...
-[MainWindow] Step 1: ✓ Set grid.project_id = 1
-[MainWindow] Step 2: Updating sidebar...
-[SidebarQt] set_project(1) called
-[17:13:24.075] [Tabs] refresh_all(force=True) called
-[17:13:24.075] [Tabs] refresh_all: key=branches, idx=0, force=True
-[17:13:24.075] [Tabs] _populate_tab(branches, idx=0, force=True)
-[17:13:24.075] [Tabs]   populated=True, loading=False
-[17:13:24.075] [Tabs]   Force refresh: removing branches from populated set
-[17:13:24.075] [Tabs]   Starting load for branches
-[17:13:24.075] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:13:24.083] [Tabs] _clear_tab idx=0
-[17:13:24.083] [Tabs] refresh_all: key=folders, idx=1, force=True
-[17:13:24.083] [Tabs] _populate_tab(folders, idx=1, force=True)
-[17:13:24.085] [Tabs]   populated=False, loading=False
-[17:13:24.085] [Tabs]   Starting load for folders
-[17:13:24.085] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[17:13:24.085] [Tabs] _clear_tab idx=1
-[17:13:24.086] [Tabs] refresh_all: key=dates, idx=2, force=True
-[17:13:24.086] [Tabs] _populate_tab(dates, idx=2, force=True)
-[17:13:24.086] [Tabs]   populated=False, loading=False
-[17:13:24.086] [Tabs]   Starting load for dates
-[17:13:24.086] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[17:13:24.086] [Tabs] _load_folders → got 0 rows for project_id=1
-[17:13:24.086] [Tabs] _clear_tab idx=2
-[17:13:24.086] [Tabs] refresh_all: key=tags, idx=3, force=True
-[17:13:24.086] [Tabs] _populate_tab(tags, idx=3, force=True)
-[17:13:24.086] [Tabs]   populated=False, loading=False
-[17:13:24.086] [Tabs]   Starting load for tags
-[17:13:24.086] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[17:13:24.086] [Tabs] _clear_tab idx=3
-[17:13:24.086] [Tabs] _load_dates → got hierarchy data for project_id=1
-[17:13:24.086] [Tabs] refresh_all: key=quick, idx=5, force=True
-[17:13:24.086] [Tabs] _populate_tab(quick, idx=5, force=True)
-[17:13:24.086] [Tabs]   populated=False, loading=False
-[17:13:24.086] [Tabs]   Starting load for quick
-[17:13:24.086] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[17:13:24.086] [Tabs] _load_tags → got 0 rows for project_id=1
-[17:13:24.086] [Tabs] _clear_tab idx=5
-[17:13:24.086] [Tabs] refresh_all(force=True) completed
-[SidebarQt] Calling reload() after setting project_id
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
+2025-11-24 19:26:38,351 [INFO] SearchService initialized
+[19:26:38.722] [Tabs] __init__ started
+[19:26:38.722] [Tabs] _build_tabs → building tab widgets
+[19:26:38.722] [Tabs] _on_tab_changed(idx=0)
+[19:26:38.722] [Tabs] _start_timeout idx=0 type=branches
+[19:26:38.722] [Tabs] _populate_tab(branches, idx=0, force=False)
+[19:26:38.722] [Tabs]   populated=False, loading=False
+[19:26:38.722] [Tabs]   Starting load for branches
+[19:26:38.722] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[19:26:38.722] [Tabs] _clear_tab idx=0
+[19:26:38.722] [Tabs] _on_tab_changed → tab_type=branches
+[19:26:38.722] [Tabs] _build_tabs → added 6 tabs
+[19:26:38.722] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=1
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
 [Sidebar] Creating fresh model (avoiding Qt segfault)
 [Sidebar] Attaching fresh model to tree view
-[17:13:24.095] [Tabs] _load_quick → got 6 rows
 [SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 0}]
-[Sidebar] Loaded 0 folder counts in batch (performance optimization)
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
+[Sidebar] Loaded 4 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
 [Sidebar] Loading videos for project_id=1
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000241DD79A2D0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -463,29 +57,117 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
 [DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
 [DeviceScanner]           Has DCIM folder: False
 [DeviceScanner]           No alternate structure found
 [DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
 [DeviceScanner]   Checking portable devices (MTP/PTP)...
 [DeviceScanner]     Attempting Shell COM enumeration...
 [DeviceScanner]     COM initialized for current thread
 [DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=2] running for 1 targets...
+[SidebarQt] switch_display_mode(list) - canceling old workers
+[SidebarQt] Hiding tabs controller
+[Sidebar][counts worker gen=2] finished scanning targets, scheduling UI update
+[19:26:38.924] [Tabs] hide_tabs() called - canceling pending workers
+[SidebarQt] Canceled tab workers via hide_tabs()
+[SidebarQt] Clearing tree view selection before rebuild
+[SidebarQt] Showing tree view
+[SidebarQt] Calling _build_tree_model()
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
+[Sidebar] Loaded 4 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
 [DeviceScanner]     COM uninitialized
 [DeviceScanner] ===== Scan complete: 0 device(s) found =====
 
@@ -496,51 +178,43 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [Sidebar] starting async count population for 1 branch targets
 [Sidebar][counts worker gen=4] running for 1 targets...
-[MainWindow] Step 2: ✓ Sidebar.set_project(1) completed
-[MainWindow] Step 3: Reloading grid to 'all' branch...
-
-[GRID] >>>>>> set_branch('all') CALLED
-[GRID]   Current state: project_id=1, load_mode=None
-[GRID]   State updated, calling reload()...
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
+[SidebarQt] _build_tree_model() completed
 [Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[GRID] Fetched tags for 0 paths, got 0 entries
-[17:13:24.420] [Tabs] _clear_tab idx=0
+[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
+[Startup] Database schema initialized successfully
+[19:26:39.159] [Tabs] _on_tab_changed(idx=0)
+[19:26:39.159] [Tabs] _start_timeout idx=0 type=branches
+[19:26:39.159] [Tabs] _populate_tab(branches, idx=0, force=False)
+[19:26:39.159] [Tabs]   populated=False, loading=False
+[19:26:39.165] [Tabs]   Starting load for branches
+[19:26:39.165] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[19:26:39.165] [Tabs] _clear_tab idx=0
+[19:26:39.165] [Tabs] _on_tab_changed → tab_type=branches
+[19:26:39.165] [Tabs] _finish_branches (stale gen=1) — ignoring
+[Sidebar][counts] Ignoring stale worker results (gen=2, current=4)
+[Sidebar][counts applied] updated UI with counts
+[19:26:39.165] [Tabs] _clear_tab idx=0
 [TAG FILTER] Cleared by navigation.
 
 [GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-[17:13:24.437] [Tabs] _clear_tab idx=1
-[17:13:24.441] [Tabs] _clear_tab idx=2
-[17:13:24.442] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[17:13:24.442] [Tabs] _clear_tab idx=3
-[17:13:24.443] [Tabs] _clear_tab idx=5
-[Sidebar][counts applied] updated UI with counts
+[GRID] project_id=1, load_mode=None
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Added project segment: My Photos
-[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
 [Breadcrumb] Calling set_path() with 2 segments
 [BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Clearing 0 existing widgets
 [BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: My Photos
+[BreadcrumbNav] Added segment 0: Default Project
 [BreadcrumbNav] Added segment 1: All Photos
 [BreadcrumbNav] set_path() completed - 2 segments added
 [Breadcrumb] set_path() completed successfully
@@ -550,196 +224,108 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] <<<<<< set_branch('all') COMPLETED
 
-[MainWindow] Step 3: ✓ Grid.set_branch('all') completed
-[MainWindow] Step 4: Breadcrumb will auto-update via gridReloaded signal
-[MainWindow] Step 5: ✓✓✓ Switched to project ID: 1
-[MainWindow] ========== _on_project_changed_by_id(1) COMPLETED ==========
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=None
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 17 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/17 paths (project_id=1)
+[GRID] Fetched tags for 17 paths, got 17 entries
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-16 of 17
+[GRID] Queued 17 new thumbnail workers
+[GRID] Loaded 17 thumbnails.
+[GRID] Reloaded 17 thumbnails in branch-mode (base=17)
+[GRID] Step 5: Emitting gridReloaded signal...
 
-[Breadcrumb] Switched to project ID: 1
-[MainWindow] Refreshed project list: 1 projects
-[Schema] Database schema initialized successfully
-[ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-[ScanController] ScanWorker imported successfully
-[ScanController] QThread created
-2025-11-24 17:13:32,679 [INFO] DBWriter timer started in worker thread
-[ScanController] ScanWorker instance created with project_id=1
-[ScanController] Worker moved to thread
-[ScanController] Signals connected
-[ScanController] Starting scan thread...
-[ScanController] thread.start() called
-[ScanWorkerAdapter] run() method called!
-[ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
-2025-11-24 17:13:32,684 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-[ScanWorkerAdapter] Starting scan...
-2025-11-24 17:13:32,686 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
-[ScanController] QThread STARTED!
-2025-11-24 17:13:32,688 [INFO] Discovered 15 candidate image files and 0 video files
-2025-11-24 17:13:32,689 [INFO] Loading existing metadata for incremental scan...
-2025-11-24 17:13:32,690 [INFO] ✓ Loaded 0 existing file records
-[SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
-2025-11-24 17:13:32,690 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
-[SCAN] _process_file started for: Alya1_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,693 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
-[SCAN] Starting file 2/15: Alya1_3_2.jpeg
-2025-11-24 17:13:32,770 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
-[SCAN] _process_file started for: Alya1_3_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,824 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_3_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
-[SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
-2025-11-24 17:13:32,840 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,841 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
-[SCAN] Processing: Alya2_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
-[SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
-2025-11-24 17:13:32,854 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,854 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
-[SCAN] Processing: Alya3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
-[SCAN] Starting file 5/15: Alya_2_2.jpeg
-2025-11-24 17:13:32,866 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
-[SCAN] _process_file started for: Alya_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,866 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
-[SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
-2025-11-24 17:13:32,887 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,889 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
-[SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
-2025-11-24 17:13:32,898 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
-[SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:32,898 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref(1)_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
-[SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
-2025-11-24 17:13:32,998 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
-[SCAN] _process_file started for: Ammar-Ref_2_2_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,007 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_2_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
-[SCAN] Starting file 9/15: Ammar-Ref_3_2.png
-2025-11-24 17:13:33,043 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
-[SCAN] _process_file started for: Ammar-Ref_3_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,045 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_3_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
-[SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
-2025-11-24 17:13:33,067 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar1_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,068 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
-[SCAN] Processing: Ammar1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
-[SCAN] Starting file 11/15: Ammar2_2_2_2.jpeg
-2025-11-24 17:13:33,091 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,093 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
-[SCAN] Processing: Ammar2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar2_2_2_2.jpeg
-[SCAN] Starting file 12/15: Ammar3_2_2_2_2.jpeg
-2025-11-24 17:13:33,104 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar3_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,105 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
-[SCAN] Processing: Ammar3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar3_2_2_2_2.jpeg
-[SCAN] Starting file 13/15: IMG_6850_2_2_2.jpeg
-2025-11-24 17:13:33,121 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6850_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,123 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
-[SCAN] Processing: IMG_6850_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6850_2_2_2.jpeg
-[SCAN] Starting file 14/15: IMG_6995_2_2_2.jpeg
-2025-11-24 17:13:33,135 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6995_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,137 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
-[SCAN] Processing: IMG_6995_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6995_2_2_2.jpeg
-[SCAN] Starting file 15/15: عليا_2_2_2.jpeg
-2025-11-24 17:13:33,149 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
-[SCAN] _process_file started for: عليا_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 17:13:33,151 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: عليا_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: عليا_2_2_2.jpeg
-2025-11-24 17:13:33,170 [INFO] Bulk upserted 15 photos for project 1
-2025-11-24 17:13:33,177 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.5s
-2025-11-24 17:13:33,177 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.5s
-[ScanController] scan finished: 1 folders, 15 photos, 0 videos
-[ScanController] cleanup after scan
-2025-11-24 17:13:34,853 [INFO] Building date branches...
-2025-11-24 17:13:34,857 [INFO] Building date branches for project_id=1
-[build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 15 photos for project 1
-[build_date_branches] Inserted 15/15 photos into 'all' branch
-[build_date_branches] Found 6 unique dates for project 1
-[build_date_branches] Date 2024-08-11: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg
-[build_date_branches] Date 2024-08-11: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-18: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg
-[build_date_branches] Date 2024-11-18: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-29: found 3 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
-[build_date_branches] Date 2024-11-29: inserted 3/3 into project_images (new)
-[build_date_branches] Date 2024-12-02: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg
-[build_date_branches] Date 2024-12-02: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-30: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg
-[build_date_branches] Date 2025-07-30: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-08-09: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg
-[build_date_branches] Date 2025-08-09: inserted 1/1 into project_images (new)
-[build_date_branches] Total entries processed: 8
-[build_date_branches] project_images table has 23 rows for project 1
-2025-11-24 17:13:34,862 [INFO] Created 8 photo date branch entries for project 1
-2025-11-24 17:13:34,862 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 0 videos with dates for project 1
-[build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-24 17:13:34,862 [INFO] Created 0 video date branch entries for project 1
-2025-11-24 17:13:34,862 [INFO] Backfilling created_date fields for photos...
-2025-11-24 17:13:34,869 [INFO] Backfilled 7 photo rows with created_date
-2025-11-24 17:13:34,869 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-2025-11-24 17:13:34,874 [INFO] Reloading sidebar after date branches built...
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-16 of 17
+[GRID] Queued 3 new thumbnail workers
+💾 Saved FFprobe path to settings: C:\ffmpeg\bin\ffprobe.exe
+✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
+✅ InsightFace detected with buffalo_l models
+   Location: C:\Users\ASUS\.insightface\models\buffalo_l
+[MainWindow] Launching clustering worker for 19 detected faces
+2025-11-24 19:26:52,460 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-24 19:26:52,476 [INFO] [FaceClusterWorker] Loaded 19 face embeddings
+[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
+[FaceCluster] Loading face embeddings...
+[FaceCluster] Clustering 19 faces...
+2025-11-24 19:26:52,492 [INFO] [FaceClusterWorker] Found 4 clusters
+2025-11-24 19:26:52,492 [INFO] [FaceClusterWorker] Found 3 unclustered faces (will create 'Unidentified' branch)
+[FaceCluster] Found 4 person groups...
+2025-11-24 19:26:52,508 [INFO] [FaceClusterWorker] Cluster 0 → 6 faces
+[FaceCluster] Saving cluster 1/4: Person 1 (6 faces)
+2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 1 → 6 faces
+[FaceCluster] Saving cluster 2/4: Person 2 (6 faces)
+2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
+[FaceCluster] Saving cluster 3/4: Person 3 (2 faces)
+2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 3 → 2 faces
+[FaceCluster] Saving cluster 4/4: Person 4 (2 faces)
+[FaceCluster] Processing 3 unidentified faces...
+2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 3 faces from 3 photos
+2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 3 unidentified faces
+2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Cancellation requested
+[FaceCluster] Complete: 4 person groups created
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
 [SidebarQt] _build_tree_model() called with project_id=1
@@ -748,14 +334,14 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Creating fresh model (avoiding Qt segfault)
 [Sidebar] Attaching fresh model to tree view
 [SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
+[Sidebar] Loaded 4 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
 [Sidebar] Loading videos for project_id=1
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000241DD79A2D0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan =====
@@ -763,29 +349,42 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
 [DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
 [DeviceScanner]           Has DCIM folder: False
 [DeviceScanner]           No alternate structure found
 [DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
 [DeviceScanner]   Checking portable devices (MTP/PTP)...
 [DeviceScanner]     Attempting Shell COM enumeration...
 [DeviceScanner]     COM initialized for current thread
 [DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
 [DeviceScanner]     COM uninitialized
 [DeviceScanner] ===== Scan complete: 0 device(s) found =====
 
@@ -796,20 +395,23 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [Sidebar] starting async count population for 1 branch targets
 [Sidebar][counts worker gen=6] running for 1 targets...
+[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
+[Sidebar][counts applied] updated UI with counts
+[FaceCluster] Clustering complete: 5 branches created
+[TAG FILTER] Cleared tag filter when navigating to people
 
 [GRID] ====== reload() CALLED ======
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 15 photos
+[get_images_by_branch] project_id=1, branch_key='face_unidentified'
+[get_images_by_branch] Found 3 photos
 [DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
 [DB_TAGS_SQL] Photos query:
                         SELECT pm.path, t.name
                         FROM photo_metadata pm
@@ -818,33 +420,29 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
                         SELECT vm.path, t.name
                         FROM video_metadata vm
                         JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
 [DB_TAGS_SQL] project_id: 1
 [DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
 [DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
 [DB_TAGS_SQL] Sample tagged PHOTOS in DB:
 [DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
-[GRID] Fetched tags for 15 paths, got 15 entries
-[Sidebar][counts applied] updated UI with counts
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[GRID] Loaded 15 thumbnails.
-[GRID] Reloaded 15 thumbnails in branch-mode (base=15)
+[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
+[GRID] Fetched tags for 3 paths, got 3 entries
+[GRID] Loaded 3 thumbnails.
+[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
 [Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
 [Breadcrumb] Calling set_path() with 2 segments
 [BreadcrumbNav] set_path() called with 2 segments
 [BreadcrumbNav] Clearing 3 existing widgets
 [BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 0: Default Project
 [BreadcrumbNav] Added segment 1: All Photos
 [BreadcrumbNav] set_path() completed - 2 segments added
 [Breadcrumb] set_path() completed successfully
@@ -854,192 +452,607 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-14 of 15
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-2 of 3
+[GRID] Queued 3 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_000'
+[get_images_by_branch] Found 6 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_001'
+[get_images_by_branch] Found 6 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_002'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-1 of 2
 [GRID] Queued 2 new thumbnail workers
-[MainWindow] Launching automatic face grouping pipeline for project 1
-2025-11-24 17:13:40,904 [INFO] [FaceDetectionWorker] Starting face detection for project 1
-2025-11-24 17:13:40,911 [INFO] 💻 Using CPU for face detection (CUDA not available)
-2025-11-24 17:13:40,911 [INFO] 🎯 Using custom model path (nested): C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l
-2025-11-24 17:13:40,911 [INFO] ✓ Initializing InsightFace with buffalo_l directory: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l
-2025-11-24 17:13:40,911 [INFO] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
-find model: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l\buffalo_l\scrfd_10g_bnkps.onnx detection
-input mean and std: 127.5 127.5
-find model: C:/Users/suleimaa/Downloads/Photo-Sorter/09.36.01.01-Photo-App/MemoryMate-PhotoFlow-Enhanced-main-08/models\buffalo_l\buffalo_l\w600k_r50.onnx recognition
-2025-11-24 17:13:41,675 [INFO] ✓ Using CPU acceleration (ctx_id=-1)
-set det-size: (720, 720)
-2025-11-24 17:13:42,186 [INFO] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=720x720)
-2025-11-24 17:13:42,186 [INFO] [FaceDetection] Initialized InsightFace with model=hog
-2025-11-24 17:13:42,187 [INFO] [FaceDetectionWorker] Processing 15 photos
-[FaceDetection] [1/15] Detecting faces: alya1_2_2_2.jpeg
-2025-11-24 17:13:42.3398265 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:42.3880187 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:42.4361730 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:42.4879822 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:42.5360668 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:42.5861597 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:42.6423774 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:42.6936068 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:42.7468726 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:42,798 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [2/15] Detecting faces: alya1_3_2.jpeg
-2025-11-24 17:13:42.9105982 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:42.9600509 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:43.0114591 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:43.0644192 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:43.1157375 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:43.1695091 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:43.2220559 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:43.2733712 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:43.3271148 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:43,366 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [3/15] Detecting faces: alya2_2_2_2_2.jpeg
-2025-11-24 17:13:43.4655819 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:43.5145254 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:43.5646824 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:43.6161807 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:43.6690532 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:43.7195216 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:43.7766410 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:43.8276696 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:43.8790016 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:43,929 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [4/15] Detecting faces: alya3_2_2_2_2.jpeg
-2025-11-24 17:13:44.0343860 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:44.0843432 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:44.1351194 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:44.1880886 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:44.2387701 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:44.2919052 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:44.3490703 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:44.3990552 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:44.4496144 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:44,500 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [5/15] Detecting faces: alya_2_2.jpeg
-2025-11-24 17:13:44.5964279 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:44.6471202 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:44.6580063 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:44.7112915 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:44.7634776 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:44.8158248 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:44.8715791 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:44.9243870 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:44.9751257 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:45,025 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [6/15] Detecting faces: alya_2_2_2_2.jpeg
-2025-11-24 17:13:45.0923171 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:45.1422825 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:45.1925389 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:45.2454221 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:45.2975260 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:45.3484244 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:45.4041508 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:45.4546738 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:45.5043387 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:45,552 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [7/15] Detecting faces: ammar-ref(1)_2_2.png
-2025-11-24 17:13:45.6451540 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:45.6950712 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:45.7468033 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:45.7997865 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:45.8509629 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:45.9032754 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:45.9574051 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:46.0088978 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:46.0599267 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:46,109 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [8/15] Detecting faces: ammar-ref_2_2_2.png
-2025-11-24 17:13:46.2099794 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:46.2617596 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:46.3127752 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:46.3660057 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:46.4143885 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:46.4647427 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:46.5181853 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:46.5701135 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:46.6224602 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:46,668 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [9/15] Detecting faces: ammar-ref_3_2.png
-2025-11-24 17:13:46.7800956 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:46.8303440 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:46.8800440 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:46.9331548 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:46.9851440 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:47.0358776 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:47.0914596 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:47.1436926 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:47.1953828 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:47,241 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [10/15] Detecting faces: ammar1_2_2_2.jpeg
-2025-11-24 17:13:47.5481543 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:47.5999673 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:47.6503268 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:47.7025618 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:47.7535686 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:47.8052695 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:47.8619210 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:47.9122464 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:48.0042340 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:48,015 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [11/15] Detecting faces: ammar2_2_2_2.jpeg
-2025-11-24 17:13:48.1713084 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:48.2236040 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:48.2747564 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:48.3279687 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:48.3781650 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:48.4288627 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:48.5205560 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:48.5393861 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:48.5904890 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:48,640 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [12/15] Detecting faces: ammar3_2_2_2_2.jpeg
-2025-11-24 17:13:48.7603508 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:48.8113590 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:48.8631145 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:48.9163731 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:48.9923683 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:49.0164486 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:49.0714924 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:49.1242469 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:49.1758248 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:49,225 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [13/15] Detecting faces: img_6850_2_2_2.jpeg
-2025-11-24 17:13:49.4018365 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:49.4480974 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:49.4584509 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:49.5102605 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:49.5610072 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:49.6101732 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:49.6652920 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:49.7155884 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:49.7641853 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:49,814 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [14/15] Detecting faces: img_6995_2_2_2.jpeg
-2025-11-24 17:13:50.0188031 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:50.0698802 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:50.1311916 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:50.1830372 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:50.2340989 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:50.2847063 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:50.3409867 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:50.3882816 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:50.4391872 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:50,445 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [15/15] Detecting faces: عليا_2_2_2.jpeg
-2025-11-24 17:13:50.5682128 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,10} does not match actual shape of {1058,10} for output 500
-2025-11-24 17:13:50.6205404 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,4} does not match actual shape of {1058,4} for output 497
-2025-11-24 17:13:50.6892817 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {800,1} does not match actual shape of {1058,1} for output 494
-2025-11-24 17:13:50.7440728 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,10} does not match actual shape of {4050,10} for output 477
-2025-11-24 17:13:50.7953666 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,4} does not match actual shape of {4050,4} for output 474
-2025-11-24 17:13:50.8445520 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {3200,1} does not match actual shape of {4050,1} for output 471
-2025-11-24 17:13:50.9027647 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,10} does not match actual shape of {16200,10} for output 454
-2025-11-24 17:13:50.9539474 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,4} does not match actual shape of {16200,4} for output 451
-2025-11-24 17:13:51.0048261 [W:onnxruntime:, execution_frame.cc:857 onnxruntime::ExecutionFrame::VerifyOutputSizes] Expected shape from model of {12800,1} does not match actual shape of {16200,1} for output 448
-2025-11-24 17:13:51,048 [ERROR] Error detecting faces in c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-2025-11-24 17:13:51,048 [INFO] [FaceDetectionWorker] Complete in 10.1s: 15 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
-[FaceDetection] Complete: 15 photos, 0 faces detected
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_003'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_unidentified'
+[get_images_by_branch] Found 3 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
+[GRID] Fetched tags for 3 paths, got 3 entries
+[GRID] Loaded 3 thumbnails.
+[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-2 of 3
+[GRID] Queued 3 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_unidentified'
+[get_images_by_branch] Found 3 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
+[GRID] Fetched tags for 3 paths, got 3 entries
+[GRID] Loaded 3 thumbnails.
+[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-2 of 3
+[GRID] Queued 3 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_000'
+[get_images_by_branch] Found 6 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_001'
+[get_images_by_branch] Found 6 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_002'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_003'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: Default Project
+[Breadcrumb] Added project segment: Default Project
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: Default Project
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
+[open_lightbox] self.grid=<thumbnail_grid_qt.ThumbnailGridQt(0x1c8d1209960) at 0x000001C887D31A00>
+[open_lightbox] folder_id=None
+[open_lightbox] paths=[]
+[open_lightbox] branch_key=None
+[open_lightbox] date_key=None
+[open_lightbox] paths=[]
+[open_lightbox] context=visible_paths, total=2
+[open_lightbox] paths=['c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3091.jpg', 'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg']
+[open_lightbox] path=c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
+[UnifiedPreview] Opening media in unified dialog: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
+[UnifiedPreview] Media type: photo
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent=<main_window_qt.MainWindow(0x1c8d0f281c0) at 0x000001C8E7584100>
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent type=MainWindow
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.db exists: False
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.reference_db exists: False
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.project_id exists: False
+2025-11-24 19:27:24,526 [WARNING] [LightboxDialog.__init__] Parent has NO db - creating new ReferenceDB instance
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] Created new db instance: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
+2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] Got project_id from parent.grid: 1
+[LightboxDialog] Video player signals connected successfully
+[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
+[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (3024, 4032)
+[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
+[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (3024, 4032)
+[ContextMenu] Got tags for 1 path(s): {'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg': []}
+[ContextMenu] present_tags = set()
+2025-11-24 19:27:30,457 [INFO] Added tag 1 to 1 photos (out of 1 requested)
+2025-11-24 19:27:30,457 [INFO] Bulk assigned tag 'favorite' to 1 photos
+[Tag] Added 'favorite' → 1 photo(s)
+[TagCache] Refreshing tags for 1 paths, got 1 entries
+[TagCache] ✅ P2-17: Updated 1/1 items (optimized)
+[Sidebar] reload_tags_only → got 1 tags for project_id=1
+[ContextMenu] Got tags for 1 path(s): {'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg': ['favorite']}
+[ContextMenu] present_tags = {'favorite'}
+2025-11-24 19:27:33,726 [INFO] Added tag 2 to 1 photos (out of 1 requested)
+2025-11-24 19:27:33,726 [INFO] Bulk assigned tag 'face' to 1 photos
+[Tag] Added 'face' → 1 photo(s)
+[TagCache] Refreshing tags for 1 paths, got 1 entries
+[TagCache] ✅ P2-17: Updated 1/1 items (optimized)
+[Sidebar] reload_tags_only → got 2 tags for project_id=1
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
 [Shutdown] Thumbnail cache cleared.
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02>
