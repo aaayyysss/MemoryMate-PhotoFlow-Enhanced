@@ -72,7 +72,7 @@ hiddenimports = [
     'sklearn',
     'sklearn.cluster',
     'sklearn.preprocessing',
-    
+
     # Qt framework
     'PySide6',
     'PySide6.QtCore',
@@ -80,7 +80,7 @@ hiddenimports = [
     'PySide6.QtWidgets',
     'PySide6.QtMultimedia',
     'PySide6.QtMultimediaWidgets',
-    
+
     # Windows COM support (pywin32)
     'win32com',
     'win32com.client',
@@ -89,10 +89,12 @@ hiddenimports = [
     'win32con',
     'pythoncom',
     'pywintypes',
-    
+    'ctypes',
+    'ctypes.wintypes',  # Required by device_monitor.py for WM_DEVICECHANGE
+
     # HEIF/HEIC image support
     'pillow_heif',
-    
+
     # Project modules
     'repository',
     'repository.base_repository',
@@ -103,24 +105,26 @@ hiddenimports = [
     'repository.video_repository',
     'repository.migrations',
     'repository.schema',
-    
+
     'services',
     'services.device_id_extractor',
     'services.device_import_service',
     'services.device_sources',
+    'services.device_monitor',  # CRITICAL: Added in Phase 2 (Windows device detection)
     'services.exif_parser',
     'services.face_detection_service',
     'services.metadata_service',
     'services.mtp_import_adapter',
     'services.photo_deletion_service',
     'services.photo_scan_service',
+    'services.scan_worker_adapter',  # Scan worker compatibility layer
     'services.search_service',
     'services.tag_service',
     'services.thumbnail_service',
     'services.video_metadata_service',
     'services.video_service',
     'services.video_thumbnail_service',
-    
+
     'workers',
     'workers.face_cluster_worker',
     'workers.face_detection_worker',
@@ -130,7 +134,7 @@ hiddenimports = [
     'workers.progress_writer',
     'workers.video_metadata_worker',
     'workers.video_thumbnail_worker',
-    
+
     'ui',
     'ui.device_import_dialog',
     'ui.face_settings_dialog',
@@ -138,10 +142,10 @@ hiddenimports = [
     'ui.mtp_import_dialog',
     'ui.people_list_view',
     'ui.people_manager_dialog',
-    
+
     'utils',
     'utils.translation_manager',
-    
+
     # Core app modules
     'config.face_detection_config',
     'logging_config',
@@ -149,6 +153,20 @@ hiddenimports = [
     'db_writer',
     'settings_manager_qt',
     'app_services',
+
+    # Root-level UI modules (CRITICAL - often missed in PyInstaller specs)
+    'main_window_qt',
+    'sidebar_qt',
+    'search_widget_qt',
+    'thumbnail_grid_qt',
+    'preview_panel_qt',
+    'video_player_qt',
+    'splash_qt',
+    'preferences_dialog',
+    'video_backfill_dialog',
+    'reference_db',
+    'thumb_cache_db',
+    'translation_manager',  # Root-level translation manager
 ]
 
 a = Analysis(
@@ -188,13 +206,13 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,  # Set to True for debugging, False for production windowed app
+    console=False,  # PRODUCTION: False for windowed app (no console), True for debugging
     disable_windowing_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,  # Add path to .ico file if you have one
+    icon='app_icon.ico',  # Application icon
 )
 
 coll = COLLECT(
