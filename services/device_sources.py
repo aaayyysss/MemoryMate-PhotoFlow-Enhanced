@@ -133,17 +133,19 @@ class DeviceScanner:
         '.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v'
     }
 
-    def __init__(self, db=None, register_devices: bool = True):
+    def __init__(self, db=None, register_devices: bool = True, progress_callback=None):
         """
         Initialize device scanner.
 
         Args:
             db: ReferenceDB instance for device registration (optional)
             register_devices: Whether to register detected devices in database
+            progress_callback: Optional callback(message: str) for progress updates
         """
         self.system = platform.system()
         self.db = db
         self.register_devices = register_devices
+        self.progress_callback = progress_callback
 
     @classmethod
     def invalidate_cache(cls):
@@ -169,6 +171,19 @@ class DeviceScanner:
         """
         cls._scan_cache_ttl = max(0.0, seconds)
         print(f"[DeviceScanner] Cache TTL set to {cls._scan_cache_ttl}s")
+
+    def _emit_progress(self, message: str):
+        """
+        Emit progress update via callback if provided.
+
+        Args:
+            message: Progress message to display
+        """
+        if self.progress_callback:
+            try:
+                self.progress_callback(message)
+            except Exception as e:
+                print(f"[DeviceScanner] Warning: Progress callback failed: {e}")
 
     def scan_devices(self, force: bool = False) -> List[MobileDevice]:
         """
@@ -205,10 +220,13 @@ class DeviceScanner:
         print(f"[DeviceScanner] Platform: {self.system}")
         print(f"[DeviceScanner] Database registration: {'enabled' if self.db and self.register_devices else 'disabled'}")
 
+        self._emit_progress("Scanning for mobile devices...")
+
         devices = []
 
         if self.system == "Windows":
             print(f"[DeviceScanner] Scanning Windows drives...")
+            self._emit_progress("Checking drive letters...")
             devices.extend(self._scan_windows())
         elif self.system == "Darwin":  # macOS
             print(f"[DeviceScanner] Scanning macOS volumes...")
@@ -254,6 +272,7 @@ class DeviceScanner:
 
         # Method 2: Scan portable devices (MTP/PTP - Android/iOS phones)
         print(f"[DeviceScanner]   Checking portable devices (MTP/PTP)...")
+        self._emit_progress("Checking for MTP/PTP devices...")
         portable_devices = self._scan_windows_portable_devices()
         devices.extend(portable_devices)
 
@@ -271,6 +290,7 @@ class DeviceScanner:
         # Try using win32com.shell (more reliable)
         try:
             print(f"[DeviceScanner]     Attempting Shell COM enumeration...")
+            self._emit_progress("Enumerating portable devices...")
             import win32com.client
             import pythoncom
 
@@ -316,6 +336,7 @@ class DeviceScanner:
                         if item.IsFolder and not item.IsFileSystem:
                             device_name = item.Name
                             print(f"[DeviceScanner]       • Portable device found: {device_name}")
+                            self._emit_progress(f"Checking device: {device_name}...")
 
                             # Try to access the device folder
                             try:
@@ -2010,7 +2031,7 @@ class DeviceScanner:
 
 
 # Convenience function
-def scan_mobile_devices(db=None, register_devices: bool = True, force: bool = False) -> List[MobileDevice]:
+def scan_mobile_devices(db=None, register_devices: bool = True, force: bool = False, progress_callback=None) -> List[MobileDevice]:
     """
     Scan for all mounted mobile devices.
 
@@ -2018,6 +2039,7 @@ def scan_mobile_devices(db=None, register_devices: bool = True, force: bool = Fa
         db: ReferenceDB instance for device registration (optional)
         register_devices: Whether to register detected devices in database
         force: If True, bypass cache and perform fresh scan (default: False)
+        progress_callback: Optional callback(message: str) for progress updates
 
     Returns:
         List of MobileDevice objects with device IDs
@@ -2031,6 +2053,9 @@ def scan_mobile_devices(db=None, register_devices: bool = True, force: bool = Fa
         >>>
         >>> # Force fresh scan (bypass cache)
         >>> devices = scan_mobile_devices(db=db, force=True)
+        >>>
+        >>> # With progress feedback
+        >>> devices = scan_mobile_devices(db=db, progress_callback=lambda msg: print(f"Progress: {msg}"))
     """
-    scanner = DeviceScanner(db=db, register_devices=register_devices)
+    scanner = DeviceScanner(db=db, register_devices=register_devices, progress_callback=progress_callback)
     return scanner.scan_devices(force=force)
