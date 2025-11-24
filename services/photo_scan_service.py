@@ -261,10 +261,13 @@ class PhotoScanService:
             batch_rows = []
             folders_seen: Set[str] = set()
 
-            # P0 FIX: Create fresh executor PER FILE to prevent worker exhaustion/deadlock
-            # ISSUE: Each file makes 2 executor submissions (stat + metadata extraction)
-            # With shared executor, after ~10 files (20 submissions), workers can deadlock
-            # SOLUTION: Fresh executor per file ensures clean state, prevents accumulated deadlocks
+            # DEADLOCK FIX: Use batch-based executor strategy
+            # PROBLEM: Fresh executor per file causes overhead + thread leaks at progress points
+            # SOLUTION: Create fresh executor every 5 files to balance overhead vs stability
+            # This prevents both: 1) accumulation deadlocks and 2) per-file overhead
+            executor = None
+            executor_file_count = 0
+            EXECUTOR_BATCH_SIZE = 5  # Recreate executor after this many files
 
             try:
                 for i, file_path in enumerate(all_files, 1):
@@ -276,8 +279,21 @@ class PhotoScanService:
                     print(f"[SCAN] Starting file {i}/{total_files}: {file_path.name}")
                     logger.info(f"[Scan] File {i}/{total_files}: {file_path.name}")
 
-                    # P0 FIX: Create fresh executor for each file to prevent deadlock
-                    executor = ThreadPoolExecutor(max_workers=2)
+                    # DEADLOCK FIX: Create/recreate executor in batches
+                    if executor is None or executor_file_count >= EXECUTOR_BATCH_SIZE:
+                        # Shutdown old executor if exists
+                        if executor is not None:
+                            try:
+                                # CRITICAL: wait=True ensures threads finish before continuing
+                                executor.shutdown(wait=True, cancel_futures=False)
+                                print(f"[SCAN] Executor batch complete ({executor_file_count} files)")
+                            except Exception as e:
+                                logger.debug(f"Executor shutdown warning: {e}")
+
+                        # Create fresh executor for next batch
+                        executor = ThreadPoolExecutor(max_workers=2)
+                        executor_file_count = 0
+                        print(f"[SCAN] Created fresh executor for file {i}")
 
                     try:
                         # Process file
@@ -290,12 +306,11 @@ class PhotoScanService:
                             extract_exif_date=extract_exif_date,
                             executor=executor
                         )
-                    finally:
-                        # P0 FIX: Clean shutdown after each file
-                        try:
-                            executor.shutdown(wait=False, cancel_futures=True)
-                        except Exception as e:
-                            logger.debug(f"Executor shutdown error (ignored): {e}")
+                        executor_file_count += 1
+                    except Exception as file_error:
+                        logger.error(f"File processing error: {file_error}")
+                        self._stats['photos_failed'] += 1
+                        continue
 
                     if row is None:
                         # Skipped or failed
@@ -339,9 +354,14 @@ class PhotoScanService:
                     self._write_batch(batch_rows, project_id)
 
             finally:
-                # P0 FIX: No need for executor shutdown here - each file has its own executor
-                # that is shut down immediately after processing (see line 294-298)
-                pass
+                # DEADLOCK FIX: Shutdown final executor batch
+                if executor is not None:
+                    try:
+                        print(f"[SCAN] Shutting down final executor (processed {executor_file_count} files)")
+                        executor.shutdown(wait=True, cancel_futures=False)
+                        logger.info(f"Executor shutdown complete")
+                    except Exception as e:
+                        logger.warning(f"Final executor shutdown error: {e}")
 
             # Step 4: Process videos
             if total_videos > 0 and not self._cancelled:
