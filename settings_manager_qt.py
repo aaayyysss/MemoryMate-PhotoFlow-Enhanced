@@ -41,6 +41,9 @@ DEFAULT_SETTINGS = {
     "gps_reverse_geocoding_enabled": True,  # Auto-fetch location names from coordinates
     "gps_geocoding_timeout_sec": 2.0,  # Timeout for reverse geocoding API calls
     "gps_cache_location_names": True,  # Cache location names to reduce API calls
+
+    # --- Device Detection settings ---
+    "device_auto_refresh": False,  # Auto-detect device connections (default: manual refresh only)
 }
 
 

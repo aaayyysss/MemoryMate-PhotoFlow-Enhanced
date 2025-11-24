@@ -19,6 +19,7 @@ from PySide6.QtGui import (
 from app_services import list_branches, export_branch
 from reference_db import ReferenceDB
 from services.tag_service import get_tag_service
+from services.device_monitor import get_device_monitor  # OPTIMIZATION: Windows device change detection
 from ui.people_list_view import PeopleListView, make_circular_pixmap
 from translation_manager import tr
 
@@ -1457,15 +1458,37 @@ class SidebarQt(QWidget):
         self._spin_angle = 0
         self._base_pm = self._make_reload_pixmap(18, 18)
 
-        # Device auto-refresh timer
+        # OPTIMIZATION: Device auto-detection system
+        # Uses Windows WM_DEVICECHANGE events (instant) + fallback timer (30s polling)
         self._device_refresh_timer = QTimer(self)
         self._device_refresh_timer.setInterval(30000)  # 30 seconds
         self._device_refresh_timer.timeout.connect(self._check_device_changes)
         self._last_device_count = 0
         self._device_auto_refresh_enabled = self.settings.get("device_auto_refresh", True) if self.settings else True
+        self._device_monitor = None  # Will be initialized if auto-refresh enabled
 
         if self._device_auto_refresh_enabled:
+            print(f"[Sidebar] Device auto-detection enabled")
+
+            # Try to use native device monitor (Windows only)
+            try:
+                import platform
+                if platform.system() == "Windows":
+                    self._device_monitor = get_device_monitor()
+                    self._device_monitor.deviceChanged.connect(self._on_device_event)
+                    self._device_monitor.start()
+                    print(f"[Sidebar] Native Windows device monitoring active (instant detection)")
+                else:
+                    print(f"[Sidebar] Native monitoring not available, using timer polling")
+            except Exception as e:
+                print(f"[Sidebar] Failed to initialize device monitor: {e}")
+                print(f"[Sidebar] Falling back to timer-based polling")
+
+            # Always start timer as fallback (even with monitor, provides redundancy)
             self._device_refresh_timer.start()
+            print(f"[Sidebar] Timer fallback active (30s polling)")
+        else:
+            print(f"[Sidebar] Device auto-detection disabled (manual refresh only)")
 
 
         # Header with prominent action buttons (Google Photos / Apple Photos inspired)
@@ -1688,6 +1711,14 @@ class SidebarQt(QWidget):
         # Stop auto-refresh timer to prevent it from interfering with cleanup
         if hasattr(self, '_device_refresh_timer'):
             self._device_refresh_timer.stop()
+
+        # OPTIMIZATION: Stop device monitor if active
+        if hasattr(self, '_device_monitor') and self._device_monitor:
+            try:
+                self._device_monitor.stop()
+                print(f"[Sidebar] Device monitor stopped during cleanup")
+            except Exception as e:
+                print(f"[Sidebar] Warning: Error stopping device monitor: {e}")
 
         # Stop other timers
         if hasattr(self, '_reload_timer'):
@@ -5945,10 +5976,35 @@ class SidebarQt(QWidget):
             # Always reset flag, even if error occurs
             self._refreshing = False
 
+    def _on_device_event(self, event_type: str):
+        """
+        Handle device change event from Windows monitor.
+
+        Called immediately when a device is connected or disconnected.
+        This provides instant detection vs 30-second timer polling.
+
+        Args:
+            event_type: "connected" or "disconnected"
+        """
+        print(f"\n[Sidebar] ===== Device event received: {event_type} =====")
+
+        # OPTIMIZATION: Invalidate device scan cache to force fresh scan
+        try:
+            from services.device_sources import DeviceScanner
+            DeviceScanner.invalidate_cache()
+            print(f"[Sidebar] Device scan cache invalidated")
+        except Exception as e:
+            print(f"[Sidebar] Warning: Failed to invalidate cache: {e}")
+
+        # Trigger device check (will use fresh scan due to cache invalidation)
+        self._check_device_changes()
+
+        print(f"[Sidebar] ===== End device event handling =====\n")
+
     def _check_device_changes(self):
         """
         Periodically check for device changes and refresh if needed.
-        Called by auto-refresh timer every 30 seconds.
+        Called by auto-refresh timer every 30 seconds OR by device event handler.
         """
         # CRITICAL: Safety checks to prevent crashes during cleanup
         try:
