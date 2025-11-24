@@ -27,6 +27,7 @@ from PySide6.QtWidgets import (
     QInputDialog, QMessageBox, QStyledItemDelegate, QStyle
 )
 from PIL import Image, ImageOps
+from translation_manager import tr
 
 
 # =====================================================================
@@ -217,7 +218,7 @@ class PeopleListView(QWidget):
 
         search_label = QLabel("🔍")
         self.search_box = QLineEdit()
-        self.search_box.setPlaceholderText("Filter people by name...")
+        self.search_box.setPlaceholderText(tr('search.placeholder_filter_people'))
         self.search_box.setClearButtonEnabled(True)
         self.search_box.textChanged.connect(self._on_search_changed)
 

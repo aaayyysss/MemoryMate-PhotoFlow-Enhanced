@@ -319,11 +319,17 @@ class PhotoScanService:
                             logger.info("Scan cancelled during progress reporting")
                             break
 
+                        # Enhanced progress message with file details
+                        file_name = file_path.name
+                        file_size_kb = round(file_path.stat().st_size / 1024, 1) if file_path.exists() else 0
+                        
+                        progress_msg = f"📷 {file_name} ({file_size_kb} KB)\nIndexed: {self._stats['photos_indexed']}/{total_files} photos"
+                        
                         progress = ScanProgress(
                             current=i,
                             total=total_files,
                             percent=int((i / total_files) * 100),
-                            message=f"Indexed {self._stats['photos_indexed']}/{total_files} photos",
+                            message=progress_msg,
                             current_file=str(file_path)
                         )
                         progress_callback(progress)

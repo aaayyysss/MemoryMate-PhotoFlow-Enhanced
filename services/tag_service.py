@@ -153,21 +153,23 @@ class TagService:
             self.logger.error(f"Failed to remove tag '{tag_name}' from {photo_path}: {e}")
             return False
 
-    def get_tags_for_path(self, photo_path: str) -> List[str]:
+    def get_tags_for_path(self, photo_path: str, project_id: int) -> List[str]:
         """
-        Get all tag names for a photo by file path.
+        Get all tag names for a photo by file path within a specific project.
 
         Args:
             photo_path: Full path to photo file
+            project_id: Project ID for tag isolation
 
         Returns:
             List of tag names (empty if photo not found)
-
-        Example:
-            >>> service.get_tags_for_path("/photos/img001.jpg")
-            ['favorite', 'vacation', 'beach']
         """
-        photo = self._photo_repo.get_by_path(photo_path)
+        if project_id is None:
+            # Project scoping is mandatory to avoid cross-project tag leakage
+            self.logger.warning("get_tags_for_path called without project_id; returning empty list")
+            return []
+
+        photo = self._photo_repo.get_by_path(photo_path, project_id)
         if not photo:
             return []
 
@@ -175,26 +177,23 @@ class TagService:
             tags = self._tag_repo.get_tags_for_photo(photo['id'])
             return [tag['name'] for tag in tags]
         except Exception as e:
-            self.logger.error(f"Failed to get tags for {photo_path}: {e}")
+            self.logger.error(f"Failed to get tags for {photo_path} (project={project_id}): {e}")
             return []
 
-    def get_paths_by_tag(self, tag_name: str) -> List[str]:
+    def get_paths_by_tag(self, tag_name: str, project_id: int) -> List[str]:
         """
-        Get all photo paths that have a specific tag.
+        Get all photo paths in a project that have a specific tag.
 
         Args:
             tag_name: Tag name
+            project_id: Project ID for tag isolation
 
         Returns:
             List of photo file paths
-
-        Example:
-            >>> service.get_paths_by_tag("favorite")
-            ['/photos/img001.jpg', '/photos/img002.jpg']
         """
         try:
-            # Get photo IDs for this tag
-            photo_ids = self._tag_repo.get_photo_ids_by_tag_name(tag_name)
+            # Get photo IDs for this tag within the project
+            photo_ids = self._tag_repo.get_photo_ids_by_tag_name(tag_name, project_id)
             if not photo_ids:
                 return []
 
@@ -208,7 +207,7 @@ class TagService:
             return paths
 
         except Exception as e:
-            self.logger.error(f"Failed to get paths for tag '{tag_name}': {e}")
+            self.logger.error(f"Failed to get paths for tag '{tag_name}' (project={project_id}): {e}")
             return []
 
     # ========================================================================
@@ -475,19 +474,22 @@ class TagService:
             self.logger.error(f"Failed to get tags with counts: {e}")
             return []
 
-    def get_all_tags(self) -> List[str]:
+    def get_all_tags(self, project_id: int | None = None) -> List[str]:
         """
         Get all tag names.
+
+        Args:
+            project_id: Optional project ID to scope tag names
 
         Returns:
             List of tag names ordered alphabetically
 
         Example:
-            >>> service.get_all_tags()
+            >>> service.get_all_tags(project_id=1)
             ['beach', 'favorite', 'vacation']
         """
         try:
-            tags = self._tag_repo.get_all()
+            tags = self._tag_repo.get_all(project_id)
             return [tag['name'] for tag in tags]
         except Exception as e:
             self.logger.error(f"Failed to get all tags: {e}")

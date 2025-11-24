@@ -13,6 +13,7 @@ import logging
 
 from reference_db import ReferenceDB
 from services.face_detection_service import get_face_detection_service
+from config.face_detection_config import get_face_config
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +85,8 @@ class FaceDetectionWorker(QRunnable):
             'photos_processed': 0,
             'photos_skipped': 0,
             'photos_failed': 0,
-            'faces_detected': 0
+            'faces_detected': 0,
+            'images_with_faces': 0
         }
 
     def cancel(self):
@@ -134,7 +136,7 @@ class FaceDetectionWorker(QRunnable):
 
                 # Detect faces
                 try:
-                    faces = face_service.detect_faces(photo_path)
+                    faces = face_service.detect_faces(photo_path, project_id=self.project_id)
 
                     if not faces:
                         self._stats['photos_processed'] += 1
@@ -156,6 +158,7 @@ class FaceDetectionWorker(QRunnable):
 
                     self._stats['photos_processed'] += 1
                     self._stats['faces_detected'] += len(faces)
+                    self._stats['images_with_faces'] += 1
 
                     # Emit face detected signal
                     self.signals.face_detected.emit(photo_path, len(faces))
@@ -172,7 +175,9 @@ class FaceDetectionWorker(QRunnable):
             duration = time.time() - start_time
             logger.info(
                 f"[FaceDetectionWorker] Complete in {duration:.1f}s: "
-                f"{self._stats['photos_processed']} processed, "
+                f"{self._stats['photos_processed']} processed "
+                f"({self._stats['images_with_faces']} with faces), "
+                f"{self._stats['photos_skipped']} skipped, "
                 f"{self._stats['faces_detected']} faces detected, "
                 f"{self._stats['photos_failed']} failed"
             )
@@ -216,6 +221,7 @@ class FaceDetectionWorker(QRunnable):
                 skipped_count = total_count - len(photos)
 
                 if skipped_count > 0:
+                    self._stats['photos_skipped'] = skipped_count
                     logger.info(
                         f"[FaceDetectionWorker] Skipping {skipped_count} photos already in database "
                         f"(processing {len(photos)}/{total_count})"
@@ -253,9 +259,12 @@ class FaceDetectionWorker(QRunnable):
 
             # Save face crop to disk
             face_service = get_face_detection_service()
-            if not face_service.save_face_crop(image_path, face, crop_path):
-                logger.warning(f"Failed to save face crop: {crop_path}")
-                return
+            if get_face_config().get('save_face_crops', True):
+                if not face_service.save_face_crop(image_path, face, crop_path):
+                    logger.warning(f"Failed to save face crop: {crop_path}")
+                    return
+            else:
+                os.makedirs(os.path.dirname(crop_path), exist_ok=True)
 
             # Convert embedding to bytes for storage
             embedding_bytes = face['embedding'].astype(np.float32).tobytes()

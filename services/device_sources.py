@@ -211,94 +211,112 @@ class DeviceScanner:
         try:
             print(f"[DeviceScanner]     Attempting Shell COM enumeration...")
             import win32com.client
+            import pythoncom
 
-            shell = win32com.client.Dispatch("Shell.Application")
-            # Namespace 17 = "This PC" / "Computer"
-            computer_folder = shell.Namespace(17)
+            # CRITICAL FIX: Initialize COM for this thread (prevents crash on GUI thread)
+            # This is required when calling COM from Qt GUI thread
+            try:
+                pythoncom.CoInitialize()
+                print(f"[DeviceScanner]     COM initialized for current thread")
+            except Exception as com_init_err:
+                print(f"[DeviceScanner]     Warning: COM already initialized or failed: {com_init_err}")
 
-            if computer_folder:
-                items = computer_folder.Items()
-                print(f"[DeviceScanner]     Found {items.Count} items under 'This PC'")
+            try:
+                shell = win32com.client.Dispatch("Shell.Application")
+                # Namespace 17 = "This PC" / "Computer"
+                computer_folder = shell.Namespace(17)
 
-                filesystem_items_to_check = []  # Track filesystem items that might be devices
+                if computer_folder:
+                    items = computer_folder.Items()
+                    print(f"[DeviceScanner]     Found {items.Count} items under 'This PC'")
 
-                for item in items:
-                    # DEBUG: Log all items to diagnose detection issues
-                    try:
-                        item_name = item.Name
-                        is_folder = item.IsFolder
-                        is_filesystem = item.IsFileSystem
-                        print(f"[DeviceScanner]       → Item: '{item_name}' | IsFolder={is_folder} | IsFileSystem={is_filesystem}")
-                    except (AttributeError, OSError, RuntimeError) as e:
-                        # P1-2 FIX: Specific exception types for COM operations
-                        print(f"[DeviceScanner]       → Item inspection error: {e}")
-                        continue
-                    except Exception as e:
-                        # P1-2 FIX: Log unexpected exceptions and continue
-                        print(f"[DeviceScanner]       → Unexpected error during item inspection: {e}")
-                        import traceback
-                        traceback.print_exc()
-                        continue
+                    filesystem_items_to_check = []  # Track filesystem items that might be devices
 
-                    # Check if it's a portable device (primary method)
-                    # Portable devices have IsFileSystem=False and IsFolder=True
-                    if item.IsFolder and not item.IsFileSystem:
-                        device_name = item.Name
-                        print(f"[DeviceScanner]       • Portable device found: {device_name}")
-
-                        # Try to access the device folder
+                    for item in items:
+                        # DEBUG: Log all items to diagnose detection issues
                         try:
-                            # P2-30 FIX: Validate path exists before accessing
-                            if not item.Path:
-                                print(f"[DeviceScanner] Skipping device with null path")
-                                continue
-
-                            device_folder = shell.Namespace(item.Path)
-                            if device_folder:
-                                # Enumerate storage locations (Phone, Card, etc.)
-                                # FIX: COM enumeration can be slow/async - retry if count is 0
-                                storage_items = device_folder.Items()
-                                storage_count = storage_items.Count
-
-                                # Retry up to 3 times if storage count is 0 (device might be initializing)
-                                if storage_count == 0:
-                                    print(f"[DeviceScanner]         Storage locations: {storage_count} (retrying...)")
-                                    import time
-                                    for retry in range(3):
-                                        time.sleep(0.3)  # Wait 300ms for COM enumeration
-                                        storage_items = device_folder.Items()
-                                        storage_count = storage_items.Count
-                                        if storage_count > 0:
-                                            print(f"[DeviceScanner]         ✓ Found storage after {retry + 1} retries")
-                                            break
-                                else:
-                                    print(f"[DeviceScanner]         Storage locations: {storage_count}")
-
-                                for storage in storage_items:
-                                    if storage.IsFolder:
-                                        storage_name = storage.Name
-                                        storage_path = storage.Path
-                                        print(f"[DeviceScanner]           • Storage: {storage_name}")
-                                        print(f"[DeviceScanner]             Path: {storage_path}")
-
-                                        # Check if this storage location has DCIM
-                                        # Use the FolderItem directly instead of path string
-                                        device = self._check_portable_storage(shell, storage, device_name)
-                                        if device:
-                                            print(f"[DeviceScanner]             ✓ Device detected!")
-                                            devices.append(device)
-                                        else:
-                                            print(f"[DeviceScanner]             ✗ No DCIM found")
-                        except (AttributeError, OSError, PermissionError) as e:
-                            # P1-2 FIX: Specific exceptions for device access
-                            print(f"[DeviceScanner]         ERROR accessing {device_name}: {e}")
+                            item_name = item.Name
+                            is_folder = item.IsFolder
+                            is_filesystem = item.IsFileSystem
+                            print(f"[DeviceScanner]       → Item: '{item_name}' | IsFolder={is_folder} | IsFileSystem={is_filesystem}")
+                        except (AttributeError, OSError, RuntimeError) as e:
+                            # P1-2 FIX: Specific exception types for COM operations
+                            print(f"[DeviceScanner]       → Item inspection error: {e}")
+                            continue
                         except Exception as e:
-                            # P1-2 FIX: Log unexpected errors with traceback
-                            print(f"[DeviceScanner]         UNEXPECTED ERROR accessing {device_name}: {e}")
+                            # P1-2 FIX: Log unexpected exceptions and continue
+                            print(f"[DeviceScanner]       → Unexpected error during item inspection: {e}")
                             import traceback
                             traceback.print_exc()
-            else:
-                print(f"[DeviceScanner]     ✗ Could not access 'This PC' namespace")
+                            continue
+
+                        # Check if it's a portable device (primary method)
+                        # Portable devices have IsFileSystem=False and IsFolder=True
+                        if item.IsFolder and not item.IsFileSystem:
+                            device_name = item.Name
+                            print(f"[DeviceScanner]       • Portable device found: {device_name}")
+
+                            # Try to access the device folder
+                            try:
+                                # P2-30 FIX: Validate path exists before accessing
+                                if not item.Path:
+                                    print(f"[DeviceScanner] Skipping device with null path")
+                                    continue
+
+                                device_folder = shell.Namespace(item.Path)
+                                if device_folder:
+                                    # Enumerate storage locations (Phone, Card, etc.)
+                                    # FIX: COM enumeration can be slow/async - retry if count is 0
+                                    storage_items = device_folder.Items()
+                                    storage_count = storage_items.Count
+
+                                    # Retry up to 3 times if storage count is 0 (device might be initializing)
+                                    if storage_count == 0:
+                                        print(f"[DeviceScanner]         Storage locations: {storage_count} (retrying...)")
+                                        import time
+                                        for retry in range(3):
+                                            time.sleep(0.3)  # Wait 300ms for COM enumeration
+                                            storage_items = device_folder.Items()
+                                            storage_count = storage_items.Count
+                                            if storage_count > 0:
+                                                print(f"[DeviceScanner]         ✓ Found storage after {retry + 1} retries")
+                                                break
+                                    else:
+                                        print(f"[DeviceScanner]         Storage locations: {storage_count}")
+
+                                    for storage in storage_items:
+                                        if storage.IsFolder:
+                                            storage_name = storage.Name
+                                            storage_path = storage.Path
+                                            print(f"[DeviceScanner]           • Storage: {storage_name}")
+                                            print(f"[DeviceScanner]             Path: {storage_path}")
+
+                                            # Check if this storage location has DCIM
+                                            # Use the FolderItem directly instead of path string
+                                            device = self._check_portable_storage(shell, storage, device_name)
+                                            if device:
+                                                print(f"[DeviceScanner]             ✓ Device detected!")
+                                                devices.append(device)
+                                            else:
+                                                print(f"[DeviceScanner]             ✗ No DCIM found")
+                            except (AttributeError, OSError, PermissionError) as e:
+                                # P1-2 FIX: Specific exceptions for device access
+                                print(f"[DeviceScanner]         ERROR accessing {device_name}: {e}")
+                            except Exception as e:
+                                # P1-2 FIX: Log unexpected errors with traceback
+                                print(f"[DeviceScanner]         UNEXPECTED ERROR accessing {device_name}: {e}")
+                                import traceback
+                                traceback.print_exc()
+                else:
+                    print(f"[DeviceScanner]     ✗ Could not access 'This PC' namespace")
+
+            finally:
+                # CRITICAL FIX: Always uninitialize COM to prevent resource leaks
+                try:
+                    pythoncom.CoUninitialize()
+                    print(f"[DeviceScanner]     COM uninitialized")
+                except Exception as com_uninit_err:
+                    print(f"[DeviceScanner]     Warning: COM uninit error: {com_uninit_err}")
 
         except ImportError:
             print(f"[DeviceScanner]     ✗ win32com not available, trying fallback...")
@@ -505,8 +523,8 @@ class DeviceScanner:
                 # Cameras: Check DCIM only
                 essential_patterns = ["DCIM", "DCIM/100CANON", "DCIM/100NIKON"]
             else:  # android
-                # Android: Comprehensive folder patterns (Option A implementation)
-                # Based on Google Photos behavior - check all common media folder locations
+                # CRITICAL FIX: Reduced to essential patterns only
+                # Based on Google Photos behavior - check common media folder locations
                 essential_patterns = [
                     # Primary camera folders
                     "DCIM/Camera",
@@ -522,43 +540,9 @@ class DeviceScanner:
                     "Pictures/Screenshots",
                     "Screenshots",
 
-                    # WhatsApp media
-                    "WhatsApp/Media/WhatsApp Images",
-                    "WhatsApp/Media/WhatsApp Video",
-
-                    # Telegram media
-                    "Telegram/Telegram Images",
-                    "Telegram/Telegram Video",
-
-                    # Instagram
-                    "Pictures/Instagram",
-                    "Instagram",
-
                     # Downloads
                     "Download",
                     "Downloads",
-
-                    # Movies/Video folders
-                    "Movies",
-                    "DCIM/Video",
-
-                    # Social media apps
-                    "Snapchat/Media",
-                    "TikTok",
-
-                    # Samsung-specific structures
-                    "Internal shared storage/DCIM/Camera",
-                    "Internal shared storage/DCIM",
-                    "Internal shared storage/Pictures",
-
-                    # Cloud sync folders
-                    "Google Photos",
-                    "OneDrive/Pictures",
-
-                    # Other messaging apps
-                    "Facebook/Media",
-                    "Messenger/Media",
-                    "Signal/Media"
                 ]
 
             print(f"[DeviceScanner]               Quick scan: checking {len(essential_patterns)} essential folders only")
@@ -655,6 +639,66 @@ class DeviceScanner:
 
         except Exception as e:
             print(f"[DeviceScanner]               ERROR scanning folders: {e}")
+
+        # CRITICAL FIX: If no folders found but DCIM exists, add it as fallback
+        # This handles devices where files are directly in DCIM root or unusual structure
+        if not folders:
+            print(f"[DeviceScanner]               No folders found in patterns, trying DCIM root as fallback...")
+            try:
+                # Get storage folder
+                storage_folder = storage_item.GetFolder
+                if storage_folder:
+                    # Navigate to DCIM
+                    items = storage_folder.Items()
+                    dcim_item = None
+                    
+                    for item in items:
+                        if item.IsFolder and item.Name == "DCIM":
+                            dcim_item = item
+                            break
+                    
+                    if dcim_item:
+                        # DCIM found! Check if it has media (files or subfolders)
+                        dcim_folder = dcim_item.GetFolder
+                        if dcim_folder:
+                            dcim_items = dcim_folder.Items()
+                            has_media = False
+                            checked = 0
+                            max_check = 10
+                            
+                            for item in dcim_items:
+                                checked += 1
+                                
+                                # Check for media files
+                                if not item.IsFolder:
+                                    name_lower = item.Name.lower()
+                                    if any(name_lower.endswith(ext) for ext in [
+                                        '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.heic',
+                                        '.mp4', '.mov', '.avi', '.mkv', '.m4v', '.3gp'
+                                    ]):
+                                        has_media = True
+                                        break
+                                
+                                # If DCIM has subfolders, assume it has media
+                                # (most devices organize in DCIM/Camera, DCIM/100ANDRO, etc.)
+                                if checked >= max_check:
+                                    if item.IsFolder:
+                                        has_media = True
+                                    break
+                            
+                            if has_media:
+                                print(f"[DeviceScanner]               ✓ DCIM fallback: Found media in DCIM root")
+                                
+                                # Build full path
+                                if storage_item.Path:
+                                    dcim_path = f"{storage_item.Path}\\DCIM"
+                                    folders.append(DeviceFolder(
+                                        name="DCIM (All Photos)",
+                                        path=dcim_path,
+                                        photo_count=1  # Indicate presence without full count
+                                    ))
+            except Exception as e:
+                print(f"[DeviceScanner]               ✗ DCIM fallback failed: {e}")
 
         return folders
 
@@ -1315,18 +1359,31 @@ class DeviceScanner:
         """
         folders = []
 
-        # Use appropriate patterns based on device type
-        if device_type == "camera":
-            patterns = self.CAMERA_PATTERNS
-        elif device_type == "ios":
-            patterns = self.IOS_PATTERNS
+        # CRITICAL FIX: Use essential patterns only (same as _scan_com_media_folders_quick)
+        # The full ANDROID_PATTERNS list is too slow and causes issues
+        if device_type == "ios":
+            essential_patterns = ["DCIM", "DCIM/100APPLE", "DCIM/101APPLE"]
+        elif device_type == "camera":
+            essential_patterns = ["DCIM", "DCIM/100CANON", "DCIM/100NIKON"]
         else:  # android
-            patterns = self.ANDROID_PATTERNS
+            # Use same essential patterns as quick scan
+            essential_patterns = [
+                "DCIM/Camera",
+                "DCIM",
+                "Camera",
+                "Pictures",
+                "Photos",
+                "DCIM/Screenshots",
+                "Pictures/Screenshots",
+                "Screenshots",
+                "Download",
+                "Downloads",
+            ]
 
-        print(f"[DeviceScanner]             Using {len(patterns)} folder patterns for {device_type}")
+        print(f"[DeviceScanner]             Quick scan: checking {len(essential_patterns)} essential folders")
 
         # For each pattern, try to access via Shell namespace
-        for pattern in patterns:
+        for pattern in essential_patterns:
             try:
                 # Build full path
                 pattern_windows = pattern.replace('/', '\\')
@@ -1335,32 +1392,85 @@ class DeviceScanner:
                 # Try to access this folder
                 folder_obj = shell.Namespace(full_path)
                 if folder_obj:
-                    # Folder exists! Count media files
+                    # Folder exists! Quick count of media files (max 10 to avoid hanging)
                     items = folder_obj.Items()
                     media_count = 0
+                    checked = 0
+                    max_quick_check = 10  # Only check first 10 files
 
                     # Quick count of image/video files
                     for item in items:
                         if not item.IsFolder:
+                            checked += 1
                             name_lower = item.Name.lower()
                             if any(name_lower.endswith(ext) for ext in [
                                 '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.heic',
                                 '.mp4', '.mov', '.avi', '.mkv', '.m4v', '.3gp'
                             ]):
                                 media_count += 1
+                            
+                            # Stop after checking enough files
+                            if checked >= max_quick_check:
+                                break
 
                     if media_count > 0:
                         display_name = self._get_folder_display_name(pattern)
                         if display_name:
-                            print(f"[DeviceScanner]               ✓ Found folder: {display_name} ({media_count} files)")
+                            print(f"[DeviceScanner]               ✓ Found folder: {display_name} ({media_count}+ files)")
                             folders.append(DeviceFolder(
                                 name=display_name,
                                 path=full_path,
                                 photo_count=media_count
                             ))
+                else:
+                    print(f"[DeviceScanner]               ⊘ Pattern not accessible: {pattern}")
             except Exception as e:
                 # Folder doesn't exist or can't be accessed
+                print(f"[DeviceScanner]               ⊘ Pattern failed: {pattern} - {e}")
                 continue
+
+        # CRITICAL FIX: If no folders found but DCIM exists, add it as fallback
+        # This handles devices where files are directly in DCIM root
+        if not folders:
+            print(f"[DeviceScanner]             No folders found in patterns, trying DCIM root as fallback...")
+            try:
+                dcim_path = f"{root_path}\\DCIM"
+                dcim_folder = shell.Namespace(dcim_path)
+                if dcim_folder:
+                    # Check if DCIM has ANY media files (even in subdirectories)
+                    items = dcim_folder.Items()
+                    has_media = False
+                    checked = 0
+                    max_check = 10
+                    
+                    # Quick check for media files or subfolders with media
+                    for item in items:
+                        checked += 1
+                        if not item.IsFolder:
+                            name_lower = item.Name.lower()
+                            if any(name_lower.endswith(ext) for ext in [
+                                '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.heic',
+                                '.mp4', '.mov', '.avi', '.mkv', '.m4v', '.3gp'
+                            ]):
+                                has_media = True
+                                break
+                        
+                        if checked >= max_check:
+                            # Assume DCIM has media if it has subfolders
+                            # (most devices organize photos in DCIM/Camera, DCIM/100ANDRO, etc.)
+                            if item.IsFolder:
+                                has_media = True
+                            break
+                    
+                    if has_media:
+                        print(f"[DeviceScanner]             ✓ DCIM fallback: Found media in DCIM root")
+                        folders.append(DeviceFolder(
+                            name="DCIM (All Photos)",
+                            path=dcim_path,
+                            photo_count=1  # Indicate presence without full count
+                        ))
+            except Exception as e:
+                print(f"[DeviceScanner]             ✗ DCIM fallback failed: {e}")
 
         return folders
 
