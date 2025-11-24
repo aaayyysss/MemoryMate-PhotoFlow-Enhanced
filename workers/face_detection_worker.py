@@ -103,7 +103,19 @@ class FaceDetectionWorker(QRunnable):
         try:
             # Initialize services
             db = ReferenceDB()
-            face_service = get_face_detection_service(model=self.model)
+
+            # CRITICAL FIX: Wrap face service initialization in try/except to prevent app crash
+            # If InsightFace fails to load, we should fail gracefully instead of crashing
+            try:
+                face_service = get_face_detection_service(model=self.model)
+            except Exception as init_error:
+                logger.error(f"❌ Failed to initialize face detection service: {init_error}")
+                logger.error("Face detection cannot proceed. Please check:")
+                logger.error("  1. InsightFace model files are present and valid")
+                logger.error("  2. InsightFace library is properly installed")
+                logger.error("  3. Model path is correctly configured in Preferences")
+                self.signals.finished.emit(0, 0, 0)
+                return
 
             # Get all photos for this project
             photos = self._get_photos_to_process(db)
