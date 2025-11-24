@@ -20,6 +20,7 @@ insightface>=0.7.3     # CRITICAL: Face detection using buffalo_l model
 onnxruntime>=1.16.0    # CRITICAL: ONNX model inference engine
 scikit-learn>=1.3.0    # CRITICAL: Clustering algorithms for face grouping
 numpy>=1.24.0          # Numerical operations (dependency for above)
+matplotlib>=3.7.0      # CRITICAL: Required by InsightFace for visualization
 
 # Video Processing (optional - graceful fallback if not installed)
 # ffmpeg-python>=0.2.0  # Uncomment if you want video metadata extraction

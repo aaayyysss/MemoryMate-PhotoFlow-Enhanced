@@ -95,6 +95,12 @@ hiddenimports = [
     # HEIF/HEIC image support
     'pillow_heif',
 
+    # Matplotlib (required by InsightFace for visualization/plotting)
+    'matplotlib',
+    'matplotlib.pyplot',
+    'matplotlib.backends',
+    'matplotlib.backends.backend_agg',
+
     # Project modules
     'repository',
     'repository.base_repository',
@@ -179,8 +185,7 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=['pyi_rth_insightface.py'],  # Hook to set InsightFace model paths
     excludes=[
-        'matplotlib',  # Exclude if not needed
-        'tkinter',     # Exclude if not needed
+        'tkinter',     # Exclude if not needed (not used by app)
         'pytest',      # Test framework not needed in production
         'tests',       # Test files not needed
         'utils.test_insightface_models',  # Test utility, not needed in production
