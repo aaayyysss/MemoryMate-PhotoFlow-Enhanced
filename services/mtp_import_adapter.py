@@ -18,12 +18,15 @@ Usage:
 
 import os
 import tempfile
+import logging
 from pathlib import Path
 from typing import List, Optional, Dict
 from datetime import datetime
 from dataclasses import dataclass
 
 from services.device_import_service import DeviceMediaFile
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -127,7 +130,8 @@ class MTPImportAdapter:
                                 if isinstance(modified, str):
                                     try:
                                         modified = datetime.fromisoformat(modified)
-                                    except:
+                                    except (ValueError, TypeError) as e:
+                                        logger.debug(f"Failed to parse MTP date '{modified}' for {filename}: {e}, using current time")
                                         modified = datetime.now()
 
                                 # Create temp path for thumbnail (not actual file yet)
