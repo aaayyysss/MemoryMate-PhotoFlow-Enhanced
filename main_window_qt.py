@@ -767,11 +767,12 @@ class _ThumbTask(QRunnable):
         if pm is None:
             try:
                 from PIL import Image, ImageQt
-                im = Image.open(self.path)
-                im.thumbnail((self.size, self.size), Image.LANCZOS)
-                if im.mode not in ("RGBA", "LA"):
-                    im = im.convert("RGBA")
-                pm = QPixmap.fromImage(ImageQt.ImageQt(im))
+                # BUG-C1 FIX: Use context manager to prevent resource leak
+                with Image.open(self.path) as im:
+                    im.thumbnail((self.size, self.size), Image.LANCZOS)
+                    if im.mode not in ("RGBA", "LA"):
+                        im = im.convert("RGBA")
+                    pm = QPixmap.fromImage(ImageQt.ImageQt(im))
             except Exception:
                 pm = None
 
@@ -1017,14 +1018,15 @@ class ThumbnailTask(QRunnable):
         # Fallback to Pillow in worker thread
         try:
             from PIL import Image, ImageOps, ImageQt
-            im = Image.open(self.path)
-            im.thumbnail((self.size, self.size), Image.LANCZOS)
-            if im.mode != "RGBA":
-                im = im.convert("RGBA")
-            qim = ImageQt.ImageQt(im)
-            pix = QPixmap.fromImage(qim)
-            self.emitter.ready.emit(self.path, pix)
-            return
+            # BUG-C1 FIX: Use context manager to prevent resource leak
+            with Image.open(self.path) as im:
+                im.thumbnail((self.size, self.size), Image.LANCZOS)
+                if im.mode != "RGBA":
+                    im = im.convert("RGBA")
+                qim = ImageQt.ImageQt(im)
+                pix = QPixmap.fromImage(qim)
+                self.emitter.ready.emit(self.path, pix)
+                return
         except Exception:
             pass
 
@@ -1143,9 +1145,10 @@ class DetailsPanel(QWidget):
                 if thumb_path.exists():
                     from PIL import Image
                     from PIL.ImageQt import ImageQt as pil_to_qimage
-                    thumb_img = Image.open(str(thumb_path))
-                    qimg = pil_to_qimage(thumb_img)
-                    thumb_pm = QPixmap.fromImage(qimg)
+                    # BUG-C1 FIX: Use context manager to prevent resource leak
+                    with Image.open(str(thumb_path)) as thumb_img:
+                        qimg = pil_to_qimage(thumb_img)
+                        thumb_pm = QPixmap.fromImage(qimg)
                     if not thumb_pm.isNull():
                         # 🎬 ENHANCEMENT: Larger thumbnail for videos (280x210)
                         scaled_pm = thumb_pm.scaled(280, 210, Qt.KeepAspectRatio, Qt.SmoothTransformation)

@@ -87,10 +87,12 @@ class MTPCopyWorker(QThread):
                             return
                         try:
                             os.remove(os.path.join(temp_dir, old_file))
-                        except:
-                            pass
-                except:
-                    pass
+                        except (OSError, PermissionError) as e:
+                            # BUG-C3 FIX: Log specific exceptions instead of silently swallowing
+                            print(f"[MTPCopyWorker] Failed to remove temp file {old_file}: {e}")
+                except (OSError, PermissionError) as e:
+                    # BUG-C3 FIX: Log directory access failures
+                    print(f"[MTPCopyWorker] Failed to access temp directory: {e}")
 
                 print(f"[MTPCopyWorker] Temp cache directory: {temp_dir}")
 
@@ -214,14 +216,16 @@ class MTPCopyWorker(QThread):
                                         subfolder = item.GetFolder
                                         if subfolder:
                                             count_media_files(subfolder, depth + 1)
-                                    except:
-                                        pass
+                                    except (AttributeError, OSError, RuntimeError) as e:
+                                        # BUG-C3 FIX: Log COM operation failures
+                                        print(f"[MTPCopyWorker] Failed to access subfolder: {e}")
                             else:
                                 name_lower = item.Name.lower()
                                 if any(name_lower.endswith(ext) for ext in self.media_extensions):
                                     files_total += 1
-                    except:
-                        pass
+                    except (AttributeError, OSError, RuntimeError) as e:
+                        # BUG-C3 FIX: Log folder iteration failures
+                        print(f"[MTPCopyWorker] Failed to iterate folder items: {e}")
 
                 count_media_files(folder)
 
@@ -257,8 +261,9 @@ class MTPCopyWorker(QThread):
                                         subfolder = item.GetFolder
                                         if subfolder:
                                             copy_media_files(subfolder, depth + 1)
-                                    except:
-                                        pass
+                                    except (AttributeError, OSError, RuntimeError) as e:
+                                        # BUG-C3 FIX: Log COM subfolder access failures
+                                        print(f"[MTPCopyWorker] Failed to access subfolder during copy: {e}")
                             else:
                                 name_lower = item.Name.lower()
                                 if any(name_lower.endswith(ext) for ext in self.media_extensions):

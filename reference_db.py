@@ -436,8 +436,9 @@ class ReferenceDB:
                     # Connection is broken, remove it and create new one
                     try:
                         conn.close()
-                    except:
-                        pass
+                    except sqlite3.Error as e:
+                        # BUG-H6 FIX: Log connection close failures
+                        print(f"[ReferenceDB] Failed to close broken connection: {e}")
                     conn = None
                     del self._connection_pool[thread_id]
         
@@ -454,8 +455,9 @@ class ReferenceDB:
                     oldest_thread = next(iter(self._connection_pool))
                     try:
                         self._connection_pool[oldest_thread].close()
-                    except:
-                        pass
+                    except sqlite3.Error as e:
+                        # BUG-H6 FIX: Log pool cleanup failures
+                        print(f"[ReferenceDB] Failed to close pooled connection: {e}")
                     del self._connection_pool[oldest_thread]
                 
                 # Add new connection to pool
