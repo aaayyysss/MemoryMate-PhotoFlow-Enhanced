@@ -207,11 +207,10 @@ def _get_insightface_app():
                     except Exception as e:
                         logger.debug(f"Could not save model path to settings: {e}")
 
-                    # CRITICAL FIX (2025-11-24): InsightFace requires PARENT directory as root
-                    # When you pass name='buffalo_l', InsightFace looks for root/buffalo_l/
-                    # So we must pass the parent of buffalo_l as root, not buffalo_l itself
-                    # This fixes "assert 'detection' in self.models" error
-                    logger.info(f"✓ Found buffalo_l models at: {buffalo_dir}")
+                    # CRITICAL: Pass buffalo_l directory DIRECTLY as root
+                    # This matches the proof of concept approach from OldPy/photo_sorter.py
+                    # Do NOT pass parent directory, pass the buffalo_l directory itself!
+                    logger.info(f"✓ Initializing InsightFace with buffalo_l directory: {buffalo_dir}")
 
                     # Version detection: Check if FaceAnalysis supports providers parameter
                     # This ensures compatibility with BOTH old and new InsightFace versions
@@ -220,12 +219,10 @@ def _get_insightface_app():
                     supports_providers = 'providers' in sig.parameters
 
                     # Initialize FaceAnalysis with version-appropriate parameters
-                    # CRITICAL FIX (2025-11-24 v2): Don't pass 'name' parameter, just use root
-                    # When you pass name='buffalo_l', InsightFace tries to find subdirectories
-                    # Instead, pass the buffalo_l directory directly as root without name
-                    # This matches how InsightFace works with standalone model directories
-                    init_params = {'root': buffalo_dir}
-                    logger.info(f"✓ Setting InsightFace root={buffalo_dir} (no name parameter)")
+                    # RESTORED FROM WORKING VERSION: Pass BOTH name and root parameters
+                    # buffalo_dir IS the buffalo_l directory (not parent), pass it as root
+                    # This matches the proven working pattern from previous version
+                    init_params = {'name': 'buffalo_l', 'root': buffalo_dir}
 
                     if supports_providers:
                         # NEWER VERSION: Pass providers for optimal performance
