@@ -104,7 +104,18 @@ MemoryMate-PhotoFlow-v2.0.1.exe
 
 ## 🚨 Common Issues & Solutions
 
-### Issue 1: "InsightFace models not found"
+### Issue 1: "No module named 'matplotlib'" ⚠️ CRITICAL
+**Symptom**: InsightFace fails to initialize with `No module named 'matplotlib'`
+
+**Root Cause**: matplotlib was excluded but is required by InsightFace
+
+**Solution**: **FIXED in latest version** - matplotlib now included in hiddenimports
+```bash
+pip install -r requirements.txt  # Ensures matplotlib installed
+pyinstaller memorymate_pyinstaller.spec
+```
+
+### Issue 2: "InsightFace models not found"
 **Symptom**: Face detection fails with "models not found" error
 
 **Solution**:
@@ -112,17 +123,17 @@ MemoryMate-PhotoFlow-v2.0.1.exe
 2. Re-run: `python download_face_models.py`
 3. Rebuild: `pyinstaller memorymate_pyinstaller.spec`
 
-### Issue 2: "Module not found: device_monitor"
+### Issue 3: "Module not found: device_monitor"
 **Symptom**: Import error on device auto-detection
 
 **Solution**: Spec file updated to include `services.device_monitor` (fixed in this version)
 
-### Issue 3: Console window appears
+### Issue 4: Console window appears
 **Symptom**: Black console window shows behind app
 
 **Solution**: Spec file set to `console=False` (fixed in this version)
 
-### Issue 4: Missing dependencies
+### Issue 5: Missing dependencies
 **Symptom**: Import errors for opencv, insightface, sklearn, etc.
 
 **Solution**:
@@ -131,7 +142,7 @@ pip install -r requirements.txt
 pyinstaller memorymate_pyinstaller.spec
 ```
 
-### Issue 5: "Permission denied" errors on Windows
+### Issue 6: "Permission denied" errors on Windows
 **Symptom**: Can't write to Program Files directory
 
 **Solution**: Install to user directory (e.g., `C:\Users\YourUsername\AppData\Local\MemoryMate-PhotoFlow\`)
@@ -151,6 +162,7 @@ MemoryMate-PhotoFlow/
 │   ├── cv2/                           # OpenCV
 │   ├── sklearn/                       # Scikit-learn
 │   ├── onnxruntime/                   # ONNX runtime
+│   ├── matplotlib/                    # Plotting library (required by InsightFace)
 │   └── ...other dependencies...
 ├── lang/                               # Language files (en, fr, nl, es, pt)
 ├── locales/                            # Locale data
@@ -166,7 +178,7 @@ MemoryMate-PhotoFlow/
 └── README.txt                          # User instructions (optional)
 ```
 
-**Total size**: ~1.5-2.0 GB (includes ML models and Qt framework)
+**Total size**: ~1.8-2.2 GB (includes ML models, Qt framework, and matplotlib)
 
 ---
 
@@ -209,7 +221,8 @@ exe = EXE(
 
 Before releasing, verify:
 
-- [x] All dependencies in requirements.txt
+- [x] All dependencies in requirements.txt (including matplotlib!)
+- [x] matplotlib included (NOT excluded - required by InsightFace)
 - [x] InsightFace models bundled correctly
 - [x] services.device_monitor included (Phase 2 fix)
 - [x] Root-level UI modules included (sidebar_qt, etc.)
@@ -219,11 +232,16 @@ Before releasing, verify:
 - [x] Runtime hook for InsightFace paths
 - [x] Language files (lang/, locales/)
 - [x] Database migrations
-- [x] Test utilities excluded
+- [x] Test utilities excluded (but NOT matplotlib)
 
 ---
 
 ## 📝 Version History
+
+**v2.0.1-hotfix** (2025-11-25)
+- 🔥 **CRITICAL FIX**: Added matplotlib dependency (required by InsightFace)
+- 🔥 Removed matplotlib from excludes list
+- ✅ Verified on target PC without Python environment
 
 **v2.0.1** (2025-11-24 - Phase 2)
 - ✅ Fixed mobile device detection (auto + manual modes)
