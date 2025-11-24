@@ -212,6 +212,15 @@ def _get_insightface_app():
                     # Do NOT pass parent directory, pass the buffalo_l directory itself!
                     logger.info(f"✓ Initializing InsightFace with buffalo_l directory: {buffalo_dir}")
 
+                    # COMPATIBILITY: Detect InsightFace version and log details
+                    try:
+                        import insightface
+                        insightface_version = getattr(insightface, '__version__', 'unknown')
+                        logger.info(f"📦 InsightFace version: {insightface_version}")
+                    except Exception as e:
+                        logger.debug(f"Could not detect InsightFace version: {e}")
+                        insightface_version = 'unknown'
+
                     # Version detection: Check if FaceAnalysis supports providers parameter
                     # This ensures compatibility with BOTH old and new InsightFace versions
                     import inspect
@@ -227,16 +236,29 @@ def _get_insightface_app():
                     if supports_providers:
                         # NEWER VERSION: Pass providers for optimal performance
                         init_params['providers'] = providers
-                        logger.info(f"✓ Using providers parameter (newer InsightFace): {providers}")
+                        logger.info(f"✓ Using providers parameter (newer InsightFace v{insightface_version})")
+                        logger.info(f"✓ Providers: {providers}")
                         _insightface_app = FaceAnalysis(**init_params)
 
                         # For newer versions, ctx_id is derived from providers automatically
                         # But we still need to call prepare()
-                        # OPTIMIZATION: Increased det_size from 640 to 720 for better small face detection
-                        # Trade-off: ~20% slower but detects 10-15% more faces (especially distant/small)
+                        # IMPORTANT: det_size MUST be (640, 640) for buffalo_l model
+                        # The model was trained specifically for this input size
+                        # Using different sizes causes shape mismatch errors
+
+                        # COMPATIBILITY: Use hardware-appropriate ctx_id
+                        use_cuda = isinstance(providers, (list, tuple)) and 'CUDAExecutionProvider' in providers
+                        ctx_id = 0 if use_cuda else -1
+
                         try:
-                            _insightface_app.prepare(ctx_id=-1, det_size=(720, 720))
-                            logger.info(f"✅ InsightFace (buffalo_l) loaded successfully with {hardware_type} acceleration (det_size=720x720)")
+                            _insightface_app.prepare(ctx_id=ctx_id, det_size=(640, 640))
+                            logger.info(f"✅ InsightFace (buffalo_l v{insightface_version}) loaded successfully")
+                            logger.info(f"   Hardware: {hardware_type}, ctx_id={ctx_id}, det_size=640x640")
+                        except TypeError as te:
+                            # FALLBACK: det_size might not be supported in some versions
+                            logger.warning(f"det_size parameter not supported, falling back to default: {te}")
+                            _insightface_app.prepare(ctx_id=ctx_id)
+                            logger.info(f"✅ InsightFace (buffalo_l v{insightface_version}) loaded with default det_size")
                         except Exception as prepare_error:
                             logger.error(f"Model preparation failed: {prepare_error}")
                             logger.error("This usually means:")
@@ -255,11 +277,12 @@ def _get_insightface_app():
                         logger.info(f"✓ Using {hardware_type} acceleration (ctx_id={ctx_id})")
 
                         # Prepare model with simple parameters (matches proof of concept)
-                        # OPTIMIZATION: Increased det_size from 640 to 720 for better small face detection
-                        # Trade-off: ~20% slower but detects 10-15% more faces (especially distant/small)
+                        # IMPORTANT: det_size MUST be (640, 640) for buffalo_l model
+                        # The model was trained specifically for this input size
+                        # Using different sizes causes shape mismatch errors
                         try:
-                            _insightface_app.prepare(ctx_id=ctx_id, det_size=(720, 720))
-                            logger.info(f"✅ InsightFace (buffalo_l) loaded successfully with {hardware_type} acceleration (det_size=720x720)")
+                            _insightface_app.prepare(ctx_id=ctx_id, det_size=(640, 640))
+                            logger.info(f"✅ InsightFace (buffalo_l) loaded successfully with {hardware_type} acceleration (det_size=640x640)")
                         except Exception as prepare_error:
                             logger.error(f"Model preparation failed: {prepare_error}")
                             logger.error("This usually means:")
