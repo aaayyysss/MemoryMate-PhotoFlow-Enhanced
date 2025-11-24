@@ -1,41 +1,41 @@
-ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01> python main_qt.py
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04> python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\locales\en.json
+✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\locales\en.json
 🌍 Language initialized: en
-2025-11-24 18:56:06,046 [INFO] ================================================================================
-2025-11-24 18:56:06,050 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-24 18:56:06,050 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\app_log.txt
-2025-11-24 18:56:06,050 [INFO] ================================================================================
-2025-11-24 18:56:06,166 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-24 18:56:06,170 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-24 21:50:02,086 [INFO] ================================================================================
+2025-11-24 21:50:02,086 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-24 21:50:02,086 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\app_log.txt
+2025-11-24 21:50:02,086 [INFO] ================================================================================
+2025-11-24 21:50:02,144 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-24 21:50:02,144 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-01\\thumbnails_cache.db', 'last_updated': '2025-11-24 18:56'}
-2025-11-24 18:56:06,593 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-04\\thumbnails_cache.db', 'last_updated': '2025-11-24 21:50'}
+2025-11-24 21:50:02,415 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-24 18:56:06,593 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-24 18:56:06,597 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-24 18:56:06,597 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-24 21:50:02,415 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-24 21:50:02,415 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-24 21:50:02,415 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-24 18:56:06,618 [INFO] SearchService initialized
-[18:56:09.421] [Tabs] __init__ started
-[18:56:09.424] [Tabs] _build_tabs → building tab widgets
-[18:56:09.424] [Tabs] _on_tab_changed(idx=0)
-[18:56:09.424] [Tabs] _start_timeout idx=0 type=branches
-[18:56:09.424] [Tabs] _populate_tab(branches, idx=0, force=False)
-[18:56:09.424] [Tabs]   populated=False, loading=False
-[18:56:09.424] [Tabs]   Starting load for branches
-[18:56:09.424] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[18:56:09.424] [Tabs] _clear_tab idx=0
-[18:56:09.435] [Tabs] _on_tab_changed → tab_type=branches
-[18:56:09.437] [Tabs] _build_tabs → added 6 tabs
-[18:56:09.437] [Tabs] __init__ completed
+2025-11-24 21:50:02,415 [INFO] SearchService initialized
+[Sidebar] Device auto-detection disabled (manual refresh only)
+[21:50:03.225] [Tabs] __init__ started
+[21:50:03.225] [Tabs] _build_tabs → building tab widgets
+[21:50:03.225] [Tabs] _on_tab_changed(idx=0)
+[21:50:03.225] [Tabs] _start_timeout idx=0 type=branches
+[21:50:03.225] [Tabs] _populate_tab(branches, idx=0, force=False)
+[21:50:03.225] [Tabs]   populated=False, loading=False
+[21:50:03.225] [Tabs]   Starting load for branches
+[21:50:03.225] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[21:50:03.225] [Tabs] _clear_tab idx=0
+[21:50:03.240] [Tabs] _on_tab_changed → tab_type=branches
+[21:50:03.240] [Tabs] _build_tabs → added 6 tabs
+[21:50:03.240] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
@@ -46,10 +46,10 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002B8F2124400>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001EB8B0F4400>
 [Sidebar] Register devices: True
 
-[DeviceScanner] ===== Starting device scan =====
+[DeviceScanner] ===== Starting device scan  =====
 [DeviceScanner] Platform: Windows
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
@@ -92,6 +92,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
 [DeviceScanner]     COM uninitialized
 [DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
 
 [Sidebar] ===== Scan complete: 0 mobile device(s) found =====
 [Sidebar]   ✗ No devices found
@@ -100,7 +101,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[18:56:09.855] [Tabs] hide_tabs() called - canceling pending workers
+[21:50:03.562] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -115,52 +116,13 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002B8F2124400>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001EB8B0F4400>
 [Sidebar] Register devices: True
 
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] ===== Using cached scan results =====
+[DeviceScanner] Cache age: 0.02s (TTL: 5.0s)
+[DeviceScanner] Cached devices: 0
+[DeviceScanner] ===== Scan complete (cached): 0 device(s) =====
 
 [Sidebar] ===== Scan complete: 0 mobile device(s) found =====
 [Sidebar]   ✗ No devices found
@@ -170,16 +132,16 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [SidebarQt] _build_tree_model() completed
 [GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
 [Startup] Database schema initialized successfully
-[18:56:10.280] [Tabs] _finish_branches (stale gen=1) — ignoring
-[18:56:10.280] [Tabs] _on_tab_changed(idx=0)
-[18:56:10.280] [Tabs] _start_timeout idx=0 type=branches
-[18:56:10.280] [Tabs] _populate_tab(branches, idx=0, force=False)
-[18:56:10.280] [Tabs]   populated=False, loading=False
-[18:56:10.280] [Tabs]   Starting load for branches
-[18:56:10.280] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[18:56:10.280] [Tabs] _clear_tab idx=0
-[18:56:10.280] [Tabs] _on_tab_changed → tab_type=branches
-[18:56:10.288] [Tabs] _clear_tab idx=0
+[21:50:03.754] [Tabs] _finish_branches (stale gen=1) — ignoring
+[21:50:03.754] [Tabs] _on_tab_changed(idx=0)
+[21:50:03.754] [Tabs] _start_timeout idx=0 type=branches
+[21:50:03.754] [Tabs] _populate_tab(branches, idx=0, force=False)
+[21:50:03.754] [Tabs]   populated=False, loading=False
+[21:50:03.754] [Tabs]   Starting load for branches
+[21:50:03.754] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[21:50:03.754] [Tabs] _clear_tab idx=0
+[21:50:03.770] [Tabs] _on_tab_changed → tab_type=branches
+[21:50:03.770] [Tabs] _clear_tab idx=0
 
 [Breadcrumb] _update_breadcrumb() CALLED
 [Breadcrumb] Grid state: navigation_mode=None, project_id=None
@@ -210,42 +172,42 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [MainWindow] Step 1: ✓ Set grid.project_id = 1
 [MainWindow] Step 2: Updating sidebar...
 [SidebarQt] set_project(1) called
-[18:56:55.027] [Tabs] refresh_all(force=True) called
-[18:56:55.027] [Tabs] refresh_all: key=branches, idx=0, force=True
-[18:56:55.027] [Tabs] _populate_tab(branches, idx=0, force=True)
-[18:56:55.027] [Tabs]   populated=True, loading=False
-[18:56:55.027] [Tabs]   Force refresh: removing branches from populated set
-[18:56:55.027] [Tabs]   Starting load for branches
-[18:56:55.027] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[18:56:55.027] [Tabs] _clear_tab idx=0
-[18:56:55.029] [Tabs] refresh_all: key=folders, idx=1, force=True
-[18:56:55.029] [Tabs] _populate_tab(folders, idx=1, force=True)
-[18:56:55.029] [Tabs]   populated=False, loading=False
-[18:56:55.029] [Tabs]   Starting load for folders
-[18:56:55.029] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[18:56:55.029] [Tabs] _clear_tab idx=1
-[18:56:55.031] [Tabs] refresh_all: key=dates, idx=2, force=True
-[18:56:55.031] [Tabs] _populate_tab(dates, idx=2, force=True)
-[18:56:55.031] [Tabs]   populated=False, loading=False
-[18:56:55.031] [Tabs]   Starting load for dates
-[18:56:55.031] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[18:56:55.031] [Tabs] _clear_tab idx=2
-[18:56:55.033] [Tabs] refresh_all: key=tags, idx=3, force=True
-[18:56:55.033] [Tabs] _populate_tab(tags, idx=3, force=True)
-[18:56:55.033] [Tabs]   populated=False, loading=False
-[18:56:55.033] [Tabs]   Starting load for tags
-[18:56:55.033] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[18:56:55.033] [Tabs] _clear_tab idx=3
-[18:56:55.035] [Tabs] refresh_all: key=quick, idx=5, force=True
-[18:56:55.035] [Tabs] _populate_tab(quick, idx=5, force=True)
-[18:56:55.035] [Tabs]   populated=False, loading=False
-[18:56:55.035] [Tabs] _load_folders → got 0 rows for project_id=1
-[18:56:55.035] [Tabs]   Starting load for quick
-[18:56:55.041] [Tabs] _load_tags → got 0 rows for project_id=1
-[18:56:55.041] [Tabs] _load_dates → got hierarchy data for project_id=1
-[18:56:55.041] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[18:56:55.041] [Tabs] _clear_tab idx=5
-[18:56:55.041] [Tabs] refresh_all(force=True) completed
+[21:50:16.562] [Tabs] refresh_all(force=True) called
+[21:50:16.562] [Tabs] refresh_all: key=branches, idx=0, force=True
+[21:50:16.562] [Tabs] _populate_tab(branches, idx=0, force=True)
+[21:50:16.562] [Tabs]   populated=True, loading=False
+[21:50:16.562] [Tabs]   Force refresh: removing branches from populated set
+[21:50:16.562] [Tabs]   Starting load for branches
+[21:50:16.562] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[21:50:16.562] [Tabs] _clear_tab idx=0
+[21:50:16.564] [Tabs] refresh_all: key=folders, idx=1, force=True
+[21:50:16.564] [Tabs] _populate_tab(folders, idx=1, force=True)
+[21:50:16.564] [Tabs]   populated=False, loading=False
+[21:50:16.564] [Tabs]   Starting load for folders
+[21:50:16.564] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[21:50:16.564] [Tabs] _clear_tab idx=1
+[21:50:16.566] [Tabs] refresh_all: key=dates, idx=2, force=True
+[21:50:16.566] [Tabs] _populate_tab(dates, idx=2, force=True)
+[21:50:16.566] [Tabs]   populated=False, loading=False
+[21:50:16.566] [Tabs]   Starting load for dates
+[21:50:16.566] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[21:50:16.566] [Tabs] _clear_tab idx=2
+[21:50:16.568] [Tabs] _load_folders → got 0 rows for project_id=1
+[21:50:16.568] [Tabs] refresh_all: key=tags, idx=3, force=True
+[21:50:16.568] [Tabs] _populate_tab(tags, idx=3, force=True)
+[21:50:16.568] [Tabs]   populated=False, loading=False
+[21:50:16.568] [Tabs]   Starting load for tags
+[21:50:16.568] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[21:50:16.568] [Tabs] _clear_tab idx=3
+[21:50:16.569] [Tabs] refresh_all: key=quick, idx=5, force=True
+[21:50:16.569] [Tabs] _load_dates → got hierarchy data for project_id=1
+[21:50:16.569] [Tabs] _populate_tab(quick, idx=5, force=True)
+[21:50:16.569] [Tabs]   populated=False, loading=False
+[21:50:16.569] [Tabs]   Starting load for quick
+[21:50:16.569] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[21:50:16.569] [Tabs] _clear_tab idx=5
+[21:50:16.571] [Tabs] _load_tags → got 0 rows for project_id=1
+[21:50:16.571] [Tabs] refresh_all(force=True) completed
 [SidebarQt] Calling reload() after setting project_id
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
@@ -254,18 +216,18 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [Sidebar] Pending events processed (skipped explicit processEvents)
 [Sidebar] Creating fresh model (avoiding Qt segfault)
 [Sidebar] Attaching fresh model to tree view
+[21:50:16.571] [Tabs] _load_quick → got 6 rows
 [SidebarQt] list_branches() returned 1 branches
 [SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 0}]
-[18:56:55.047] [Tabs] _load_quick → got 6 rows
 [Sidebar] Loaded 0 folder counts in batch (performance optimization)
 [Sidebar] Loading videos for project_id=1
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002B8F2124400>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001EB8B0F4400>
 [Sidebar] Register devices: True
 
-[DeviceScanner] ===== Starting device scan =====
+[DeviceScanner] ===== Starting device scan  =====
 [DeviceScanner] Platform: Windows
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
@@ -308,6 +270,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
 [DeviceScanner]     COM uninitialized
 [DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
 
 [Sidebar] ===== Scan complete: 0 mobile device(s) found =====
 [Sidebar]   ✗ No devices found
@@ -326,9 +289,9 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [GRID] ====== reload() CALLED ======
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
-[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
 [GRID] Fetched tags for 0 paths, got 0 entries
-[18:56:55.166] [Tabs] _clear_tab idx=0
+[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
+[21:50:16.684] [Tabs] _clear_tab idx=0
 [TAG FILTER] Cleared by navigation.
 
 [GRID] ====== reload() CALLED ======
@@ -342,11 +305,11 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [GRID] reload() blocked - already reloading (prevents concurrent reload crash)
 [GRID] ====== reload() BLOCKED ======
 
-[18:56:55.168] [Tabs] _clear_tab idx=1
-[18:56:55.174] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[18:56:55.174] [Tabs] _clear_tab idx=3
-[18:56:55.174] [Tabs] _clear_tab idx=2
-[18:56:55.174] [Tabs] _clear_tab idx=5
+[21:50:16.684] [Tabs] _clear_tab idx=1
+[21:50:16.691] [Tabs] _clear_tab idx=2
+[21:50:16.691] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[21:50:16.691] [Tabs] _clear_tab idx=3
+[21:50:16.691] [Tabs] _clear_tab idx=5
 [Sidebar][counts applied] updated UI with counts
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
@@ -380,784 +343,101 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-
 [Breadcrumb] Switched to project ID: 1
 [MainWindow] Refreshed project list: 1 projects
 [Schema] Database schema initialized successfully
-[ScanController] Creating ScanWorker for folder: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
+[ScanController] Creating ScanWorker for folder: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos
 [ScanController] ScanWorker imported successfully
 [ScanController] QThread created
 [ScanController] ScanWorker instance created with project_id=1
 [ScanController] Worker moved to thread
-2025-11-24 18:57:22,839 [INFO] DBWriter timer started in worker thread
+2025-11-24 21:50:46,323 [INFO] DBWriter timer started in worker thread
 [ScanController] Signals connected
 [ScanController] Starting scan thread...
 [ScanController] thread.start() called
 [ScanWorkerAdapter] run() method called!
-[ScanWorkerAdapter] folder=C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs, incremental=True
-2025-11-24 18:57:22,839 [INFO] ScanWorkerAdapter starting scan of C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
+[ScanWorkerAdapter] folder=C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos, incremental=True
+2025-11-24 21:50:46,323 [INFO] ScanWorkerAdapter starting scan of C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos
 [ScanWorkerAdapter] Starting scan...
-2025-11-24 18:57:22,839 [INFO] Starting scan: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs (incremental=True)
+2025-11-24 21:50:46,323 [INFO] Starting scan: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos (incremental=True)
 [ScanController] QThread STARTED!
-2025-11-24 18:57:22,844 [INFO] Discovered 21 candidate image files and 0 video files
-2025-11-24 18:57:22,844 [INFO] Loading existing metadata for incremental scan...
-2025-11-24 18:57:22,844 [INFO] ✓ Loaded 0 existing file records
-[SCAN] Starting file 1/21: EWKJ3802.JPG
-2025-11-24 18:57:22,844 [INFO] [Scan] File 1/21: EWKJ3802.JPG
+2025-11-24 21:50:46,338 [INFO] Discovered 105 candidate image files and 0 video files
+2025-11-24 21:50:46,338 [INFO] Loading existing metadata for incremental scan...
+2025-11-24 21:50:46,338 [INFO] ✓ Loaded 0 existing file records
+[SCAN] Starting file 1/105: EWKJ3802.JPG
+2025-11-24 21:50:46,338 [INFO] [Scan] File 1/105: EWKJ3802.JPG
 [SCAN] _process_file started for: EWKJ3802.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:22,854 [INFO] 📷 Processing: EWKJ3802.JPG (101.0 KB)
+2025-11-24 21:50:46,338 [INFO] 📷 Processing: EWKJ3802.JPG (101.0 KB)
 [SCAN] Processing: EWKJ3802.JPG
 [SCAN] ✓ Metadata extracted: EWKJ3802.JPG
-[SCAN] Starting file 2/21: IHOC0868.JPG
-2025-11-24 18:57:22,947 [INFO] [Scan] File 2/21: IHOC0868.JPG
+[SCAN] Starting file 2/105: IHOC0868.JPG
+2025-11-24 21:50:46,386 [INFO] [Scan] File 2/105: IHOC0868.JPG
 [SCAN] _process_file started for: IHOC0868.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:22,947 [INFO] 📷 Processing: IHOC0868.JPG (57.3 KB)
+2025-11-24 21:50:46,386 [INFO] 📷 Processing: IHOC0868.JPG (57.3 KB)
 [SCAN] Processing: IHOC0868.JPG
 [SCAN] ✓ Metadata extracted: IHOC0868.JPG
-[SCAN] Starting file 3/21: IMG_1550.DNG
-2025-11-24 18:57:22,968 [INFO] [Scan] File 3/21: IMG_1550.DNG
-[SCAN] _process_file started for: IMG_1550.DNG
+[SCAN] Starting file 3/105: IMG_0484.JPG
+2025-11-24 21:50:46,412 [INFO] [Scan] File 3/105: IMG_0484.JPG
+[SCAN] _process_file started for: IMG_0484.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:22,968 [INFO] 📷 Processing: IMG_1550.DNG (17800.9 KB)
-[SCAN] Processing: IMG_1550.DNG
-[SCAN] ✓ Metadata extracted: IMG_1550.DNG
-[SCAN] Starting file 4/21: IMG_3307.JPG
-2025-11-24 18:57:23,174 [INFO] [Scan] File 4/21: IMG_3307.JPG
+2025-11-24 21:50:46,412 [INFO] 📷 Processing: IMG_0484.JPG (3076.8 KB)
+[SCAN] Processing: IMG_0484.JPG
+[SCAN] ✓ Metadata extracted: IMG_0484.JPG
+[SCAN] Starting file 4/105: IMG_0485.JPG
+2025-11-24 21:50:46,433 [INFO] [Scan] File 4/105: IMG_0485.JPG
+[SCAN] _process_file started for: IMG_0485.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-24 21:50:46,433 [INFO] 📷 Processing: IMG_0485.JPG (2999.1 KB)
+[SCAN] Processing: IMG_0485.JPG
+[SCAN] ✓ Metadata extracted: IMG_0485.JPG
+[SCAN] Starting file 5/105: IMG_0486.JPG
+2025-11-24 21:50:46,461 [INFO] [Scan] File 5/105: IMG_0486.JPG
+[SCAN] _process_file started for: IMG_0486.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-24 21:50:46,462 [INFO] 📷 Processing: IMG_0486.JPG (3254.4 KB)
+[SCAN] Processing: IMG_0486.JPG
+[SCAN] ✓ Metadata extracted: IMG_0486.JPG
+[SCAN] Starting file 6/105: IMG_0487.JPG
+2025-11-24 21:50:46,476 [INFO] [Scan] File 6/105: IMG_0487.JPG
+[SCAN] _process_file started for: IMG_0487.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-24 21:50:46,476 [INFO] 📷 Processing: IMG_0487.JPG (2857.0 KB)
+[SCAN] Processing: IMG_0487.JPG
+[SCAN] ✓ Metadata extracted: IMG_0487.JPG
+[SCAN] Starting file 7/105: IMG_3307.JPG
+2025-11-24 21:50:46,490 [INFO] [Scan] File 7/105: IMG_3307.JPG
 [SCAN] _process_file started for: IMG_3307.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,174 [INFO] 📷 Processing: IMG_3307.JPG (4122.2 KB)
+2025-11-24 21:50:46,496 [INFO] 📷 Processing: IMG_3307.JPG (4122.2 KB)
 [SCAN] Processing: IMG_3307.JPG
 [SCAN] ✓ Metadata extracted: IMG_3307.JPG
-[SCAN] Starting file 5/21: IMG_9570.JPG
-2025-11-24 18:57:23,205 [INFO] [Scan] File 5/21: IMG_9570.JPG
-[SCAN] _process_file started for: IMG_9570.JPG
+[SCAN] Starting file 8/105: IMG_4790.JPEG
+2025-11-24 21:50:46,509 [INFO] [Scan] File 8/105: IMG_4790.JPEG
+[SCAN] _process_file started for: IMG_4790.JPEG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,205 [INFO] 📷 Processing: IMG_9570.JPG (1879.8 KB)
-[SCAN] Processing: IMG_9570.JPG
-[SCAN] ✓ Metadata extracted: IMG_9570.JPG
-[SCAN] Starting file 6/21: IMG_E3122.JPG
-2025-11-24 18:57:23,225 [INFO] [Scan] File 6/21: IMG_E3122.JPG
-[SCAN] _process_file started for: IMG_E3122.JPG
+2025-11-24 21:50:46,512 [INFO] 📷 Processing: IMG_4790.JPEG (953.5 KB)
+[SCAN] Processing: IMG_4790.JPEG
+[SCAN] ✓ Metadata extracted: IMG_4790.JPEG
+[SCAN] Starting file 9/105: IMG_4973.JPG
+2025-11-24 21:50:46,528 [INFO] [Scan] File 9/105: IMG_4973.JPG
+[SCAN] _process_file started for: IMG_4973.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,225 [INFO] 📷 Processing: IMG_E3122.JPG (3374.7 KB)
-[SCAN] Processing: IMG_E3122.JPG
-[SCAN] ✓ Metadata extracted: IMG_E3122.JPG
-[SCAN] Starting file 7/21: IMG_E7413.JPG
-2025-11-24 18:57:23,236 [INFO] [Scan] File 7/21: IMG_E7413.JPG
-[SCAN] _process_file started for: IMG_E7413.JPG
+2025-11-24 21:50:46,528 [INFO] 📷 Processing: IMG_4973.JPG (2813.2 KB)
+[SCAN] Processing: IMG_4973.JPG
+[SCAN] ✓ Metadata extracted: IMG_4973.JPG
+[SCAN] Starting file 10/105: IMG_E3062.JPG
+2025-11-24 21:50:46,544 [INFO] [Scan] File 10/105: IMG_E3062.JPG
+[SCAN] _process_file started for: IMG_E3062.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,236 [INFO] 📷 Processing: IMG_E7413.JPG (1715.4 KB)
-[SCAN] Processing: IMG_E7413.JPG
-[SCAN] ✓ Metadata extracted: IMG_E7413.JPG
-[SCAN] Starting file 8/21: IMG_E9569.JPG
-2025-11-24 18:57:23,256 [INFO] [Scan] File 8/21: IMG_E9569.JPG
-[SCAN] _process_file started for: IMG_E9569.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,260 [INFO] 📷 Processing: IMG_E9569.JPG (1925.4 KB)
-[SCAN] Processing: IMG_E9569.JPG
-[SCAN] ✓ Metadata extracted: IMG_E9569.JPG
-[SCAN] Starting file 9/21: IMG_E9574.JPG
-2025-11-24 18:57:23,266 [INFO] [Scan] File 9/21: IMG_E9574.JPG
-[SCAN] _process_file started for: IMG_E9574.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,266 [INFO] 📷 Processing: IMG_E9574.JPG (2077.4 KB)
-[SCAN] Processing: IMG_E9574.JPG
-[SCAN] ✓ Metadata extracted: IMG_E9574.JPG
-[SCAN] Starting file 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
-2025-11-24 18:57:23,287 [INFO] [Scan] File 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
-[SCAN] _process_file started for: 244008930_565686944637059_4279754871252118785_n.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,287 [INFO] 📷 Processing: 244008930_565686944637059_4279754871252118785_n.jpg (163.1 KB)
-[SCAN] Processing: 244008930_565686944637059_4279754871252118785_n.jpg
-[SCAN] ✓ Metadata extracted: 244008930_565686944637059_4279754871252118785_n.jpg
-[SCAN] Starting file 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-2025-11-24 18:57:23,318 [INFO] [Scan] File 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-[SCAN] _process_file started for: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,329 [INFO] 📷 Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif (448.6 KB)
-[SCAN] Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-[SCAN] ✓ Metadata extracted: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-[SCAN] Starting file 12/21: GPIC6664.JPG
-2025-11-24 18:57:23,348 [INFO] [Scan] File 12/21: GPIC6664.JPG
-[SCAN] _process_file started for: GPIC6664.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,348 [INFO] 📷 Processing: GPIC6664.JPG (234.7 KB)
-[SCAN] Processing: GPIC6664.JPG
-[SCAN] ✓ Metadata extracted: GPIC6664.JPG
-[SCAN] Starting file 13/21: IMG_8920.PNG
-2025-11-24 18:57:23,371 [INFO] [Scan] File 13/21: IMG_8920.PNG
-[SCAN] _process_file started for: IMG_8920.PNG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,371 [INFO] 📷 Processing: IMG_8920.PNG (3606.7 KB)
-[SCAN] Processing: IMG_8920.PNG
-[SCAN] ✓ Metadata extracted: IMG_8920.PNG
-[SCAN] Starting file 14/21: JKHC8378.JPG
-2025-11-24 18:57:23,400 [INFO] [Scan] File 14/21: JKHC8378.JPG
-[SCAN] _process_file started for: JKHC8378.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,400 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
-[SCAN] Processing: JKHC8378.JPG
-[SCAN] ✓ Metadata extracted: JKHC8378.JPG
-[SCAN] Starting file 15/21: NTXK2933.JPG
-2025-11-24 18:57:23,420 [INFO] [Scan] File 15/21: NTXK2933.JPG
-[SCAN] _process_file started for: NTXK2933.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,420 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
-[SCAN] Processing: NTXK2933.JPG
-[SCAN] ✓ Metadata extracted: NTXK2933.JPG
-[SCAN] Starting file 16/21: IMG_8152.JPEG
-2025-11-24 18:57:23,431 [INFO] [Scan] File 16/21: IMG_8152.JPEG
-[SCAN] _process_file started for: IMG_8152.JPEG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,431 [INFO] 📷 Processing: IMG_8152.JPEG (466.1 KB)
-[SCAN] Processing: IMG_8152.JPEG
-[SCAN] ✓ Metadata extracted: IMG_8152.JPEG
-[SCAN] Starting file 17/21: IMG_8158.JPEG
-2025-11-24 18:57:23,471 [INFO] [Scan] File 17/21: IMG_8158.JPEG
-[SCAN] _process_file started for: IMG_8158.JPEG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,472 [INFO] 📷 Processing: IMG_8158.JPEG (563.9 KB)
-[SCAN] Processing: IMG_8158.JPEG
-[SCAN] ✓ Metadata extracted: IMG_8158.JPEG
-[SCAN] Starting file 18/21: IMG_1779.JPEG
-2025-11-24 18:57:23,497 [INFO] [Scan] File 18/21: IMG_1779.JPEG
-[SCAN] _process_file started for: IMG_1779.JPEG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,503 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
-[SCAN] Processing: IMG_1779.JPEG
-[SCAN] ✓ Metadata extracted: IMG_1779.JPEG
-[SCAN] Starting file 19/21: IMG_E3091.JPG
-2025-11-24 18:57:23,529 [INFO] [Scan] File 19/21: IMG_E3091.JPG
-[SCAN] _process_file started for: IMG_E3091.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,535 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
-[SCAN] Processing: IMG_E3091.JPG
-[SCAN] ✓ Metadata extracted: IMG_E3091.JPG
-[SCAN] Starting file 20/21: IMG_E3092.JPG
-2025-11-24 18:57:23,548 [INFO] [Scan] File 20/21: IMG_E3092.JPG
-[SCAN] _process_file started for: IMG_E3092.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,548 [INFO] 📷 Processing: IMG_E3092.JPG (4652.5 KB)
-[SCAN] Processing: IMG_E3092.JPG
-[SCAN] ✓ Metadata extracted: IMG_E3092.JPG
-[SCAN] Starting file 21/21: IMG_E3093.JPG
-2025-11-24 18:57:23,565 [INFO] [Scan] File 21/21: IMG_E3093.JPG
-[SCAN] _process_file started for: IMG_E3093.JPG
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-24 18:57:23,565 [INFO] 📷 Processing: IMG_E3093.JPG (4602.6 KB)
-[SCAN] Processing: IMG_E3093.JPG
-[SCAN] ✓ Metadata extracted: IMG_E3093.JPG
-2025-11-24 18:57:23,596 [INFO] Bulk upserted 21 photos for project 1
-2025-11-24 18:57:23,596 [INFO] Scan complete: 21 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.8s
-2025-11-24 18:57:23,606 [INFO] Scan completed: 21 photos, 0 videos, 5 folders in 0.8s
-[ScanController] scan finished: 5 folders, 21 photos, 0 videos
-[ScanController] cleanup after scan
-2025-11-24 18:57:25,096 [INFO] Building date branches...
-2025-11-24 18:57:25,096 [INFO] Building date branches for project_id=1
-[build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 21 photos for project 1
-[build_date_branches] Inserted 21/21 photos into 'all' branch
-[build_date_branches] Found 7 unique dates for project 1
-[build_date_branches] Date 2022-01-15: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4/img_1779.jpeg
-[build_date_branches] Date 2022-01-15: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2022-08-18: found 4 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e3122.jpg
-[build_date_branches] Date 2022-08-18: inserted 4/4 into project_images (new)
-[build_date_branches] Date 2023-10-19: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg
-[build_date_branches] Date 2023-10-19: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-07: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg
-[build_date_branches] Date 2024-11-07: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-16: found 3 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg
-[build_date_branches] Date 2024-11-16: inserted 3/3 into project_images (new)
-[build_date_branches] Date 2024-11-26: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
-[build_date_branches] Date 2024-11-26: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-03-13: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg
-[build_date_branches] Date 2025-03-13: inserted 2/2 into project_images (new)
-[build_date_branches] Total entries processed: 13
-[build_date_branches] project_images table has 34 rows for project 1
-2025-11-24 18:57:25,106 [INFO] Created 13 photo date branch entries for project 1
-2025-11-24 18:57:25,106 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 0 videos with dates for project 1
-[build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-24 18:57:25,106 [INFO] Created 0 video date branch entries for project 1
-2025-11-24 18:57:25,106 [INFO] Backfilling created_date fields for photos...
-2025-11-24 18:57:25,122 [INFO] Backfilled 8 photo rows with created_date
-2025-11-24 18:57:25,122 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-2025-11-24 18:57:25,132 [INFO] Reloading sidebar after date branches built...
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
-[Sidebar] Loaded 6 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002B8F2124400>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=6] running for 1 targets...
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 21 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
-[DB_TAGS_SQL] project_id: 1
-[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
-[GRID] Fetched tags for 21 paths, got 21 entries
-[Sidebar][counts applied] updated UI with counts
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 21 new thumbnail workers
-[GRID] Loaded 21 thumbnails.
-[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 2 new thumbnail workers
-🌍 Language switched to: en
-⚠️ Missing translation key: preferences.nav.gps_location
-2025-11-24 18:57:39,813 [INFO] ======================================================================
-2025-11-24 18:57:39,814 [INFO] InsightFace Model Path Test
-2025-11-24 18:57:39,815 [INFO] ======================================================================
-2025-11-24 18:57:39,815 [INFO] Testing path: C:\Users\ASUS/.insightface\models\buffalo_l
-
-2025-11-24 18:57:39,815 [INFO] ✓ Detected: buffalo_l directory (detector: det_10g.onnx)
-2025-11-24 18:57:39,816 [INFO]
-Verifying model files...
-2025-11-24 18:57:39,817 [INFO]   ✓ det_10g.onnx (16.1 MB) [DETECTOR]
-2025-11-24 18:57:39,817 [INFO]   ✓ w600k_r50.onnx (166.3 MB) [RECOGNITION]
-2025-11-24 18:57:39,818 [INFO]
-Testing InsightFace initialization...
-2025-11-24 18:57:39,833 [INFO]   ✓ Detected: CPU only
-2025-11-24 18:57:39,833 [INFO]
-  Initializing with buffalo_l directory: C:\Users\ASUS/.insightface\models\buffalo_l
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\1k3d68.onnx landmark_3d_68 ['None', 3, 192, 192] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\2d106det.onnx landmark_2d_106 ['None', 3, 192, 192] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\det_10g.onnx detection [1, 3, '?', '?'] 127.5 128.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\genderage.onnx genderage ['None', 3, 96, 96] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\w600k_r50.onnx recognition ['None', 3, 112, 112] 127.5 127.5
-2025-11-24 18:57:41,854 [INFO]   Using CPU (ctx_id=-1)
-set det-size: (640, 640)
-2025-11-24 18:57:43,059 [INFO]
-✅ SUCCESS! InsightFace initialized successfully
-2025-11-24 18:57:43,059 [INFO] ======================================================================
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceConfig] Saved to C:\Users\ASUS\.memorymate\face_detection_config.json
-✅ Face detection settings saved: model=buffalo_l, eps=34%, min_samples=2
-🎬 FFprobe path configured: (using system PATH)
-🔄 Restarting application...
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[Main] Qt event loop exited with code: 0
-[ThumbCacheDB] Closing cache gracefully...
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01> [Startup] pillow_heif available — HEIC/HEIF support enabled.
-🔇 Decoder warnings suppressed per settings.
-🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\locales\en.json
-🌍 Language initialized: en
-2025-11-24 18:58:22,747 [INFO] ================================================================================
-2025-11-24 18:58:22,749 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-24 18:58:22,749 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\app_log.txt
-2025-11-24 18:58:22,749 [INFO] ================================================================================
-2025-11-24 18:58:22,788 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-24 18:58:22,792 [INFO] Qt message handler installed to suppress TIFF warnings
-[Main] Starting Qt event loop...
-[Startup] Database schema initialized successfully
-[ThumbCacheDB] Purged 21 stale thumbnails (> 30 days).
-[Cache] {'entries': 21, 'size_mb': 0.07, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-01\\thumbnails_cache.db', 'last_updated': '2025-11-24 18:58'}
-2025-11-24 18:58:23,020 [INFO] SearchService initialized
-[Startup] SearchService initialized
-2025-11-24 18:58:23,020 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-24 18:58:23,026 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-24 18:58:23,026 [INFO] Global ThumbnailService created with Phase 1B memory limits
-[Startup] ThumbnailService initialized
-🌍 Language switched to: en
-[MainWindow] Language loaded from settings: en
-🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-24 18:58:23,034 [INFO] SearchService initialized
-[18:58:23.623] [Tabs] __init__ started
-[18:58:23.623] [Tabs] _build_tabs → building tab widgets
-[18:58:23.623] [Tabs] _on_tab_changed(idx=0)
-[18:58:23.623] [Tabs] _start_timeout idx=0 type=branches
-[18:58:23.623] [Tabs] _populate_tab(branches, idx=0, force=False)
-[18:58:23.623] [Tabs]   populated=False, loading=False
-[18:58:23.623] [Tabs]   Starting load for branches
-[18:58:23.623] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[18:58:23.623] [Tabs] _clear_tab idx=0
-[18:58:23.623] [Tabs] _on_tab_changed → tab_type=branches
-[18:58:23.623] [Tabs] _build_tabs → added 6 tabs
-[18:58:23.623] [Tabs] __init__ completed
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
-[Sidebar] Loaded 6 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001EC3C0EB1F0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=2] running for 1 targets...
-[SidebarQt] switch_display_mode(list) - canceling old workers
-[SidebarQt] Hiding tabs controller
-[18:58:23.792] [Tabs] hide_tabs() called - canceling pending workers
-[Sidebar][counts worker gen=2] finished scanning targets, scheduling UI update
-[SidebarQt] Canceled tab workers via hide_tabs()
-[SidebarQt] Clearing tree view selection before rebuild
-[SidebarQt] Showing tree view
-[SidebarQt] Calling _build_tree_model()
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
-[Sidebar] Loaded 6 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001EC3C0EB1F0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=4] running for 1 targets...
-[SidebarQt] _build_tree_model() completed
-[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
-[Startup] Database schema initialized successfully
-[18:58:24.002] [Tabs] _on_tab_changed(idx=0)
-[18:58:24.002] [Tabs] _start_timeout idx=0 type=branches
-[18:58:24.002] [Tabs] _populate_tab(branches, idx=0, force=False)
-[18:58:24.002] [Tabs]   populated=False, loading=False
-[18:58:24.002] [Tabs]   Starting load for branches
-[18:58:24.002] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[18:58:24.002] [Tabs] _clear_tab idx=0
-[18:58:24.002] [Tabs] _on_tab_changed → tab_type=branches
-[18:58:24.002] [Tabs] _finish_branches (stale gen=1) — ignoring
-[Sidebar][counts] Ignoring stale worker results (gen=2, current=4)
-[Sidebar][counts applied] updated UI with counts
-[18:58:24.010] [Tabs] _clear_tab idx=0
-[TAG FILTER] Cleared by navigation.
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in None-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 0 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 21 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
-[GRID] Fetched tags for 21 paths, got 21 entries
-[GRID] Using scroll-based start position: 0 (scroll: 0/34)
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 21 new thumbnail workers
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Loaded 21 thumbnails.
-[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 3 new thumbnail workers
-💾 Saved FFprobe path to settings: C:\ffmpeg\bin\ffprobe.exe
-✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\ASUS\.insightface\models\buffalo_l
-[MainWindow] Launching automatic face grouping pipeline for project 1
-2025-11-24 18:58:33,085 [INFO] [FaceDetectionWorker] Starting face detection for project 1
-2025-11-24 18:58:33,085 [INFO] 💻 Using CPU for face detection (CUDA not available)
-2025-11-24 18:58:33,090 [INFO] 🎯 Using custom model path (buffalo_l directory): C:\Users\ASUS/.insightface\models\buffalo_l
-2025-11-24 18:58:33,095 [INFO] ✓ Initializing InsightFace with buffalo_l directory: C:\Users\ASUS/.insightface\models\buffalo_l
-2025-11-24 18:58:33,125 [INFO] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\1k3d68.onnx landmark_3d_68 ['None', 3, 192, 192] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\2d106det.onnx landmark_2d_106 ['None', 3, 192, 192] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\det_10g.onnx detection [1, 3, '?', '?'] 127.5 128.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\genderage.onnx genderage ['None', 3, 96, 96] 0.0 1.0
-Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
-find model: C:\Users\ASUS/.insightface\models\buffalo_l\models\buffalo_l\w600k_r50.onnx recognition ['None', 3, 112, 112] 127.5 127.5
-2025-11-24 18:58:34,409 [INFO] ✓ Using CPU acceleration (ctx_id=-1)
-set det-size: (720, 720)
-2025-11-24 18:58:35,492 [INFO] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=720x720)
-2025-11-24 18:58:35,492 [INFO] [FaceDetection] Initialized InsightFace with model=hog
-2025-11-24 18:58:35,492 [INFO] [FaceDetectionWorker] Processing 21 photos
-[FaceDetection] [1/21] Detecting faces: ewkj3802.jpg
-[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-2025-11-24 18:58:35,694 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [2/21] Detecting faces: ihoc0868.jpg
-2025-11-24 18:58:35,816 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [3/21] Detecting faces: img_1550.dng
-2025-11-24 18:58:36,113 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [4/21] Detecting faces: img_3307.jpg
-2025-11-24 18:58:36,401 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [5/21] Detecting faces: img_9570.jpg
-2025-11-24 18:58:36,650 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [6/21] Detecting faces: img_e3122.jpg
-2025-11-24 18:58:36,921 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e3122.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [7/21] Detecting faces: img_e7413.jpg
-2025-11-24 18:58:37,131 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [8/21] Detecting faces: img_e9569.jpg
-2025-11-24 18:58:37,349 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e9569.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [9/21] Detecting faces: img_e9574.jpg
-2025-11-24 18:58:37,571 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e9574.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [10/21] Detecting faces: 244008930_565686944637059_4279754871252118785_n.jpg
-2025-11-24 18:58:37,709 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/244008930_565686944637059_4279754871252118785_n.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [11/21] Detecting faces: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-2025-11-24 18:58:37,884 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [12/21] Detecting faces: gpic6664.jpg
-2025-11-24 18:58:38,032 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/gpic6664.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [13/21] Detecting faces: img_8920.png
-2025-11-24 18:58:38,228 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [14/21] Detecting faces: jkhc8378.jpg
-2025-11-24 18:58:38,381 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/jkhc8378.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [15/21] Detecting faces: ntxk2933.jpg
-2025-11-24 18:58:38,548 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/ntxk2933.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [16/21] Detecting faces: img_8152.jpeg
-2025-11-24 18:58:38,689 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [17/21] Detecting faces: img_8158.jpeg
-2025-11-24 18:58:38,840 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [18/21] Detecting faces: img_1779.jpeg
-2025-11-24 18:58:39,086 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4/img_1779.jpeg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [19/21] Detecting faces: img_e3091.jpg
-2025-11-24 18:58:39,392 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3091.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [20/21] Detecting faces: img_e3092.jpg
-2025-11-24 18:58:39,678 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3092.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-[FaceDetection] [21/21] Detecting faces: img_e3093.jpg
-2025-11-24 18:58:39,974 [ERROR] Error detecting faces in c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3093.jpg: operands could not be broadcast together with shapes (968,) (1058,)
-2025-11-24 18:58:39,974 [INFO] [FaceDetectionWorker] Complete in 6.9s: 21 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
-[FaceDetection] Complete: 21 photos, 0 faces detected
+2025-11-24 21:50:46,544 [INFO] 📷 Processing: IMG_E3062.JPG (2023.1 KB)
+[SCAN] Processing: IMG_E3062.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3062.JPG
