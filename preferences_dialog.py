@@ -433,8 +433,13 @@ class PreferencesDialog(QDialog):
         # Devices
         devices_group = QGroupBox("Devices")
         devices_layout = QVBoxLayout(devices_group)
-        self.chk_device_auto_refresh = QCheckBox("Auto-detect device connections (poll every 30s)")
-        self.chk_device_auto_refresh.setToolTip("Enable periodic device scanning. Disable to use manual refresh only.")
+        self.chk_device_auto_refresh = QCheckBox("Auto-detect device connections")
+        self.chk_device_auto_refresh.setToolTip(
+            "Automatically detect when mobile devices are connected/disconnected.\n\n"
+            "• Windows: Instant detection via system events + 30s polling backup\n"
+            "• Other platforms: 30s polling only\n"
+            "• Disabled: Manual refresh only (click refresh button)"
+        )
         devices_layout.addWidget(self.chk_device_auto_refresh)
         layout.addWidget(devices_group)
 

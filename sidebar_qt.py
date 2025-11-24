@@ -1712,6 +1712,14 @@ class SidebarQt(QWidget):
         if hasattr(self, '_device_refresh_timer'):
             self._device_refresh_timer.stop()
 
+        # OPTIMIZATION: Stop device monitor if active
+        if hasattr(self, '_device_monitor') and self._device_monitor:
+            try:
+                self._device_monitor.stop()
+                print(f"[Sidebar] Device monitor stopped during cleanup")
+            except Exception as e:
+                print(f"[Sidebar] Warning: Error stopping device monitor: {e}")
+
         # Stop other timers
         if hasattr(self, '_reload_timer'):
             self._reload_timer.stop()
