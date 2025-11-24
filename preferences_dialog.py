@@ -14,15 +14,136 @@ from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem,
     QStackedWidget, QWidget, QLabel, QCheckBox, QComboBox, QLineEdit,
     QTextEdit, QPushButton, QSpinBox, QFormLayout, QGroupBox, QMessageBox,
-    QDialogButtonBox, QScrollArea, QFileDialog
+    QDialogButtonBox, QScrollArea, QFileDialog, QFrame
 )
-from PySide6.QtCore import Qt, QSize, QProcess
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtCore import Qt, QSize, QProcess, QRect
+from PySide6.QtGui import QGuiApplication, QPainter, QColor, QPen, QFont
 import sys
 from pathlib import Path
 
 from translation_manager import get_translation_manager, tr
 from config.face_detection_config import get_face_config
+
+
+class BadgePreviewWidget(QWidget):
+    """Live preview widget showing badge samples with current settings."""
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setMinimumSize(280, 120)
+        self.setMaximumHeight(120)
+        self.badge_size = 22
+        self.badge_shape = "circle"
+        self.badge_max = 4
+        self.badge_shadow = True
+        self.badge_enabled = True
+    
+    def update_settings(self, size, shape, max_count, shadow, enabled):
+        """Update preview with new settings."""
+        self.badge_size = size
+        self.badge_shape = shape
+        self.badge_max = max_count
+        self.badge_shadow = shadow
+        self.badge_enabled = enabled
+        self.update()
+    
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing)
+        
+        # Background
+        painter.fillRect(self.rect(), QColor(240, 240, 245))
+        
+        if not self.badge_enabled:
+            painter.setPen(QColor(150, 150, 150))
+            font = QFont()
+            font.setPointSize(10)
+            painter.setFont(font)
+            painter.drawText(self.rect(), Qt.AlignCenter, "Badge overlays disabled")
+            return
+        
+        # Draw sample thumbnail background
+        thumb_rect = QRect(10, 10, 100, 100)
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(QColor(200, 200, 200))
+        painter.drawRoundedRect(thumb_rect, 4, 4)
+        
+        # Sample badges (favorite, face, tag)
+        sample_badges = [
+            ('★', QColor(255, 215, 0, 230), Qt.black),
+            ('👤', QColor(70, 130, 180, 220), Qt.white),
+            ('🏷', QColor(150, 150, 150, 230), Qt.white),
+            ('⚑', QColor(255, 69, 0, 220), Qt.white),
+            ('💼', QColor(0, 128, 255, 220), Qt.white)
+        ]
+        
+        margin = 4
+        x_right = thumb_rect.right() - margin - self.badge_size
+        y_top = thumb_rect.top() + margin
+        
+        max_display = min(len(sample_badges), self.badge_max)
+        
+        for i in range(max_display):
+            by = y_top + i * (self.badge_size + 4)
+            badge_rect = QRect(x_right, by, self.badge_size, self.badge_size)
+            
+            # Shadow
+            if self.badge_shadow:
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(QColor(0, 0, 0, 100))
+                shadow_rect = badge_rect.adjusted(2, 2, 2, 2)
+                if self.badge_shape == 'square':
+                    painter.drawRect(shadow_rect)
+                elif self.badge_shape == 'rounded':
+                    painter.drawRoundedRect(shadow_rect, 4, 4)
+                else:
+                    painter.drawEllipse(shadow_rect)
+            
+            # Badge
+            ch, bg, fg = sample_badges[i]
+            painter.setPen(Qt.NoPen)
+            painter.setBrush(bg)
+            if self.badge_shape == 'square':
+                painter.drawRect(badge_rect)
+            elif self.badge_shape == 'rounded':
+                painter.drawRoundedRect(badge_rect, 4, 4)
+            else:
+                painter.drawEllipse(badge_rect)
+            
+            # Icon
+            painter.setPen(QPen(fg))
+            font = QFont()
+            font.setPointSize(max(8, int(self.badge_size * 0.5)))
+            font.setBold(True)
+            painter.setFont(font)
+            painter.drawText(badge_rect, Qt.AlignCenter, ch)
+        
+        # Overflow indicator
+        if len(sample_badges) > self.badge_max:
+            by = y_top + max_display * (self.badge_size + 4)
+            more_rect = QRect(x_right, by, self.badge_size, self.badge_size)
+            painter.setPen(Qt.NoPen)
+            painter.setBrush(QColor(60, 60, 60, 220))
+            if self.badge_shape == 'square':
+                painter.drawRect(more_rect)
+            elif self.badge_shape == 'rounded':
+                painter.drawRoundedRect(more_rect, 4, 4)
+            else:
+                painter.drawEllipse(more_rect)
+            painter.setPen(QPen(Qt.white))
+            font2 = QFont()
+            font2.setPointSize(max(7, int(self.badge_size * 0.45)))
+            font2.setBold(True)
+            painter.setFont(font2)
+            painter.drawText(more_rect, Qt.AlignCenter, f"+{len(sample_badges) - self.badge_max}")
+        
+        # Info text
+        painter.setPen(QColor(100, 100, 100))
+        info_font = QFont()
+        info_font.setPointSize(9)
+        painter.setFont(info_font)
+        info_text = f"Preview: {self.badge_shape} • {self.badge_size}px • max {self.badge_max}"
+        painter.drawText(QRect(120, 10, 160, 100), Qt.AlignLeft | Qt.AlignVCenter, info_text)
 
 
 class PreferencesDialog(QDialog):
@@ -69,6 +190,7 @@ class PreferencesDialog(QDialog):
             ("preferences.nav.general", "⚙️"),
             ("preferences.nav.appearance", "🎨"),
             ("preferences.nav.scanning", "📁"),
+            ("preferences.nav.gps_location", "🗺️"),
             ("preferences.nav.face_detection", "👤"),
             ("preferences.nav.video", "🎬"),
             ("preferences.nav.advanced", "🔧")
@@ -112,6 +234,7 @@ class PreferencesDialog(QDialog):
         self.content_stack.addWidget(self._create_general_panel())
         self.content_stack.addWidget(self._create_appearance_panel())
         self.content_stack.addWidget(self._create_scanning_panel())
+        self.content_stack.addWidget(self._create_gps_location_panel())
         self.content_stack.addWidget(self._create_face_detection_panel())
         self.content_stack.addWidget(self._create_video_panel())
         self.content_stack.addWidget(self._create_advanced_panel())
@@ -194,7 +317,43 @@ class PreferencesDialog(QDialog):
         lang_layout.addRow(tr("preferences.appearance.language") + ":", self.cmb_language)
         layout.addWidget(lang_group)
 
-        # Thumbnail cache
+        # Badge overlays
+        badge_group = QGroupBox(tr("preferences.appearance.badge_overlays"))
+        badge_form = QFormLayout(badge_group)
+        badge_form.setSpacing(10)
+
+        self.chk_badge_overlays = QCheckBox(tr("preferences.appearance.badge_enable"))
+        badge_form.addRow(self.chk_badge_overlays)
+
+        self.spin_badge_size = QSpinBox()
+        self.spin_badge_size.setRange(12, 64)
+        self.spin_badge_size.setSuffix(" px")
+        badge_form.addRow(tr("preferences.appearance.badge_size") + ":", self.spin_badge_size)
+
+        self.cmb_badge_shape = QComboBox()
+        self.cmb_badge_shape.addItems(["circle", "rounded", "square"])
+        badge_form.addRow(tr("preferences.appearance.badge_shape") + ":", self.cmb_badge_shape)
+
+        self.spin_badge_max = QSpinBox()
+        self.spin_badge_max.setRange(1, 9)
+        badge_form.addRow(tr("preferences.appearance.badge_max_count") + ":", self.spin_badge_max)
+
+        self.chk_badge_shadow = QCheckBox(tr("preferences.appearance.badge_shadow"))
+        badge_form.addRow(self.chk_badge_shadow)
+
+        # Live preview widget
+        self.badge_preview = BadgePreviewWidget()
+        badge_form.addRow("", self.badge_preview)
+        
+        # Wire live updates
+        self.chk_badge_overlays.toggled.connect(self._update_badge_preview)
+        self.spin_badge_size.valueChanged.connect(self._update_badge_preview)
+        self.cmb_badge_shape.currentIndexChanged.connect(self._update_badge_preview)
+        self.spin_badge_max.valueChanged.connect(self._update_badge_preview)
+        self.chk_badge_shadow.toggled.connect(self._update_badge_preview)
+
+        layout.addWidget(badge_group)
+        # Cache settings group
         cache_group = QGroupBox(tr("preferences.cache.title"))
         cache_layout = QVBoxLayout(cache_group)
         cache_layout.setSpacing(10)
@@ -278,6 +437,94 @@ class PreferencesDialog(QDialog):
         self.chk_device_auto_refresh.setToolTip("Enable periodic device scanning. Disable to use manual refresh only.")
         devices_layout.addWidget(self.chk_device_auto_refresh)
         layout.addWidget(devices_group)
+
+        layout.addStretch()
+
+        return self._create_scrollable_panel(widget)
+
+    def _create_gps_location_panel(self) -> QWidget:
+        """Create GPS & Location Settings panel."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setAlignment(Qt.AlignTop)
+        layout.setSpacing(15)
+
+        # Title
+        title = QLabel("GPS & Location Settings")
+        title.setStyleSheet("font-size: 18pt; font-weight: bold;")
+        layout.addWidget(title)
+
+        # Location Clustering
+        cluster_group = QGroupBox("🗺️ Location Clustering")
+        cluster_layout = QFormLayout(cluster_group)
+        cluster_layout.setSpacing(10)
+
+        self.spin_cluster_radius = QSpinBox()
+        self.spin_cluster_radius.setRange(1, 50)
+        self.spin_cluster_radius.setSuffix(" km")
+        self.spin_cluster_radius.setToolTip(
+            "Photos within this radius will be grouped together.\n"
+            "Smaller values = more precise grouping\n"
+            "Larger values = fewer, broader location groups"
+        )
+        cluster_layout.addRow("Clustering Radius:", self.spin_cluster_radius)
+
+        layout.addWidget(cluster_group)
+
+        # Reverse Geocoding
+        geocoding_group = QGroupBox("🌍 Reverse Geocoding")
+        geocoding_layout = QVBoxLayout(geocoding_group)
+        geocoding_layout.setSpacing(10)
+
+        self.chk_reverse_geocoding = QCheckBox("Enable automatic location name lookup")
+        self.chk_reverse_geocoding.setToolTip(
+            "When enabled, GPS coordinates will be converted to location names\n"
+            "(e.g., 'San Francisco, California, USA')\n"
+            "Uses OpenStreetMap Nominatim API (free, no key required)"
+        )
+        geocoding_layout.addWidget(self.chk_reverse_geocoding)
+
+        timeout_row = QWidget()
+        timeout_layout = QHBoxLayout(timeout_row)
+        timeout_layout.setContentsMargins(0, 0, 0, 0)
+        
+        timeout_label = QLabel("API Timeout:")
+        self.spin_geocoding_timeout = QSpinBox()
+        self.spin_geocoding_timeout.setRange(1, 10)
+        self.spin_geocoding_timeout.setSuffix(" seconds")
+        self.spin_geocoding_timeout.setToolTip(
+            "Maximum time to wait for location name lookup.\n"
+            "Lower = faster but may fail on slow connections\n"
+            "Higher = more reliable but may slow down metadata display"
+        )
+        timeout_layout.addWidget(timeout_label)
+        timeout_layout.addWidget(self.spin_geocoding_timeout)
+        timeout_layout.addStretch()
+        geocoding_layout.addWidget(timeout_row)
+
+        self.chk_cache_location_names = QCheckBox("Cache location names (reduces API calls)")
+        self.chk_cache_location_names.setToolTip(
+            "Store location names in database to avoid repeated API lookups.\n"
+            "Recommended for better performance and to respect API rate limits."
+        )
+        geocoding_layout.addWidget(self.chk_cache_location_names)
+
+        layout.addWidget(geocoding_group)
+
+        # Info box
+        info_label = QLabel(
+            "💡 <b>How it works:</b><br>"
+            "• Photos with GPS EXIF data are automatically detected<br>"
+            "• Locations are grouped by proximity using the clustering radius<br>"
+            "• Click GPS coordinates in photo metadata to view on OpenStreetMap<br>"
+            "• Location names are fetched using free Nominatim API (no key needed)"
+        )
+        info_label.setWordWrap(True)
+        info_label.setStyleSheet(
+            "QLabel { font-size: 10pt; color: #666; padding: 8px; "
+            "background: #f0f0f0; border-radius: 4px; border-left: 4px solid #0078d4; }"
+        )
+        layout.addWidget(info_label)
 
         layout.addStretch()
 
@@ -435,6 +682,43 @@ class PreferencesDialog(QDialog):
         cluster_layout.addRow("", self.chk_auto_cluster)
 
         layout.addWidget(cluster_group)
+
+        # Per-Project Overrides
+        project_group = QGroupBox("Per-Project Overrides")
+        project_form = QFormLayout(project_group)
+        project_form.setSpacing(10)
+
+        from app_services import get_default_project_id
+        self.current_project_id = get_default_project_id() or 1
+        self.lbl_project_info = QLabel(f"Current project ID: {self.current_project_id}")
+        project_form.addRow(self.lbl_project_info)
+
+        self.chk_project_overrides = QCheckBox("Enable per-project overrides for this project")
+        project_form.addRow("", self.chk_project_overrides)
+
+        self.spin_proj_min_face = QSpinBox()
+        self.spin_proj_min_face.setRange(10, 100)
+        self.spin_proj_min_face.setSuffix(" px")
+        project_form.addRow("Min Face Size (project):", self.spin_proj_min_face)
+
+        self.spin_proj_confidence = QSpinBox()
+        self.spin_proj_confidence.setRange(10, 95)
+        self.spin_proj_confidence.setSuffix(" %")
+        project_form.addRow("Confidence (project):", self.spin_proj_confidence)
+
+        self.spin_proj_eps = QSpinBox()
+        self.spin_proj_eps.setRange(20, 60)
+        self.spin_proj_eps.setSuffix(" %")
+        project_form.addRow("Threshold eps (project):", self.spin_proj_eps)
+
+        self.spin_proj_min_samples = QSpinBox()
+        self.spin_proj_min_samples.setRange(1, 10)
+        project_form.addRow("Min Samples (project):", self.spin_proj_min_samples)
+
+        self.chk_show_low_conf = QCheckBox("Show low-confidence detections in UI")
+        project_form.addRow("", self.chk_show_low_conf)
+
+        layout.addWidget(project_group)
 
         # Performance Settings
         perf_group = QGroupBox("Performance")
@@ -669,12 +953,36 @@ class PreferencesDialog(QDialog):
         self.chk_auto_cluster.setChecked(self.face_config.get("auto_cluster_after_scan", True))
         self.spin_max_workers.setValue(self.face_config.get("max_workers", 4))
         self.spin_batch_size.setValue(self.face_config.get("batch_size", 50))
+        po = self.face_config.get("project_overrides", {})
+        ov = po.get(str(self.current_project_id), {})
+        self.chk_project_overrides.setChecked(bool(ov))
+        self.spin_proj_min_face.setValue(int(ov.get("min_face_size", self.face_config.get("min_face_size", 20))))
+        self.spin_proj_confidence.setValue(int((ov.get("confidence_threshold", self.face_config.get("confidence_threshold", 0.6))) * 100))
+        self.spin_proj_eps.setValue(int(ov.get("clustering_eps", self.face_config.get("clustering_eps", 0.35)) * 100))
+        self.spin_proj_min_samples.setValue(int(ov.get("clustering_min_samples", self.face_config.get("clustering_min_samples", 2))))
+        self.chk_show_low_conf.setChecked(self.face_config.get("show_low_confidence", False))
 
         # InsightFace model path
         self.txt_model_path.setText(self.settings.get("insightface_model_path", ""))
 
-        # Video
-        self.txt_ffprobe_path.setText(self.settings.get("ffprobe_path", ""))
+        # Badge overlay settings
+        self.chk_badge_overlays.setChecked(self.settings.get("badge_overlays_enabled", True))
+        self.spin_badge_size.setValue(int(self.settings.get("badge_size_px", 22)))
+        shape = str(self.settings.get("badge_shape", "circle")).lower()
+        idx = self.cmb_badge_shape.findText(shape)
+        if idx >= 0:
+            self.cmb_badge_shape.setCurrentIndex(idx)
+        self.spin_badge_max.setValue(int(self.settings.get("badge_max_count", 4)))
+        self.chk_badge_shadow.setChecked(self.settings.get("badge_shadow", True))
+        
+        # Update preview with initial values
+        self._update_badge_preview()
+        
+        # GPS & Location
+        self.spin_cluster_radius.setValue(int(self.settings.get("gps_clustering_radius_km", 5)))
+        self.chk_reverse_geocoding.setChecked(self.settings.get("gps_reverse_geocoding_enabled", True))
+        self.spin_geocoding_timeout.setValue(int(self.settings.get("gps_geocoding_timeout_sec", 2)))
+        self.chk_cache_location_names.setChecked(self.settings.get("gps_cache_location_names", True))
 
         # Advanced
         self.chk_decoder_warnings.setChecked(self.settings.get("show_decoder_warnings", False))
@@ -777,6 +1085,21 @@ class PreferencesDialog(QDialog):
         self.face_config.set("auto_cluster_after_scan", self.chk_auto_cluster.isChecked())
         self.face_config.set("max_workers", self.spin_max_workers.value())
         self.face_config.set("batch_size", self.spin_batch_size.value())
+        # Per-project overrides
+        if self.chk_project_overrides.isChecked():
+            self.face_config.set_project_overrides(self.current_project_id, {
+                "min_face_size": self.spin_proj_min_face.value(),
+                "confidence_threshold": self.spin_proj_confidence.value() / 100.0,
+                "clustering_eps": self.spin_proj_eps.value() / 100.0,
+                "clustering_min_samples": self.spin_proj_min_samples.value(),
+            })
+        else:
+            po = self.face_config.get("project_overrides", {})
+            if str(self.current_project_id) in po:
+                del po[str(self.current_project_id)]
+                self.face_config.set("project_overrides", po)
+        # UI low-confidence toggle
+        self.face_config.set("show_low_confidence", self.chk_show_low_conf.isChecked())
         print(f"✅ Face detection settings saved: model={self.cmb_insightface_model.currentData()}, "
               f"eps={self.spin_cluster_eps.value()}%, min_samples={self.spin_min_samples.value()}")
 
@@ -797,11 +1120,23 @@ class PreferencesDialog(QDialog):
 
             print(f"🧑 InsightFace model path configured: {model_path or '(using default locations)'}")
 
-        # Video
+        # Badge overlays
+        self.settings.set("badge_overlays_enabled", self.chk_badge_overlays.isChecked())
+        self.settings.set("badge_size_px", self.spin_badge_size.value())
+        self.settings.set("badge_shape", self.cmb_badge_shape.currentText())
+        self.settings.set("badge_max_count", self.spin_badge_max.value())
+        self.settings.set("badge_shadow", self.chk_badge_shadow.isChecked())
+        
+        # GPS & Location
+        self.settings.set("gps_clustering_radius_km", float(self.spin_cluster_radius.value()))
+        self.settings.set("gps_reverse_geocoding_enabled", self.chk_reverse_geocoding.isChecked())
+        self.settings.set("gps_geocoding_timeout_sec", float(self.spin_geocoding_timeout.value()))
+        self.settings.set("gps_cache_location_names", self.chk_cache_location_names.isChecked())
+
+        # Video FFprobe path
         ffprobe_path = self.txt_ffprobe_path.text().strip()
         old_ffprobe_path = self.settings.get("ffprobe_path", "")
         self.settings.set("ffprobe_path", ffprobe_path)
-
         if ffprobe_path != old_ffprobe_path:
             # Clear FFmpeg check flag
             flag_file = Path('.ffmpeg_check_done')
@@ -1199,3 +1534,16 @@ class PreferencesDialog(QDialog):
                 )
         except Exception as e:
             QMessageBox.warning(self, "Purge Cache", f"Error purging cache:\n{str(e)}")
+
+    def _update_badge_preview(self):
+        """Update the badge preview widget with current settings."""
+        try:
+            self.badge_preview.update_settings(
+                size=self.spin_badge_size.value(),
+                shape=self.cmb_badge_shape.currentText(),
+                max_count=self.spin_badge_max.value(),
+                shadow=self.chk_badge_shadow.isChecked(),
+                enabled=self.chk_badge_overlays.isChecked()
+            )
+        except Exception as e:
+            print(f"[PreferencesDialog] Badge preview update error: {e}")

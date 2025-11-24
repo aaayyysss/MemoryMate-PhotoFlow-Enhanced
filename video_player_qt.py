@@ -13,6 +13,7 @@ from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtMultimediaWidgets import QVideoWidget
 from pathlib import Path
 import os
+from translation_manager import tr
 
 
 class VideoPlayerPanel(QWidget):
@@ -611,7 +612,7 @@ class VideoPlayerPanel(QWidget):
         # Tag input
         tag_input_layout = QHBoxLayout()
         self.tag_input = QLineEdit()
-        self.tag_input.setPlaceholderText("Add tag...")
+        self.tag_input.setPlaceholderText(tr('search.placeholder_add_tag'))
         self.tag_input.returnPressed.connect(self._add_tag)
         tag_input_layout.addWidget(self.tag_input)
 

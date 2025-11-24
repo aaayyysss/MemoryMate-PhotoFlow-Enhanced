@@ -14,6 +14,13 @@ from settings_manager_qt import SettingsManager
 # P2-25 FIX: Initialize settings once (will be reused at line 67)
 # This prevents potential state inconsistencies from multiple instantiations
 settings = SettingsManager()
+
+# ✅ Initialize translation manager early with language from settings
+from translation_manager import TranslationManager
+language = settings.get("language", "en")
+TranslationManager.get_instance(language)
+print(f"🌍 Language initialized: {language}")
+
 log_level = settings.get("log_level", "INFO")
 log_to_console = settings.get("log_to_console", True)
 log_colored = settings.get("log_colored_output", True)
@@ -42,6 +49,19 @@ def exception_hook(exctype, value, tb):
     traceback.print_exception(exctype, value, tb)
     logger.error("Unhandled exception", exc_info=(exctype, value, tb))
     print("=" * 80)
+    
+    # DIAGNOSTIC: Log stack trace to file for post-mortem analysis
+    try:
+        with open("crash_log.txt", "a", encoding="utf-8") as f:
+            import datetime
+            f.write(f"\n{'='*80}\n")
+            f.write(f"CRASH at {datetime.datetime.now()}\n")
+            f.write(f"{'='*80}\n")
+            traceback.print_exception(exctype, value, tb, file=f)
+            f.write(f"{'='*80}\n\n")
+    except:
+        pass
+    
     sys.__excepthook__(exctype, value, tb)
 
 # Install exception hook immediately
@@ -211,4 +231,16 @@ if __name__ == "__main__":
     worker.start()
     
     # 6️: Run the app
-    sys.exit(app.exec())
+    print("[Main] Starting Qt event loop...")
+    exit_code = app.exec()
+    print(f"[Main] Qt event loop exited with code: {exit_code}")
+    
+    # DIAGNOSTIC: Log normal exit
+    try:
+        with open("crash_log.txt", "a", encoding="utf-8") as f:
+            import datetime
+            f.write(f"\n[{datetime.datetime.now()}] Normal exit with code {exit_code}\n")
+    except:
+        pass
+    
+    sys.exit(exit_code)

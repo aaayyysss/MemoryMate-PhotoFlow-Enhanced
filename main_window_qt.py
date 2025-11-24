@@ -54,7 +54,7 @@ from services.scan_worker_adapter import ScanWorkerAdapter as ScanWorker
 
 # Add imports near top if not present:
 
-from PySide6.QtCore import Qt, QThread, QSize, QThreadPool, Signal, QObject, QRunnable, QEvent, QTimer, QProcess, QItemSelectionModel
+from PySide6.QtCore import Qt, QThread, QSize, QThreadPool, Signal, QObject, QRunnable, QEvent, QTimer, QProcess, QItemSelectionModel, QRect
 
 from PySide6.QtGui import QPixmap, QImage, QImageReader, QAction, QActionGroup, QIcon, QTransform, QPalette, QColor, QGuiApplication
 
@@ -119,7 +119,7 @@ from video_backfill_dialog import VideoBackfillDialog
 
 # --- Preferences dialog (new version with i18n and sidebar navigation) ---
 from preferences_dialog import PreferencesDialog
-from translation_manager import get_translation_manager
+from translation_manager import get_translation_manager, tr
 
 # --- Backfill / process management imports ---
 import subprocess, shlex, sys
@@ -310,7 +310,7 @@ class ScanController:
             import traceback
             traceback.print_exc()
             self.main.statusBar().showMessage(f"❌ Failed to create scan worker: {e}")
-            QMessageBox.critical(self.main, "Scan Error", f"Failed to create scan worker:\n\n{e}")
+            QMessageBox.critical(self.main, tr("messages.scan_error"), tr("messages.scan_error_worker", error=str(e)))
             return
 
     def cancel(self):
@@ -321,7 +321,7 @@ class ScanController:
                 self.worker.stop()
             except Exception:
                 pass
-        self.main.statusBar().showMessage("🛑 Scan cancellation requested…")
+        self.main.statusBar().showMessage(tr('status_messages.scan_cancel_requested'))
         self.main.act_cancel_scan.setEnabled(False)
 
     def _on_committed(self, n: int):
@@ -339,6 +339,8 @@ class ScanController:
         pct_i = max(0, min(100, int(pct or 0)))
         self.main._scan_progress.setValue(pct_i)
         if msg:
+            # Enhanced progress display with file details
+            # Extract filename and size from message if available
             label = f"{msg}\nCommitted: {self.main._committed_total}"
             self.main._scan_progress.setLabelText(label)
         QApplication.processEvents()
@@ -351,7 +353,7 @@ class ScanController:
 
     def _on_error(self, err_text: str):
         try:
-            QMessageBox.critical(self.main, "Scan Error", err_text)
+            QMessageBox.critical(self.main, tr("messages.scan_error"), err_text)
         except Exception:
             print(f"[ScanController] {err_text}")
         if self.thread and self.thread.isRunning():
@@ -395,7 +397,7 @@ class ScanController:
             msg += f" and {v} videos"
         msg += f" in {f} folders.\n\n"
         msg += "📊 Processing metadata and updating views...\nThis may take a few seconds."
-        QMessageBox.information(self.main, "Scan Complete", msg)
+        QMessageBox.information(self.main, tr("messages.scan_complete_title"), msg)
 
         # Show progress indicator for post-scan processing
         progress = QProgressDialog("Building date branches...", None, 0, 4, self.main)
@@ -1060,8 +1062,8 @@ class DetailsPanel(QWidget):
         self.meta = QLabel(alignment=Qt.AlignTop)
         self.meta.setWordWrap(True)
 
-        self.btn_copy = QPushButton("Copy")
-        self.btn_copy.setToolTip("Copy all metadata as plain text")
+        self.btn_copy = QPushButton(tr('metadata.copy_all'))
+        self.btn_copy.setToolTip(tr('metadata.copy_all'))
         self.btn_copy.clicked.connect(self._copy_all)
 
         # Style
@@ -1091,7 +1093,10 @@ class DetailsPanel(QWidget):
         lay.setContentsMargins(8, 8, 8, 8)
         lay.setSpacing(6)
         lay.addWidget(self.thumb, 3)
-        lay.addWidget(self.meta, 2)
+        self.meta_scroll = QScrollArea()
+        self.meta_scroll.setWidget(self.meta)
+        self.meta_scroll.setWidgetResizable(True)
+        lay.addWidget(self.meta_scroll, 2)
         lay.addWidget(self.btn_copy, 0, alignment=Qt.AlignRight)
 
         # Internal: last plain-text metadata
@@ -1151,11 +1156,41 @@ class DetailsPanel(QWidget):
                         scaled_pm = thumb_pm.scaled(280, 210, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                         
                         # 🏷️ Add tag icon overlay if video has tags
-                        tags = []
-                        if video_meta and video_meta.get('tags'):
+                        from services.tag_service import get_tag_service
+                        svc = get_tag_service()
+                        try:
+                            tags = []
+                            if project_id is not None:
+                                tags = (svc.get_tags_for_paths([path], project_id) or {}).get(path, [])
+                        except Exception:
+                            tags = []
+                        if (not tags) and video_meta and video_meta.get('tags'):
                             tags_str = video_meta.get('tags', '')
                             if tags_str:
                                 tags = [t.strip() for t in tags_str.split(',') if t.strip()]
+                        # Fallback: read from grid model if still empty
+                        if not tags:
+                            try:
+                                parent = self.parent()
+                                if hasattr(parent, 'grid') and hasattr(parent.grid, 'model'):
+                                    import os
+                                    target_norm = os.path.normcase(os.path.abspath(os.path.normpath(path)))
+                                    mdl = parent.grid.model
+                                    for r in range(mdl.rowCount()):
+                                        it = mdl.item(r)
+                                        if not it:
+                                            continue
+                                        p0 = it.data(Qt.UserRole)
+                                        p1 = it.data(Qt.UserRole + 6)
+                                        match0 = p0 and (os.path.normcase(os.path.abspath(os.path.normpath(p0))) == target_norm)
+                                        match1 = p1 and (os.path.normcase(os.path.abspath(os.path.normpath(p1))) == target_norm)
+                                        if match0 or match1:
+                                            t = it.data(Qt.UserRole + 2) or []
+                                            if t:
+                                                tags = t
+                                            break
+                            except Exception:
+                                pass
                         
                         if tags:
                             # Draw tag icon overlay on thumbnail
@@ -1164,26 +1199,57 @@ class DetailsPanel(QWidget):
                             painter = QPainter(overlay_pm)
                             
                             # Draw semi-transparent tag badge in top-right corner
-                            badge_size = 32
-                            x = overlay_pm.width() - badge_size - 8
-                            y = 8
+                            badge_size = max(24, min(36, int(overlay_pm.width() * 0.10)))
+                            x = overlay_pm.width() - badge_size - 6
+                            y = 6
                             
                             # Background circle
+                            painter.setRenderHint(QPainter.Antialiasing, True)
+                            painter.setRenderHint(QPainter.TextAntialiasing, True)
                             painter.setBrush(QColor(102, 126, 234, 200))  # Purple with transparency
                             painter.setPen(Qt.NoPen)
                             painter.drawEllipse(x, y, badge_size, badge_size)
                             
-                            # Tag emoji
-                            painter.setPen(QColor(255, 255, 255))
-                            font = QFont("Segoe UI Emoji", 16, QFont.Bold)
-                            painter.setFont(font)
-                            painter.drawText(x, y, badge_size, badge_size, Qt.AlignCenter, "🏷️")
-                            
+                            # Draw stacked badges for each tag (top-right column)
+                            from settings_manager_qt import SettingsManager
+                            sm = SettingsManager()
+                            if sm.get("badge_overlays_enabled", True):
+                                icons = []
+                                for t in tags:
+                                    tl = t.lower().strip()
+                                    if tl == 'favorite':
+                                        icons.append('★')
+                                    elif tl == 'face':
+                                        icons.append('👤')
+                                    else:
+                                        icons.append('🏷️')
+                                badge_size = int(sm.get("badge_size_px", badge_size))
+                                max_badges = min(len(icons), int(sm.get("badge_max_count", 4)))
+                                for i in range(max_badges):
+                                    by = y + i * (badge_size + 4)
+                                    painter.setBrush(QColor(102, 126, 234, 200))
+                                    painter.setPen(Qt.NoPen)
+                                    shape = str(sm.get("badge_shape", "circle")).lower()
+                                    rect_i = QRect(x, by, badge_size, badge_size)
+                                    if shape == 'square':
+                                        painter.drawRect(rect_i)
+                                    elif shape == 'rounded':
+                                        painter.drawRoundedRect(rect_i, 4, 4)
+                                    else:
+                                        painter.drawEllipse(x, by, badge_size, badge_size)
+                                    painter.setPen(QColor(255, 255, 255))
+                                    painter.drawText(x, by, badge_size, badge_size, Qt.AlignCenter, icons[i])
                             painter.end()
                             scaled_pm = overlay_pm
                         
                         # Replace thumb widget with container
                         self.thumb.setPixmap(scaled_pm)
+                        self.thumb.setToolTip(', '.join(tags) if tags else '')
+                        from PySide6.QtWidgets import QGraphicsDropShadowEffect
+                        _eff = QGraphicsDropShadowEffect()
+                        _eff.setBlurRadius(12)
+                        _eff.setOffset(0, 2)
+                        self.thumb.setGraphicsEffect(_eff)
                         self.thumb.setStyleSheet("""
                             QLabel {
                                 background: #000;
@@ -1239,32 +1305,41 @@ class DetailsPanel(QWidget):
                     quality = "SD"
                 resolution_str = f"📺 {width}×{height} ({quality})"
                 
-                video_rows.append(r("Duration", duration_str))
-                video_rows.append(r("Resolution", resolution_str))
-                video_rows.append(r("Frame Rate", f"🎬 {video_meta.get('fps', '-')} fps"))
-                video_rows.append(r("Codec", f"💿 {video_meta.get('codec', '-')}"))
+                video_rows.append(r(tr('metadata.field_duration'), duration_str))
+                video_rows.append(r(tr('metadata.field_resolution'), resolution_str))
+                fps = video_meta.get('fps')
+                if fps:
+                    try:
+                        fps_val = float(fps)
+                        fps_str = f"{int(round(fps_val))}" if abs(fps_val - round(fps_val)) < 0.05 else f"{fps_val:.2f}"
+                    except Exception:
+                        fps_str = str(fps)
+                else:
+                    fps_str = "-"
+                video_rows.append(r(tr('metadata.field_frame_rate'), f"🎬 {fps_str} fps"))
+                video_rows.append(r(tr('metadata.field_codec'), f"💿 {video_meta.get('codec', '-')}"))
                 
                 bitrate = video_meta.get('bitrate_kbps')
                 if bitrate:
-                    video_rows.append(r("Bitrate", f"📊 {bitrate/1000:.2f} Mbps"))
+                    video_rows.append(r(tr('metadata.field_bitrate'), f"📊 {bitrate/1000:.2f} Mbps"))
                 
                 file_size = video_meta.get('file_size_mb', 0)
-                video_rows.append(r("File Size", f"💾 {file_size:.1f} MB"))
+                video_rows.append(r(tr('metadata.field_file_size'), f"💾 {file_size:.1f} MB"))
                 
                 # Status with emoji indicators
                 meta_status = video_meta.get('metadata_status', 'pending')
                 meta_icon = "✅" if meta_status == "completed" else "⏳" if meta_status == "pending" else "❌"
-                video_rows.append(r("Metadata", f"{meta_icon} {meta_status}"))
+                video_rows.append(r(tr('metadata.field_metadata_status'), f"{meta_icon} {meta_status}"))
                 
                 thumb_status = video_meta.get('thumbnail_status', 'pending')
                 thumb_icon = "✅" if thumb_status == "ok" else "⏳" if thumb_status == "pending" else "❌"
-                video_rows.append(r("Thumbnail", f"{thumb_icon} {thumb_status}"))
+                video_rows.append(r(tr('metadata.field_thumbnail_status'), f"{thumb_icon} {thumb_status}"))
             
             fs_rows = [
-                r("File", base),
-                r("Path", path),
-                r("Size (FS)", fs_size_kb),
-                r("Modified (FS)", fs_mtime),
+                r(tr('metadata.field_file'), base),
+                r(tr('metadata.field_path'), path),
+                r(tr('metadata.field_size_fs'), fs_size_kb),
+                r(tr('metadata.field_modified_fs'), fs_mtime),
             ]
             
             sections = []
@@ -1273,7 +1348,7 @@ class DetailsPanel(QWidget):
                     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
                                 color: white; padding: 8px 12px; border-radius: 6px; 
                                 font-weight: 700; font-size: 11pt; margin-bottom: 8px;'>
-                        🎬 Video Metadata
+                        🎬 {tr('metadata.section_video_info')}
                     </div>
                     <table style='width:100%; margin-bottom:12px;'>{''.join(video_rows)}</table>
                 """)
@@ -1281,7 +1356,7 @@ class DetailsPanel(QWidget):
                 <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
                             color: white; padding: 8px 12px; border-radius: 6px; 
                             font-weight: 700; font-size: 11pt; margin-bottom: 8px;'>
-                    📁 File Information
+                    📁 {tr('metadata.section_file_info')}
                 </div>
                 <table style='width:100%;'>{''.join(fs_rows)}</table>
             """)
@@ -1320,12 +1395,109 @@ class DetailsPanel(QWidget):
             db = ReferenceDB()
             row = db.get_photo_metadata_by_path(path) or {}
             
-            # 🏷️ Load tags for photo overlay
-            tags = []
-            if row.get('tags'):
-                tags_str = row.get('tags', '')
-                if tags_str:
+            from services.tag_service import get_tag_service
+            svc = get_tag_service()
+            try:
+                tags = []
+                # Prefer project-aware TagService lookup
+                project_id = None
+                if hasattr(self.parent(), 'grid') and hasattr(self.parent().grid, 'project_id'):
+                    project_id = self.parent().grid.project_id
+                elif hasattr(self.parent(), 'sidebar') and hasattr(self.parent().sidebar, 'project_id'):
+                    project_id = self.parent().sidebar.project_id
+                if project_id is None:
+                    from app_services import get_default_project_id
+                    project_id = get_default_project_id()
+                if project_id is not None:
+                    tags = (svc.get_tags_for_paths([path], project_id) or {}).get(path, [])
+                    # Also try tags for the currently selected items in the grid
+                    try:
+                        parent = self.parent()
+                        if hasattr(parent, 'grid') and hasattr(parent.grid, 'get_selected_paths'):
+                            sel_paths = parent.grid.get_selected_paths()
+                            if sel_paths:
+                                sel_map = svc.get_tags_for_paths(sel_paths, project_id) or {}
+                                import os
+                                target_norm = os.path.normcase(os.path.abspath(os.path.normpath(path)))
+                                # Direct key or normalized match
+                                if path in sel_map and sel_map[path]:
+                                    tags = sel_map[path]
+                                else:
+                                    for k, v in sel_map.items():
+                                        kn = os.path.normcase(os.path.abspath(os.path.normpath(k)))
+                                        if kn == target_norm and v:
+                                            tags = v
+                                            break
+                    except Exception:
+                        pass
+            except Exception:
+                tags = []
+            try:
+                parent = self.parent()
+                if hasattr(parent, '_selection_tag_cache') and parent._selection_tag_cache:
+                    cache_tags = parent._selection_tag_cache.get(path)
+                    if cache_tags:
+                        tags = [str(t).strip() for t in cache_tags if str(t).strip()]
+            except Exception:
+                pass
+
+            # Fallback: use DB row tags if service returns none
+            if (not tags) and row and row.get('tags'):
+                tags_str = row.get('tags')
+                if isinstance(tags_str, str):
                     tags = [t.strip() for t in tags_str.split(',') if t.strip()]
+            # Fallback: read tags from grid model for the selected path
+            if not tags:
+                try:
+                    parent = self.parent()
+                    if hasattr(parent, 'grid') and hasattr(parent.grid, 'model'):
+                        import os
+                        target_norm = os.path.normcase(os.path.abspath(os.path.normpath(path)))
+                        mdl = parent.grid.model
+                        for r in range(mdl.rowCount()):
+                            it = mdl.item(r)
+                            if not it:
+                                continue
+                            p0 = it.data(Qt.UserRole)
+                            p1 = it.data(Qt.UserRole + 6)
+                            match0 = p0 and (os.path.normcase(os.path.abspath(os.path.normpath(p0))) == target_norm)
+                            match1 = p1 and (os.path.normcase(os.path.abspath(os.path.normpath(p1))) == target_norm)
+                            if match0 or match1:
+                                t = it.data(Qt.UserRole + 2) or []
+                                t = [str(x).strip() for x in t if str(x).strip()]
+                                if t:
+                                    tags = t
+                                break
+                except Exception:
+                    pass
+            # Fallback: use DB row tags if service returns none
+            if (not tags) and row and row.get('tags'):
+                tags_str = row.get('tags')
+                if isinstance(tags_str, str):
+                    tags = [t.strip() for t in tags_str.split(',') if t.strip()]
+            # Fallback: read tags from grid model for the selected path
+            if not tags:
+                try:
+                    parent = self.parent()
+                    if hasattr(parent, 'grid') and hasattr(parent.grid, 'model'):
+                        import os
+                        target_norm = os.path.normcase(os.path.abspath(os.path.normpath(path)))
+                        mdl = parent.grid.model
+                        for r in range(mdl.rowCount()):
+                            it = mdl.item(r)
+                            if not it:
+                                continue
+                            p0 = it.data(Qt.UserRole)
+                            p1 = it.data(Qt.UserRole + 6)
+                            match0 = p0 and (os.path.normcase(os.path.abspath(os.path.normpath(p0))) == target_norm)
+                            match1 = p1 and (os.path.normcase(os.path.abspath(os.path.normpath(p1))) == target_norm)
+                            if match0 or match1:
+                                t = it.data(Qt.UserRole + 2) or []
+                                if t:
+                                    tags = t
+                                break
+                except Exception:
+                    pass
             
             # --- Preview (safe; QImageReader honors EXIF orientation) ---
             reader = QImageReader(path)
@@ -1341,11 +1513,13 @@ class DetailsPanel(QWidget):
                     painter = QPainter(overlay_pm)
                     
                     # Draw semi-transparent tag badge in top-right corner
-                    badge_size = 28
+                    badge_size = max(22, min(34, int(overlay_pm.width() * 0.10)))
                     x = overlay_pm.width() - badge_size - 6
                     y = 6
                     
                     # Background circle
+                    painter.setRenderHint(QPainter.Antialiasing, True)
+                    painter.setRenderHint(QPainter.TextAntialiasing, True)
                     painter.setBrush(QColor(102, 126, 234, 200))  # Purple with transparency
                     painter.setPen(Qt.NoPen)
                     painter.drawEllipse(x, y, badge_size, badge_size)
@@ -1354,12 +1528,43 @@ class DetailsPanel(QWidget):
                     painter.setPen(QColor(255, 255, 255))
                     font = QFont("Segoe UI Emoji", 14, QFont.Bold)
                     painter.setFont(font)
-                    painter.drawText(x, y, badge_size, badge_size, Qt.AlignCenter, "🏷️")
                     
+                    # Draw stacked badges for each tag (top-right column)
+                    icons = []
+                    for t in tags:
+                        tl = t.lower().strip()
+                        if tl == 'favorite':
+                            icons.append('★')
+                        elif tl == 'face':
+                            icons.append('👤')
+                        else:
+                            icons.append('🏷️')
+                    max_badges = min(len(icons), 4)
+                    for i in range(max_badges):
+                        by = y + i * (badge_size + 4)
+                        painter.setBrush(QColor(102, 126, 234, 200))
+                        painter.setPen(Qt.NoPen)
+                        painter.drawEllipse(x, by, badge_size, badge_size)
+                        painter.setPen(QColor(255, 255, 255))
+                        painter.drawText(x, by, badge_size, badge_size, Qt.AlignCenter, icons[i])
                     painter.end()
                     pm = overlay_pm
                 
                 self.thumb.setPixmap(pm)
+                self.thumb.setToolTip(', '.join(tags) if tags else '')
+                from PySide6.QtWidgets import QGraphicsDropShadowEffect
+                _eff = QGraphicsDropShadowEffect()
+                _eff.setBlurRadius(12)
+                _eff.setOffset(0, 2)
+                self.thumb.setGraphicsEffect(_eff)
+                self.thumb.setStyleSheet("""
+                            QLabel {
+                                background: #000;
+                                border: 2px solid #0078d4;
+                                border-radius: 8px;
+                                padding: 4px;
+                            }
+                        """)
             else:
                 self.thumb.setText("(no preview)")
 
@@ -1414,29 +1619,98 @@ class DetailsPanel(QWidget):
                 pass
 
             exif_rows = []
-            for key in ("Camera", "Lens", "ISO", "Shutter", "Aperture", "Focal Length",
-                        "Orientation", "Date Taken", "GPS"):
-                if exif.get(key) not in (None, "", []):
-                    exif_rows.append(r(key, exif[key]))
+            # EXIF field mapping: (English key in dict, translated label)
+            exif_fields = [
+                ("Camera", tr('metadata.field_camera')),
+                ("Lens", tr('metadata.field_lens')),
+                ("ISO", tr('metadata.field_iso')),
+                ("Shutter", tr('metadata.field_shutter')),
+                ("Aperture", tr('metadata.field_aperture')),
+                ("Focal Length", tr('metadata.field_focal_length')),
+                ("Orientation", tr('metadata.field_orientation')),
+                ("Date Taken", tr('metadata.field_date_taken_exif'))
+            ]
+            for eng_key, label in exif_fields:
+                if exif.get(eng_key) not in (None, "", []):
+                    exif_rows.append(r(label, exif[eng_key]))
+            
+            # GPS with enhanced display and map preview
+            gps_str = exif.get("GPS")
+            if gps_str:
+                lat, lon = self._parse_gps_coords(gps_str)
+                if lat is not None and lon is not None:
+                    # Create clickable map link
+                    map_url = f"https://www.openstreetmap.org/?mlat={lat}&mlon={lon}&zoom=15"
+                    gps_display = f"""
+                        <div style='background: #f8f9fa; padding: 6px; border-radius: 4px; margin: 4px 0;'>
+                            <div style='font-weight: 600; color: #0078d4;'>📍 {gps_str}</div>
+                            <div style='font-size: 9pt; color: #666; margin-top: 2px;'>
+                                <a href='{map_url}' style='color: #0078d4; text-decoration: none;'>🗺️ {tr('metadata.view_on_map')}</a>
+                            </div>
+                        </div>
+                    """
+                    exif_rows.append((tr('metadata.field_gps'), gps_display))
+                    
+                    # Try to get location name (non-blocking)
+                    location_name = self._get_location_name(lat, lon)
+                    if location_name:
+                        exif_rows.append(r(tr('metadata.field_location'), f"📌 {location_name}"))
+                else:
+                    exif_rows.append(r(tr('metadata.field_gps'), gps_str))
+            
+            # Convert exif_rows to HTML (handle tuples for GPS)
+            exif_html_rows = []
+            for item in exif_rows:
+                if isinstance(item, tuple):
+                    key, val = item
+                    exif_html_rows.append(f"<tr><td><b>{key}</b></td><td>{val}</td></tr>")
+                else:
+                    exif_html_rows.append(item)
 
             fs_rows = [
-                r("File", base),
-                r("Path", path),
-                r("Size (FS)", fs_size_kb),
-                r("Modified (FS)", fs_mtime),
+                r(tr('metadata.field_file'), base),
+                r(tr('metadata.field_path'), path),
+                r(tr('metadata.field_size_fs'), fs_size_kb),
+                r(tr('metadata.field_modified_fs'), fs_mtime),
     #            r("Date Taken (final)", date_taken),
-                r("Dimensions", f"{row.get('width','-')} × {row.get('height','-')}"),
-                r("Date Taken (final)", date_taken),            
+                r(tr('metadata.field_dimensions'), f"{row.get('width','-')} × {row.get('height','-')}"),
+                r(tr('metadata.field_date_taken'), date_taken),            
             ]
 
             sections = []
             if db_rows:
-                sections.append(f"<div class='hdr'>Database</div><table>{''.join(db_rows)}</table>")
+                sections.append(f"<div class='hdr'>{tr('metadata.section_database')}</div><table>{''.join(db_rows)}</table>")
             if exif_rows:
-                sections.append(f"<div class='hdr'>EXIF</div><table>{''.join(exif_rows)}</table>")
-            sections.append(f"<div class='hdr'>File</div><table>{''.join(fs_rows)}</table>")
+                sections.append(f"<div class='hdr'>{tr('metadata.section_exif')}</div><table>{''.join(exif_rows)}</table>")
+            sections.append(f"<div class='hdr'>{tr('metadata.section_file_info')}</div><table>{''.join(fs_rows)}</table>")
 
-            html = f"<b>{base}</b><br>{''.join(sections)}"
+            html = f"""
+                <div style='padding: 8px;'>
+                    <div style='font-size: 12pt; font-weight: 700; color: #333; margin-bottom: 12px; 
+                                padding: 8px; background: #f0f0f0; border-radius: 6px; 
+                                border-left: 4px solid #0078d4;'>
+                        🖼️ {base}
+                    </div>
+                    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                color: white; padding: 8px 12px; border-radius: 6px; 
+                                font-weight: 700; font-size: 11pt; margin-bottom: 8px;'>
+                        {tr('metadata.section_database')}
+                    </div>
+                    <table style='width:100%; margin-bottom:12px;'>{''.join(db_rows)}</table>
+                    <div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+                                color: white; padding: 8px 12px; border-radius: 6px; 
+                                font-weight: 700; font-size: 11pt; margin-bottom: 8px;'>
+                        {tr('metadata.section_exif')}
+                    </div>
+                    <table style='width:100%; margin-bottom:12px;'>{''.join(exif_html_rows)}</table>
+                    <div style='background: linear-gradient(135deg, #42e695 0%, #3bb2b8 100%); 
+                                color: white; padding: 8px 12px; border-radius: 6px; 
+                                font-weight: 700; font-size: 11pt; margin-bottom: 8px;'>
+                        {tr('metadata.section_file_info')}
+                    </div>
+                    <table style='width:100%;'>{''.join(fs_rows)}</table>
+                </div>
+            """
             self.meta.setText(html)
 
             # Prepare plain text for copy
@@ -1684,6 +1958,94 @@ class DetailsPanel(QWidget):
             return deg
         except Exception:
             return None
+    
+    def _parse_gps_coords(self, gps_str: str) -> tuple:
+        """Parse GPS string 'lat, lon' to (lat, lon) floats."""
+        try:
+            if not gps_str or ',' not in gps_str:
+                return None, None
+            parts = gps_str.split(',')
+            if len(parts) != 2:
+                return None, None
+            lat = float(parts[0].strip())
+            lon = float(parts[1].strip())
+            return lat, lon
+        except Exception:
+            return None, None
+    
+    def _get_location_name(self, lat: float, lon: float, timeout: float = None) -> str | None:
+        """Get human-readable location name from coordinates using Nominatim reverse geocoding."""
+        try:
+            # Check if reverse geocoding is enabled in settings
+            from settings_manager_qt import SettingsManager
+            sm = SettingsManager()
+            if not sm.get("gps_reverse_geocoding_enabled", True):
+                return None
+            
+            # Use timeout from settings if not provided
+            if timeout is None:
+                timeout = float(sm.get("gps_geocoding_timeout_sec", 2.0))
+            
+            # Check cache first if enabled
+            cache_key = f"{lat:.6f},{lon:.6f}"
+            if sm.get("gps_cache_location_names", True):
+                from reference_db import ReferenceDB
+                db = ReferenceDB()
+                cached = db.get_cached_location_name(lat, lon)
+                if cached:
+                    return cached
+            
+            import urllib.request
+            import urllib.parse
+            import json
+            
+            # Nominatim API (OpenStreetMap)
+            url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=10"
+            headers = {'User-Agent': 'MemoryMate-PhotoFlow/1.0'}
+            
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=timeout) as response:
+                data = json.loads(response.read().decode())
+                
+                # Try to build a nice location string
+                addr = data.get('address', {})
+                parts = []
+                
+                # City/Town/Village
+                city = (addr.get('city') or addr.get('town') or 
+                       addr.get('village') or addr.get('municipality'))
+                if city:
+                    parts.append(city)
+                
+                # State/Province
+                state = addr.get('state') or addr.get('province')
+                if state and state != city:
+                    parts.append(state)
+                
+                # Country
+                country = addr.get('country')
+                if country and len(parts) < 2:
+                    parts.append(country)
+                
+                location_name = None
+                if parts:
+                    location_name = ', '.join(parts[:3])  # Max 3 components
+                else:
+                    # Fallback to display_name
+                    location_name = data.get('display_name', '').split(',')[0]
+                
+                # Cache the result if enabled
+                if location_name and sm.get("gps_cache_location_names", True):
+                    try:
+                        db.cache_location_name(lat, lon, location_name)
+                    except Exception:
+                        pass
+                
+                return location_name
+        except Exception as e:
+            # Silent fail - don't block metadata display
+            print(f"[GPS] Reverse geocoding failed: {e}")
+            return None
 
 
 class BreadcrumbNavigation(QWidget):
@@ -1735,6 +2097,19 @@ class BreadcrumbNavigation(QWidget):
     def _show_project_menu(self):
         """Show project management menu (create new, switch project)."""
         from PySide6.QtWidgets import QMenu
+        
+        print(f"[Breadcrumb] _show_project_menu() called")
+        
+        # CRITICAL FIX: Refresh project list before showing menu
+        # This ensures we always show the latest projects
+        try:
+            from app_services import list_projects
+            if hasattr(self.main_window, "_projects"):
+                self.main_window._projects = list_projects()
+                print(f"[Breadcrumb] Refreshed project list: {len(self.main_window._projects)} projects")
+        except Exception as e:
+            print(f"[Breadcrumb] Warning: Could not refresh project list: {e}")
+        
         menu = QMenu(self)
 
         # Add "Create New Project" action
@@ -1745,16 +2120,37 @@ class BreadcrumbNavigation(QWidget):
 
         # Add existing projects
         if hasattr(self.main_window, "_projects") and self.main_window._projects:
+            print(f"[Breadcrumb] Adding {len(self.main_window._projects)} projects to menu")
             for project in self.main_window._projects:
                 proj_id = project.get("id")
                 proj_name = project.get("name", f"Project {proj_id}")
                 proj_mode = project.get("mode", "scan")
 
-                action = menu.addAction(f"  {proj_name} ({proj_mode})")
+                # CRITICAL FIX: Check if this is the current project
+                is_current = False
+                if hasattr(self.main_window, "grid") and hasattr(self.main_window.grid, "project_id"):
+                    is_current = (proj_id == self.main_window.grid.project_id)
+                
+                # Mark current project with checkmark
+                action_text = f"{'✓ ' if is_current else '  '}{proj_name} ({proj_mode})"
+                action = menu.addAction(action_text)
                 action.setData(proj_id)
-                action.triggered.connect(lambda checked=False, pid=proj_id: self._switch_project(pid))
+                
+                # CRITICAL FIX: Use proper closure to capture proj_id
+                # Old: lambda checked=False, pid=proj_id: self._switch_project(pid)
+                # New: Use functools.partial for proper binding
+                from functools import partial
+                action.triggered.connect(partial(self._switch_project, proj_id))
+                
+                print(f"[Breadcrumb]   - {action_text} (ID: {proj_id})")
+        else:
+            print(f"[Breadcrumb] No projects found in main_window._projects")
+            # Add a disabled item showing no projects
+            no_proj_action = menu.addAction("  (No projects found)")
+            no_proj_action.setEnabled(False)
 
         # Show menu below the home button
+        print(f"[Breadcrumb] Showing menu...")
         menu.exec(self.btn_home.mapToGlobal(self.btn_home.rect().bottomLeft()))
 
     def _create_new_project(self):
@@ -1796,11 +2192,22 @@ class BreadcrumbNavigation(QWidget):
 
     def _switch_project(self, project_id: int):
         """Switch to a different project."""
+        print(f"[Breadcrumb] _switch_project({project_id}) called")
+        
+        # CRITICAL FIX: Check if already on this project
+        if hasattr(self.main_window, "grid") and hasattr(self.main_window.grid, "project_id"):
+            current_id = self.main_window.grid.project_id
+            if current_id == project_id:
+                print(f"[Breadcrumb] Already on project {project_id}, skipping switch")
+                return
+        
         if hasattr(self.main_window, "_on_project_changed_by_id"):
             self.main_window._on_project_changed_by_id(project_id)
         elif hasattr(self.main_window, "project_controller"):
             # Fallback to project controller
             self.main_window.project_controller.switch_project(project_id)
+        else:
+            print(f"[Breadcrumb] ERROR: No method available to switch projects!")
 
         print(f"[Breadcrumb] Switched to project ID: {project_id}")
 
@@ -1813,46 +2220,80 @@ class BreadcrumbNavigation(QWidget):
                      Example: [("My Photos", lambda: navigate_home()),
                               ("2024", lambda: navigate_to_year(2024))]
         """
-        # Clear existing breadcrumbs
-        while self.breadcrumb_layout.count():
-            item = self.breadcrumb_layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
+        print(f"[BreadcrumbNav] set_path() called with {len(segments)} segments")
+        
+        try:
+            # CRITICAL FIX: Clear widgets safely without processEvents()
+            # processEvents() during signal processing causes re-entrant crashes!
+            print(f"[BreadcrumbNav] Clearing {self.breadcrumb_layout.count()} existing widgets")
+            widgets_to_delete = []
+            while self.breadcrumb_layout.count():
+                item = self.breadcrumb_layout.takeAt(0)
+                if item.widget():
+                    widgets_to_delete.append(item.widget())
+            
+            # Delete widgets via deleteLater - Qt will handle cleanup safely
+            for widget in widgets_to_delete:
+                widget.setParent(None)
+                widget.deleteLater()
+            
+            # REMOVED: QCoreApplication.processEvents() - causes re-entrant crash!
+            # Qt's event loop will process deleteLater() at the appropriate time
+            
+            print(f"[BreadcrumbNav] Cleared all existing widgets")
 
-        self.breadcrumbs = segments
+            self.breadcrumbs = segments
 
-        for i, (label, callback) in enumerate(segments):
-            # Add separator before each segment (except first)
-            if i > 0:
-                sep = QLabel(">")
-                sep.setStyleSheet("color: #999; font-size: 12px;")
-                self.breadcrumb_layout.addWidget(sep)
+            for i, (label, callback) in enumerate(segments):
+                # Add separator before each segment (except first)
+                if i > 0:
+                    sep = QLabel("›")
+                    sep.setStyleSheet("color: #999; font-size: 12px;")
+                    self.breadcrumb_layout.addWidget(sep)
 
-            # Add clickable segment
-            btn = QPushButton(label)
-            btn.setStyleSheet("""
-                QPushButton {
-                    border: none;
-                    background-color: transparent;
-                    color: #333;
-                    font-size: 13px;
-                    padding: 4px 8px;
-                }
-                QPushButton:hover {
-                    background-color: rgba(0, 0, 0, 0.1);
-                    border-radius: 4px;
-                    text-decoration: underline;
-                }
-            """)
-            btn.setCursor(Qt.PointingHandCursor)
-            if callback:
-                btn.clicked.connect(callback)
+                # Add clickable segment
+                btn = QPushButton(label)
+                btn.setStyleSheet("""
+                    QPushButton {
+                        border: none;
+                        background-color: transparent;
+                        color: #333;
+                        font-size: 13px;
+                        padding: 4px 8px;
+                    }
+                    QPushButton:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                        border-radius: 4px;
+                        text-decoration: underline;
+                    }
+                """)
+                btn.setCursor(Qt.PointingHandCursor)
+                # Phase 1: Emphasize first breadcrumb segment (project)
+                if i == 0:
+                    btn.setStyleSheet(btn.styleSheet() + "QPushButton { font-weight: 600; }")
+                
+                # CRITICAL FIX: Disconnect all previous signals before connecting new one
+                try:
+                    btn.clicked.disconnect()
+                except:
+                    pass  # No previous connections
+                
+                if callback:
+                    btn.clicked.connect(callback)
 
-            # Last segment is bold (current location)
-            if i == len(segments) - 1:
-                btn.setStyleSheet(btn.styleSheet() + "QPushButton { font-weight: bold; color: #000; }")
+                # Last segment is bold (current location)
+                if i == len(segments) - 1:
+                    btn.setStyleSheet(btn.styleSheet() + "QPushButton { font-weight: bold; color: #000; }")
 
-            self.breadcrumb_layout.addWidget(btn)
+                self.breadcrumb_layout.addWidget(btn)
+                print(f"[BreadcrumbNav] Added segment {i}: {label}")
+            
+            print(f"[BreadcrumbNav] set_path() completed - {len(segments)} segments added")
+        
+        except Exception as e:
+            print(f"[BreadcrumbNav] ✗✗✗ ERROR in set_path(): {e}")
+            import traceback
+            traceback.print_exc()
 
 
 class SelectionToolbar(QWidget):
@@ -1885,7 +2326,7 @@ class SelectionToolbar(QWidget):
         layout.addStretch()
 
         # Action buttons (black text, disabled when no selection)
-        self.btn_favorite = QPushButton("⭐ Favorite")
+        self.btn_favorite = QPushButton(tr('toolbar.favorite'))
         self.btn_favorite.setStyleSheet("""
             QPushButton {
                 background-color: #4A90E2;
@@ -1906,7 +2347,7 @@ class SelectionToolbar(QWidget):
         """)
         layout.addWidget(self.btn_favorite)
 
-        self.btn_delete = QPushButton("🗑️ Delete")
+        self.btn_delete = QPushButton(tr('toolbar.delete'))
         self.btn_delete.setStyleSheet("""
             QPushButton {
                 background-color: #DC3545;
@@ -1927,19 +2368,19 @@ class SelectionToolbar(QWidget):
         """)
         layout.addWidget(self.btn_delete)
 
-        self.btn_export = QPushButton("📁 Export")
+        self.btn_export = QPushButton(tr('toolbar.export'))
         self.btn_export.setStyleSheet(self.btn_delete.styleSheet())
         layout.addWidget(self.btn_export)
 
-        self.btn_move = QPushButton("📦 Move")
+        self.btn_move = QPushButton(tr('toolbar.move'))
         self.btn_move.setStyleSheet(self.btn_delete.styleSheet())
         layout.addWidget(self.btn_move)
 
-        self.btn_tag = QPushButton("🏷️ Tag…")
+        self.btn_tag = QPushButton(tr('toolbar.tag'))
         self.btn_tag.setStyleSheet(self.btn_favorite.styleSheet())
         layout.addWidget(self.btn_tag)
 
-        self.btn_clear = QPushButton("✕ Clear Selection")
+        self.btn_clear = QPushButton(tr('toolbar.clear_selection'))
         self.btn_clear.setStyleSheet("""
             QPushButton {
                 background-color: #6C757D;
@@ -2112,7 +2553,7 @@ class CompactBackfillIndicator(QWidget):
 
             dialog.exec()
         except Exception as e:
-            QMessageBox.warning(self, "Log Error", f"Could not read backfill log:\n{e}")
+            QMessageBox.warning(self, tr('message_boxes.log_error_title'), tr('message_boxes.log_error_message').format(error=e))
 
     # ===== Compatibility methods for menu actions =====
     def _get_config(self):
@@ -2134,7 +2575,7 @@ class CompactBackfillIndicator(QWidget):
         from pathlib import Path
         script = Path(__file__).resolve().parent / "workers" / "meta_backfill_pool.py"
         if not script.exists():
-            QMessageBox.warning(self, "Backfill Script Missing", f"{script} not found.")
+            QMessageBox.warning(self, tr('message_boxes.backfill_script_missing_title'), tr('message_boxes.backfill_script_missing_message').format(script=script))
             return
 
         settings = self._get_config()
@@ -2171,17 +2612,17 @@ class CompactBackfillIndicator(QWidget):
 
         try:
             subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **kwargs)
-            QMessageBox.information(self, "Backfill", "Persistent backfill started in background.")
+            QMessageBox.information(self, tr('message_boxes.backfill_started_title'), tr('message_boxes.backfill_started_message'))
             self.start_backfill()  # Show progress indicator
         except Exception as e:
-            QMessageBox.critical(self, "Backfill Error", str(e))
+            QMessageBox.critical(self, tr('message_boxes.backfill_error_title'), str(e))
 
     def _on_start_background(self):
         """Start backfill in background (menu action)."""
         try:
             self._launch_detached()
         except Exception as e:
-            QMessageBox.critical(self, "Backfill Error", str(e))
+            QMessageBox.critical(self, tr('message_boxes.backfill_error_title'), str(e))
 
     def _on_run_foreground(self):
         """Run backfill in foreground (menu action)."""
@@ -2202,10 +2643,10 @@ class CompactBackfillIndicator(QWidget):
                    "--batch", str(int(batch))]
             try:
                 subprocess.run(cmd)
-                QMessageBox.information(self, "Backfill", "Foreground backfill finished.")
+                QMessageBox.information(self, tr('message_boxes.backfill_finished_title'), tr('message_boxes.backfill_finished_message'))
                 self.finish_backfill()  # Hide progress indicator
             except Exception as e:
-                QMessageBox.critical(self, "Backfill", str(e))
+                QMessageBox.critical(self, tr('message_boxes.backfill_finished_title'), str(e))
 
         self.start_backfill()  # Show progress indicator
         Thread(target=run, daemon=True).start()
@@ -2223,7 +2664,7 @@ class BackfillStatusPanel(QWidget):
         layout = QVBoxLayout(self)
         lbl = QLabel("<b>Metadata Backfill Status</b>")
         layout.addWidget(lbl)
-        self.txt = QLabel("(no log yet)")
+        self.txt = QLabel(tr('status_messages.no_log_yet'))
         self.txt.setWordWrap(True)
         self.txt.setStyleSheet("font-family: monospace;")
         layout.addWidget(self.txt, 1)
@@ -2262,7 +2703,7 @@ class BackfillStatusPanel(QWidget):
     def _launch_detached(self):
         script = Path(__file__).resolve().parent / "workers" / "meta_backfill_pool.py"
         if not script.exists():
-            QMessageBox.warning(self, "Backfill Script Missing", f"{script} not found.")
+            QMessageBox.warning(self, tr('message_boxes.backfill_script_missing_title'), tr('message_boxes.backfill_script_missing_message').format(script=script))
             return
 
         settings = self._get_config()
@@ -2308,16 +2749,16 @@ class BackfillStatusPanel(QWidget):
 
         try:
             subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **kwargs)
-            QMessageBox.information(self, "Backfill", "Persistent backfill started in background.")
+            QMessageBox.information(self, tr('message_boxes.backfill_started_title'), tr('message_boxes.backfill_started_message'))
         except Exception as e:
-            QMessageBox.critical(self, "Backfill Error", str(e))
+            QMessageBox.critical(self, tr('message_boxes.backfill_error_title'), str(e))
 
     def _on_start_background(self):
         # Quick guard: spawn detached in main thread (fire-and-forget)
         try:
             self._launch_detached()
         except Exception as e:
-            QMessageBox.critical(self, "Backfill Error", str(e))
+            QMessageBox.critical(self, tr('message_boxes.backfill_error_title'), str(e))
 
     def _on_run_foreground(self):
         """
@@ -2337,20 +2778,20 @@ class BackfillStatusPanel(QWidget):
                    "--batch", str(int(batch))]
             try:
                 subprocess.run(cmd)
-                QMessageBox.information(self, "Backfill", "Foreground backfill finished.")
+                QMessageBox.information(self, tr('message_boxes.backfill_finished_title'), tr('message_boxes.backfill_finished_message'))
             except Exception as e:
-                QMessageBox.critical(self, "Backfill", str(e))
+                QMessageBox.critical(self, tr('message_boxes.backfill_finished_title'), str(e))
 
         Thread(target=run, daemon=True).start()
 
     def _on_stop(self):
-        QMessageBox.information(self, "Stop", "Stopping detached backfill requires PID-tracking or OS tools. Not implemented in GUI.")
+        QMessageBox.information(self, tr('message_boxes.stop_title'), tr('message_boxes.stop_message'))
 
     def _tail_log(self):
         try:
             p = Path.cwd() / "app_log.txt"
             if not p.exists():
-                self.txt.setText("(no log yet)")
+                self.txt.setText(tr('status_messages.no_log_yet'))
                 return
             lines = p.read_text(encoding="utf-8", errors="ignore").splitlines()[-12:]
             filtered = [l for l in lines if "meta_backfill" in l or "worker" in l or "supervisor" in l]
@@ -2410,17 +2851,17 @@ class MainWindow(QMainWindow):
         ui = UIBuilder(self)
         tb = ui.make_toolbar("Tools")
         # Defer connecting handlers until grid exists
-        act_select_all = ui.action("Select All")
-        act_clear_sel = ui.action("Clear")
-        act_open = ui.action("Open")
-        act_delete = ui.action("Delete")
+        act_select_all = ui.action(tr('toolbar.select_all'))
+        act_clear_sel = ui.action(tr('toolbar.clear'))
+        act_open = ui.action(tr('toolbar.open'))
+        act_delete = ui.action(tr('toolbar.delete'))
         ui.separator()
 
         folded = bool(self.settings.get("sidebar_folded", False))
 
         # Create action early — connect it later when sidebar exists
         self.act_fold_unfold = ui.action(
-            "Fold/Unfold Sidebar",
+            tr('toolbar.fold_unfold_sidebar'),
             shortcut="Ctrl+Shift+F",
             tooltip="Toggle collapse/expand of the sidebar (Ctrl+Shift+F)",
             checkable=True
@@ -2433,31 +2874,31 @@ class MainWindow(QMainWindow):
         menu_bar = self.menuBar()
 
         # ========== FILE MENU ==========
-        menu_file = menu_bar.addMenu("File")
+        menu_file = menu_bar.addMenu(tr("menu.file"))
 
-        act_scan_repo_menu = QAction("Scan Repository…", self)
+        act_scan_repo_menu = QAction(tr("menu.file_scan"), self)
         act_scan_repo_menu.setShortcut("Ctrl+O")
         act_scan_repo_menu.setToolTip("Scan a directory to add photos to the current project")
         menu_file.addAction(act_scan_repo_menu)
 
         menu_file.addSeparator()
 
-        act_preferences = QAction("Preferences…", self)
+        act_preferences = QAction(tr("menu.file_preferences"), self)
         act_preferences.setShortcut("Ctrl+,")
         act_preferences.setIcon(QIcon.fromTheme("preferences-system"))
         menu_file.addAction(act_preferences)
         act_preferences.triggered.connect(self._open_preferences)
 
         # ========== VIEW MENU ==========
-        menu_view = menu_bar.addMenu("View")
+        menu_view = menu_bar.addMenu(tr("menu.view"))
 
         # Zoom controls
-        act_zoom_in = QAction("Zoom In", self)
+        act_zoom_in = QAction(tr("menu.view_zoom_in"), self)
         act_zoom_in.setShortcut("Ctrl++")
         act_zoom_in.setToolTip("Increase thumbnail size")
         menu_view.addAction(act_zoom_in)
 
-        act_zoom_out = QAction("Zoom Out", self)
+        act_zoom_out = QAction(tr("menu.view_zoom_out"), self)
         act_zoom_out.setShortcut("Ctrl+-")
         act_zoom_out.setToolTip("Decrease thumbnail size")
         menu_view.addAction(act_zoom_out)
@@ -2465,22 +2906,22 @@ class MainWindow(QMainWindow):
         menu_view.addSeparator()
 
         # Grid Size submenu
-        menu_grid_size = menu_view.addMenu("Grid Size")
+        menu_grid_size = menu_view.addMenu(tr("menu.view_grid_size"))
 
-        act_grid_small_menu = QAction("Small (90px)", self)
+        act_grid_small_menu = QAction(tr("menu.view_grid_small"), self)
         act_grid_small_menu.setCheckable(True)
         menu_grid_size.addAction(act_grid_small_menu)
 
-        act_grid_medium_menu = QAction("Medium (120px)", self)
+        act_grid_medium_menu = QAction(tr("menu.view_grid_medium"), self)
         act_grid_medium_menu.setCheckable(True)
         act_grid_medium_menu.setChecked(True)  # Default
         menu_grid_size.addAction(act_grid_medium_menu)
 
-        act_grid_large_menu = QAction("Large (200px)", self)
+        act_grid_large_menu = QAction(tr("menu.view_grid_large"), self)
         act_grid_large_menu.setCheckable(True)
         menu_grid_size.addAction(act_grid_large_menu)
 
-        act_grid_xl_menu = QAction("XL (280px)", self)
+        act_grid_xl_menu = QAction(tr("menu.view_grid_xl"), self)
         act_grid_xl_menu.setCheckable(True)
         menu_grid_size.addAction(act_grid_xl_menu)
 
@@ -2494,18 +2935,18 @@ class MainWindow(QMainWindow):
         menu_view.addSeparator()
 
         # Sort By submenu
-        menu_sort = menu_view.addMenu("Sort By")
+        menu_sort = menu_view.addMenu(tr("menu.view_sort"))
 
-        act_sort_date = QAction("Date", self)
+        act_sort_date = QAction(tr("menu.view_sort_date"), self)
         act_sort_date.setCheckable(True)
         menu_sort.addAction(act_sort_date)
 
-        act_sort_filename = QAction("Filename", self)
+        act_sort_filename = QAction(tr("menu.view_sort_filename"), self)
         act_sort_filename.setCheckable(True)
         act_sort_filename.setChecked(True)  # Default
         menu_sort.addAction(act_sort_filename)
 
-        act_sort_size = QAction("Size", self)
+        act_sort_size = QAction(tr("menu.view_sort_size"), self)
         act_sort_size.setCheckable(True)
         menu_sort.addAction(act_sort_size)
 
@@ -2518,15 +2959,15 @@ class MainWindow(QMainWindow):
         menu_view.addSeparator()
 
         # Sidebar submenu
-        menu_sidebar = menu_view.addMenu("Sidebar")
+        menu_sidebar = menu_view.addMenu(tr("menu.view_sidebar"))
 
-        act_toggle_sidebar = QAction("Show/Hide Sidebar", self)
+        act_toggle_sidebar = QAction(tr("menu.view_sidebar"), self)
         act_toggle_sidebar.setShortcut("Ctrl+B")
         act_toggle_sidebar.setCheckable(True)
         act_toggle_sidebar.setChecked(True)  # Default visible
         menu_sidebar.addAction(act_toggle_sidebar)
 
-        act_toggle_sidebar_mode = QAction("Toggle List/Tabs Mode", self)
+        act_toggle_sidebar_mode = QAction(tr("menu.view_sidebar_mode"), self)
         act_toggle_sidebar_mode.setShortcut("Ctrl+Alt+S")
         act_toggle_sidebar_mode.setToolTip("Toggle Sidebar between List and Tabs (Ctrl+Alt+S)")
         menu_sidebar.addAction(act_toggle_sidebar_mode)
@@ -2534,16 +2975,16 @@ class MainWindow(QMainWindow):
         # ========== FILTERS MENU ==========
         menu_filters = menu_bar.addMenu("Filters")
 
-        self.btn_all = QAction("All Photos", self)
+        self.btn_all = QAction(tr("sidebar.all_photos"), self)
         self.btn_all.setCheckable(True)
         self.btn_all.setChecked(True)
         menu_filters.addAction(self.btn_all)
 
-        self.btn_fav = QAction("Favorites", self)
+        self.btn_fav = QAction(tr("sidebar.favorites"), self)
         self.btn_fav.setCheckable(True)
         menu_filters.addAction(self.btn_fav)
 
-        self.btn_faces = QAction("Faces", self)
+        self.btn_faces = QAction(tr("sidebar.people"), self)
         self.btn_faces.setCheckable(True)
         menu_filters.addAction(self.btn_faces)
 
@@ -2554,9 +2995,9 @@ class MainWindow(QMainWindow):
         self.filter_menu_group.addAction(self.btn_faces)
 
         # ========== TOOLS MENU ==========
-        menu_tools = menu_bar.addMenu("Tools")
+        menu_tools = menu_bar.addMenu(tr("menu.tools"))
 
-        act_scan_repo_tools = QAction("Scan Repository…", self)
+        act_scan_repo_tools = QAction(tr("menu.tools_scan_repo"), self)
         act_scan_repo_tools.setToolTip("Scan a directory to add photos to the current project")
         menu_tools.addAction(act_scan_repo_tools)
 
@@ -2576,39 +3017,39 @@ class MainWindow(QMainWindow):
         act_meta_auto.setChecked(self.settings.get("auto_run_backfill_after_scan", False))
         act_meta_auto.setToolTip("Automatically backfill metadata for both photos and videos after scanning")
 
-        act_clear_cache = QAction("Clear Thumbnail Cache…", self)
+        act_clear_cache = QAction(tr("menu.tools_clear_cache"), self)
         menu_tools.addAction(act_clear_cache)
         act_clear_cache.triggered.connect(self._on_clear_thumbnail_cache)
 
         menu_tools.addSeparator()
 
         # Database submenu (advanced operations)
-        menu_db = menu_tools.addMenu("Database")
+        menu_db = menu_tools.addMenu(tr("menu.tools_database"))
 
-        act_db_fresh = QAction("Fresh Start (delete DB)…", self)
+        act_db_fresh = QAction(tr("menu.tools_db_fresh"), self)
         menu_db.addAction(act_db_fresh)
 
-        act_db_check = QAction("Self-Check / Report…", self)
+        act_db_check = QAction(tr("menu.tools_db_check"), self)
         menu_db.addAction(act_db_check)
 
         menu_db.addSeparator()
 
-        act_db_rebuild_dates = QAction("Rebuild Date Index", self)
+        act_db_rebuild_dates = QAction(tr("menu.tools_db_rebuild_dates"), self)
         menu_db.addAction(act_db_rebuild_dates)
 
-        act_migrate = QAction("Data Migration… (created_ts / year / date)", self)
+        act_migrate = QAction(tr("menu.tools_db_migrate"), self)
         menu_db.addAction(act_migrate)
 
-        act_optimize = QAction("Optimize Indexes (date/updated)", self)
+        act_optimize = QAction(tr("menu.tools_db_optimize"), self)
         menu_db.addAction(act_optimize)
 
         # ========== HELP MENU ==========
-        menu_help = menu_bar.addMenu("Help")
+        menu_help = menu_bar.addMenu(tr("menu.help"))
 
-        act_about = QAction("About MemoryMate PhotoFlow", self)
+        act_about = QAction(tr("menu.help_about"), self)
         menu_help.addAction(act_about)
 
-        act_shortcuts = QAction("Keyboard Shortcuts", self)
+        act_shortcuts = QAction(tr("menu.help_shortcuts"), self)
         act_shortcuts.setShortcut("F1")
         menu_help.addAction(act_shortcuts)
 
@@ -2659,9 +3100,9 @@ class MainWindow(QMainWindow):
         def _optimize_db():
             try:
                 ReferenceDB().optimize_indexes()
-                QMessageBox.information(self, "Database", "Indexes created/verified successfully.")
+                QMessageBox.information(self, tr('message_boxes.database_title'), tr('message_boxes.database_success_message'))
             except Exception as e:
-                QMessageBox.critical(self, "Database Error", str(e))
+                QMessageBox.critical(self, tr('message_boxes.database_error_title'), str(e))
 
         act_optimize.triggered.connect(_optimize_db)
 
@@ -2671,10 +3112,28 @@ class MainWindow(QMainWindow):
         act_report_bug.triggered.connect(lambda: self._open_url("https://github.com/anthropics/memorymate-photoflow/issues"))    
 
         # 📂 Scan Repository Action
-        act_scan_repo = tb.addAction("📂 Scan Repository…")
+        act_scan_repo = tb.addAction(tr('toolbar.scan_repository'))
+        # Phase 1: Promote Scan Repository with a primary button
+        self.btn_scan_primary = QPushButton(tr('toolbar.scan_repository'))
+        self.btn_scan_primary.setCursor(Qt.PointingHandCursor)
+        self.btn_scan_primary.setStyleSheet("""
+            QPushButton {
+                background-color: #4A90E2;
+                color: white;
+                border: 1px solid #3A7BC8;
+                border-radius: 4px;
+                padding: 6px 12px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #357ABD;
+            }
+        """)
+        self.btn_scan_primary.clicked.connect(self._on_scan_repository)
+        tb.addWidget(self.btn_scan_primary)
 
         # Toggle action: show/hide the BackfillStatusPanel
-        self.act_toggle_backfill = QAction(QIcon.fromTheme("view-sidebar"), "Backfill Panel", self)
+        self.act_toggle_backfill = QAction(QIcon.fromTheme("view-sidebar"), tr('toolbar.backfill_panel'), self)
         self.act_toggle_backfill.setCheckable(True)
         
         # read persisted preference (fallback True)
@@ -2697,7 +3156,7 @@ class MainWindow(QMainWindow):
 
         # 🛑 Cancel Scan button (programmatic cancel trigger)
         self.act_cancel_scan = ui.action(
-            "🛑 Cancel Scan",
+            tr('toolbar.cancel_scan'),
             icon="process-stop",
             tooltip="Abort an ongoing repository scan immediately",
             handler=self._on_cancel_scan_clicked
@@ -2705,7 +3164,7 @@ class MainWindow(QMainWindow):
         self.act_cancel_scan.setEnabled(False)
 
         # Incremental vs full scan
-        self.chk_incremental = ui.checkbox("Incremental", checked=True)
+        self.chk_incremental = ui.checkbox(tr('toolbar.incremental'), checked=True)
         ui.separator()
 
         # 🔍 Search Bar
@@ -2716,16 +3175,16 @@ class MainWindow(QMainWindow):
         ui.separator()
 
         # 🔽 Sorting and filtering controls
-        self.sort_combo = ui.combo_sort("Sort:", ["Filename", "Date", "Size"], self._apply_sort_filter)
+        self.sort_combo = ui.combo_sort(tr('toolbar.sort'), ["Filename", "Date", "Size"], self._apply_sort_filter)
         self.sort_order_combo = QSortComboBox()
-        self.sort_order_combo.addItems(["Ascending", "Descending"])
+        self.sort_order_combo.addItems([tr('toolbar.ascending'), tr('toolbar.descending')])
         self.sort_order_combo.currentIndexChanged.connect(lambda *_: self._apply_sort_filter())
         tb.addWidget(self.sort_order_combo)
         ui.separator()
 
         # Phase 2.3: Grid Size Presets (Google Photos style)
         # Quick resize buttons: Small / Medium / Large / XL
-        tb.addWidget(QLabel("Grid:"))
+        tb.addWidget(QLabel(tr('toolbar.grid')))
 
         # Create button group for exclusive selection
         self.grid_size_group = QButtonGroup(self)
@@ -2867,13 +3326,13 @@ class MainWindow(QMainWindow):
             b.setStyleSheet("QPushButton{border:1px solid #ccc; border-radius:14px; padding:4px 10px; background:#f7f7f7;} QPushButton:hover{background:#eaeaea;}")
             if cb: b.clicked.connect(cb)
             return b
-        chip_layout.addWidget(make_chip("⭐ Favorites", lambda: self._apply_tag_filter("favorite")))
-        chip_layout.addWidget(make_chip("👤 People", lambda: self._apply_tag_filter("face")))
-        chip_layout.addWidget(make_chip("🎬 Videos", lambda: self.grid.set_context("videos", None)))
+        chip_layout.addWidget(make_chip(tr('toolbar.favorites'), lambda: self._apply_tag_filter("favorite")))
+        chip_layout.addWidget(make_chip(tr('toolbar.people'), lambda: self._apply_tag_filter("face")))
+        chip_layout.addWidget(make_chip(tr('toolbar.videos'), lambda: self.grid.set_context("videos", None)))
         chip_layout.addSpacing(12)
-        chip_layout.addWidget(make_chip("Today", lambda: self.grid.set_context("date", "today")))
-        chip_layout.addWidget(make_chip("This Week", lambda: self.grid.set_context("date", "this-week")))
-        chip_layout.addWidget(make_chip("This Month", lambda: self.grid.set_context("date", "this-month")))
+        chip_layout.addWidget(make_chip(tr('toolbar.today'), lambda: self.grid.set_context("date", "today")))
+        chip_layout.addWidget(make_chip(tr('toolbar.this_week'), lambda: self.grid.set_context("date", "this-week")))
+        chip_layout.addWidget(make_chip(tr('toolbar.this_month'), lambda: self.grid.set_context("date", "this-month")))
         chip_layout.addStretch()
         grid_layout.addWidget(chip_bar)
 
@@ -2971,14 +3430,28 @@ class MainWindow(QMainWindow):
             self.grid.btn_recluster.clicked.connect(self._on_recluster_faces)
 
         # --- Auto-update details panel on selection change
+        self._selection_tag_cache = {}
+        self._details_update_timer = QTimer(self)
+        self._details_update_timer.setSingleShot(True)
         def _update_details_from_selection():
             paths = self.grid.get_selected_paths()
             # 📜 ENHANCEMENT: Show placeholder when no selection or empty grid click
             if paths:
+                try:
+                    from services.tag_service import get_tag_service
+                    svc = get_tag_service()
+                    # Batch fetch tags for selection and cache
+                    pid = self.grid.project_id
+                    tag_map = svc.get_tags_for_paths(paths, pid) if pid is not None else {}
+                    self._selection_tag_cache = tag_map or {}
+                except Exception:
+                    self._selection_tag_cache = {}
                 self.details.update_path(paths[-1])
             else:
                 # Clear and show elegant placeholder
                 self.details.clear()
+                self.details.thumb.setMinimumHeight(220)
+                self.details.thumb.setToolTip('')
                 self.details.thumb.setText("🖼️")
                 self.details.thumb.setStyleSheet("""
                     QLabel {
@@ -2996,8 +3469,8 @@ class MainWindow(QMainWindow):
                         <p style='font-size:10pt;'>Select a photo or video to view details</p>
                     </div>
                 """)
-            
-        self.grid.selectionChanged.connect(lambda *_: _update_details_from_selection())
+        self.grid.selectionChanged.connect(lambda *_: self._details_update_timer.start(100))
+        self._details_update_timer.timeout.connect(_update_details_from_selection)
         
         # 🏷️ ENHANCEMENT: Refresh details panel when tags change
         # This ensures tag overlay updates in real-time
@@ -3134,10 +3607,10 @@ class MainWindow(QMainWindow):
                 print(f"[SEARCH] Quick search found {len(paths)} results for '{query}'")
             else:
                 self.statusBar().showMessage(f"🔍 No photos found matching '{query}'")
-                QMessageBox.information(self, "Search Results", f"No photos found matching '{query}'")
+                QMessageBox.information(self, tr('search.error_title'), tr('search.no_results').format(query=query))
         except Exception as e:
             logging.getLogger(__name__).error(f"Quick search failed: {e}")
-            QMessageBox.critical(self, "Search Error", f"Search failed:\n{e}")
+            QMessageBox.critical(self, tr('search.error_title'), tr('search.error_message').format(error=e))
 
     def _on_advanced_search(self):
         """Show advanced search dialog."""
@@ -3157,10 +3630,10 @@ class MainWindow(QMainWindow):
                     )
                     print(f"[SEARCH] Advanced search found {result.filtered_count} results in {result.execution_time_ms:.1f}ms")
                 else:
-                    QMessageBox.information(self, "Search Results", "No photos match the search criteria")
+                    QMessageBox.information(self, tr('search.error_title'), tr('search.no_results_criteria'))
         except Exception as e:
             logging.getLogger(__name__).error(f"Advanced search failed: {e}")
-            QMessageBox.critical(self, "Search Error", f"Search failed:\n{e}")
+            QMessageBox.critical(self, tr('search.error_title'), tr('search.error_message').format(error=e))
 
 
     def _on_video_backfill(self):
@@ -3218,9 +3691,9 @@ class MainWindow(QMainWindow):
         ) == QMessageBox.Yes:
             ok = clear_thumbnail_cache()
             if ok:
-                QMessageBox.information(self, "Cache Cleared", "Thumbnail cache has been cleared.")
+                QMessageBox.information(self, tr('message_boxes.cache_cleared_title'), tr('message_boxes.cache_cleared_message'))
             else:
-                QMessageBox.warning(self, "Cache", "No cache folder found or could not clear.")
+                QMessageBox.warning(self, tr('message_boxes.cache_title'), tr('message_boxes.cache_not_found'))
 
 
     def _open_preferences(self):
@@ -3266,7 +3739,7 @@ class MainWindow(QMainWindow):
         # Step 2: how much to do? (check for data to backfill)
         total = db.count_missing_created_fields()
         if total == 0:
-            QMessageBox.information(self, "Migration", "Nothing to migrate — fields already populated.")
+            QMessageBox.information(self, tr('message_boxes.migration_title'), tr('message_boxes.migration_nothing'))
             return
 
         progress = QProgressDialog("Backfilling created_* fields…", "Cancel", 0, total, self)
@@ -3546,35 +4019,54 @@ class MainWindow(QMainWindow):
         Phase 2: Switch to a project by ID (used by breadcrumb navigation).
         Updates the sidebar and grid to show the selected project.
         """
+        print(f"\n[MainWindow] ========== _on_project_changed_by_id({project_id}) STARTED ==========")
         try:
             # CRITICAL: Check if already on this project to prevent redundant reloads and crashes
             current_project_id = getattr(self.grid, 'project_id', None) if hasattr(self, 'grid') else None
+            print(f"[MainWindow] Current project_id: {current_project_id}")
+            
             if current_project_id == project_id:
                 print(f"[MainWindow] Already on project {project_id}, skipping switch")
                 return
 
+            print(f"[MainWindow] Step 1: Updating grid.project_id...")
             # CRITICAL ORDER: Update grid FIRST before sidebar to prevent race condition
             # Sidebar.set_project() triggers callbacks that reload grid, so grid.project_id
             # must be set BEFORE those callbacks fire
             if hasattr(self, "grid") and self.grid:
                 self.grid.project_id = project_id
-                print(f"[MainWindow] Set grid.project_id = {project_id}")
+                print(f"[MainWindow] Step 1: ✓ Set grid.project_id = {project_id}")
+            else:
+                print(f"[MainWindow] Step 1: ✗ Grid not available!")
 
+            print(f"[MainWindow] Step 2: Updating sidebar...")
             # Now update sidebar (this triggers reload which will use the new grid.project_id)
             if hasattr(self, "sidebar") and self.sidebar:
                 self.sidebar.set_project(project_id)
+                print(f"[MainWindow] Step 2: ✓ Sidebar.set_project({project_id}) completed")
+            else:
+                print(f"[MainWindow] Step 2: ✗ Sidebar not available!")
 
+            print(f"[MainWindow] Step 3: Reloading grid to 'all' branch...")
             # Finally, explicitly reload grid to show all photos
             if hasattr(self, "grid") and self.grid:
                 self.grid.set_branch("all")  # Reset to show all photos
+                print(f"[MainWindow] Step 3: ✓ Grid.set_branch('all') completed")
+            else:
+                print(f"[MainWindow] Step 3: ✗ Grid not available for set_branch!")
 
-            # Update breadcrumb
-            if hasattr(self, "_update_breadcrumb"):
-                QTimer.singleShot(100, self._update_breadcrumb)
+            # CRITICAL FIX: Removed duplicate breadcrumb update!
+            # The gridReloaded signal (line 3392) already triggers _update_breadcrumb()
+            # Scheduling a second update here causes a race condition crash!
+            print(f"[MainWindow] Step 4: Breadcrumb will auto-update via gridReloaded signal")
 
-            print(f"[MainWindow] Switched to project ID: {project_id}")
+            print(f"[MainWindow] Step 5: ✓✓✓ Switched to project ID: {project_id}")
+            print(f"[MainWindow] ========== _on_project_changed_by_id({project_id}) COMPLETED ==========\n")
         except Exception as e:
-            print(f"[MainWindow] Error switching project: {e}")
+            print(f"[MainWindow] ✗✗✗ ERROR switching project: {e}")
+            import traceback
+            traceback.print_exc()
+            print(f"[MainWindow] ========== _on_project_changed_by_id({project_id}) FAILED ==========\n")
 
     def _refresh_project_list(self):
         """
@@ -3795,8 +4287,10 @@ class MainWindow(QMainWindow):
             msg = f"Added {len(paths)} photo(s) to favorites"
 
         # Refresh grid to show updated tag icons
-        if hasattr(self.grid, "reload"):
-            self.grid.reload()
+        if hasattr(self.grid, "_refresh_tags_for_paths"):
+            self.grid._refresh_tags_for_paths(paths)
+        if hasattr(self.grid, 'tagsChanged'):
+            self.grid.tagsChanged.emit()
 
         self.statusBar().showMessage(msg, 3000)
         print(f"[Favorite] {msg}")
@@ -3813,7 +4307,11 @@ class MainWindow(QMainWindow):
                 from services.tag_service import get_tag_service
                 svc = get_tag_service()
                 svc.assign_tags_bulk(paths, name.strip(), self.grid.project_id)
-                self.grid.reload()
+                # Update grid tags overlay without full reload
+                if hasattr(self.grid, '_refresh_tags_for_paths'):
+                    self.grid._refresh_tags_for_paths(paths)
+                if hasattr(self.grid, 'tagsChanged'):
+                    self.grid.tagsChanged.emit()
                 self.statusBar().showMessage(f"Tagged {len(paths)} photo(s) with '{name.strip()}'", 3000)
             except Exception as e:
                 QMessageBox.critical(self, "Tag Failed", str(e))
@@ -4433,23 +4931,33 @@ class MainWindow(QMainWindow):
         Phase 2 (High Impact): Update breadcrumb navigation based on current grid state.
         Shows: Project > Folder/Date/Branch path
         """
+        print(f"\n[Breadcrumb] _update_breadcrumb() CALLED")
         try:
             if not hasattr(self, "breadcrumb_nav") or not hasattr(self, "grid"):
+                print(f"[Breadcrumb] Missing breadcrumb_nav or grid, aborting")
                 return
+
+            print(f"[Breadcrumb] Grid state: navigation_mode={getattr(self.grid, 'navigation_mode', 'None')}, project_id={getattr(self.grid, 'project_id', 'None')}")
 
             segments = []
 
-            # Get current project name
+            # CRITICAL FIX: Get CURRENT project name from grid.project_id, NOT default project!
             project_name = "My Photos"
-            if hasattr(self, "_projects") and self._projects:
-                default_pid = get_default_project_id()
+            if hasattr(self, "_projects") and self._projects and hasattr(self.grid, 'project_id'):
+                current_pid = self.grid.project_id  # ← Use ACTUAL current project, not default!
+                print(f"[Breadcrumb] Looking for CURRENT project_id={current_pid} in {len(self._projects)} projects")
                 for p in self._projects:
-                    if p.get("id") == default_pid:
+                    if p.get("id") == current_pid:
                         project_name = p.get("name", "My Photos")
+                        print(f"[Breadcrumb] Found CURRENT project name: {project_name}")
                         break
+                else:
+                    # If current project not found in list (shouldn't happen), log warning
+                    print(f"[Breadcrumb] ⚠️ WARNING: Current project_id={current_pid} not found in project list!")
 
             # Always start with project
             segments.append((project_name, None))  # No callback for current project
+            print(f"[Breadcrumb] Added project segment: {project_name}")
 
             # Add navigation context
             if self.grid.navigation_mode == "folder" and hasattr(self.grid, "navigation_key"):
@@ -4467,32 +4975,47 @@ class MainWindow(QMainWindow):
                 except Exception as e:
                     self.logger.warning(f"Failed to get folder name for ID {folder_id}: {e}")
 
-                segments.append(("Folder View", lambda: self.grid.set_branch("all")))
+                # CRITICAL FIX: Use functools.partial instead of lambda to avoid closure issues
+                from functools import partial
+                segments.append(("Folder View", partial(self.grid.set_branch, "all")))
                 segments.append((folder_name, None))
+                print(f"[Breadcrumb] Added folder segments: Folder View > {folder_name}")
             elif self.grid.navigation_mode == "date" and hasattr(self.grid, "navigation_key"):
                 # For date mode, show date path
                 date_key = str(self.grid.navigation_key)
-                segments.append(("Timeline", lambda: self.grid.set_branch("all")))
+                from functools import partial
+                segments.append(("Timeline", partial(self.grid.set_branch, "all")))
                 segments.append((date_key, None))
+                print(f"[Breadcrumb] Added date segments: Timeline > {date_key}")
             elif self.grid.navigation_mode == "branch":
                 # For branch mode, show "All Photos"
                 segments.append(("All Photos", None))
+                print(f"[Breadcrumb] Added branch segment: All Photos")
             elif hasattr(self.grid, "active_tag_filter") and self.grid.active_tag_filter:
                 # Tag filter mode
                 tag = self.grid.active_tag_filter
-                segments.append(("Tags", lambda: self._apply_tag_filter("all")))
+                from functools import partial
+                segments.append(("Tags", partial(self._apply_tag_filter, "all")))
                 if tag == "favorite":
                     segments.append(("Favorites", None))
                 elif tag == "face":
                     segments.append(("Faces", None))
                 else:
                     segments.append((tag, None))
+                print(f"[Breadcrumb] Added tag segments: Tags > {tag}")
             else:
                 segments.append(("All Photos", None))
+                print(f"[Breadcrumb] Added fallback segment: All Photos")
 
+            print(f"[Breadcrumb] Calling set_path() with {len(segments)} segments")
             self.breadcrumb_nav.set_path(segments)
+            print(f"[Breadcrumb] set_path() completed successfully")
+            print(f"[Breadcrumb] _update_breadcrumb() COMPLETED\n")
         except Exception as e:
-            print(f"[MainWindow] _update_breadcrumb error: {e}")
+            print(f"[Breadcrumb] ✗✗✗ ERROR in _update_breadcrumb(): {e}")
+            import traceback
+            traceback.print_exc()
+            print(f"[Breadcrumb] _update_breadcrumb() FAILED\n")
 
     def _update_status_bar(self, selection_count=None):
         """
@@ -4561,7 +5084,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(f"[MainWindow] _update_status_bar error: {e}")
             # Fallback to simple message
-            self.statusBar().showMessage("Ready")
+            self.statusBar().showMessage(tr('status_messages.ready'))
 
 
     def _init_progress_pollers(self):
@@ -4587,7 +5110,7 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(f"👥 Clustering {pct:.1f}% ({phase})")
 
             if phase == "done":
-                self.statusBar().showMessage("✅ Clustering complete")
+                self.statusBar().showMessage(tr('status_messages.clustering_complete'))
                 os.remove(path)
         except Exception as e:
             print(f"[Status] cluster poll failed: {e}")
@@ -4608,7 +5131,7 @@ class MainWindow(QMainWindow):
 
             if data.get("phase") == "done":
 #                self.status_bar.showMessage("✅ Metadata backfill complete")
-                self.statusBar().showMessage("✅ Metadata backfill complete")                
+                self.statusBar().showMessage(tr('status_messages.backfill_complete'))                
                 os.remove(path)
         except Exception as e:
             print(f"[Status] backfill poll failed: {e}")

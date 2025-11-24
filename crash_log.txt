@@ -1,0 +1,124 @@
+
+[2025-11-23 01:26:48.591652] Normal exit with code 0
+
+================================================================================
+CRASH at 2025-11-23 01:27:18.913624
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 2083, in _toggle_metadata_panel
+    panel = self._build_metadata_panel(meta_dict)
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1997, in _build_metadata_panel
+    desc_field.setPlaceholderText(tr('search.placeholder_description'))
+TypeError: 'PySide6.QtWidgets.QHBoxLayout' object is not callable
+================================================================================
+
+
+================================================================================
+CRASH at 2025-11-23 01:27:43.991184
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 2083, in _toggle_metadata_panel
+    panel = self._build_metadata_panel(meta_dict)
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1997, in _build_metadata_panel
+    desc_field.setPlaceholderText(tr('search.placeholder_description'))
+TypeError: 'PySide6.QtWidgets.QHBoxLayout' object is not callable
+================================================================================
+
+
+[2025-11-23 01:28:26.882221] Normal exit with code 0
+
+[2025-11-23 01:28:31.121613] Normal exit with code 0
+
+[2025-11-23 01:31:08.707296] Normal exit with code 0
+
+================================================================================
+CRASH at 2025-11-23 01:36:16.040984
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\main_window_qt.py", line 3407, in <lambda>
+    self.grid.openRequested.connect(lambda p: self._open_lightbox(p))
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\main_window_qt.py", line 4805, in _open_lightbox
+    dlg = LightboxDialog(path, self)
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1128, in __init__
+    self.editor_page = self._build_edit_page()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1526, in _build_edit_page
+    self.btn_undo = make_btn("↺", "Undo (Ctrl+Z)", "reset")
+UnboundLocalError: local variable 'make_btn' referenced before assignment
+================================================================================
+
+
+================================================================================
+CRASH at 2025-11-23 01:36:17.929387
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\main_window_qt.py", line 3407, in <lambda>
+    self.grid.openRequested.connect(lambda p: self._open_lightbox(p))
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\main_window_qt.py", line 4805, in _open_lightbox
+    dlg = LightboxDialog(path, self)
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1128, in __init__
+    self.editor_page = self._build_edit_page()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_32.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\preview_panel_qt.py", line 1526, in _build_edit_page
+    self.btn_undo = make_btn("↺", "Undo (Ctrl+Z)", "reset")
+UnboundLocalError: local variable 'make_btn' referenced before assignment
+================================================================================
+
+
+[2025-11-23 01:36:21.788453] Normal exit with code 0
+
+[2025-11-23 01:40:26.343826] Normal exit with code 0
+
+[2025-11-23 01:50:46.462617] Normal exit with code 0
+
+[2025-11-23 01:52:39.784847] Normal exit with code 0
+
+[2025-11-23 02:02:46.546867] Normal exit with code 0
+
+[2025-11-23 02:11:10.209709] Normal exit with code 0
+
+[2025-11-23 02:17:45.643283] Normal exit with code 0
+
+[2025-11-23 02:18:38.336340] Normal exit with code 0
+
+[2025-11-23 02:24:00.634906] Normal exit with code 0
+
+[2025-11-23 02:26:42.908737] Normal exit with code 0
+
+[2025-11-23 02:38:42.240905] Normal exit with code 0
+
+[2025-11-23 02:40:21.625650] Normal exit with code 0
+
+[2025-11-23 02:43:26.016738] Normal exit with code 0
+
+[2025-11-23 02:47:36.422540] Normal exit with code 0
+
+[2025-11-23 02:55:51.065277] Normal exit with code 0
+
+[2025-11-23 02:56:35.227504] Normal exit with code 0
+
+[2025-11-23 03:01:49.391122] Normal exit with code 0
+
+[2025-11-23 03:08:35.422522] Normal exit with code 0
+
+[2025-11-23 03:08:52.748250] Normal exit with code 0
+
+[2025-11-23 03:21:31.470995] Normal exit with code 0
+
+[2025-11-23 15:27:59.260181] Normal exit with code 0
+
+[2025-11-23 23:02:41.548576] Normal exit with code 0
+
+[2025-11-23 23:13:24.588242] Normal exit with code 0
+
+[2025-11-23 23:14:37.426269] Normal exit with code 0
+
+[2025-11-24 01:05:16.020870] Normal exit with code 0
+
+[2025-11-24 01:13:55.293046] Normal exit with code 0
+
+[2025-11-24 01:14:47.648091] Normal exit with code 0
+
+[2025-11-24 01:55:05.626546] Normal exit with code 0
+
+[2025-11-24 14:13:34.272052] Normal exit with code 0
+
+[2025-11-24 14:16:03.187791] Normal exit with code 0
