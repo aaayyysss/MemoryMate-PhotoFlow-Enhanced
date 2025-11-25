@@ -100,11 +100,19 @@ class LayoutManager:
 
         print(f"[LayoutManager] Switching layout: {self._current_layout_id} → {layout_id}")
 
-        # CRITICAL FIX: Save reference to original central widget on first switch
+        # CRITICAL FIX v2: Use takeCentralWidget() to preserve the original widget
         # This happens when switching AWAY from "current" layout for the first time
         if self._original_central_widget is None and self._current_layout_id == "current":
-            self._original_central_widget = self.main_window.centralWidget()
-            print(f"[LayoutManager] 💾 Saved original central widget: {type(self._original_central_widget).__name__}")
+            # takeCentralWidget() removes the widget WITHOUT deleting it
+            # Transfers ownership to us, so Qt won't delete it when we set a new one
+            self._original_central_widget = self.main_window.takeCentralWidget()
+            print(f"[LayoutManager] 💾 Took ownership of original central widget: {type(self._original_central_widget).__name__}")
+        elif self._current_layout_id != "current" and layout_id != "current":
+            # Switching between placeholder layouts - remove current placeholder
+            old_widget = self.main_window.takeCentralWidget()
+            if old_widget:
+                old_widget.deleteLater()  # Clean up old placeholder
+                print(f"[LayoutManager] 🗑️ Removed old placeholder widget")
 
         # Save current layout state
         if self._current_layout:
@@ -112,7 +120,7 @@ class LayoutManager:
             if self.settings:
                 self.settings.set(f"layout_{self._current_layout_id}_state", state)
 
-            # Cleanup current layout (but don't destroy the original widget)
+            # Cleanup current layout
             self._current_layout.cleanup()
 
         # Create new layout instance
@@ -129,10 +137,12 @@ class LayoutManager:
             self.main_window.setCentralWidget(layout_widget)
         else:
             # Layout uses MainWindow's existing components (CurrentLayout)
-            # CRITICAL FIX: Restore the original central widget
+            # CRITICAL FIX v2: Restore the original central widget
             if layout_id == "current" and self._original_central_widget is not None:
                 print(f"[LayoutManager] 🔄 Restoring original central widget: {type(self._original_central_widget).__name__}")
                 self.main_window.setCentralWidget(self._original_central_widget)
+                # Clear the reference since it's now owned by MainWindow again
+                self._original_central_widget = None
             else:
                 # First initialization - widget is already set in MainWindow.__init__
                 print(f"[LayoutManager] Keeping existing central widget (first initialization)")
