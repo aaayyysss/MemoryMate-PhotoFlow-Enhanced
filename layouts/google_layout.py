@@ -4,14 +4,338 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QSplitter, QToolBar, QLineEdit, QTreeWidget,
-    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy
+    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
 )
-from PySide6.QtCore import Qt, Signal, QSize
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtCore import Qt, Signal, QSize, QEvent
+from PySide6.QtGui import QPixmap, QIcon, QKeyEvent
 from .base_layout import BaseLayout
 from typing import Dict, List, Tuple
 from collections import defaultdict
 from datetime import datetime
+import os
+
+
+class PhotoLightbox(QDialog):
+    """
+    Full-screen photo lightbox/preview dialog.
+
+    Features:
+    - Full-screen image display
+    - Metadata panel (EXIF, date, dimensions)
+    - Navigation arrows (prev/next)
+    - Close button and ESC key
+    """
+
+    def __init__(self, photo_path: str, all_photos: List[str], parent=None):
+        """
+        Initialize photo lightbox.
+
+        Args:
+            photo_path: Path to photo to display
+            all_photos: List of all photo paths in timeline order
+            parent: Parent widget
+        """
+        super().__init__(parent)
+
+        self.photo_path = photo_path
+        self.all_photos = all_photos
+        self.current_index = all_photos.index(photo_path) if photo_path in all_photos else 0
+
+        self._setup_ui()
+        self._load_photo()
+
+    def _setup_ui(self):
+        """Setup lightbox UI."""
+        # Window settings
+        self.setWindowTitle("Photo Preview")
+        self.setWindowState(Qt.WindowMaximized)
+        self.setStyleSheet("background: #1a1a1a;")
+
+        # Main layout
+        main_layout = QHBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+
+        # Left: Image display area
+        image_container = QWidget()
+        image_container.setStyleSheet("background: #1a1a1a;")
+        image_layout = QVBoxLayout(image_container)
+        image_layout.setContentsMargins(20, 20, 20, 20)
+
+        # Top bar with close button
+        top_bar = QHBoxLayout()
+        top_bar.addStretch()
+
+        close_btn = QPushButton("✕ Close")
+        close_btn.setStyleSheet("""
+            QPushButton {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
+                padding: 8px 16px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+        """)
+        close_btn.clicked.connect(self.close)
+        top_bar.addWidget(close_btn)
+        image_layout.addLayout(top_bar)
+
+        # Image display
+        self.image_label = QLabel()
+        self.image_label.setAlignment(Qt.AlignCenter)
+        self.image_label.setStyleSheet("background: transparent;")
+        self.image_label.setScaledContents(False)
+        image_layout.addWidget(self.image_label, 1)
+
+        # Navigation buttons (bottom)
+        nav_layout = QHBoxLayout()
+
+        self.prev_btn = QPushButton("← Previous")
+        self.prev_btn.setStyleSheet("""
+            QPushButton {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
+                padding: 10px 20px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+            QPushButton:disabled {
+                background: rgba(255, 255, 255, 0.05);
+                color: rgba(255, 255, 255, 0.3);
+            }
+        """)
+        self.prev_btn.clicked.connect(self._previous_photo)
+        nav_layout.addWidget(self.prev_btn)
+
+        nav_layout.addStretch()
+
+        # Photo counter
+        self.counter_label = QLabel()
+        self.counter_label.setStyleSheet("color: white; font-size: 10pt;")
+        nav_layout.addWidget(self.counter_label)
+
+        nav_layout.addStretch()
+
+        self.next_btn = QPushButton("Next →")
+        self.next_btn.setStyleSheet("""
+            QPushButton {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
+                padding: 10px 20px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+            QPushButton:disabled {
+                background: rgba(255, 255, 255, 0.05);
+                color: rgba(255, 255, 255, 0.3);
+            }
+        """)
+        self.next_btn.clicked.connect(self._next_photo)
+        nav_layout.addWidget(self.next_btn)
+
+        image_layout.addLayout(nav_layout)
+
+        main_layout.addWidget(image_container, 3)
+
+        # Right: Metadata panel
+        metadata_panel = QWidget()
+        metadata_panel.setFixedWidth(350)
+        metadata_panel.setStyleSheet("""
+            QWidget {
+                background: #2a2a2a;
+                border-left: 1px solid #404040;
+            }
+        """)
+
+        metadata_layout = QVBoxLayout(metadata_panel)
+        metadata_layout.setContentsMargins(20, 20, 20, 20)
+        metadata_layout.setSpacing(16)
+
+        # Metadata header
+        header = QLabel("📊 Photo Information")
+        header.setStyleSheet("color: white; font-size: 13pt; font-weight: bold;")
+        metadata_layout.addWidget(header)
+
+        # Metadata content (scrollable)
+        metadata_scroll = QScrollArea()
+        metadata_scroll.setFrameShape(QFrame.NoFrame)
+        metadata_scroll.setWidgetResizable(True)
+        metadata_scroll.setStyleSheet("background: transparent; border: none;")
+
+        self.metadata_content = QWidget()
+        self.metadata_layout = QVBoxLayout(self.metadata_content)
+        self.metadata_layout.setContentsMargins(0, 0, 0, 0)
+        self.metadata_layout.setSpacing(12)
+        self.metadata_layout.setAlignment(Qt.AlignTop)
+
+        metadata_scroll.setWidget(self.metadata_content)
+        metadata_layout.addWidget(metadata_scroll)
+
+        main_layout.addWidget(metadata_panel)
+
+    def _load_photo(self):
+        """Load and display the current photo."""
+        try:
+            # Load image
+            pixmap = QPixmap(self.photo_path)
+
+            if pixmap.isNull():
+                self.image_label.setText("❌ Failed to load image")
+                self.image_label.setStyleSheet("color: white; font-size: 14pt;")
+                return
+
+            # Scale to fit while maintaining aspect ratio
+            # Get available space (accounting for padding and nav buttons)
+            max_width = self.width() - 400  # Leave space for metadata panel
+            max_height = self.height() - 200  # Leave space for top/bottom bars
+
+            scaled_pixmap = pixmap.scaled(
+                max_width, max_height,
+                Qt.KeepAspectRatio,
+                Qt.SmoothTransformation
+            )
+
+            self.image_label.setPixmap(scaled_pixmap)
+
+            # Update counter
+            self.counter_label.setText(
+                f"{self.current_index + 1} of {len(self.all_photos)}"
+            )
+
+            # Update navigation buttons
+            self.prev_btn.setEnabled(self.current_index > 0)
+            self.next_btn.setEnabled(self.current_index < len(self.all_photos) - 1)
+
+            # Load metadata
+            self._load_metadata()
+
+        except Exception as e:
+            print(f"[PhotoLightbox] Error loading photo: {e}")
+            self.image_label.setText(f"❌ Error loading image\n\n{str(e)}")
+            self.image_label.setStyleSheet("color: white; font-size: 12pt;")
+
+    def _load_metadata(self):
+        """Load and display photo metadata."""
+        # Clear existing metadata
+        while self.metadata_layout.count():
+            child = self.metadata_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        try:
+            # Get file info
+            file_size = os.path.getsize(self.photo_path)
+            file_size_mb = file_size / (1024 * 1024)
+            filename = os.path.basename(self.photo_path)
+
+            # Add filename
+            self._add_metadata_field("📄 Filename", filename)
+
+            # Add file size
+            self._add_metadata_field("💾 File Size", f"{file_size_mb:.2f} MB")
+
+            # Get image dimensions
+            pixmap = QPixmap(self.photo_path)
+            if not pixmap.isNull():
+                self._add_metadata_field(
+                    "📐 Dimensions",
+                    f"{pixmap.width()} × {pixmap.height()} px"
+                )
+
+            # Get EXIF metadata
+            try:
+                from services.exif_parser import EXIFParser
+                exif_parser = EXIFParser()
+                metadata = exif_parser.parse_image_full(self.photo_path)
+
+                # Date taken
+                if metadata.get('datetime_original'):
+                    date_str = metadata['datetime_original'].strftime("%B %d, %Y at %I:%M %p")
+                    self._add_metadata_field("📅 Date Taken", date_str)
+
+                # Camera info
+                if metadata.get('camera_make') or metadata.get('camera_model'):
+                    camera = f"{metadata.get('camera_make', '')} {metadata.get('camera_model', '')}".strip()
+                    self._add_metadata_field("📷 Camera", camera)
+
+                # GPS coordinates
+                if metadata.get('gps_latitude') and metadata.get('gps_longitude'):
+                    lat = metadata['gps_latitude']
+                    lon = metadata['gps_longitude']
+                    self._add_metadata_field(
+                        "🌍 Location",
+                        f"{lat:.6f}, {lon:.6f}"
+                    )
+
+            except Exception as e:
+                print(f"[PhotoLightbox] Error loading EXIF: {e}")
+                self._add_metadata_field("⚠️ EXIF Data", "Not available")
+
+            # Add file path (at bottom)
+            self._add_metadata_field("📁 Path", self.photo_path, word_wrap=True)
+
+        except Exception as e:
+            print(f"[PhotoLightbox] Error loading metadata: {e}")
+            self._add_metadata_field("⚠️ Error", str(e))
+
+    def _add_metadata_field(self, label: str, value: str, word_wrap: bool = False):
+        """Add a metadata field to the panel."""
+        # Label
+        label_widget = QLabel(label)
+        label_widget.setStyleSheet("""
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 9pt;
+            font-weight: bold;
+        """)
+        self.metadata_layout.addWidget(label_widget)
+
+        # Value
+        value_widget = QLabel(value)
+        value_widget.setStyleSheet("""
+            color: white;
+            font-size: 10pt;
+            padding-left: 8px;
+        """)
+        if word_wrap:
+            value_widget.setWordWrap(True)
+        self.metadata_layout.addWidget(value_widget)
+
+    def _previous_photo(self):
+        """Navigate to previous photo."""
+        if self.current_index > 0:
+            self.current_index -= 1
+            self.photo_path = self.all_photos[self.current_index]
+            self._load_photo()
+
+    def _next_photo(self):
+        """Navigate to next photo."""
+        if self.current_index < len(self.all_photos) - 1:
+            self.current_index += 1
+            self.photo_path = self.all_photos[self.current_index]
+            self._load_photo()
+
+    def keyPressEvent(self, event: QKeyEvent):
+        """Handle keyboard shortcuts."""
+        if event.key() == Qt.Key_Escape:
+            self.close()
+        elif event.key() == Qt.Key_Left:
+            self._previous_photo()
+        elif event.key() == Qt.Key_Right:
+            self._next_photo()
+        else:
+            super().keyPressEvent(event)
 
 
 class GooglePhotosLayout(BaseLayout):
@@ -705,8 +1029,71 @@ class GooglePhotosLayout(BaseLayout):
         if self.selection_mode:
             self._toggle_photo_selection(path)
         else:
-            # TODO Phase 3: Open lightbox or details panel
-            print(f"[GooglePhotosLayout] Would open lightbox for: {path}")
+            # Phase 2: Open lightbox/preview
+            self._open_photo_lightbox(path)
+
+    def _open_photo_lightbox(self, path: str):
+        """
+        Open photo lightbox/preview dialog.
+
+        Args:
+            path: Path to photo to display
+        """
+        print(f"[GooglePhotosLayout] 👁️ Opening lightbox for: {path}")
+
+        # Collect all photo paths in timeline order
+        all_photos = self._get_all_photo_paths()
+
+        if not all_photos:
+            print("[GooglePhotosLayout] ⚠️ No photos to display in lightbox")
+            return
+
+        # Create and show lightbox dialog
+        try:
+            lightbox = PhotoLightbox(path, all_photos, parent=self.main_window)
+            lightbox.exec()
+            print("[GooglePhotosLayout] ✓ Lightbox closed")
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error opening lightbox: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def _get_all_photo_paths(self) -> List[str]:
+        """
+        Get all photo paths in timeline order (newest to oldest).
+
+        Returns:
+            List of photo paths
+        """
+        all_paths = []
+
+        try:
+            from reference_db import ReferenceDB
+            db = ReferenceDB()
+
+            # Query all photos for current project, ordered by date
+            query = """
+                SELECT DISTINCT pm.path
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND pm.date_taken IS NOT NULL
+                ORDER BY pm.date_taken DESC
+            """
+
+            with db._connect() as conn:
+                conn.execute("PRAGMA busy_timeout = 5000")
+                cur = conn.cursor()
+                cur.execute(query, (self.project_id,))
+                rows = cur.fetchall()
+
+                all_paths = [row[0] for row in rows]
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error fetching photo paths: {e}")
+
+        return all_paths
 
     def _on_selection_changed(self, path: str, state: int):
         """
