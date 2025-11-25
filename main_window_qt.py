@@ -669,6 +669,7 @@ class ScanController:
                 self.main.thumbnails.load_thumbnails(self.main.grid.get_visible_paths())
 
             # CRITICAL FIX: Refresh Google Photos layout if active
+            # Wrap in try-except with timeout to prevent blocking
             try:
                 if hasattr(self.main, 'layout_manager') and self.main.layout_manager:
                     current_layout_id = self.main.layout_manager._current_layout_id
@@ -676,10 +677,15 @@ class ScanController:
                         self.logger.info("Refreshing Google Photos layout after scan...")
                         current_layout = self.main.layout_manager._current_layout
                         if current_layout and hasattr(current_layout, '_load_photos'):
-                            current_layout._load_photos()
-                            self.logger.info("✓ Google Photos layout refreshed")
+                            # Use QTimer.singleShot to defer refresh and prevent blocking
+                            # This ensures UI remains responsive
+                            from PySide6.QtCore import QTimer
+                            QTimer.singleShot(500, current_layout._load_photos)
+                            self.logger.info("✓ Google Photos layout refresh scheduled")
             except Exception as e:
-                self.logger.error(f"Error refreshing Google Photos layout: {e}")
+                # CRITICAL: Catch ALL exceptions to prevent scan cleanup from failing
+                self.logger.error(f"Error refreshing Google Photos layout: {e}", exc_info=True)
+                # Don't let layout refresh errors break scan completion
 
             # CRITICAL FIX: Close scan completion message box if still open
             try:
