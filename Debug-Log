@@ -1,23 +1,23 @@
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04> python main_qt.py
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-07> python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\locales\en.json
+✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-07\locales\en.json
 🌍 Language initialized: en
-2025-11-25 22:52:58,057 [INFO] ================================================================================
-2025-11-25 22:52:58,057 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-25 22:52:58,057 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\app_log.txt
-2025-11-25 22:52:58,057 [INFO] ================================================================================
-2025-11-25 22:52:58,109 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-25 22:52:58,111 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-26 00:19:56,761 [INFO] ================================================================================
+2025-11-26 00:19:56,761 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-26 00:19:56,761 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-07\app_log.txt
+2025-11-26 00:19:56,761 [INFO] ================================================================================
+2025-11-26 00:19:56,806 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-26 00:19:56,806 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_35.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-04\\thumbnails_cache.db', 'last_updated': '2025-11-25 22:52'}
-2025-11-25 22:52:58,990 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_35.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-07\\thumbnails_cache.db', 'last_updated': '2025-11-26 00:19'}
+2025-11-26 00:19:57,452 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-25 22:52:58,994 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-25 22:52:58,995 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-25 22:52:58,995 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-26 00:19:57,454 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-26 00:19:57,454 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-26 00:19:57,456 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
@@ -27,20 +27,20 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [LayoutManager] Registered layout: Lightroom Style (id=lightroom)
 [MainWindow] Layout manager initialized
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-25 22:52:59,034 [INFO] SearchService initialized
+2025-11-26 00:19:57,482 [INFO] SearchService initialized
 [Sidebar] Device auto-detection disabled (manual refresh only)
-[22:52:59.048] [Tabs] __init__ started
-[22:52:59.050] [Tabs] _build_tabs → building tab widgets
-[22:52:59.050] [Tabs] _on_tab_changed(idx=0)
-[22:52:59.050] [Tabs] _start_timeout idx=0 type=branches
-[22:52:59.050] [Tabs] _populate_tab(branches, idx=0, force=False)
-[22:52:59.050] [Tabs]   populated=False, loading=False
-[22:52:59.050] [Tabs]   Starting load for branches
-[22:52:59.050] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[22:52:59.050] [Tabs] _clear_tab idx=0
-[22:52:59.052] [Tabs] _on_tab_changed → tab_type=branches
-[22:52:59.053] [Tabs] _build_tabs → added 6 tabs
-[22:52:59.053] [Tabs] __init__ completed
+[00:19:57.498] [Tabs] __init__ started
+[00:19:57.498] [Tabs] _build_tabs → building tab widgets
+[00:19:57.498] [Tabs] _on_tab_changed(idx=0)
+[00:19:57.498] [Tabs] _start_timeout idx=0 type=branches
+[00:19:57.498] [Tabs] _populate_tab(branches, idx=0, force=False)
+[00:19:57.498] [Tabs]   populated=False, loading=False
+[00:19:57.498] [Tabs]   Starting load for branches
+[00:19:57.498] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[00:19:57.498] [Tabs] _clear_tab idx=0
+[00:19:57.498] [Tabs] _on_tab_changed → tab_type=branches
+[00:19:57.503] [Tabs] _build_tabs → added 6 tabs
+[00:19:57.503] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
@@ -51,7 +51,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000252ABE94A00>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000019D6C72ABF0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -106,7 +106,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[22:52:59.234] [Tabs] hide_tabs() called - canceling pending workers
+[00:19:57.709] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -121,7 +121,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000252ABE94A00>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000019D6C72ABF0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Using cached scan results =====
@@ -140,16 +140,16 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [LayoutManager] Already using layout: current
 [Startup] Layout system initialized successfully
 [Startup] Database schema initialized successfully
-[22:52:59.421] [Tabs] _finish_branches (stale gen=1) — ignoring
-[22:52:59.422] [Tabs] _on_tab_changed(idx=0)
-[22:52:59.422] [Tabs] _start_timeout idx=0 type=branches
-[22:52:59.422] [Tabs] _populate_tab(branches, idx=0, force=False)
-[22:52:59.422] [Tabs]   populated=False, loading=False
-[22:52:59.422] [Tabs]   Starting load for branches
-[22:52:59.422] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[22:52:59.423] [Tabs] _clear_tab idx=0
-[22:52:59.424] [Tabs] _on_tab_changed → tab_type=branches
-[22:52:59.425] [Tabs] _clear_tab idx=0
+[00:19:57.879] [Tabs] _finish_branches (stale gen=1) — ignoring
+[00:19:57.879] [Tabs] _on_tab_changed(idx=0)
+[00:19:57.879] [Tabs] _start_timeout idx=0 type=branches
+[00:19:57.879] [Tabs] _populate_tab(branches, idx=0, force=False)
+[00:19:57.879] [Tabs]   populated=False, loading=False
+[00:19:57.879] [Tabs]   Starting load for branches
+[00:19:57.879] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[00:19:57.879] [Tabs] _clear_tab idx=0
+[00:19:57.879] [Tabs] _on_tab_changed → tab_type=branches
+[00:19:57.879] [Tabs] _clear_tab idx=0
 
 [Breadcrumb] _update_breadcrumb() CALLED
 [Breadcrumb] Grid state: navigation_mode=None, project_id=None
@@ -173,7 +173,7 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GooglePhotosLayout] ⚠️ WARNING: No projects found! Please create a project first.
 [GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
 [GooglePhotosLayout] Project selector populated with 0 projects
-[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] ⚠️ No project selected
 [LayoutManager] Setting new central widget: QWidget
 [GooglePhotosLayout] 📍 Layout activated
@@ -191,42 +191,42 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [MainWindow] Step 1: ✓ Set grid.project_id = 1
 [MainWindow] Step 2: Updating sidebar...
 [SidebarQt] set_project(1) called
-[22:53:16.480] [Tabs] refresh_all(force=True) called
-[22:53:16.480] [Tabs] refresh_all: key=branches, idx=0, force=True
-[22:53:16.480] [Tabs] _populate_tab(branches, idx=0, force=True)
-[22:53:16.480] [Tabs]   populated=True, loading=False
-[22:53:16.480] [Tabs]   Force refresh: removing branches from populated set
-[22:53:16.480] [Tabs]   Starting load for branches
-[22:53:16.480] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[22:53:16.480] [Tabs] _clear_tab idx=0
-[22:53:16.482] [Tabs] refresh_all: key=folders, idx=1, force=True
-[22:53:16.482] [Tabs] _populate_tab(folders, idx=1, force=True)
-[22:53:16.482] [Tabs]   populated=False, loading=False
-[22:53:16.482] [Tabs]   Starting load for folders
-[22:53:16.482] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[22:53:16.482] [Tabs] _clear_tab idx=1
-[22:53:16.485] [Tabs] refresh_all: key=dates, idx=2, force=True
-[22:53:16.485] [Tabs] _populate_tab(dates, idx=2, force=True)
-[22:53:16.485] [Tabs]   populated=False, loading=False
-[22:53:16.485] [Tabs]   Starting load for dates
-[22:53:16.485] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[22:53:16.485] [Tabs] _clear_tab idx=2
-[22:53:16.487] [Tabs] refresh_all: key=tags, idx=3, force=True
-[22:53:16.487] [Tabs] _populate_tab(tags, idx=3, force=True)
-[22:53:16.487] [Tabs]   populated=False, loading=False
-[22:53:16.487] [Tabs]   Starting load for tags
-[22:53:16.487] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[22:53:16.487] [Tabs] _clear_tab idx=3
-[22:53:16.487] [Tabs] refresh_all: key=quick, idx=5, force=True
-[22:53:16.487] [Tabs] _populate_tab(quick, idx=5, force=True)
-[22:53:16.487] [Tabs]   populated=False, loading=False
-[22:53:16.487] [Tabs]   Starting load for quick
-[22:53:16.487] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[22:53:16.487] [Tabs] _load_folders → got 0 rows for project_id=1
-[22:53:16.487] [Tabs] _clear_tab idx=5
-[22:53:16.487] [Tabs] _load_dates → got hierarchy data for project_id=1
-[22:53:16.487] [Tabs] _load_tags → got 0 rows for project_id=1
-[22:53:16.491] [Tabs] refresh_all(force=True) completed
+[00:20:17.543] [Tabs] refresh_all(force=True) called
+[00:20:17.543] [Tabs] refresh_all: key=branches, idx=0, force=True
+[00:20:17.543] [Tabs] _populate_tab(branches, idx=0, force=True)
+[00:20:17.543] [Tabs]   populated=True, loading=False
+[00:20:17.543] [Tabs]   Force refresh: removing branches from populated set
+[00:20:17.543] [Tabs]   Starting load for branches
+[00:20:17.543] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[00:20:17.543] [Tabs] _clear_tab idx=0
+[00:20:17.543] [Tabs] refresh_all: key=folders, idx=1, force=True
+[00:20:17.552] [Tabs] _populate_tab(folders, idx=1, force=True)
+[00:20:17.552] [Tabs]   populated=False, loading=False
+[00:20:17.552] [Tabs]   Starting load for folders
+[00:20:17.552] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[00:20:17.553] [Tabs] _clear_tab idx=1
+[00:20:17.553] [Tabs] refresh_all: key=dates, idx=2, force=True
+[00:20:17.553] [Tabs] _populate_tab(dates, idx=2, force=True)
+[00:20:17.553] [Tabs]   populated=False, loading=False
+[00:20:17.553] [Tabs]   Starting load for dates
+[00:20:17.553] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[00:20:17.553] [Tabs] _clear_tab idx=2
+[00:20:17.553] [Tabs] refresh_all: key=tags, idx=3, force=True
+[00:20:17.553] [Tabs] _populate_tab(tags, idx=3, force=True)
+[00:20:17.553] [Tabs]   populated=False, loading=False
+[00:20:17.553] [Tabs]   Starting load for tags
+[00:20:17.553] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[00:20:17.553] [Tabs] _clear_tab idx=3
+[00:20:17.558] [Tabs] refresh_all: key=quick, idx=5, force=True
+[00:20:17.558] [Tabs] _populate_tab(quick, idx=5, force=True)
+[00:20:17.558] [Tabs]   populated=False, loading=False
+[00:20:17.558] [Tabs]   Starting load for quick
+[00:20:17.558] [Tabs] _load_folders → got 0 rows for project_id=1
+[00:20:17.558] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[00:20:17.558] [Tabs] _load_dates → got hierarchy data for project_id=1
+[00:20:17.558] [Tabs] _clear_tab idx=5
+[00:20:17.558] [Tabs] _load_tags → got 0 rows for project_id=1
+[00:20:17.558] [Tabs] refresh_all(force=True) completed
 [SidebarQt] Calling reload() after setting project_id
 [SidebarQt] reload() blocked - widget not visible (likely being deleted)
 [MainWindow] Step 2: ✓ Sidebar.set_project(1) completed
@@ -240,12 +240,12 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
 [GRID] Fetched tags for 0 paths, got 0 entries
-[22:53:16.491] [Tabs] _load_quick → got 6 rows
-[22:53:16.491] [Tabs] _clear_tab idx=0
-[22:53:16.491] [Tabs] _clear_tab idx=1
-[22:53:16.497] [Tabs] _clear_tab idx=2
-[22:53:16.497] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[22:53:16.497] [Tabs] _clear_tab idx=3
+[00:20:17.564] [Tabs] _clear_tab idx=0
+[00:20:17.564] [Tabs] _load_quick → got 6 rows
+[00:20:17.564] [Tabs] _clear_tab idx=1
+[00:20:17.564] [Tabs] _clear_tab idx=2
+[00:20:17.564] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[00:20:17.564] [Tabs] _clear_tab idx=3
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [GRID] Step 5: Emitting gridReloaded signal...
@@ -280,207 +280,207 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GooglePhotosLayout] ✓ Project creation dialog completed
 [GooglePhotosLayout] Updated project_id: 1
 [GooglePhotosLayout] Project selector populated with 1 projects
-[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] ✓ Layout refreshed after project creation
-[22:53:16.508] [Tabs] _clear_tab idx=5
+[00:20:17.574] [Tabs] _clear_tab idx=5
 [Schema] Database schema initialized successfully
 [ScanController] Creating ScanWorker for folder: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
 [ScanController] ScanWorker imported successfully
 [ScanController] QThread created
 [ScanController] ScanWorker instance created with project_id=1
+2025-11-26 00:20:31,464 [INFO] DBWriter timer started in worker thread
 [ScanController] Worker moved to thread
-2025-11-25 22:53:36,760 [INFO] DBWriter timer started in worker thread
 [ScanController] Signals connected
 [ScanController] Starting scan thread...
 [ScanController] thread.start() called
 [ScanWorkerAdapter] run() method called!
 [ScanWorkerAdapter] folder=C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs, incremental=True
-2025-11-25 22:53:36,760 [INFO] ScanWorkerAdapter starting scan of C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
+2025-11-26 00:20:31,474 [INFO] ScanWorkerAdapter starting scan of C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
 [ScanWorkerAdapter] Starting scan...
-2025-11-25 22:53:36,760 [INFO] Starting scan: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs (incremental=True)
+2025-11-26 00:20:31,474 [INFO] Starting scan: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs (incremental=True)
 [ScanController] QThread STARTED!
-2025-11-25 22:53:36,766 [INFO] Discovered 21 candidate image files and 0 video files
-2025-11-25 22:53:36,766 [INFO] Loading existing metadata for incremental scan...
-2025-11-25 22:53:36,769 [INFO] ✓ Loaded 0 existing file records
+2025-11-26 00:20:31,480 [INFO] Discovered 21 candidate image files and 0 video files
+2025-11-26 00:20:31,480 [INFO] Loading existing metadata for incremental scan...
+2025-11-26 00:20:31,484 [INFO] ✓ Loaded 0 existing file records
 [SCAN] Created single executor for scan (21 files)
 [SCAN] Starting file 1/21: EWKJ3802.JPG
-2025-11-25 22:53:36,770 [INFO] [Scan] File 1/21: EWKJ3802.JPG
+2025-11-26 00:20:31,484 [INFO] [Scan] File 1/21: EWKJ3802.JPG
 [SCAN] _process_file started for: EWKJ3802.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:36,770 [INFO] 📷 Processing: EWKJ3802.JPG (101.0 KB)
+2025-11-26 00:20:31,484 [INFO] 📷 Processing: EWKJ3802.JPG (101.0 KB)
 [SCAN] Processing: EWKJ3802.JPG
 [SCAN] ✓ Metadata extracted: EWKJ3802.JPG
 [SCAN] Starting file 2/21: IHOC0868.JPG
-2025-11-25 22:53:36,801 [INFO] [Scan] File 2/21: IHOC0868.JPG
+2025-11-26 00:20:31,512 [INFO] [Scan] File 2/21: IHOC0868.JPG
 [SCAN] _process_file started for: IHOC0868.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:36,801 [INFO] 📷 Processing: IHOC0868.JPG (57.3 KB)
+2025-11-26 00:20:31,515 [INFO] 📷 Processing: IHOC0868.JPG (57.3 KB)
 [SCAN] Processing: IHOC0868.JPG
 [SCAN] ✓ Metadata extracted: IHOC0868.JPG
 [SCAN] Starting file 3/21: IMG_1550.DNG
-2025-11-25 22:53:36,814 [INFO] [Scan] File 3/21: IMG_1550.DNG
+2025-11-26 00:20:31,526 [INFO] [Scan] File 3/21: IMG_1550.DNG
 [SCAN] _process_file started for: IMG_1550.DNG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:36,822 [INFO] 📷 Processing: IMG_1550.DNG (17800.9 KB)
+2025-11-26 00:20:31,528 [INFO] 📷 Processing: IMG_1550.DNG (17800.9 KB)
 [SCAN] Processing: IMG_1550.DNG
 [SCAN] ✓ Metadata extracted: IMG_1550.DNG
 [SCAN] Starting file 4/21: IMG_3307.JPG
-2025-11-25 22:53:37,017 [INFO] [Scan] File 4/21: IMG_3307.JPG
+2025-11-26 00:20:31,619 [INFO] [Scan] File 4/21: IMG_3307.JPG
 [SCAN] _process_file started for: IMG_3307.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,017 [INFO] 📷 Processing: IMG_3307.JPG (4122.2 KB)
+2025-11-26 00:20:31,619 [INFO] 📷 Processing: IMG_3307.JPG (4122.2 KB)
 [SCAN] Processing: IMG_3307.JPG
 [SCAN] ✓ Metadata extracted: IMG_3307.JPG
 [SCAN] Starting file 5/21: IMG_9570.JPG
-2025-11-25 22:53:37,027 [INFO] [Scan] File 5/21: IMG_9570.JPG
+2025-11-26 00:20:31,629 [INFO] [Scan] File 5/21: IMG_9570.JPG
 [SCAN] _process_file started for: IMG_9570.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,027 [INFO] 📷 Processing: IMG_9570.JPG (1879.8 KB)
+2025-11-26 00:20:31,629 [INFO] 📷 Processing: IMG_9570.JPG (1879.8 KB)
 [SCAN] Processing: IMG_9570.JPG
 [SCAN] ✓ Metadata extracted: IMG_9570.JPG
 [SCAN] Starting file 6/21: IMG_E3122.JPG
-2025-11-25 22:53:37,048 [INFO] [Scan] File 6/21: IMG_E3122.JPG
+2025-11-26 00:20:31,650 [INFO] [Scan] File 6/21: IMG_E3122.JPG
 [SCAN] _process_file started for: IMG_E3122.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,048 [INFO] 📷 Processing: IMG_E3122.JPG (3374.7 KB)
+2025-11-26 00:20:31,650 [INFO] 📷 Processing: IMG_E3122.JPG (3374.7 KB)
 [SCAN] Processing: IMG_E3122.JPG
 [SCAN] ✓ Metadata extracted: IMG_E3122.JPG
 [SCAN] Starting file 7/21: IMG_E7413.JPG
-2025-11-25 22:53:37,063 [INFO] [Scan] File 7/21: IMG_E7413.JPG
+2025-11-26 00:20:31,666 [INFO] [Scan] File 7/21: IMG_E7413.JPG
 [SCAN] _process_file started for: IMG_E7413.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,063 [INFO] 📷 Processing: IMG_E7413.JPG (1715.4 KB)
+2025-11-26 00:20:31,670 [INFO] 📷 Processing: IMG_E7413.JPG (1715.4 KB)
 [SCAN] Processing: IMG_E7413.JPG
 [SCAN] ✓ Metadata extracted: IMG_E7413.JPG
 [SCAN] Starting file 8/21: IMG_E9569.JPG
-2025-11-25 22:53:37,078 [INFO] [Scan] File 8/21: IMG_E9569.JPG
+2025-11-26 00:20:31,687 [INFO] [Scan] File 8/21: IMG_E9569.JPG
 [SCAN] _process_file started for: IMG_E9569.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,078 [INFO] 📷 Processing: IMG_E9569.JPG (1925.4 KB)
+2025-11-26 00:20:31,687 [INFO] 📷 Processing: IMG_E9569.JPG (1925.4 KB)
 [SCAN] Processing: IMG_E9569.JPG
 [SCAN] ✓ Metadata extracted: IMG_E9569.JPG
 [SCAN] Starting file 9/21: IMG_E9574.JPG
-2025-11-25 22:53:37,089 [INFO] [Scan] File 9/21: IMG_E9574.JPG
+2025-11-26 00:20:31,703 [INFO] [Scan] File 9/21: IMG_E9574.JPG
 [SCAN] _process_file started for: IMG_E9574.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,089 [INFO] 📷 Processing: IMG_E9574.JPG (2077.4 KB)
+2025-11-26 00:20:31,703 [INFO] 📷 Processing: IMG_E9574.JPG (2077.4 KB)
 [SCAN] Processing: IMG_E9574.JPG
 [SCAN] ✓ Metadata extracted: IMG_E9574.JPG
 [SCAN] Starting file 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
-2025-11-25 22:53:37,109 [INFO] [Scan] File 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
+2025-11-26 00:20:31,722 [INFO] [Scan] File 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
 [SCAN] _process_file started for: 244008930_565686944637059_4279754871252118785_n.jpg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,109 [INFO] 📷 Processing: 244008930_565686944637059_4279754871252118785_n.jpg (163.1 KB)
+2025-11-26 00:20:31,722 [INFO] 📷 Processing: 244008930_565686944637059_4279754871252118785_n.jpg (163.1 KB)
 [SCAN] Processing: 244008930_565686944637059_4279754871252118785_n.jpg
 [SCAN] ✓ Metadata extracted: 244008930_565686944637059_4279754871252118785_n.jpg
 [SCAN] Starting file 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
-2025-11-25 22:53:37,126 [INFO] [Scan] File 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
+2025-11-26 00:20:31,750 [INFO] [Scan] File 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
 [SCAN] _process_file started for: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,130 [INFO] 📷 Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif (448.6 KB)
+2025-11-26 00:20:31,750 [INFO] 📷 Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif (448.6 KB)
 [SCAN] Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
 [SCAN] ✓ Metadata extracted: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
 [SCAN] Starting file 12/21: GPIC6664.JPG
-2025-11-25 22:53:37,140 [INFO] [Scan] File 12/21: GPIC6664.JPG
+2025-11-26 00:20:31,766 [INFO] [Scan] File 12/21: GPIC6664.JPG
 [SCAN] _process_file started for: GPIC6664.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,140 [INFO] 📷 Processing: GPIC6664.JPG (234.7 KB)
+2025-11-26 00:20:31,766 [INFO] 📷 Processing: GPIC6664.JPG (234.7 KB)
 [SCAN] Processing: GPIC6664.JPG
 [SCAN] ✓ Metadata extracted: GPIC6664.JPG
 [SCAN] Starting file 13/21: IMG_8920.PNG
-2025-11-25 22:53:37,164 [INFO] [Scan] File 13/21: IMG_8920.PNG
+2025-11-26 00:20:31,782 [INFO] [Scan] File 13/21: IMG_8920.PNG
 [SCAN] _process_file started for: IMG_8920.PNG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,164 [INFO] 📷 Processing: IMG_8920.PNG (3606.7 KB)
+2025-11-26 00:20:31,784 [INFO] 📷 Processing: IMG_8920.PNG (3606.7 KB)
 [SCAN] Processing: IMG_8920.PNG
 [SCAN] ✓ Metadata extracted: IMG_8920.PNG
 [SCAN] Starting file 14/21: JKHC8378.JPG
-2025-11-25 22:53:37,180 [INFO] [Scan] File 14/21: JKHC8378.JPG
+2025-11-26 00:20:31,798 [INFO] [Scan] File 14/21: JKHC8378.JPG
 [SCAN] _process_file started for: JKHC8378.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,180 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
+2025-11-26 00:20:31,798 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
 [SCAN] Processing: JKHC8378.JPG
 [SCAN] ✓ Metadata extracted: JKHC8378.JPG
 [SCAN] Starting file 15/21: NTXK2933.JPG
-2025-11-25 22:53:37,192 [INFO] [Scan] File 15/21: NTXK2933.JPG
+2025-11-26 00:20:31,804 [INFO] [Scan] File 15/21: NTXK2933.JPG
 [SCAN] _process_file started for: NTXK2933.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,192 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
+2025-11-26 00:20:31,814 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
 [SCAN] Processing: NTXK2933.JPG
 [SCAN] ✓ Metadata extracted: NTXK2933.JPG
 [SCAN] Starting file 16/21: IMG_8152.JPEG
-2025-11-25 22:53:37,202 [INFO] [Scan] File 16/21: IMG_8152.JPEG
+2025-11-26 00:20:31,825 [INFO] [Scan] File 16/21: IMG_8152.JPEG
 [SCAN] _process_file started for: IMG_8152.JPEG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,202 [INFO] 📷 Processing: IMG_8152.JPEG (466.1 KB)
+2025-11-26 00:20:31,825 [INFO] 📷 Processing: IMG_8152.JPEG (466.1 KB)
 [SCAN] Processing: IMG_8152.JPEG
 [SCAN] ✓ Metadata extracted: IMG_8152.JPEG
 [SCAN] Starting file 17/21: IMG_8158.JPEG
-2025-11-25 22:53:37,222 [INFO] [Scan] File 17/21: IMG_8158.JPEG
+2025-11-26 00:20:31,835 [INFO] [Scan] File 17/21: IMG_8158.JPEG
 [SCAN] _process_file started for: IMG_8158.JPEG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,222 [INFO] 📷 Processing: IMG_8158.JPEG (563.9 KB)
+2025-11-26 00:20:31,835 [INFO] 📷 Processing: IMG_8158.JPEG (563.9 KB)
 [SCAN] Processing: IMG_8158.JPEG
 [SCAN] ✓ Metadata extracted: IMG_8158.JPEG
 [SCAN] Starting file 18/21: IMG_1779.JPEG
-2025-11-25 22:53:37,238 [INFO] [Scan] File 18/21: IMG_1779.JPEG
+2025-11-26 00:20:31,856 [INFO] [Scan] File 18/21: IMG_1779.JPEG
 [SCAN] _process_file started for: IMG_1779.JPEG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,238 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
+2025-11-26 00:20:31,856 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
 [SCAN] Processing: IMG_1779.JPEG
 [SCAN] ✓ Metadata extracted: IMG_1779.JPEG
 [SCAN] Starting file 19/21: IMG_E3091.JPG
-2025-11-25 22:53:37,253 [INFO] [Scan] File 19/21: IMG_E3091.JPG
+2025-11-26 00:20:31,866 [INFO] [Scan] File 19/21: IMG_E3091.JPG
 [SCAN] _process_file started for: IMG_E3091.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,253 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
+2025-11-26 00:20:31,866 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
 [SCAN] Processing: IMG_E3091.JPG
 [SCAN] ✓ Metadata extracted: IMG_E3091.JPG
 [SCAN] Starting file 20/21: IMG_E3092.JPG
-2025-11-25 22:53:37,268 [INFO] [Scan] File 20/21: IMG_E3092.JPG
+2025-11-26 00:20:31,887 [INFO] [Scan] File 20/21: IMG_E3092.JPG
 [SCAN] _process_file started for: IMG_E3092.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,270 [INFO] 📷 Processing: IMG_E3092.JPG (4652.5 KB)
+2025-11-26 00:20:31,887 [INFO] 📷 Processing: IMG_E3092.JPG (4652.5 KB)
 [SCAN] Processing: IMG_E3092.JPG
 [SCAN] ✓ Metadata extracted: IMG_E3092.JPG
 [SCAN] Starting file 21/21: IMG_E3093.JPG
-2025-11-25 22:53:37,283 [INFO] [Scan] File 21/21: IMG_E3093.JPG
+2025-11-26 00:20:31,903 [INFO] [Scan] File 21/21: IMG_E3093.JPG
 [SCAN] _process_file started for: IMG_E3093.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 22:53:37,283 [INFO] 📷 Processing: IMG_E3093.JPG (4602.6 KB)
+2025-11-26 00:20:31,903 [INFO] 📷 Processing: IMG_E3093.JPG (4602.6 KB)
 [SCAN] Processing: IMG_E3093.JPG
 [SCAN] ✓ Metadata extracted: IMG_E3093.JPG
-2025-11-25 22:53:37,306 [INFO] Bulk upserted 21 photos for project 1
+2025-11-26 00:20:31,924 [INFO] Bulk upserted 21 photos for project 1
 [SCAN] Shutting down executor
-2025-11-25 22:53:37,306 [INFO] Executor shutdown complete
-2025-11-25 22:53:37,314 [INFO] Scan complete: 21 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.6s
-2025-11-25 22:53:37,314 [INFO] Scan completed: 21 photos, 0 videos, 5 folders in 0.6s
+2025-11-26 00:20:31,924 [INFO] Executor shutdown complete
+2025-11-26 00:20:31,928 [INFO] Scan complete: 21 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.5s
+2025-11-26 00:20:31,928 [INFO] Scan completed: 21 photos, 0 videos, 5 folders in 0.5s
 [ScanController] scan finished: 5 folders, 21 photos, 0 videos
 [ScanController] cleanup after scan
-2025-11-25 22:53:37,438 [INFO] Building date branches...
-2025-11-25 22:53:37,440 [INFO] Building date branches for project_id=1
+2025-11-26 00:20:32,001 [INFO] Building date branches...
+2025-11-26 00:20:32,001 [INFO] Building date branches for project_id=1
 [build_date_branches] Using project_id=1
 [build_date_branches] Populating 'all' branch with 21 photos for project 1
 [build_date_branches] Inserted 21/21 photos into 'all' branch
@@ -508,17 +508,17 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [build_date_branches] Date 2025-03-13: inserted 2/2 into project_images (new)
 [build_date_branches] Total entries processed: 13
 [build_date_branches] project_images table has 34 rows for project 1
-2025-11-25 22:53:37,458 [INFO] Created 13 photo date branch entries for project 1
-2025-11-25 22:53:37,458 [INFO] Building video date branches for project_id=1
+2025-11-26 00:20:32,021 [INFO] Created 13 photo date branch entries for project 1
+2025-11-26 00:20:32,021 [INFO] Building video date branches for project_id=1
 [build_video_date_branches] Using project_id=1
 [build_video_date_branches] Found 0 videos with dates for project 1
 [build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-25 22:53:37,458 [INFO] Created 0 video date branch entries for project 1
-2025-11-25 22:53:37,461 [INFO] Backfilling created_date fields for photos...
-2025-11-25 22:53:37,467 [INFO] Backfilled 8 photo rows with created_date
-2025-11-25 22:53:37,467 [INFO] Backfilling created_date fields for videos...
+2025-11-26 00:20:32,023 [INFO] Created 0 video date branch entries for project 1
+2025-11-26 00:20:32,025 [INFO] Backfilling created_date fields for photos...
+2025-11-26 00:20:32,025 [INFO] Backfilled 8 photo rows with created_date
+2025-11-26 00:20:32,025 [INFO] Backfilling created_date fields for videos...
 [FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-2025-11-25 22:53:37,469 [INFO] Reloading sidebar after date branches built...
+2025-11-26 00:20:32,040 [INFO] Reloading sidebar after date branches built...
 [SidebarQt] reload() blocked - widget not visible (likely being deleted)
 
 [GRID] ====== reload() CALLED ======
@@ -549,43 +549,95 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-2025-11-25 22:53:37,483 [INFO] Refreshing Google Photos layout after scan...
-2025-11-25 22:53:37,483 [INFO] ✓ Google Photos layout refresh scheduled
-[GooglePhotosLayout] Loading photos from database...
+2025-11-26 00:20:32,058 [INFO] Refreshing Google Photos layout after scan...
+2025-11-26 00:20:32,058 [INFO] ✓ Google Photos layout refresh scheduled
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] Loaded 13 photos in 7 date groups
+[GooglePhotosLayout] Filtering by year: 2025
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2025]...
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
+[GooglePhotosLayout] 🔎 Zoom changed to: 198px
+[GooglePhotosLayout] Loading photos from database (thumb size: 198px)...
+[GooglePhotosLayout] Loaded 13 photos in 7 date groups
+[GooglePhotosLayout] Filtering by year: 2024
+[GooglePhotosLayout] Loading photos from database (thumb size: 198px) [year=2024]...
+[GooglePhotosLayout] Loaded 5 photos in 3 date groups
+[GooglePhotosLayout] 🔎 Zoom changed to: 192px
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px)...
+[GooglePhotosLayout] Loaded 13 photos in 7 date groups
+[GooglePhotosLayout] Filtering by folder: 1
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1]...
+[GooglePhotosLayout] Loaded 7 photos in 5 date groups
+[GooglePhotosLayout] Filtering by folder: 5
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5]...
+[GooglePhotosLayout] Loaded 3 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 3
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3]...
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 5
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5]...
+[GooglePhotosLayout] Loaded 3 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 1
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1]...
+[GooglePhotosLayout] Loaded 7 photos in 5 date groups
+[GooglePhotosLayout] Filtering by folder: 4
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4]...
+[GooglePhotosLayout] Loaded 1 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 3
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3]...
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 5
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5]...
+[GooglePhotosLayout] Loaded 3 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: 1
+[GooglePhotosLayout] Loading photos from database (thumb size: 192px) [folder=c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1]...
+[GooglePhotosLayout] Loaded 7 photos in 5 date groups
 [LayoutManager] Switching layout: google → current
 [LayoutManager] 🔄 Restoring original central widget: QWidget
+[CurrentLayout] Layout activated - refreshing sidebar and grid
+[CurrentLayout] Reloading sidebar...
+[SidebarQt] reload() blocked - widget not visible (likely being deleted)
+[CurrentLayout] ✓ Sidebar reload completed
+[CurrentLayout] Reloading grid...
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in None-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[CurrentLayout] ✓ Grid reload completed
 [LayoutManager] ✓ Switched to: Current Layout
 [MainWindow] ✓ Switched to layout: current
 
 [GRID] ====== reload() CALLED ======
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
-[GRID] Fetched tags for 21 paths, got 21 entries
-[GRID] Loaded 21 thumbnails.
-[GRID] Reloaded 21 thumbnails in date-mode (base=21)
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
@@ -608,130 +660,191 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/7 paths (project_id=1)
+[GRID] Fetched tags for 7 paths, got 7 entries
 [GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 21 new thumbnail workers
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Loading viewport range: 0-20 of 21
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Queued 7 new thumbnail workers
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Loaded 7 thumbnails.
+[GRID] Reloaded 7 thumbnails in date-mode (base=7)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-6 of 7
 [GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/7 paths (project_id=1)
-[GRID] Fetched tags for 7 paths, got 7 entries
-[GRID] Loaded 7 thumbnails.
-[GRID] Reloaded 7 thumbnails in date-mode (base=7)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
 [GRID] Loading viewport range: 0-6 of 7
-[GRID] Queued 7 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in date-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in date-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[SIDEBAR] Section header 'Quick Dates' clicked
-[SIDEBAR] Section header 'Quick Dates' clicked
-[SIDEBAR] Section header '👥 People' clicked
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Queued 3 new thumbnail workers
+[GRID] Loading viewport range: 0-6 of 7
 [TAG FILTER] Cleared tag filter when navigating to branch
 
 [GRID] ====== reload() CALLED ======
@@ -760,9 +873,6 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [DB_TAGS_SQL] Sample tagged VIDEOS in DB:
 [DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
 [GRID] Fetched tags for 21 paths, got 21 entries
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 21 new thumbnail workers
-[GRID] Loading viewport range: 0-20 of 21
 [GRID] Loaded 21 thumbnails.
 [GRID] Reloaded 21 thumbnails in date-mode (base=21)
 [GRID] Step 5: Emitting gridReloaded signal...
@@ -787,186 +897,13 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 7 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/7 paths (project_id=1)
-[GRID] Fetched tags for 7 paths, got 7 entries
-[GRID] Loaded 7 thumbnails.
-[GRID] Reloaded 7 thumbnails in date-mode (base=7)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-6 of 7
-[GRID] Queued 7 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in date-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in date-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[SIDEBAR] Section header 'Folders' clicked
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 21 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
-[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
 [GRID] Loading viewport range: 0-20 of 21
 [GRID] Queued 21 new thumbnail workers
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Loaded 21 thumbnails.
-[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 8 new thumbnail workers
-[SIDEBAR] Section header '👥 People' clicked
-[SIDEBAR] Section header 'Folders' clicked
+[SIDEBAR] Section header 'Branches' clicked
 
 [GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
+[GRID] project_id=1, load_mode=date
 [GRID] Step 1: Setting _reloading=True
 [get_images_by_branch] project_id=1, branch_key='all'
 [get_images_by_branch] Found 21 photos
@@ -1019,10 +956,13 @@ PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-
 [GRID] Finally block: Setting _reloading=False
 [GRID] Loading viewport range: 0-20 of 21
 [GRID] Queued 21 new thumbnail workers
+[SIDEBAR] Section header 'Quick Dates' clicked
+[SIDEBAR] Section header 'Quick Dates' clicked
+[SIDEBAR] Section header 'Quick Dates' clicked
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
 [Shutdown] Thumbnail cache cleared.
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-07>
