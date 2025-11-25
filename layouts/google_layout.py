@@ -279,7 +279,12 @@ class GooglePhotosLayout(BaseLayout):
                 WHERE date_taken IS NOT NULL
                 ORDER BY date_taken DESC
             """
-            rows = db.con.execute(query).fetchall()
+
+            # Use ReferenceDB's connection pattern
+            with db._connect() as conn:
+                cur = conn.cursor()
+                cur.execute(query)
+                rows = cur.fetchall()
 
             if not rows:
                 # No photos - show empty state
