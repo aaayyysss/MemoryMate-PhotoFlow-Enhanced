@@ -400,7 +400,20 @@ class ScanController:
             msg += f" and {v} videos"
         msg += f" in {f} folders.\n\n"
         msg += "📊 Processing metadata and updating views...\nThis may take a few seconds."
-        QMessageBox.information(self.main, tr("messages.scan_complete_title"), msg)
+
+        # CRITICAL FIX: Create and show message box explicitly, then close it properly
+        # Using QMessageBox.information() can cause issues with multiple scans
+        msgbox = QMessageBox(self.main)
+        msgbox.setWindowTitle(tr("messages.scan_complete_title"))
+        msgbox.setText(msg)
+        msgbox.setIcon(QMessageBox.Information)
+        msgbox.setStandardButtons(QMessageBox.Ok)
+        msgbox.setModal(True)
+        msgbox.show()
+        QApplication.processEvents()
+
+        # Store reference to close it later
+        self.main._scan_complete_msgbox = msgbox
 
         # Show progress indicator for post-scan processing
         progress = QProgressDialog("Building date branches...", None, 0, 4, self.main)
@@ -654,6 +667,28 @@ class ScanController:
             # reload thumbnails after scan
             if self.main.thumbnails and hasattr(self.main.grid, "get_visible_paths"):
                 self.main.thumbnails.load_thumbnails(self.main.grid.get_visible_paths())
+
+            # CRITICAL FIX: Refresh Google Photos layout if active
+            try:
+                if hasattr(self.main, 'layout_manager') and self.main.layout_manager:
+                    current_layout_id = self.main.layout_manager._current_layout_id
+                    if current_layout_id == "google":
+                        self.logger.info("Refreshing Google Photos layout after scan...")
+                        current_layout = self.main.layout_manager._current_layout
+                        if current_layout and hasattr(current_layout, '_load_photos'):
+                            current_layout._load_photos()
+                            self.logger.info("✓ Google Photos layout refreshed")
+            except Exception as e:
+                self.logger.error(f"Error refreshing Google Photos layout: {e}")
+
+            # CRITICAL FIX: Close scan completion message box if still open
+            try:
+                if hasattr(self.main, '_scan_complete_msgbox') and self.main._scan_complete_msgbox:
+                    self.main._scan_complete_msgbox.close()
+                    self.main._scan_complete_msgbox.deleteLater()
+                    self.main._scan_complete_msgbox = None
+            except Exception as e:
+                self.logger.error(f"Error closing scan message box: {e}")
 
             # Close progress dialog
             progress.close()
