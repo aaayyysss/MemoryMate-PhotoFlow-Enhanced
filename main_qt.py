@@ -90,6 +90,7 @@ if __name__ == "__main__":
 
     worker = StartupWorker(settings)
     worker.progress.connect(splash.update_progress)
+    worker.detail.connect(splash.add_detail)  # Connect detailed messages
 
     # 3️: Handle cancel button gracefully
     def on_cancel():
