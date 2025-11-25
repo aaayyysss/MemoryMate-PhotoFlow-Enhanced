@@ -1,24 +1,25 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03>python main_qt.py
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05
+
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05>python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\locales\en.json
+✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\locales\en.json
 🌍 Language initialized: en
-2025-11-25 15:26:42,902 [INFO] ================================================================================
-2025-11-25 15:26:42,902 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-25 15:26:42,902 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\app_log.txt
-2025-11-25 15:26:42,902 [INFO] ================================================================================
-2025-11-25 15:26:43,047 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-25 15:26:43,047 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-25 17:05:14,802 [INFO] ================================================================================
+2025-11-25 17:05:14,802 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 17:05:14,802 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\app_log.txt
+2025-11-25 17:05:14,802 [INFO] ================================================================================
+2025-11-25 17:05:14,865 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 17:05:14,865 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 15, 'size_mb': 0.05, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.37.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-03\\thumbnails_cache.db', 'last_updated': '2025-11-25 15:26'}
-[ThumbCacheDB] Purged 15 stale thumbnails (> 30 days).
-2025-11-25 15:26:43,682 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.37.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-05\\thumbnails_cache.db', 'last_updated': '2025-11-25 17:05'}
+2025-11-25 17:05:16,160 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-25 15:26:43,682 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-25 15:26:43,682 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-25 15:26:43,682 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 17:05:16,170 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 17:05:16,171 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 17:05:16,171 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
@@ -28,34 +29,216 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [LayoutManager] Registered layout: Lightroom Style (id=lightroom)
 [MainWindow] Layout manager initialized
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-25 15:26:43,724 [INFO] SearchService initialized
+2025-11-25 17:05:16,201 [INFO] SearchService initialized
 [Sidebar] Device auto-detection disabled (manual refresh only)
-[15:26:43.732] [Tabs] __init__ started
-[15:26:43.732] [Tabs] _build_tabs → building tab widgets
-[15:26:43.732] [Tabs] _on_tab_changed(idx=0)
-[15:26:43.732] [Tabs] _start_timeout idx=0 type=branches
-[15:26:43.732] [Tabs] _populate_tab(branches, idx=0, force=False)
-[15:26:43.732] [Tabs]   populated=False, loading=False
-[15:26:43.732] [Tabs]   Starting load for branches
-[15:26:43.732] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[15:26:43.732] [Tabs] _clear_tab idx=0
-[15:26:43.740] [Tabs] _on_tab_changed → tab_type=branches
-[15:26:43.740] [Tabs] _build_tabs → added 6 tabs
-[15:26:43.740] [Tabs] __init__ completed
+[17:05:16.216] [Tabs] __init__ started
+[17:05:16.217] [Tabs] _build_tabs → building tab widgets
+[17:05:16.217] [Tabs] _on_tab_changed(idx=0)
+[17:05:16.218] [Tabs] _start_timeout idx=0 type=branches
+[17:05:16.218] [Tabs] _populate_tab(branches, idx=0, force=False)
+[17:05:16.218] [Tabs]   populated=False, loading=False
+[17:05:16.218] [Tabs]   Starting load for branches
+[17:05:16.218] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[17:05:16.218] [Tabs] _clear_tab idx=0
+[17:05:16.222] [Tabs] _on_tab_changed → tab_type=branches
+[17:05:16.223] [Tabs] _build_tabs → added 6 tabs
+[17:05:16.223] [Tabs] __init__ completed
+[SidebarQt] _build_tree_model() called with project_id=None
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 0 branches
+[Sidebar] Loading videos for project_id=None
+[Sidebar] Found 0 videos in project None
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000240105CD6D0>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan  =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive H: exists, checking...
+[DeviceScanner]           Checking path: H:\
+[DeviceScanner]           Directories found: []
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive H:
+[DeviceScanner]     Drive P: exists, checking...
+[DeviceScanner]           Checking path: P:\
+[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[SidebarQt] switch_display_mode(list) - canceling old workers
+[SidebarQt] Hiding tabs controller
+[17:05:16.647] [Tabs] hide_tabs() called - canceling pending workers
+[SidebarQt] Canceled tab workers via hide_tabs()
+[SidebarQt] Clearing tree view selection before rebuild
+[SidebarQt] Showing tree view
+[SidebarQt] Calling _build_tree_model()
+[SidebarQt] _build_tree_model() called with project_id=None
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 0 branches
+[Sidebar] Loading videos for project_id=None
+[Sidebar] Found 0 videos in project None
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000240105CD6D0>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Using cached scan results =====
+[DeviceScanner] Cache age: 0.01s (TTL: 5.0s)
+[DeviceScanner] Cached devices: 0
+[DeviceScanner] ===== Scan complete (cached): 0 device(s) =====
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[SidebarQt] _build_tree_model() completed
+[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
+[LayoutManager] Initializing default layout: current
+[LayoutManager] Already using layout: current
+[Startup] Layout system initialized successfully
+[Startup] Database schema initialized successfully
+[17:05:17.206] [Tabs] _finish_branches (stale gen=1) — ignoring
+[17:05:17.206] [Tabs] _on_tab_changed(idx=0)
+[17:05:17.207] [Tabs] _start_timeout idx=0 type=branches
+[17:05:17.207] [Tabs] _populate_tab(branches, idx=0, force=False)
+[17:05:17.207] [Tabs]   populated=False, loading=False
+[17:05:17.207] [Tabs]   Starting load for branches
+[17:05:17.207] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[17:05:17.207] [Tabs] _clear_tab idx=0
+[17:05:17.222] [Tabs] _on_tab_changed → tab_type=branches
+[17:05:17.228] [Tabs] _clear_tab idx=0
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=None
+[Breadcrumb] Added project segment: My Photos
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 0 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: My Photos
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
+✅ InsightFace detected with buffalo_l models
+   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\models\buffalo_l
+[MAIN_open_lightbox_from_selection] paths: []
+[MAIN_open_lightbox_from_selection] paths: []
+[LayoutManager] Switching layout: current → google
+[LayoutManager] 💾 Took ownership of original central widget: QWidget
+[GooglePhotosLayout] ⚠️ WARNING: No projects found! Please create a project first.
+[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] ⚠️ No project selected
+[LayoutManager] Setting new central widget: QWidget
+[GooglePhotosLayout] Layout activated
+[GooglePhotosLayout] Connected Scan button to MainWindow
+[GooglePhotosLayout] Connected Faces button to MainWindow
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
+[LayoutManager] Switching layout: google → current
+[LayoutManager] 🔄 Restoring original central widget: QWidget
+[LayoutManager] ✓ Switched to: Current Layout
+[MainWindow] ✓ Switched to layout: current
+[Breadcrumb] _show_project_menu() called
+[Breadcrumb] Refreshed project list: 0 projects
+[Breadcrumb] No projects found in main_window._projects
+[Breadcrumb] Showing menu...
+[Breadcrumb] _switch_project(1) called
+
+[MainWindow] ========== _on_project_changed_by_id(1) STARTED ==========
+[MainWindow] Current project_id: None
+[MainWindow] Step 1: Updating grid.project_id...
+[MainWindow] Step 1: ✓ Set grid.project_id = 1
+[MainWindow] Step 2: Updating sidebar...
+[SidebarQt] set_project(1) called
+[17:06:09.109] [Tabs] refresh_all(force=True) called
+[17:06:09.111] [Tabs] refresh_all: key=branches, idx=0, force=True
+[17:06:09.111] [Tabs] _populate_tab(branches, idx=0, force=True)
+[17:06:09.111] [Tabs]   populated=True, loading=False
+[17:06:09.111] [Tabs]   Force refresh: removing branches from populated set
+[17:06:09.111] [Tabs]   Starting load for branches
+[17:06:09.111] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[17:06:09.111] [Tabs] _clear_tab idx=0
+[17:06:09.114] [Tabs] refresh_all: key=folders, idx=1, force=True
+[17:06:09.118] [Tabs] _populate_tab(folders, idx=1, force=True)
+[17:06:09.118] [Tabs]   populated=False, loading=False
+[17:06:09.118] [Tabs]   Starting load for folders
+[17:06:09.118] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[17:06:09.118] [Tabs] _clear_tab idx=1
+[17:06:09.120] [Tabs] refresh_all: key=dates, idx=2, force=True
+[17:06:09.120] [Tabs] _populate_tab(dates, idx=2, force=True)
+[17:06:09.120] [Tabs]   populated=False, loading=False
+[17:06:09.120] [Tabs]   Starting load for dates
+[17:06:09.120] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[17:06:09.120] [Tabs] _clear_tab idx=2
+[17:06:09.122] [Tabs] _load_folders → got 0 rows for project_id=1
+[17:06:09.122] [Tabs] refresh_all: key=tags, idx=3, force=True
+[17:06:09.122] [Tabs] _populate_tab(tags, idx=3, force=True)
+[17:06:09.122] [Tabs]   populated=False, loading=False
+[17:06:09.122] [Tabs]   Starting load for tags
+[17:06:09.122] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[17:06:09.122] [Tabs] _clear_tab idx=3
+[17:06:09.122] [Tabs] refresh_all: key=quick, idx=5, force=True
+[17:06:09.122] [Tabs] _populate_tab(quick, idx=5, force=True)
+[17:06:09.122] [Tabs]   populated=False, loading=False
+[17:06:09.122] [Tabs] _load_dates → got hierarchy data for project_id=1
+[17:06:09.122] [Tabs]   Starting load for quick
+[17:06:09.122] [Tabs] _load_tags → got 0 rows for project_id=1
+[17:06:09.122] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[17:06:09.122] [Tabs] _clear_tab idx=5
+[17:06:09.127] [Tabs] refresh_all(force=True) completed
+[SidebarQt] Calling reload() after setting project_id
+[SidebarQt] reload() called, display_mode=list, tabs_visible=False
+[SidebarQt] Calling _build_tree_model() instead of tabs refresh
 [SidebarQt] _build_tree_model() called with project_id=1
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
 [Sidebar] Creating fresh model (avoiding Qt segfault)
 [Sidebar] Attaching fresh model to tree view
+[17:06:09.129] [Tabs] _load_quick → got 6 rows
 [SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 0}]
+[Sidebar] Loaded 0 folder counts in batch (performance optimization)
 [Sidebar] Loading videos for project_id=1
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000014DBF2F2D50>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000240105CD6D0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -96,83 +279,51 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 
 [Sidebar] No mobile devices detected - added help message
 [Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=2] running for 1 targets...
-[SidebarQt] switch_display_mode(list) - canceling old workers
-[SidebarQt] Hiding tabs controller
-[15:26:44.333] [Tabs] hide_tabs() called - canceling pending workers
-[SidebarQt] Canceled tab workers via hide_tabs()
-[SidebarQt] Clearing tree view selection before rebuild
-[SidebarQt] Showing tree view
-[SidebarQt] Calling _build_tree_model()
-[Sidebar][counts worker gen=2] finished scanning targets, scheduling UI update
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
-[Sidebar] Loaded 2 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000014DBF2F2D50>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Using cached scan results =====
-[DeviceScanner] Cache age: 0.01s (TTL: 5.0s)
-[DeviceScanner] Cached devices: 0
-[DeviceScanner] ===== Scan complete (cached): 0 device(s) =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
 [Sidebar][counts worker gen=4] running for 1 targets...
-[SidebarQt] _build_tree_model() completed
+[MainWindow] Step 2: ✓ Sidebar.set_project(1) completed
+[MainWindow] Step 3: Reloading grid to 'all' branch...
+
+[GRID] >>>>>> set_branch('all') CALLED
+[GRID]   Current state: project_id=1, load_mode=None
+[GRID]   State updated, calling reload()...
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
 [Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
-[LayoutManager] Initializing default layout: current
-[LayoutManager] Already using layout: current
-[Startup] Layout system initialized successfully
-[Startup] Database schema initialized successfully
-[15:26:44.839] [Tabs] _on_tab_changed(idx=0)
-[15:26:44.840] [Tabs] _start_timeout idx=0 type=branches
-[15:26:44.840] [Tabs] _populate_tab(branches, idx=0, force=False)
-[15:26:44.840] [Tabs]   populated=False, loading=False
-[15:26:44.840] [Tabs]   Starting load for branches
-[15:26:44.840] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[15:26:44.840] [Tabs] _clear_tab idx=0
-[15:26:44.841] [Tabs] _on_tab_changed → tab_type=branches
-[15:26:44.841] [Tabs] _finish_branches (stale gen=1) — ignoring
-[Sidebar][counts] Ignoring stale worker results (gen=2, current=4)
-[Sidebar][counts applied] updated UI with counts
-[15:26:44.843] [Tabs] _clear_tab idx=0
+[17:06:09.446] [Tabs] _clear_tab idx=0
 [TAG FILTER] Cleared by navigation.
 
 [GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] project_id=1, load_mode=branch
+[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
+[GRID] ====== reload() BLOCKED ======
+
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
+[GRID] ====== reload() BLOCKED ======
+
+[17:06:09.446] [Tabs] _clear_tab idx=1
+[17:06:09.446] [Tabs] _clear_tab idx=2
+[17:06:09.446] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[17:06:09.446] [Tabs] _clear_tab idx=3
+[17:06:09.456] [Tabs] _clear_tab idx=5
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Added project segment: My Photos
+[Breadcrumb] Added branch segment: All Photos
 [Breadcrumb] Calling set_path() with 2 segments
 [BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 0 existing widgets
+[BreadcrumbNav] Clearing 3 existing widgets
 [BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 0: My Photos
 [BreadcrumbNav] Added segment 1: All Photos
 [BreadcrumbNav] set_path() completed - 2 segments added
 [Breadcrumb] set_path() completed successfully
@@ -182,9 +333,215 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
+[GRID] <<<<<< set_branch('all') COMPLETED
+
+[MainWindow] Step 3: ✓ Grid.set_branch('all') completed
+[MainWindow] Step 4: Breadcrumb will auto-update via gridReloaded signal
+[MainWindow] Step 5: ✓✓✓ Switched to project ID: 1
+[MainWindow] ========== _on_project_changed_by_id(1) COMPLETED ==========
+
+[Breadcrumb] Switched to project ID: 1
+[MainWindow] Refreshed project list: 1 projects
+[Sidebar][counts applied] updated UI with counts
+[LayoutManager] Switching layout: current → google
+[LayoutManager] 💾 Took ownership of original central widget: QWidget
+[GooglePhotosLayout] Using default project: 1
+[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] No photos found in project 1
+[LayoutManager] Setting new central widget: QWidget
+[GooglePhotosLayout] Layout activated
+[GooglePhotosLayout] Connected Scan button to MainWindow
+[GooglePhotosLayout] Connected Faces button to MainWindow
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
+[Schema] Database schema initialized successfully
+[ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+2025-11-25 17:06:24,562 [INFO] DBWriter timer started in worker thread
+[ScanController] ScanWorker imported successfully
+[ScanController] QThread created
+[ScanController] ScanWorker instance created with project_id=1
+[ScanController] Worker moved to thread
+[ScanController] Signals connected
+[ScanController] Starting scan thread...
+[ScanController] thread.start() called
+[ScanWorkerAdapter] run() method called!
+[ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
+2025-11-25 17:06:24,573 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+[ScanWorkerAdapter] Starting scan...
+2025-11-25 17:06:24,574 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
+[ScanController] QThread STARTED!
+2025-11-25 17:06:24,577 [INFO] Discovered 15 candidate image files and 0 video files
+2025-11-25 17:06:24,577 [INFO] Loading existing metadata for incremental scan...
+2025-11-25 17:06:24,579 [INFO] ✓ Loaded 0 existing file records
+[SCAN] Created single executor for scan (15 files)
+[SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
+2025-11-25 17:06:24,581 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
+[SCAN] _process_file started for: Alya1_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,583 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
+[SCAN] Processing: Alya1_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
+[SCAN] Starting file 2/15: Alya1_3_2.jpeg
+2025-11-25 17:06:24,791 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
+[SCAN] _process_file started for: Alya1_3_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,810 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
+[SCAN] Processing: Alya1_3_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
+[SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
+2025-11-25 17:06:24,833 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
+[SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,834 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
+[SCAN] Processing: Alya2_2_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
+[SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
+2025-11-25 17:06:24,877 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
+[SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,940 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
+[SCAN] Processing: Alya3_2_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
+[SCAN] Starting file 5/15: Alya_2_2.jpeg
+2025-11-25 17:06:24,963 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
+[SCAN] _process_file started for: Alya_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,963 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
+[SCAN] Processing: Alya_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
+[SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
+2025-11-25 17:06:24,977 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
+[SCAN] _process_file started for: Alya_2_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,977 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
+[SCAN] Processing: Alya_2_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
+[SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
+2025-11-25 17:06:24,994 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
+[SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:24,994 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
+[SCAN] Processing: Ammar-Ref(1)_2_2.png
+[SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
+[SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
+2025-11-25 17:06:25,020 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
+[SCAN] _process_file started for: Ammar-Ref_2_2_2.png
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,020 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
+[SCAN] Processing: Ammar-Ref_2_2_2.png
+[SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
+[SCAN] Starting file 9/15: Ammar-Ref_3_2.png
+2025-11-25 17:06:25,044 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
+[SCAN] _process_file started for: Ammar-Ref_3_2.png
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,044 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
+[SCAN] Processing: Ammar-Ref_3_2.png
+[SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
+[SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
+2025-11-25 17:06:25,068 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
+[SCAN] _process_file started for: Ammar1_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,068 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
+[SCAN] Processing: Ammar1_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
+[SCAN] Starting file 11/15: Ammar2_2_2_2.jpeg
+2025-11-25 17:06:25,100 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
+[SCAN] _process_file started for: Ammar2_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,100 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
+[SCAN] Processing: Ammar2_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Ammar2_2_2_2.jpeg
+[SCAN] Starting file 12/15: Ammar3_2_2_2_2.jpeg
+2025-11-25 17:06:25,116 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
+[SCAN] _process_file started for: Ammar3_2_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,116 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
+[SCAN] Processing: Ammar3_2_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: Ammar3_2_2_2_2.jpeg
+[SCAN] Starting file 13/15: IMG_6850_2_2_2.jpeg
+2025-11-25 17:06:25,127 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
+[SCAN] _process_file started for: IMG_6850_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,127 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
+[SCAN] Processing: IMG_6850_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: IMG_6850_2_2_2.jpeg
+[SCAN] Starting file 14/15: IMG_6995_2_2_2.jpeg
+2025-11-25 17:06:25,148 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
+[SCAN] _process_file started for: IMG_6995_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,148 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
+[SCAN] Processing: IMG_6995_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: IMG_6995_2_2_2.jpeg
+[SCAN] Starting file 15/15: عليا_2_2_2.jpeg
+2025-11-25 17:06:25,164 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
+[SCAN] _process_file started for: عليا_2_2_2.jpeg
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 17:06:25,164 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
+[SCAN] Processing: عليا_2_2_2.jpeg
+[SCAN] ✓ Metadata extracted: عليا_2_2_2.jpeg
+2025-11-25 17:06:25,180 [INFO] Bulk upserted 15 photos for project 1
+[SCAN] Shutting down executor
+2025-11-25 17:06:25,180 [INFO] Executor shutdown complete
+2025-11-25 17:06:25,180 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.6s
+2025-11-25 17:06:25,180 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.6s
+[ScanController] scan finished: 1 folders, 15 photos, 0 videos
+[ScanController] cleanup after scan
+2025-11-25 17:06:27,006 [INFO] Building date branches...
+2025-11-25 17:06:27,006 [INFO] Building date branches for project_id=1
+[build_date_branches] Using project_id=1
+[build_date_branches] Populating 'all' branch with 15 photos for project 1
+[build_date_branches] Inserted 15/15 photos into 'all' branch
+[build_date_branches] Found 6 unique dates for project 1
+[build_date_branches] Date 2024-08-11: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg
+[build_date_branches] Date 2024-08-11: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2024-11-18: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg
+[build_date_branches] Date 2024-11-18: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2024-11-29: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
+[build_date_branches] Date 2024-11-29: inserted 3/3 into project_images (new)
+[build_date_branches] Date 2024-12-02: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg
+[build_date_branches] Date 2024-12-02: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2025-07-30: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg
+[build_date_branches] Date 2025-07-30: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2025-08-09: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg
+[build_date_branches] Date 2025-08-09: inserted 1/1 into project_images (new)
+[build_date_branches] Total entries processed: 8
+[build_date_branches] project_images table has 23 rows for project 1
+2025-11-25 17:06:27,023 [INFO] Created 8 photo date branch entries for project 1
+2025-11-25 17:06:27,023 [INFO] Building video date branches for project_id=1
+[build_video_date_branches] Using project_id=1
+[build_video_date_branches] Found 0 videos with dates for project 1
+[build_video_date_branches] No videos with dates found, skipping branch creation
+2025-11-25 17:06:27,027 [INFO] Created 0 video date branch entries for project 1
+2025-11-25 17:06:27,027 [INFO] Backfilling created_date fields for photos...
+2025-11-25 17:06:27,027 [INFO] Backfilled 7 photo rows with created_date
+2025-11-25 17:06:27,027 [INFO] Backfilling created_date fields for videos...
+[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
+2025-11-25 17:06:27,053 [INFO] Reloading sidebar after date branches built...
+[SidebarQt] reload() blocked - widget not visible (likely being deleted)
 
 [GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
+[GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
 [get_images_by_branch] project_id=1, branch_key='all'
 [get_images_by_branch] Found 15 photos
@@ -205,23 +562,25 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
                         JOIN video_tags vt ON vt.video_...
 [DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
 [DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 2 rows (2 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS] Found favorite tag: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='face'
-[DB_TAGS] Retrieved 2 tags for 1/15 paths (project_id=1)
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
 [GRID] Fetched tags for 15 paths, got 15 entries
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-14 of 15
+[GRID] Queued 15 new thumbnail workers
 [GRID] Loaded 15 thumbnails.
 [GRID] Reloaded 15 thumbnails in branch-mode (base=15)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
 [Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
 [Breadcrumb] Found CURRENT project name: P01
 [Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Added branch segment: All Photos
 [Breadcrumb] Calling set_path() with 2 segments
 [BreadcrumbNav] set_path() called with 2 segments
 [BreadcrumbNav] Clearing 3 existing widgets
@@ -236,385 +595,18 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
 [GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[GRID] Loading viewport range: 0-14 of 15
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03\models\buffalo_l
-[LayoutManager] Switching layout: current → apple
-[LayoutManager] 💾 Took ownership of original central widget: QWidget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Apple Photos Style
-[MainWindow] ✓ Switched to layout: apple
-[LayoutManager] Switching layout: apple → google
-[LayoutManager] 🗑️ Removed old placeholder widget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Google Photos Style
-[MainWindow] ✓ Switched to layout: google
-[LayoutManager] Switching layout: google → lightroom
-[LayoutManager] 🗑️ Removed old placeholder widget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Lightroom Style
-[MainWindow] ✓ Switched to layout: lightroom
-[LayoutManager] Switching layout: lightroom → current
-[LayoutManager] 🔄 Restoring original central widget: QWidget
-[LayoutManager] ✓ Switched to: Current Layout
-[MainWindow] ✓ Switched to layout: current
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[ThumbnailGridQt_on_double_clicked] index: <built-in method data of PySide6.QtCore.QModelIndex object at 0x0000014D8A1B9480>
-[open_lightbox] self.grid=<thumbnail_grid_qt.ThumbnailGridQt(0x14de701cdb0) at 0x0000014D88A53840>
-[open_lightbox] folder_id=None
-[open_lightbox] paths=[]
-[open_lightbox] branch_key=None
-[open_lightbox] date_key=None
-[open_lightbox] paths=[]
-[open_lightbox] context=visible_paths, total=15
-[open_lightbox] paths=['c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya1_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya1_3_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya2_2_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya3_2_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\alya_2_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar-ref(1)_2_2.png', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar-ref_2_2_2.png', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar-ref_3_2.png', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar1_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar2_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\ammar3_2_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\img_6850_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\img_6995_2_2_2.jpeg', 'c:\\users\\suleimaa\\downloads\\photo-sorter\\images\\output6\\عليا_2_2_2.jpeg']
-[open_lightbox] path=c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[UnifiedPreview] Opening media in unified dialog: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[UnifiedPreview] Media type: photo
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] parent=<main_window_qt.MainWindow(0x14de6bc5c70) at 0x0000014DE7B796C0>
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] parent type=MainWindow
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] parent.db exists: False
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] parent.reference_db exists: False
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] parent.project_id exists: False
-2025-11-25 15:27:13,457 [WARNING] [LightboxDialog.__init__] Parent has NO db - creating new ReferenceDB instance
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] Created new db instance: <reference_db.ReferenceDB object at 0x0000014DBF2F2D50>
-2025-11-25 15:27:13,457 [INFO] [LightboxDialog.__init__] Got project_id from parent.grid: 1
-[LightboxDialog] Video player signals connected successfully
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1140, 791)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1140, 791)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_3_2.png
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1140, 791)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar1_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (4032, 3024)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar2_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (2062, 3664)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar3_2_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1284, 2778)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\img_6850_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (4032, 3024)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\img_6995_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (4032, 3024)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\suleimaa\downloads\photo-sorter\images\output6\عليا_2_2_2.jpeg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (1440, 2560)
-[LayoutManager] Switching layout: current → google
-[LayoutManager] 💾 Took ownership of original central widget: QWidget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Google Photos Style
-[MainWindow] ✓ Switched to layout: google
-[LayoutManager] Switching layout: google → current
-[LayoutManager] 🔄 Restoring original central widget: QWidget
-[LayoutManager] ✓ Switched to: Current Layout
-[MainWindow] ✓ Switched to layout: current
-[LayoutManager] Switching layout: current → apple
-[LayoutManager] 💾 Took ownership of original central widget: QWidget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Apple Photos Style
-[MainWindow] ✓ Switched to layout: apple
-[LayoutManager] Switching layout: apple → lightroom
-[LayoutManager] 🗑️ Removed old placeholder widget
-[LayoutManager] Setting new central widget: QWidget
-[LayoutManager] ✓ Switched to: Lightroom Style
-[MainWindow] ✓ Switched to layout: lightroom
-[LayoutManager] Switching layout: lightroom → current
-[LayoutManager] 🔄 Restoring original central widget: QWidget
-[LayoutManager] ✓ Switched to: Current Layout
-[MainWindow] ✓ Switched to layout: current
-[Breadcrumb] _show_project_menu() called
-[Breadcrumb] Refreshed project list: 1 projects
-[Breadcrumb] Adding 1 projects to menu
-[Breadcrumb]   - ✓ P01 (scan) (ID: 1)
-[Breadcrumb] Showing menu...
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 2 rows (2 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS] Found favorite tag: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='face'
-[DB_TAGS] Retrieved 2 tags for 1/9 paths (project_id=1)
-[GRID] Fetched tags for 9 paths, got 9 entries
-[GRID] Loaded 9 thumbnails.
-[GRID] Reloaded 9 thumbnails in date-mode (base=9)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-8 of 9
-[GRID] Queued 9 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to branch
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-  DB path: 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png' tag: 'favorite'
-  DB path: 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png' tag: 'face'
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in date-mode (base=6)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=date
-[GRID] Step 1: Setting _reloading=True
-[TAG FILTER] Showing all tagged photos for 'face' (1)
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-      orig='c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 2 rows (2 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS] Found favorite tag: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='face'
-[DB_TAGS] Retrieved 2 tags for 1/1 paths (project_id=1)
-[GRID] Fetched tags for 1 paths, got 1 entries
-[GRID] Loaded 1 thumbnails.
-[GRID] Reloaded 1/1 thumbnails in None-mode (tag=face)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[TAG FILTER] Showing ALL photos with tag 'face' (no navigation context)
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-0 of 1
-[GRID] Queued 1 new thumbnail workers
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=tag
-[GRID] Step 1: Setting _reloading=True
-[TAG FILTER] Showing all tagged photos for 'favorite' (1)
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-      orig='c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 2 rows (2 photos + 0 videos)
-[DB_TAGS_SQL] First row: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='favorite'
-[DB_TAGS] Found favorite tag: c:\users\suleimaa\downloads\photo-sorter\images\output6\ammar-ref_2_2_2.png
-[DB_TAGS_DEBUG] DB returned: path='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', tag='face'
-[DB_TAGS] Retrieved 2 tags for 1/1 paths (project_id=1)
-[GRID] Fetched tags for 1 paths, got 1 entries
-[GRID] Loaded 1 thumbnails.
-[GRID] Reloaded 1/1 thumbnails in None-mode (tag=favorite)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[TAG FILTER] Showing ALL photos with tag 'favorite' (no navigation context)
-[GRID] Loading viewport range: 0-0 of 1
-[GRID] Queued 1 new thumbnail workers
+[GRID] Queued 4 new thumbnail workers
+[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Error loading thumbnail for c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg: 'ThumbCacheDB' object has no attribute 'get_qt_pixmap'
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
@@ -622,4 +614,4 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
 
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-03>
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05>
