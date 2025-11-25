@@ -1,23 +1,23 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06>python main_qt.py
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04> python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\locales\en.json
+✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\locales\en.json
 🌍 Language initialized: en
-2025-11-25 17:19:29,856 [INFO] ================================================================================
-2025-11-25 17:19:29,856 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-25 17:19:29,856 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\app_log.txt
-2025-11-25 17:19:29,856 [INFO] ================================================================================
-2025-11-25 17:19:29,941 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-25 17:19:29,943 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-25 22:52:58,057 [INFO] ================================================================================
+2025-11-25 22:52:58,057 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 22:52:58,057 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04\app_log.txt
+2025-11-25 22:52:58,057 [INFO] ================================================================================
+2025-11-25 22:52:58,109 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 22:52:58,111 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.37.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-06\\thumbnails_cache.db', 'last_updated': '2025-11-25 17:19'}
-2025-11-25 17:19:33,699 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_35.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-04\\thumbnails_cache.db', 'last_updated': '2025-11-25 22:52'}
+2025-11-25 22:52:58,990 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-25 17:19:33,699 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-25 17:19:33,699 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-25 17:19:33,699 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 22:52:58,994 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 22:52:58,995 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 22:52:58,995 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
@@ -27,20 +27,20 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [LayoutManager] Registered layout: Lightroom Style (id=lightroom)
 [MainWindow] Layout manager initialized
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-25 17:19:33,748 [INFO] SearchService initialized
+2025-11-25 22:52:59,034 [INFO] SearchService initialized
 [Sidebar] Device auto-detection disabled (manual refresh only)
-[17:19:33.764] [Tabs] __init__ started
-[17:19:33.764] [Tabs] _build_tabs → building tab widgets
-[17:19:33.764] [Tabs] _on_tab_changed(idx=0)
-[17:19:33.764] [Tabs] _start_timeout idx=0 type=branches
-[17:19:33.764] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:19:33.764] [Tabs]   populated=False, loading=False
-[17:19:33.764] [Tabs]   Starting load for branches
-[17:19:33.764] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:19:33.764] [Tabs] _clear_tab idx=0
-[17:19:33.764] [Tabs] _on_tab_changed → tab_type=branches
-[17:19:33.764] [Tabs] _build_tabs → added 6 tabs
-[17:19:33.764] [Tabs] __init__ completed
+[22:52:59.048] [Tabs] __init__ started
+[22:52:59.050] [Tabs] _build_tabs → building tab widgets
+[22:52:59.050] [Tabs] _on_tab_changed(idx=0)
+[22:52:59.050] [Tabs] _start_timeout idx=0 type=branches
+[22:52:59.050] [Tabs] _populate_tab(branches, idx=0, force=False)
+[22:52:59.050] [Tabs]   populated=False, loading=False
+[22:52:59.050] [Tabs]   Starting load for branches
+[22:52:59.050] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[22:52:59.050] [Tabs] _clear_tab idx=0
+[22:52:59.052] [Tabs] _on_tab_changed → tab_type=branches
+[22:52:59.053] [Tabs] _build_tabs → added 6 tabs
+[22:52:59.053] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
@@ -51,7 +51,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001A5BFD6D6D0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000252ABE94A00>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -59,29 +59,42 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [DeviceScanner] Database registration: enabled
 [DeviceScanner] Scanning Windows drives...
 [DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
 [DeviceScanner]           Has DCIM folder: False
 [DeviceScanner]           No alternate structure found
 [DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
 [DeviceScanner]   Checking portable devices (MTP/PTP)...
 [DeviceScanner]     Attempting Shell COM enumeration...
 [DeviceScanner]     COM initialized for current thread
 [DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
 [DeviceScanner]     COM uninitialized
 [DeviceScanner] ===== Scan complete: 0 device(s) found =====
 [DeviceScanner] Results cached for 5.0s
@@ -93,7 +106,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[17:19:34.434] [Tabs] hide_tabs() called - canceling pending workers
+[22:52:59.234] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -108,11 +121,11 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001A5BFD6D6D0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000252ABE94A00>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Using cached scan results =====
-[DeviceScanner] Cache age: 0.13s (TTL: 5.0s)
+[DeviceScanner] Cache age: 0.01s (TTL: 5.0s)
 [DeviceScanner] Cached devices: 0
 [DeviceScanner] ===== Scan complete (cached): 0 device(s) =====
 
@@ -127,16 +140,16 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [LayoutManager] Already using layout: current
 [Startup] Layout system initialized successfully
 [Startup] Database schema initialized successfully
-[17:19:35.393] [Tabs] _finish_branches (stale gen=1) — ignoring
-[17:19:35.393] [Tabs] _on_tab_changed(idx=0)
-[17:19:35.393] [Tabs] _start_timeout idx=0 type=branches
-[17:19:35.393] [Tabs] _populate_tab(branches, idx=0, force=False)
-[17:19:35.393] [Tabs]   populated=False, loading=False
-[17:19:35.393] [Tabs]   Starting load for branches
-[17:19:35.393] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:19:35.393] [Tabs] _clear_tab idx=0
-[17:19:35.393] [Tabs] _on_tab_changed → tab_type=branches
-[17:19:35.393] [Tabs] _clear_tab idx=0
+[22:52:59.421] [Tabs] _finish_branches (stale gen=1) — ignoring
+[22:52:59.422] [Tabs] _on_tab_changed(idx=0)
+[22:52:59.422] [Tabs] _start_timeout idx=0 type=branches
+[22:52:59.422] [Tabs] _populate_tab(branches, idx=0, force=False)
+[22:52:59.422] [Tabs]   populated=False, loading=False
+[22:52:59.422] [Tabs]   Starting load for branches
+[22:52:59.422] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[22:52:59.423] [Tabs] _clear_tab idx=0
+[22:52:59.424] [Tabs] _on_tab_changed → tab_type=branches
+[22:52:59.425] [Tabs] _clear_tab idx=0
 
 [Breadcrumb] _update_breadcrumb() CALLED
 [Breadcrumb] Grid state: navigation_mode=None, project_id=None
@@ -153,56 +166,23 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoF
 [Breadcrumb] _update_breadcrumb() COMPLETED
 
 ✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-
-═══════════════════════════════════════════════════════════════════
-⚠️  InsightFace Models Not Found
-═══════════════════════════════════════════════════════════════════
-
-Face detection models (buffalo_l) are not installed.
-
-⚠️ Impact:
-  ✅ Photos can still be viewed and organized
-  ❌ Face detection won't work until models are downloaded
-  ❌ People sidebar will be empty
-
-📥 Download Models:
-  Option 1: Use the application preferences
-    1. Go to Preferences (Ctrl+,)
-    2. Navigate to "🧑 Face Detection" section
-    3. Click "Download Models"
-
-  Option 2: Run the download script
-    python download_face_models.py
-
-💡 Model Size: ~200MB
-   Models will be downloaded to: ./models/buffalo_l/
-
-After download:
-  1. Restart the application (or re-scan photos)
-  2. Face detection will be automatically enabled
-  3. Faces will be detected during the next scan
-
-═══════════════════════════════════════════════════════════════════
-
+✅ InsightFace detected with buffalo_l models
+   Location: C:\Users\ASUS\.insightface\models\buffalo_l
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] ⚠️ WARNING: No projects found! Please create a project first.
+[GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
+[GooglePhotosLayout] Project selector populated with 0 projects
 [GooglePhotosLayout] Loading photos from database...
 [GooglePhotosLayout] ⚠️ No project selected
 [LayoutManager] Setting new central widget: QWidget
-[GooglePhotosLayout] Layout activated
-[GooglePhotosLayout] Connected Scan button to MainWindow
-[GooglePhotosLayout] Connected Faces button to MainWindow
+[GooglePhotosLayout] 📍 Layout activated
+[GooglePhotosLayout] ✓ Connected Scan button
+[GooglePhotosLayout] ✓ Connected Faces button
 [LayoutManager] ✓ Switched to: Google Photos Style
 [MainWindow] ✓ Switched to layout: google
-[LayoutManager] Switching layout: google → current
-[LayoutManager] 🔄 Restoring original central widget: QWidget
-[LayoutManager] ✓ Switched to: Current Layout
-[MainWindow] ✓ Switched to layout: current
-[Breadcrumb] _show_project_menu() called
-[Breadcrumb] Refreshed project list: 0 projects
-[Breadcrumb] No projects found in main_window._projects
-[Breadcrumb] Showing menu...
+[GooglePhotosLayout] 🆕🆕🆕 CREATE PROJECT BUTTON CLICKED! 🆕🆕🆕
+[GooglePhotosLayout] ✓ Calling breadcrumb_nav._create_new_project()...
 [Breadcrumb] _switch_project(1) called
 
 [MainWindow] ========== _on_project_changed_by_id(1) STARTED ==========
@@ -211,100 +191,44 @@ After download:
 [MainWindow] Step 1: ✓ Set grid.project_id = 1
 [MainWindow] Step 2: Updating sidebar...
 [SidebarQt] set_project(1) called
-[17:20:09.784] [Tabs] refresh_all(force=True) called
-[17:20:09.784] [Tabs] refresh_all: key=branches, idx=0, force=True
-[17:20:09.784] [Tabs] _populate_tab(branches, idx=0, force=True)
-[17:20:09.784] [Tabs]   populated=True, loading=False
-[17:20:09.784] [Tabs]   Force refresh: removing branches from populated set
-[17:20:09.784] [Tabs]   Starting load for branches
-[17:20:09.784] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[17:20:09.784] [Tabs] _clear_tab idx=0
-[17:20:09.784] [Tabs] refresh_all: key=folders, idx=1, force=True
-[17:20:09.784] [Tabs] _populate_tab(folders, idx=1, force=True)
-[17:20:09.784] [Tabs]   populated=False, loading=False
-[17:20:09.784] [Tabs]   Starting load for folders
-[17:20:09.784] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[17:20:09.784] [Tabs] _clear_tab idx=1
-[17:20:09.784] [Tabs] refresh_all: key=dates, idx=2, force=True
-[17:20:09.784] [Tabs] _populate_tab(dates, idx=2, force=True)
-[17:20:09.784] [Tabs]   populated=False, loading=False
-[17:20:09.784] [Tabs]   Starting load for dates
-[17:20:09.784] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[17:20:09.784] [Tabs] _clear_tab idx=2
-[17:20:09.784] [Tabs] _load_folders → got 0 rows for project_id=1
-[17:20:09.784] [Tabs] refresh_all: key=tags, idx=3, force=True
-[17:20:09.784] [Tabs] _populate_tab(tags, idx=3, force=True)
-[17:20:09.793] [Tabs]   populated=False, loading=False
-[17:20:09.793] [Tabs]   Starting load for tags
-[17:20:09.793] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[17:20:09.793] [Tabs] _clear_tab idx=3
-[17:20:09.793] [Tabs] _load_dates → got hierarchy data for project_id=1
-[17:20:09.794] [Tabs] refresh_all: key=quick, idx=5, force=True
-[17:20:09.794] [Tabs] _populate_tab(quick, idx=5, force=True)
-[17:20:09.794] [Tabs]   populated=False, loading=False
-[17:20:09.794] [Tabs]   Starting load for quick
-[17:20:09.794] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[17:20:09.794] [Tabs] _clear_tab idx=5
-[17:20:09.794] [Tabs] _load_tags → got 0 rows for project_id=1
-[17:20:09.794] [Tabs] refresh_all(force=True) completed
+[22:53:16.480] [Tabs] refresh_all(force=True) called
+[22:53:16.480] [Tabs] refresh_all: key=branches, idx=0, force=True
+[22:53:16.480] [Tabs] _populate_tab(branches, idx=0, force=True)
+[22:53:16.480] [Tabs]   populated=True, loading=False
+[22:53:16.480] [Tabs]   Force refresh: removing branches from populated set
+[22:53:16.480] [Tabs]   Starting load for branches
+[22:53:16.480] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[22:53:16.480] [Tabs] _clear_tab idx=0
+[22:53:16.482] [Tabs] refresh_all: key=folders, idx=1, force=True
+[22:53:16.482] [Tabs] _populate_tab(folders, idx=1, force=True)
+[22:53:16.482] [Tabs]   populated=False, loading=False
+[22:53:16.482] [Tabs]   Starting load for folders
+[22:53:16.482] [Tabs] _show_loading idx=1 label='Loading Folders…'
+[22:53:16.482] [Tabs] _clear_tab idx=1
+[22:53:16.485] [Tabs] refresh_all: key=dates, idx=2, force=True
+[22:53:16.485] [Tabs] _populate_tab(dates, idx=2, force=True)
+[22:53:16.485] [Tabs]   populated=False, loading=False
+[22:53:16.485] [Tabs]   Starting load for dates
+[22:53:16.485] [Tabs] _show_loading idx=2 label='Loading Dates…'
+[22:53:16.485] [Tabs] _clear_tab idx=2
+[22:53:16.487] [Tabs] refresh_all: key=tags, idx=3, force=True
+[22:53:16.487] [Tabs] _populate_tab(tags, idx=3, force=True)
+[22:53:16.487] [Tabs]   populated=False, loading=False
+[22:53:16.487] [Tabs]   Starting load for tags
+[22:53:16.487] [Tabs] _show_loading idx=3 label='Loading Tags…'
+[22:53:16.487] [Tabs] _clear_tab idx=3
+[22:53:16.487] [Tabs] refresh_all: key=quick, idx=5, force=True
+[22:53:16.487] [Tabs] _populate_tab(quick, idx=5, force=True)
+[22:53:16.487] [Tabs]   populated=False, loading=False
+[22:53:16.487] [Tabs]   Starting load for quick
+[22:53:16.487] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
+[22:53:16.487] [Tabs] _load_folders → got 0 rows for project_id=1
+[22:53:16.487] [Tabs] _clear_tab idx=5
+[22:53:16.487] [Tabs] _load_dates → got hierarchy data for project_id=1
+[22:53:16.487] [Tabs] _load_tags → got 0 rows for project_id=1
+[22:53:16.491] [Tabs] refresh_all(force=True) completed
 [SidebarQt] Calling reload() after setting project_id
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[17:20:09.794] [Tabs] _load_quick → got 6 rows
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 0}]
-[Sidebar] Loaded 0 folder counts in batch (performance optimization)
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001A5BFD6D6D0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan  =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-[DeviceScanner] Results cached for 5.0s
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=4] running for 1 targets...
+[SidebarQt] reload() blocked - widget not visible (likely being deleted)
 [MainWindow] Step 2: ✓ Sidebar.set_project(1) completed
 [MainWindow] Step 3: Reloading grid to 'all' branch...
 
@@ -316,26 +240,12 @@ After download:
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
 [GRID] Fetched tags for 0 paths, got 0 entries
-[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[17:20:10.177] [Tabs] _clear_tab idx=0
-[TAG FILTER] Cleared by navigation.
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-[17:20:10.184] [Tabs] _clear_tab idx=1
-[17:20:10.184] [Tabs] _clear_tab idx=2
-[17:20:10.184] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[17:20:10.184] [Tabs] _clear_tab idx=3
-[17:20:10.184] [Tabs] _clear_tab idx=5
+[22:53:16.491] [Tabs] _load_quick → got 6 rows
+[22:53:16.491] [Tabs] _clear_tab idx=0
+[22:53:16.491] [Tabs] _clear_tab idx=1
+[22:53:16.497] [Tabs] _clear_tab idx=2
+[22:53:16.497] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
+[22:53:16.497] [Tabs] _clear_tab idx=3
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
 [GRID] Step 5: Emitting gridReloaded signal...
@@ -367,216 +277,297 @@ After download:
 
 [Breadcrumb] Switched to project ID: 1
 [MainWindow] Refreshed project list: 1 projects
-[Sidebar][counts applied] updated UI with counts
-[LayoutManager] Switching layout: current → google
-[LayoutManager] 💾 Took ownership of original central widget: QWidget
-[GooglePhotosLayout] Using default project: 1
+[GooglePhotosLayout] ✓ Project creation dialog completed
+[GooglePhotosLayout] Updated project_id: 1
+[GooglePhotosLayout] Project selector populated with 1 projects
 [GooglePhotosLayout] Loading photos from database...
 [GooglePhotosLayout] No photos found in project 1
-[LayoutManager] Setting new central widget: QWidget
-[GooglePhotosLayout] Layout activated
-[GooglePhotosLayout] Connected Scan button to MainWindow
-[GooglePhotosLayout] Connected Faces button to MainWindow
-[LayoutManager] ✓ Switched to: Google Photos Style
-[MainWindow] ✓ Switched to layout: google
+[GooglePhotosLayout] ✓ Layout refreshed after project creation
+[22:53:16.508] [Tabs] _clear_tab idx=5
 [Schema] Database schema initialized successfully
-[ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-2025-11-25 17:20:32,906 [INFO] DBWriter timer started in worker thread
+[ScanController] Creating ScanWorker for folder: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
 [ScanController] ScanWorker imported successfully
 [ScanController] QThread created
 [ScanController] ScanWorker instance created with project_id=1
 [ScanController] Worker moved to thread
+2025-11-25 22:53:36,760 [INFO] DBWriter timer started in worker thread
 [ScanController] Signals connected
 [ScanController] Starting scan thread...
 [ScanController] thread.start() called
 [ScanWorkerAdapter] run() method called!
-[ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
-[ScanController] QThread STARTED!
-2025-11-25 17:20:32,927 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
+[ScanWorkerAdapter] folder=C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs, incremental=True
+2025-11-25 22:53:36,760 [INFO] ScanWorkerAdapter starting scan of C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs
 [ScanWorkerAdapter] Starting scan...
-2025-11-25 17:20:32,928 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
-2025-11-25 17:20:32,931 [INFO] Discovered 15 candidate image files and 0 video files
-2025-11-25 17:20:32,932 [INFO] Loading existing metadata for incremental scan...
-2025-11-25 17:20:32,935 [INFO] ✓ Loaded 0 existing file records
-[SCAN] Created single executor for scan (15 files)
-[SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
-2025-11-25 17:20:32,936 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
-[SCAN] _process_file started for: Alya1_2_2_2.jpeg
+2025-11-25 22:53:36,760 [INFO] Starting scan: C:/Users/ASUS/OneDrive/Documents/Python/Test-Photos/photos/refs (incremental=True)
+[ScanController] QThread STARTED!
+2025-11-25 22:53:36,766 [INFO] Discovered 21 candidate image files and 0 video files
+2025-11-25 22:53:36,766 [INFO] Loading existing metadata for incremental scan...
+2025-11-25 22:53:36,769 [INFO] ✓ Loaded 0 existing file records
+[SCAN] Created single executor for scan (21 files)
+[SCAN] Starting file 1/21: EWKJ3802.JPG
+2025-11-25 22:53:36,770 [INFO] [Scan] File 1/21: EWKJ3802.JPG
+[SCAN] _process_file started for: EWKJ3802.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:32,937 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
-[SCAN] Starting file 2/15: Alya1_3_2.jpeg
-2025-11-25 17:20:33,122 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
-[SCAN] _process_file started for: Alya1_3_2.jpeg
+2025-11-25 22:53:36,770 [INFO] 📷 Processing: EWKJ3802.JPG (101.0 KB)
+[SCAN] Processing: EWKJ3802.JPG
+[SCAN] ✓ Metadata extracted: EWKJ3802.JPG
+[SCAN] Starting file 2/21: IHOC0868.JPG
+2025-11-25 22:53:36,801 [INFO] [Scan] File 2/21: IHOC0868.JPG
+[SCAN] _process_file started for: IHOC0868.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,129 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_3_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
-[SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
-2025-11-25 17:20:33,147 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
+2025-11-25 22:53:36,801 [INFO] 📷 Processing: IHOC0868.JPG (57.3 KB)
+[SCAN] Processing: IHOC0868.JPG
+[SCAN] ✓ Metadata extracted: IHOC0868.JPG
+[SCAN] Starting file 3/21: IMG_1550.DNG
+2025-11-25 22:53:36,814 [INFO] [Scan] File 3/21: IMG_1550.DNG
+[SCAN] _process_file started for: IMG_1550.DNG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,154 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
-[SCAN] Processing: Alya2_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
-[SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
-2025-11-25 17:20:33,265 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
+2025-11-25 22:53:36,822 [INFO] 📷 Processing: IMG_1550.DNG (17800.9 KB)
+[SCAN] Processing: IMG_1550.DNG
+[SCAN] ✓ Metadata extracted: IMG_1550.DNG
+[SCAN] Starting file 4/21: IMG_3307.JPG
+2025-11-25 22:53:37,017 [INFO] [Scan] File 4/21: IMG_3307.JPG
+[SCAN] _process_file started for: IMG_3307.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,272 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
-[SCAN] Processing: Alya3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
-[SCAN] Starting file 5/15: Alya_2_2.jpeg
-2025-11-25 17:20:33,291 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
-[SCAN] _process_file started for: Alya_2_2.jpeg
+2025-11-25 22:53:37,017 [INFO] 📷 Processing: IMG_3307.JPG (4122.2 KB)
+[SCAN] Processing: IMG_3307.JPG
+[SCAN] ✓ Metadata extracted: IMG_3307.JPG
+[SCAN] Starting file 5/21: IMG_9570.JPG
+2025-11-25 22:53:37,027 [INFO] [Scan] File 5/21: IMG_9570.JPG
+[SCAN] _process_file started for: IMG_9570.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,292 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
-[SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
-2025-11-25 17:20:33,304 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya_2_2_2_2.jpeg
+2025-11-25 22:53:37,027 [INFO] 📷 Processing: IMG_9570.JPG (1879.8 KB)
+[SCAN] Processing: IMG_9570.JPG
+[SCAN] ✓ Metadata extracted: IMG_9570.JPG
+[SCAN] Starting file 6/21: IMG_E3122.JPG
+2025-11-25 22:53:37,048 [INFO] [Scan] File 6/21: IMG_E3122.JPG
+[SCAN] _process_file started for: IMG_E3122.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,305 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
-[SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
-2025-11-25 17:20:33,316 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
-[SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
+2025-11-25 22:53:37,048 [INFO] 📷 Processing: IMG_E3122.JPG (3374.7 KB)
+[SCAN] Processing: IMG_E3122.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3122.JPG
+[SCAN] Starting file 7/21: IMG_E7413.JPG
+2025-11-25 22:53:37,063 [INFO] [Scan] File 7/21: IMG_E7413.JPG
+[SCAN] _process_file started for: IMG_E7413.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,318 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref(1)_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
-[SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
-2025-11-25 17:20:33,344 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
-[SCAN] _process_file started for: Ammar-Ref_2_2_2.png
+2025-11-25 22:53:37,063 [INFO] 📷 Processing: IMG_E7413.JPG (1715.4 KB)
+[SCAN] Processing: IMG_E7413.JPG
+[SCAN] ✓ Metadata extracted: IMG_E7413.JPG
+[SCAN] Starting file 8/21: IMG_E9569.JPG
+2025-11-25 22:53:37,078 [INFO] [Scan] File 8/21: IMG_E9569.JPG
+[SCAN] _process_file started for: IMG_E9569.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,344 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_2_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
-[SCAN] Starting file 9/15: Ammar-Ref_3_2.png
-2025-11-25 17:20:33,377 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
-[SCAN] _process_file started for: Ammar-Ref_3_2.png
+2025-11-25 22:53:37,078 [INFO] 📷 Processing: IMG_E9569.JPG (1925.4 KB)
+[SCAN] Processing: IMG_E9569.JPG
+[SCAN] ✓ Metadata extracted: IMG_E9569.JPG
+[SCAN] Starting file 9/21: IMG_E9574.JPG
+2025-11-25 22:53:37,089 [INFO] [Scan] File 9/21: IMG_E9574.JPG
+[SCAN] _process_file started for: IMG_E9574.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,443 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_3_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
-[SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
-2025-11-25 17:20:33,575 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar1_2_2_2.jpeg
+2025-11-25 22:53:37,089 [INFO] 📷 Processing: IMG_E9574.JPG (2077.4 KB)
+[SCAN] Processing: IMG_E9574.JPG
+[SCAN] ✓ Metadata extracted: IMG_E9574.JPG
+[SCAN] Starting file 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
+2025-11-25 22:53:37,109 [INFO] [Scan] File 10/21: 244008930_565686944637059_4279754871252118785_n.jpg
+[SCAN] _process_file started for: 244008930_565686944637059_4279754871252118785_n.jpg
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,589 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
-[SCAN] Processing: Ammar1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
-[SCAN] Starting file 11/15: Ammar2_2_2_2.jpeg
-2025-11-25 17:20:33,640 [INFO] [Scan] File 11/15: Ammar2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar2_2_2_2.jpeg
+2025-11-25 22:53:37,109 [INFO] 📷 Processing: 244008930_565686944637059_4279754871252118785_n.jpg (163.1 KB)
+[SCAN] Processing: 244008930_565686944637059_4279754871252118785_n.jpg
+[SCAN] ✓ Metadata extracted: 244008930_565686944637059_4279754871252118785_n.jpg
+[SCAN] Starting file 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
+2025-11-25 22:53:37,126 [INFO] [Scan] File 11/21: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
+[SCAN] _process_file started for: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,642 [INFO] 📷 Processing: Ammar2_2_2_2.jpeg (2338.2 KB)
-[SCAN] Processing: Ammar2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar2_2_2_2.jpeg
-[SCAN] Starting file 12/15: Ammar3_2_2_2_2.jpeg
-2025-11-25 17:20:33,759 [INFO] [Scan] File 12/15: Ammar3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar3_2_2_2_2.jpeg
+2025-11-25 22:53:37,130 [INFO] 📷 Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif (448.6 KB)
+[SCAN] Processing: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
+[SCAN] ✓ Metadata extracted: 7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif
+[SCAN] Starting file 12/21: GPIC6664.JPG
+2025-11-25 22:53:37,140 [INFO] [Scan] File 12/21: GPIC6664.JPG
+[SCAN] _process_file started for: GPIC6664.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,760 [INFO] 📷 Processing: Ammar3_2_2_2_2.jpeg (171.0 KB)
-[SCAN] Processing: Ammar3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar3_2_2_2_2.jpeg
-[SCAN] Starting file 13/15: IMG_6850_2_2_2.jpeg
-2025-11-25 17:20:33,793 [INFO] [Scan] File 13/15: IMG_6850_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6850_2_2_2.jpeg
+2025-11-25 22:53:37,140 [INFO] 📷 Processing: GPIC6664.JPG (234.7 KB)
+[SCAN] Processing: GPIC6664.JPG
+[SCAN] ✓ Metadata extracted: GPIC6664.JPG
+[SCAN] Starting file 13/21: IMG_8920.PNG
+2025-11-25 22:53:37,164 [INFO] [Scan] File 13/21: IMG_8920.PNG
+[SCAN] _process_file started for: IMG_8920.PNG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,795 [INFO] 📷 Processing: IMG_6850_2_2_2.jpeg (3027.8 KB)
-[SCAN] Processing: IMG_6850_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6850_2_2_2.jpeg
-[SCAN] Starting file 14/15: IMG_6995_2_2_2.jpeg
-2025-11-25 17:20:33,809 [INFO] [Scan] File 14/15: IMG_6995_2_2_2.jpeg
-[SCAN] _process_file started for: IMG_6995_2_2_2.jpeg
+2025-11-25 22:53:37,164 [INFO] 📷 Processing: IMG_8920.PNG (3606.7 KB)
+[SCAN] Processing: IMG_8920.PNG
+[SCAN] ✓ Metadata extracted: IMG_8920.PNG
+[SCAN] Starting file 14/21: JKHC8378.JPG
+2025-11-25 22:53:37,180 [INFO] [Scan] File 14/21: JKHC8378.JPG
+[SCAN] _process_file started for: JKHC8378.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,810 [INFO] 📷 Processing: IMG_6995_2_2_2.jpeg (4005.3 KB)
-[SCAN] Processing: IMG_6995_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6995_2_2_2.jpeg
-[SCAN] Starting file 15/15: عليا_2_2_2.jpeg
-2025-11-25 17:20:33,827 [INFO] [Scan] File 15/15: عليا_2_2_2.jpeg
-[SCAN] _process_file started for: عليا_2_2_2.jpeg
+2025-11-25 22:53:37,180 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
+[SCAN] Processing: JKHC8378.JPG
+[SCAN] ✓ Metadata extracted: JKHC8378.JPG
+[SCAN] Starting file 15/21: NTXK2933.JPG
+2025-11-25 22:53:37,192 [INFO] [Scan] File 15/21: NTXK2933.JPG
+[SCAN] _process_file started for: NTXK2933.JPG
 [SCAN] Getting file stats...
 [SCAN] File stats retrieved successfully
-2025-11-25 17:20:33,827 [INFO] 📷 Processing: عليا_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: عليا_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: عليا_2_2_2.jpeg
-2025-11-25 17:20:33,850 [INFO] Bulk upserted 15 photos for project 1
+2025-11-25 22:53:37,192 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
+[SCAN] Processing: NTXK2933.JPG
+[SCAN] ✓ Metadata extracted: NTXK2933.JPG
+[SCAN] Starting file 16/21: IMG_8152.JPEG
+2025-11-25 22:53:37,202 [INFO] [Scan] File 16/21: IMG_8152.JPEG
+[SCAN] _process_file started for: IMG_8152.JPEG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,202 [INFO] 📷 Processing: IMG_8152.JPEG (466.1 KB)
+[SCAN] Processing: IMG_8152.JPEG
+[SCAN] ✓ Metadata extracted: IMG_8152.JPEG
+[SCAN] Starting file 17/21: IMG_8158.JPEG
+2025-11-25 22:53:37,222 [INFO] [Scan] File 17/21: IMG_8158.JPEG
+[SCAN] _process_file started for: IMG_8158.JPEG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,222 [INFO] 📷 Processing: IMG_8158.JPEG (563.9 KB)
+[SCAN] Processing: IMG_8158.JPEG
+[SCAN] ✓ Metadata extracted: IMG_8158.JPEG
+[SCAN] Starting file 18/21: IMG_1779.JPEG
+2025-11-25 22:53:37,238 [INFO] [Scan] File 18/21: IMG_1779.JPEG
+[SCAN] _process_file started for: IMG_1779.JPEG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,238 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
+[SCAN] Processing: IMG_1779.JPEG
+[SCAN] ✓ Metadata extracted: IMG_1779.JPEG
+[SCAN] Starting file 19/21: IMG_E3091.JPG
+2025-11-25 22:53:37,253 [INFO] [Scan] File 19/21: IMG_E3091.JPG
+[SCAN] _process_file started for: IMG_E3091.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,253 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
+[SCAN] Processing: IMG_E3091.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3091.JPG
+[SCAN] Starting file 20/21: IMG_E3092.JPG
+2025-11-25 22:53:37,268 [INFO] [Scan] File 20/21: IMG_E3092.JPG
+[SCAN] _process_file started for: IMG_E3092.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,270 [INFO] 📷 Processing: IMG_E3092.JPG (4652.5 KB)
+[SCAN] Processing: IMG_E3092.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3092.JPG
+[SCAN] Starting file 21/21: IMG_E3093.JPG
+2025-11-25 22:53:37,283 [INFO] [Scan] File 21/21: IMG_E3093.JPG
+[SCAN] _process_file started for: IMG_E3093.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-25 22:53:37,283 [INFO] 📷 Processing: IMG_E3093.JPG (4602.6 KB)
+[SCAN] Processing: IMG_E3093.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3093.JPG
+2025-11-25 22:53:37,306 [INFO] Bulk upserted 21 photos for project 1
 [SCAN] Shutting down executor
-2025-11-25 17:20:33,851 [INFO] Executor shutdown complete
-2025-11-25 17:20:33,860 [INFO] Scan complete: 15 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.9s
-2025-11-25 17:20:33,865 [INFO] Scan completed: 15 photos, 0 videos, 1 folders in 0.9s
-[ScanController] scan finished: 1 folders, 15 photos, 0 videos
+2025-11-25 22:53:37,306 [INFO] Executor shutdown complete
+2025-11-25 22:53:37,314 [INFO] Scan complete: 21 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 0.6s
+2025-11-25 22:53:37,314 [INFO] Scan completed: 21 photos, 0 videos, 5 folders in 0.6s
+[ScanController] scan finished: 5 folders, 21 photos, 0 videos
 [ScanController] cleanup after scan
-2025-11-25 17:20:35,263 [INFO] Building date branches...
-2025-11-25 17:20:35,264 [INFO] Building date branches for project_id=1
+2025-11-25 22:53:37,438 [INFO] Building date branches...
+2025-11-25 22:53:37,440 [INFO] Building date branches for project_id=1
 [build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 15 photos for project 1
-[build_date_branches] Inserted 15/15 photos into 'all' branch
-[build_date_branches] Found 6 unique dates for project 1
-[build_date_branches] Date 2024-08-11: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg
-[build_date_branches] Date 2024-08-11: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-18: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg
-[build_date_branches] Date 2024-11-18: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-29: found 3 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
-[build_date_branches] Date 2024-11-29: inserted 3/3 into project_images (new)
-[build_date_branches] Date 2024-12-02: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg
-[build_date_branches] Date 2024-12-02: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-30: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg
-[build_date_branches] Date 2025-07-30: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-08-09: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg
-[build_date_branches] Date 2025-08-09: inserted 1/1 into project_images (new)
-[build_date_branches] Total entries processed: 8
-[build_date_branches] project_images table has 23 rows for project 1
-2025-11-25 17:20:35,403 [INFO] Created 8 photo date branch entries for project 1
-2025-11-25 17:20:35,404 [INFO] Building video date branches for project_id=1
+[build_date_branches] Populating 'all' branch with 21 photos for project 1
+[build_date_branches] Inserted 21/21 photos into 'all' branch
+[build_date_branches] Found 7 unique dates for project 1
+[build_date_branches] Date 2022-01-15: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4/img_1779.jpeg
+[build_date_branches] Date 2022-01-15: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2022-08-18: found 4 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e3122.jpg
+[build_date_branches] Date 2022-08-18: inserted 4/4 into project_images (new)
+[build_date_branches] Date 2023-10-19: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg
+[build_date_branches] Date 2023-10-19: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2024-11-07: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg
+[build_date_branches] Date 2024-11-07: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2024-11-16: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg
+[build_date_branches] Date 2024-11-16: inserted 3/3 into project_images (new)
+[build_date_branches] Date 2024-11-26: found 1 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
+[build_date_branches] Date 2024-11-26: inserted 1/1 into project_images (new)
+[build_date_branches] Date 2025-03-13: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg
+[build_date_branches] Date 2025-03-13: inserted 2/2 into project_images (new)
+[build_date_branches] Total entries processed: 13
+[build_date_branches] project_images table has 34 rows for project 1
+2025-11-25 22:53:37,458 [INFO] Created 13 photo date branch entries for project 1
+2025-11-25 22:53:37,458 [INFO] Building video date branches for project_id=1
 [build_video_date_branches] Using project_id=1
 [build_video_date_branches] Found 0 videos with dates for project 1
 [build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-25 17:20:35,406 [INFO] Created 0 video date branch entries for project 1
-2025-11-25 17:20:35,409 [INFO] Backfilling created_date fields for photos...
-2025-11-25 17:20:35,420 [INFO] Backfilled 7 photo rows with created_date
-2025-11-25 17:20:35,423 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-2025-11-25 17:20:35,461 [INFO] Reloading sidebar after date branches built...
+2025-11-25 22:53:37,458 [INFO] Created 0 video date branch entries for project 1
+2025-11-25 22:53:37,461 [INFO] Backfilling created_date fields for photos...
+2025-11-25 22:53:37,467 [INFO] Backfilled 8 photo rows with created_date
+2025-11-25 22:53:37,467 [INFO] Backfilling created_date fields for videos...
+[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
+2025-11-25 22:53:37,469 [INFO] Reloading sidebar after date branches built...
 [SidebarQt] reload() blocked - widget not visible (likely being deleted)
 
 [GRID] ====== reload() CALLED ======
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 15 photos
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in None-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+2025-11-25 22:53:37,483 [INFO] Refreshing Google Photos layout after scan...
+2025-11-25 22:53:37,483 [INFO] ✓ Google Photos layout refresh scheduled
+[GooglePhotosLayout] Loading photos from database...
+[GooglePhotosLayout] Loaded 13 photos in 7 date groups
+[LayoutManager] Switching layout: google → current
+[LayoutManager] 🔄 Restoring original central widget: QWidget
+[LayoutManager] ✓ Switched to: Current Layout
+[MainWindow] ✓ Switched to layout: current
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
 [DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [DB_TAGS_SQL] Photos query:
                         SELECT pm.path, t.name
                         FROM photo_metadata pm
@@ -585,16 +576,16 @@ After download:
                         SELECT vm.path, t.name
                         FROM video_metadata vm
                         JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
 [DB_TAGS_SQL] project_id: 1
 [DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
 [DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
 [DB_TAGS_SQL] Sample tagged PHOTOS in DB:
 [DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
-[GRID] Fetched tags for 15 paths, got 15 entries
-[GRID] Loaded 15 thumbnails.
-[GRID] Reloaded 15 thumbnails in branch-mode (base=15)
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in date-mode (base=21)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
@@ -618,1475 +609,23 @@ After download:
 
 [GRID] Finally block: Setting _reloading=False
 [GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-14 of 15
-[GRID] Queued 15 new thumbnail workers
-[GRID] Loading viewport range: 0-14 of 15
-[GooglePhotosLayout] Loading photos from database...
-[GooglePhotosLayout] Loaded 8 photos in 6 date groups
-[Schema] Database schema initialized successfully
-[ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Desktop
-[ScanController] ScanWorker imported successfully
-[ScanController] QThread created
-[ScanController] ScanWorker instance created with project_id=1
-[ScanController] Worker moved to thread
-[ScanController] Signals connected
-[ScanController] Starting scan thread...
-[ScanController] thread.start() called
-2025-11-25 17:21:43,344 [INFO] DBWriter timer started in worker thread
-[ScanWorkerAdapter] run() method called!
-[ScanWorkerAdapter] folder=C:/Users/suleimaa/Desktop, incremental=True
-2025-11-25 17:21:43,345 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Desktop
-[ScanWorkerAdapter] Starting scan...
-2025-11-25 17:21:43,346 [INFO] Starting scan: C:/Users/suleimaa/Desktop (incremental=True)
-[ScanController] QThread STARTED!
-2025-11-25 17:21:43,434 [INFO] Discovered 166 candidate image files and 3 video files
-2025-11-25 17:21:43,434 [INFO] Loading existing metadata for incremental scan...
-2025-11-25 17:21:43,434 [INFO] ✓ Loaded 15 existing file records
-[SCAN] Created single executor for scan (166 files)
-[SCAN] Starting file 1/166: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg
-2025-11-25 17:21:43,434 [INFO] [Scan] File 1/166: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg
-[SCAN] _process_file started for: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,434 [INFO] 📷 Processing: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg (19.6 KB)
-[SCAN] Processing: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg
-[SCAN] ✓ Metadata extracted: 71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg
-[SCAN] Starting file 2/166: 1.png
-2025-11-25 17:21:43,444 [INFO] [Scan] File 2/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,444 [INFO] 📷 Processing: 1.png (1125.0 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 3/166: 20241127-lastminutes.png
-2025-11-25 17:21:43,486 [INFO] [Scan] File 3/166: 20241127-lastminutes.png
-[SCAN] _process_file started for: 20241127-lastminutes.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,487 [INFO] 📷 Processing: 20241127-lastminutes.png (65.2 KB)
-[SCAN] Processing: 20241127-lastminutes.png
-[SCAN] ✓ Metadata extracted: 20241127-lastminutes.png
-[SCAN] Starting file 4/166: 20250122_G+D GenAI Cheat Sheet 1.jpg
-2025-11-25 17:21:43,497 [INFO] [Scan] File 4/166: 20250122_G+D GenAI Cheat Sheet 1.jpg
-[SCAN] _process_file started for: 20250122_G+D GenAI Cheat Sheet 1.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,497 [INFO] 📷 Processing: 20250122_G+D GenAI Cheat Sheet 1.jpg (270.8 KB)
-[SCAN] Processing: 20250122_G+D GenAI Cheat Sheet 1.jpg
-[SCAN] ✓ Metadata extracted: 20250122_G+D GenAI Cheat Sheet 1.jpg
-[SCAN] Starting file 5/166: GvK28dRWkAAhxiK.jfif
-2025-11-25 17:21:43,529 [INFO] [Scan] File 5/166: GvK28dRWkAAhxiK.jfif
-[SCAN] _process_file started for: GvK28dRWkAAhxiK.jfif
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,529 [INFO] 📷 Processing: GvK28dRWkAAhxiK.jfif (252.9 KB)
-[SCAN] Processing: GvK28dRWkAAhxiK.jfif
-[SCAN] ✓ Metadata extracted: GvK28dRWkAAhxiK.jfif
-[SCAN] Starting file 6/166: LufthansaInternet.png
-2025-11-25 17:21:43,562 [INFO] [Scan] File 6/166: LufthansaInternet.png
-[SCAN] _process_file started for: LufthansaInternet.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,562 [INFO] 📷 Processing: LufthansaInternet.png (18.2 KB)
-[SCAN] Processing: LufthansaInternet.png
-[SCAN] ✓ Metadata extracted: LufthansaInternet.png
-[SCAN] Starting file 7/166: Schwartz.png
-2025-11-25 17:21:43,594 [INFO] [Scan] File 7/166: Schwartz.png
-[SCAN] _process_file started for: Schwartz.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,596 [INFO] 📷 Processing: Schwartz.png (4.3 KB)
-[SCAN] Processing: Schwartz.png
-[SCAN] ✓ Metadata extracted: Schwartz.png
-[SCAN] Starting file 8/166: SuleimanAmmar-BusinessCard.jpg
-2025-11-25 17:21:43,613 [INFO] [Scan] File 8/166: SuleimanAmmar-BusinessCard.jpg
-[SCAN] _process_file started for: SuleimanAmmar-BusinessCard.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,613 [INFO] 📷 Processing: SuleimanAmmar-BusinessCard.jpg (88.5 KB)
-[SCAN] Processing: SuleimanAmmar-BusinessCard.jpg
-[SCAN] ✓ Metadata extracted: SuleimanAmmar-BusinessCard.jpg
-[SCAN] Starting file 9/166: SuleimanAmmar-DEAusweis.jpg
-2025-11-25 17:21:43,640 [INFO] [Scan] File 9/166: SuleimanAmmar-DEAusweis.jpg
-[SCAN] _process_file started for: SuleimanAmmar-DEAusweis.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,644 [INFO] 📷 Processing: SuleimanAmmar-DEAusweis.jpg (284.7 KB)
-[SCAN] Processing: SuleimanAmmar-DEAusweis.jpg
-[SCAN] ✓ Metadata extracted: SuleimanAmmar-DEAusweis.jpg
-[SCAN] Starting file 10/166: SYR.png
-2025-11-25 17:21:43,644 [INFO] [Scan] File 10/166: SYR.png
-[SCAN] _process_file started for: SYR.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,644 [INFO] 📷 Processing: SYR.png (295.3 KB)
-[SCAN] Processing: SYR.png
-[SCAN] ✓ Metadata extracted: SYR.png
-[SCAN] Starting file 11/166: AlyaYasserAhmad-Oman-ID-RS.jpg
-2025-11-25 17:21:43,677 [INFO] [Scan] File 11/166: AlyaYasserAhmad-Oman-ID-RS.jpg
-[SCAN] _process_file started for: AlyaYasserAhmad-Oman-ID-RS.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,677 [INFO] 📷 Processing: AlyaYasserAhmad-Oman-ID-RS.jpg (155.6 KB)
-[SCAN] Processing: AlyaYasserAhmad-Oman-ID-RS.jpg
-[SCAN] ✓ Metadata extracted: AlyaYasserAhmad-Oman-ID-RS.jpg
-[SCAN] Starting file 12/166: AlyaYasserAhmad-Oman-ID-VS.jpg
-2025-11-25 17:21:43,694 [INFO] [Scan] File 12/166: AlyaYasserAhmad-Oman-ID-VS.jpg
-[SCAN] _process_file started for: AlyaYasserAhmad-Oman-ID-VS.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,705 [INFO] 📷 Processing: AlyaYasserAhmad-Oman-ID-VS.jpg (191.9 KB)
-[SCAN] Processing: AlyaYasserAhmad-Oman-ID-VS.jpg
-[SCAN] ✓ Metadata extracted: AlyaYasserAhmad-Oman-ID-VS.jpg
-[SCAN] Starting file 13/166: MTCN-379-925-3908-AppScreenshot.jpeg
-2025-11-25 17:21:43,730 [INFO] [Scan] File 13/166: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] _process_file started for: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,731 [INFO] 📷 Processing: MTCN-379-925-3908-AppScreenshot.jpeg (284.9 KB)
-[SCAN] Processing: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] ✓ Metadata extracted: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] Starting file 14/166: MTCN-379-925-3908-AppScreenshot.jpg
-2025-11-25 17:21:43,747 [INFO] [Scan] File 14/166: MTCN-379-925-3908-AppScreenshot.jpg
-[SCAN] _process_file started for: MTCN-379-925-3908-AppScreenshot.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,750 [INFO] 📷 Processing: MTCN-379-925-3908-AppScreenshot.jpg (284.9 KB)
-[SCAN] Processing: MTCN-379-925-3908-AppScreenshot.jpg
-[SCAN] ✓ Metadata extracted: MTCN-379-925-3908-AppScreenshot.jpg
-[SCAN] Starting file 15/166: MTCN-379-925-3908-AppScreenshot.png
-2025-11-25 17:21:43,764 [INFO] [Scan] File 15/166: MTCN-379-925-3908-AppScreenshot.png
-[SCAN] _process_file started for: MTCN-379-925-3908-AppScreenshot.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,767 [INFO] 📷 Processing: MTCN-379-925-3908-AppScreenshot.png (256.0 KB)
-[SCAN] Processing: MTCN-379-925-3908-AppScreenshot.png
-[SCAN] ✓ Metadata extracted: MTCN-379-925-3908-AppScreenshot.png
-[SCAN] Starting file 16/166: output_1746715144678.png
-2025-11-25 17:21:43,799 [INFO] [Scan] File 16/166: output_1746715144678.png
-[SCAN] _process_file started for: output_1746715144678.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,799 [INFO] 📷 Processing: output_1746715144678.png (1878.9 KB)
-[SCAN] Processing: output_1746715144678.png
-[SCAN] ✓ Metadata extracted: output_1746715144678.png
-[SCAN] Starting file 17/166: output_1746715748246.png
-2025-11-25 17:21:43,847 [INFO] [Scan] File 17/166: output_1746715748246.png
-[SCAN] _process_file started for: output_1746715748246.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,847 [INFO] 📷 Processing: output_1746715748246.png (2364.7 KB)
-[SCAN] Processing: output_1746715748246.png
-[SCAN] ✓ Metadata extracted: output_1746715748246.png
-[SCAN] Starting file 18/166: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png
-2025-11-25 17:21:43,898 [INFO] [Scan] File 18/166: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png
-[SCAN] _process_file started for: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,898 [INFO] 📷 Processing: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png (1928.2 KB)
-[SCAN] Processing: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png
-[SCAN] ✓ Metadata extracted: Sailor Moon-f48d04b5-89cd-49fa-aa16-94c2437dfa3b.png
-[SCAN] Starting file 19/166: PHOTO-2025-04-08-11-45-49.jpg
-2025-11-25 17:21:43,944 [INFO] [Scan] File 19/166: PHOTO-2025-04-08-11-45-49.jpg
-[SCAN] _process_file started for: PHOTO-2025-04-08-11-45-49.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,944 [INFO] 📷 Processing: PHOTO-2025-04-08-11-45-49.jpg (191.9 KB)
-[SCAN] Processing: PHOTO-2025-04-08-11-45-49.jpg
-[SCAN] ✓ Metadata extracted: PHOTO-2025-04-08-11-45-49.jpg
-[SCAN] Starting file 20/166: PHOTO-2025-04-08-11-46-14.jpg
-2025-11-25 17:21:43,968 [INFO] [Scan] File 20/166: PHOTO-2025-04-08-11-46-14.jpg
-[SCAN] _process_file started for: PHOTO-2025-04-08-11-46-14.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,968 [INFO] 📷 Processing: PHOTO-2025-04-08-11-46-14.jpg (155.6 KB)
-[SCAN] Processing: PHOTO-2025-04-08-11-46-14.jpg
-[SCAN] ✓ Metadata extracted: PHOTO-2025-04-08-11-46-14.jpg
-[SCAN] Starting file 21/166: 04-FrauAlyaAhmad--PHOTO.jpg
-2025-11-25 17:21:43,994 [INFO] [Scan] File 21/166: 04-FrauAlyaAhmad--PHOTO.jpg
-[SCAN] _process_file started for: 04-FrauAlyaAhmad--PHOTO.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:43,994 [INFO] 📷 Processing: 04-FrauAlyaAhmad--PHOTO.jpg (181.4 KB)
-[SCAN] Processing: 04-FrauAlyaAhmad--PHOTO.jpg
-[SCAN] ✓ Metadata extracted: 04-FrauAlyaAhmad--PHOTO.jpg
-[SCAN] Starting file 22/166: Alya.jpeg
-2025-11-25 17:21:44,027 [INFO] [Scan] File 22/166: Alya.jpeg
-[SCAN] _process_file started for: Alya.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,027 [INFO] 📷 Processing: Alya.jpeg (181.4 KB)
-[SCAN] Processing: Alya.jpeg
-[SCAN] ✓ Metadata extracted: Alya.jpeg
-[SCAN] Starting file 23/166: Alya1.jpeg
-2025-11-25 17:21:44,077 [INFO] [Scan] File 23/166: Alya1.jpeg
-[SCAN] _process_file started for: Alya1.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,077 [INFO] 📷 Processing: Alya1.jpeg (345.2 KB)
-[SCAN] Processing: Alya1.jpeg
-[SCAN] ✓ Metadata extracted: Alya1.jpeg
-[SCAN] Starting file 24/166: Alya2.jpeg
-2025-11-25 17:21:44,100 [INFO] [Scan] File 24/166: Alya2.jpeg
-[SCAN] _process_file started for: Alya2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,100 [INFO] 📷 Processing: Alya2.jpeg (107.1 KB)
-[SCAN] Processing: Alya2.jpeg
-[SCAN] ✓ Metadata extracted: Alya2.jpeg
-[SCAN] Starting file 25/166: Alya3.jpeg
-2025-11-25 17:21:44,119 [INFO] [Scan] File 25/166: Alya3.jpeg
-[SCAN] _process_file started for: Alya3.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,127 [INFO] 📷 Processing: Alya3.jpeg (97.2 KB)
-[SCAN] Processing: Alya3.jpeg
-[SCAN] ✓ Metadata extracted: Alya3.jpeg
-[SCAN] Starting file 26/166: Alya4.jpeg
-2025-11-25 17:21:44,150 [INFO] [Scan] File 26/166: Alya4.jpeg
-[SCAN] _process_file started for: Alya4.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,150 [INFO] 📷 Processing: Alya4.jpeg (110.6 KB)
-[SCAN] Processing: Alya4.jpeg
-[SCAN] ✓ Metadata extracted: Alya4.jpeg
-[SCAN] Starting file 27/166: Alya5.jpeg
-2025-11-25 17:21:44,180 [INFO] [Scan] File 27/166: Alya5.jpeg
-[SCAN] _process_file started for: Alya5.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,180 [INFO] 📷 Processing: Alya5.jpeg (2497.7 KB)
-[SCAN] Processing: Alya5.jpeg
-[SCAN] ✓ Metadata extracted: Alya5.jpeg
-[SCAN] Starting file 28/166: Alya6.jpeg
-2025-11-25 17:21:44,212 [INFO] [Scan] File 28/166: Alya6.jpeg
-[SCAN] _process_file started for: Alya6.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,212 [INFO] 📷 Processing: Alya6.jpeg (832.9 KB)
-[SCAN] Processing: Alya6.jpeg
-[SCAN] ✓ Metadata extracted: Alya6.jpeg
-[SCAN] Starting file 29/166: Ammar-Ref.png
-2025-11-25 17:21:44,251 [INFO] [Scan] File 29/166: Ammar-Ref.png
-[SCAN] _process_file started for: Ammar-Ref.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,251 [INFO] 📷 Processing: Ammar-Ref.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref.png
-[SCAN] Starting file 30/166: Ammar1.jpeg
-2025-11-25 17:21:44,286 [INFO] [Scan] File 30/166: Ammar1.jpeg
-[SCAN] _process_file started for: Ammar1.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,286 [INFO] 📷 Processing: Ammar1.jpeg (4364.7 KB)
-[SCAN] Processing: Ammar1.jpeg
-[SCAN] ✓ Metadata extracted: Ammar1.jpeg
-[SCAN] Starting file 31/166: Ammar2.jpeg
-2025-11-25 17:21:44,315 [INFO] [Scan] File 31/166: Ammar2.jpeg
-[SCAN] _process_file started for: Ammar2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,315 [INFO] 📷 Processing: Ammar2.jpeg (2338.2 KB)
-[SCAN] Processing: Ammar2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar2.jpeg
-[SCAN] Starting file 32/166: Ammar3.jpeg
-2025-11-25 17:21:44,344 [INFO] [Scan] File 32/166: Ammar3.jpeg
-[SCAN] _process_file started for: Ammar3.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,344 [INFO] 📷 Processing: Ammar3.jpeg (171.0 KB)
-[SCAN] Processing: Ammar3.jpeg
-[SCAN] ✓ Metadata extracted: Ammar3.jpeg
-[SCAN] Starting file 33/166: IMG_6850.jpeg
-2025-11-25 17:21:44,383 [INFO] [Scan] File 33/166: IMG_6850.jpeg
-[SCAN] _process_file started for: IMG_6850.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,383 [INFO] 📷 Processing: IMG_6850.jpeg (3027.8 KB)
-[SCAN] Processing: IMG_6850.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6850.jpeg
-[SCAN] Starting file 34/166: IMG_6934.jpeg
-2025-11-25 17:21:44,427 [INFO] [Scan] File 34/166: IMG_6934.jpeg
-[SCAN] _process_file started for: IMG_6934.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,427 [INFO] 📷 Processing: IMG_6934.jpeg (3919.0 KB)
-[SCAN] Processing: IMG_6934.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6934.jpeg
-[SCAN] Starting file 35/166: IMG_6995.jpeg
-2025-11-25 17:21:44,467 [INFO] [Scan] File 35/166: IMG_6995.jpeg
-[SCAN] _process_file started for: IMG_6995.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,467 [INFO] 📷 Processing: IMG_6995.jpeg (4005.3 KB)
-[SCAN] Processing: IMG_6995.jpeg
-[SCAN] ✓ Metadata extracted: IMG_6995.jpeg
-[SCAN] Starting file 36/166: Ammar-Ref.png
-2025-11-25 17:21:44,499 [INFO] [Scan] File 36/166: Ammar-Ref.png
-[SCAN] _process_file started for: Ammar-Ref.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,499 [INFO] 📷 Processing: Ammar-Ref.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref.png
-[SCAN] Starting file 37/166: Alya.jpeg
-2025-11-25 17:21:44,548 [INFO] [Scan] File 37/166: Alya.jpeg
-[SCAN] _process_file started for: Alya.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,548 [INFO] 📷 Processing: Alya.jpeg (181.4 KB)
-[SCAN] Processing: Alya.jpeg
-[SCAN] ✓ Metadata extracted: Alya.jpeg
-[SCAN] Starting file 38/166: 1.jpg
-2025-11-25 17:21:44,599 [INFO] [Scan] File 38/166: 1.jpg
-[SCAN] _process_file started for: 1.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,599 [INFO] 📷 Processing: 1.jpg (199.0 KB)
-[SCAN] Processing: 1.jpg
-[SCAN] ✓ Metadata extracted: 1.jpg
-[SCAN] Starting file 39/166: 2.jpg
-2025-11-25 17:21:44,617 [INFO] [Scan] File 39/166: 2.jpg
-[SCAN] _process_file started for: 2.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,617 [INFO] 📷 Processing: 2.jpg (212.0 KB)
-[SCAN] Processing: 2.jpg
-[SCAN] ✓ Metadata extracted: 2.jpg
-[SCAN] Starting file 40/166: 3.jpg
-2025-11-25 17:21:44,628 [INFO] [Scan] File 40/166: 3.jpg
-[SCAN] _process_file started for: 3.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,628 [INFO] 📷 Processing: 3.jpg (208.7 KB)
-[SCAN] Processing: 3.jpg
-[SCAN] ✓ Metadata extracted: 3.jpg
-[SCAN] Starting file 41/166: 4.jpg
-2025-11-25 17:21:44,651 [INFO] [Scan] File 41/166: 4.jpg
-[SCAN] _process_file started for: 4.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,651 [INFO] 📷 Processing: 4.jpg (204.6 KB)
-[SCAN] Processing: 4.jpg
-[SCAN] ✓ Metadata extracted: 4.jpg
-[SCAN] Starting file 42/166: 5.jpg
-2025-11-25 17:21:44,661 [INFO] [Scan] File 42/166: 5.jpg
-[SCAN] _process_file started for: 5.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,661 [INFO] 📷 Processing: 5.jpg (211.8 KB)
-[SCAN] Processing: 5.jpg
-[SCAN] ✓ Metadata extracted: 5.jpg
-[SCAN] Starting file 43/166: 6.jpg
-2025-11-25 17:21:44,677 [INFO] [Scan] File 43/166: 6.jpg
-[SCAN] _process_file started for: 6.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,677 [INFO] 📷 Processing: 6.jpg (202.6 KB)
-[SCAN] Processing: 6.jpg
-[SCAN] ✓ Metadata extracted: 6.jpg
-[SCAN] Starting file 44/166: 7.jpg
-2025-11-25 17:21:44,694 [INFO] [Scan] File 44/166: 7.jpg
-[SCAN] _process_file started for: 7.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,694 [INFO] 📷 Processing: 7.jpg (193.3 KB)
-[SCAN] Processing: 7.jpg
-[SCAN] ✓ Metadata extracted: 7.jpg
-[SCAN] Starting file 45/166: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png
-2025-11-25 17:21:44,748 [INFO] [Scan] File 45/166: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png
-[SCAN] _process_file started for: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,748 [INFO] 📷 Processing: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png (234.9 KB)
-[SCAN] Processing: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png
-[SCAN] ✓ Metadata extracted: a4a32752-25bd-4ca2-b626-79cd20fad1a8.png
-[SCAN] Starting file 46/166: AutoExpertChat.jpg
-2025-11-25 17:21:44,786 [INFO] [Scan] File 46/166: AutoExpertChat.jpg
-[SCAN] _process_file started for: AutoExpertChat.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,786 [INFO] 📷 Processing: AutoExpertChat.jpg (490.4 KB)
-[SCAN] Processing: AutoExpertChat.jpg
-[SCAN] ✓ Metadata extracted: AutoExpertChat.jpg
-[SCAN] Starting file 47/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg
-2025-11-25 17:21:44,827 [INFO] [Scan] File 47/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,827 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg (123.3 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_1.jpg
-[SCAN] Starting file 48/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg
-2025-11-25 17:21:44,850 [INFO] [Scan] File 48/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,850 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg (149.2 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_2.jpg
-[SCAN] Starting file 49/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg
-2025-11-25 17:21:44,881 [INFO] [Scan] File 49/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,881 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg (211.9 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_3.jpg
-[SCAN] Starting file 50/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg
-2025-11-25 17:21:44,898 [INFO] [Scan] File 50/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,910 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg (279.3 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_4.jpg
-[SCAN] Starting file 51/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg
-2025-11-25 17:21:44,929 [INFO] [Scan] File 51/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,929 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg (229.0 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_5.jpg
-[SCAN] Starting file 52/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg
-2025-11-25 17:21:44,961 [INFO] [Scan] File 52/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,961 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg (136.7 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_6.jpg
-[SCAN] Starting file 53/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg
-2025-11-25 17:21:44,994 [INFO] [Scan] File 53/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:44,994 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg (192.6 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_7.jpg
-[SCAN] Starting file 54/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg
-2025-11-25 17:21:45,024 [INFO] [Scan] File 54/166: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg
-[SCAN] _process_file started for: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,024 [INFO] 📷 Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg (143.3 KB)
-[SCAN] Processing: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg
-[SCAN] ✓ Metadata extracted: 1742469222089-2e20e4c4-7f2b-44c8-bab9-de675123abb0_8.jpg
-[SCAN] Starting file 55/166: 1-Wohnzimmer.jpeg
-2025-11-25 17:21:45,045 [INFO] [Scan] File 55/166: 1-Wohnzimmer.jpeg
-[SCAN] _process_file started for: 1-Wohnzimmer.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,045 [INFO] 📷 Processing: 1-Wohnzimmer.jpeg (2585.0 KB)
-[SCAN] Processing: 1-Wohnzimmer.jpeg
-[SCAN] ✓ Metadata extracted: 1-Wohnzimmer.jpeg
-[SCAN] Starting file 56/166: 1-Wohnzimmer.jpg
-2025-11-25 17:21:45,072 [INFO] [Scan] File 56/166: 1-Wohnzimmer.jpg
-[SCAN] _process_file started for: 1-Wohnzimmer.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,072 [INFO] 📷 Processing: 1-Wohnzimmer.jpg (254.6 KB)
-[SCAN] Processing: 1-Wohnzimmer.jpg
-[SCAN] ✓ Metadata extracted: 1-Wohnzimmer.jpg
-[SCAN] Starting file 57/166: 2-KleinSchlaffzimmer.jpeg
-2025-11-25 17:21:45,096 [INFO] [Scan] File 57/166: 2-KleinSchlaffzimmer.jpeg
-[SCAN] _process_file started for: 2-KleinSchlaffzimmer.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,096 [INFO] 📷 Processing: 2-KleinSchlaffzimmer.jpeg (2325.9 KB)
-[SCAN] Processing: 2-KleinSchlaffzimmer.jpeg
-[SCAN] ✓ Metadata extracted: 2-KleinSchlaffzimmer.jpeg
-[SCAN] Starting file 58/166: 2-KleinSchlaffzimmer.jpg
-2025-11-25 17:21:45,127 [INFO] [Scan] File 58/166: 2-KleinSchlaffzimmer.jpg
-[SCAN] _process_file started for: 2-KleinSchlaffzimmer.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,127 [INFO] 📷 Processing: 2-KleinSchlaffzimmer.jpg (247.5 KB)
-[SCAN] Processing: 2-KleinSchlaffzimmer.jpg
-[SCAN] ✓ Metadata extracted: 2-KleinSchlaffzimmer.jpg
-[SCAN] Starting file 59/166: 3-Schlaffzimmer.jpeg
-2025-11-25 17:21:45,161 [INFO] [Scan] File 59/166: 3-Schlaffzimmer.jpeg
-[SCAN] _process_file started for: 3-Schlaffzimmer.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,162 [INFO] 📷 Processing: 3-Schlaffzimmer.jpeg (2742.2 KB)
-[SCAN] Processing: 3-Schlaffzimmer.jpeg
-[SCAN] ✓ Metadata extracted: 3-Schlaffzimmer.jpeg
-[SCAN] Starting file 60/166: 3-Schlaffzimmer.jpg
-2025-11-25 17:21:45,184 [INFO] [Scan] File 60/166: 3-Schlaffzimmer.jpg
-[SCAN] _process_file started for: 3-Schlaffzimmer.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,184 [INFO] 📷 Processing: 3-Schlaffzimmer.jpg (235.6 KB)
-[SCAN] Processing: 3-Schlaffzimmer.jpg
-[SCAN] ✓ Metadata extracted: 3-Schlaffzimmer.jpg
-[SCAN] Starting file 61/166: 4-Kuche.jpeg
-2025-11-25 17:21:45,215 [INFO] [Scan] File 61/166: 4-Kuche.jpeg
-[SCAN] _process_file started for: 4-Kuche.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,215 [INFO] 📷 Processing: 4-Kuche.jpeg (2227.0 KB)
-[SCAN] Processing: 4-Kuche.jpeg
-[SCAN] ✓ Metadata extracted: 4-Kuche.jpeg
-[SCAN] Starting file 62/166: 4-Kuche.jpg
-2025-11-25 17:21:45,246 [INFO] [Scan] File 62/166: 4-Kuche.jpg
-[SCAN] _process_file started for: 4-Kuche.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,250 [INFO] 📷 Processing: 4-Kuche.jpg (239.7 KB)
-[SCAN] Processing: 4-Kuche.jpg
-[SCAN] ✓ Metadata extracted: 4-Kuche.jpg
-[SCAN] Starting file 63/166: 5-Bad.jpeg
-2025-11-25 17:21:45,278 [INFO] [Scan] File 63/166: 5-Bad.jpeg
-[SCAN] _process_file started for: 5-Bad.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,278 [INFO] 📷 Processing: 5-Bad.jpeg (2606.7 KB)
-[SCAN] Processing: 5-Bad.jpeg
-[SCAN] ✓ Metadata extracted: 5-Bad.jpeg
-[SCAN] Starting file 64/166: 5-Bad.jpg
-2025-11-25 17:21:45,294 [INFO] [Scan] File 64/166: 5-Bad.jpg
-[SCAN] _process_file started for: 5-Bad.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,294 [INFO] 📷 Processing: 5-Bad.jpg (182.8 KB)
-[SCAN] Processing: 5-Bad.jpg
-[SCAN] ✓ Metadata extracted: 5-Bad.jpg
-[SCAN] Starting file 65/166: Kalt.jpeg
-2025-11-25 17:21:45,327 [INFO] [Scan] File 65/166: Kalt.jpeg
-[SCAN] _process_file started for: Kalt.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,327 [INFO] 📷 Processing: Kalt.jpeg (3048.3 KB)
-[SCAN] Processing: Kalt.jpeg
-[SCAN] ✓ Metadata extracted: Kalt.jpeg
-[SCAN] Starting file 66/166: Kalt.jpg
-2025-11-25 17:21:45,365 [INFO] [Scan] File 66/166: Kalt.jpg
-[SCAN] _process_file started for: Kalt.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,368 [INFO] 📷 Processing: Kalt.jpg (1314.5 KB)
-[SCAN] Processing: Kalt.jpg
-[SCAN] ✓ Metadata extracted: Kalt.jpg
-[SCAN] Starting file 67/166: Warm.jpeg
-2025-11-25 17:21:45,394 [INFO] [Scan] File 67/166: Warm.jpeg
-[SCAN] _process_file started for: Warm.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,394 [INFO] 📷 Processing: Warm.jpeg (3020.9 KB)
-[SCAN] Processing: Warm.jpeg
-[SCAN] ✓ Metadata extracted: Warm.jpeg
-[SCAN] Starting file 68/166: Warm.jpg
-2025-11-25 17:21:45,421 [INFO] [Scan] File 68/166: Warm.jpg
-[SCAN] _process_file started for: Warm.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,421 [INFO] 📷 Processing: Warm.jpg (984.0 KB)
-[SCAN] Processing: Warm.jpg
-[SCAN] ✓ Metadata extracted: Warm.jpg
-[SCAN] Starting file 69/166: RundV-MietkautionsBürgerschaft-20241004.png
-2025-11-25 17:21:45,451 [INFO] [Scan] File 69/166: RundV-MietkautionsBürgerschaft-20241004.png
-[SCAN] _process_file started for: RundV-MietkautionsBürgerschaft-20241004.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,452 [INFO] 📷 Processing: RundV-MietkautionsBürgerschaft-20241004.png (70.9 KB)
-[SCAN] Processing: RundV-MietkautionsBürgerschaft-20241004.png
-[SCAN] ✓ Metadata extracted: RundV-MietkautionsBürgerschaft-20241004.png
-[SCAN] Starting file 70/166: Waschmaschine.png
-2025-11-25 17:21:45,477 [INFO] [Scan] File 70/166: Waschmaschine.png
-[SCAN] _process_file started for: Waschmaschine.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,477 [INFO] 📷 Processing: Waschmaschine.png (203.5 KB)
-[SCAN] Processing: Waschmaschine.png
-[SCAN] ✓ Metadata extracted: Waschmaschine.png
-[SCAN] Starting file 71/166: 11.jpg
-2025-11-25 17:21:45,500 [INFO] [Scan] File 71/166: 11.jpg
-[SCAN] _process_file started for: 11.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,500 [INFO] 📷 Processing: 11.jpg (225.0 KB)
-[SCAN] Processing: 11.jpg
-[SCAN] ✓ Metadata extracted: 11.jpg
-[SCAN] Starting file 72/166: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg
-2025-11-25 17:21:45,516 [INFO] [Scan] File 72/166: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg
-[SCAN] _process_file started for: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,516 [INFO] 📷 Processing: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg (289.1 KB)
-[SCAN] Processing: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg
-[SCAN] ✓ Metadata extracted: 20201119-20301118-SuleimanAmmar_DE_ePass_P3.jpg
-[SCAN] Starting file 73/166: 22.jpg
-2025-11-25 17:21:45,532 [INFO] [Scan] File 73/166: 22.jpg
-[SCAN] _process_file started for: 22.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,544 [INFO] 📷 Processing: 22.jpg (149.3 KB)
-[SCAN] Processing: 22.jpg
-[SCAN] ✓ Metadata extracted: 22.jpg
-[SCAN] Starting file 74/166: MTCN-379-925-3908-AppScreenshot.jpeg
-2025-11-25 17:21:45,561 [INFO] [Scan] File 74/166: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] _process_file started for: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,564 [INFO] 📷 Processing: MTCN-379-925-3908-AppScreenshot.jpeg (284.9 KB)
-[SCAN] Processing: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] ✓ Metadata extracted: MTCN-379-925-3908-AppScreenshot.jpeg
-[SCAN] Starting file 75/166: SRO-KMMF-0123111311170.jpg
-2025-11-25 17:21:45,577 [INFO] [Scan] File 75/166: SRO-KMMF-0123111311170.jpg
-[SCAN] _process_file started for: SRO-KMMF-0123111311170.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,577 [INFO] 📷 Processing: SRO-KMMF-0123111311170.jpg (592.0 KB)
-[SCAN] Processing: SRO-KMMF-0123111311170.jpg
-[SCAN] ✓ Metadata extracted: SRO-KMMF-0123111311170.jpg
-[SCAN] Starting file 76/166: SuleimanAmmar - Kopie.jpg
-2025-11-25 17:21:45,580 [INFO] [Scan] File 76/166: SuleimanAmmar - Kopie.jpg
-[SCAN] _process_file started for: SuleimanAmmar - Kopie.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,580 [INFO] 📷 Processing: SuleimanAmmar - Kopie.jpg (150.4 KB)
-[SCAN] Processing: SuleimanAmmar - Kopie.jpg
-[SCAN] ✓ Metadata extracted: SuleimanAmmar - Kopie.jpg
-[SCAN] Starting file 77/166: SuleimanAmmar-Revised.jpg
-2025-11-25 17:21:45,611 [INFO] [Scan] File 77/166: SuleimanAmmar-Revised.jpg
-[SCAN] _process_file started for: SuleimanAmmar-Revised.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,612 [INFO] 📷 Processing: SuleimanAmmar-Revised.jpg (89.3 KB)
-[SCAN] Processing: SuleimanAmmar-Revised.jpg
-[SCAN] ✓ Metadata extracted: SuleimanAmmar-Revised.jpg
-[SCAN] Starting file 78/166: SuleimanAmmar.jpg
-2025-11-25 17:21:45,636 [INFO] [Scan] File 78/166: SuleimanAmmar.jpg
-[SCAN] _process_file started for: SuleimanAmmar.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,636 [INFO] 📷 Processing: SuleimanAmmar.jpg (150.4 KB)
-[SCAN] Processing: SuleimanAmmar.jpg
-[SCAN] ✓ Metadata extracted: SuleimanAmmar.jpg
-[SCAN] Starting file 79/166: IMG-20250526-WA0000.jpg
-2025-11-25 17:21:45,657 [INFO] [Scan] File 79/166: IMG-20250526-WA0000.jpg
-[SCAN] _process_file started for: IMG-20250526-WA0000.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,658 [INFO] 📷 Processing: IMG-20250526-WA0000.jpg (142.6 KB)
-[SCAN] Processing: IMG-20250526-WA0000.jpg
-[SCAN] ✓ Metadata extracted: IMG-20250526-WA0000.jpg
-[SCAN] Starting file 80/166: 1.jpg
-2025-11-25 17:21:45,691 [INFO] [Scan] File 80/166: 1.jpg
-[SCAN] _process_file started for: 1.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,694 [INFO] 📷 Processing: 1.jpg (400.2 KB)
-[SCAN] Processing: 1.jpg
-[SCAN] ✓ Metadata extracted: 1.jpg
-[SCAN] Starting file 81/166: 2.jpg
-2025-11-25 17:21:45,711 [INFO] [Scan] File 81/166: 2.jpg
-[SCAN] _process_file started for: 2.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,711 [INFO] 📷 Processing: 2.jpg (485.3 KB)
-[SCAN] Processing: 2.jpg
-[SCAN] ✓ Metadata extracted: 2.jpg
-[SCAN] Starting file 82/166: 3.jpg
-2025-11-25 17:21:45,727 [INFO] [Scan] File 82/166: 3.jpg
-[SCAN] _process_file started for: 3.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,727 [INFO] 📷 Processing: 3.jpg (404.0 KB)
-[SCAN] Processing: 3.jpg
-[SCAN] ✓ Metadata extracted: 3.jpg
-[SCAN] Starting file 83/166: 4.jpg
-2025-11-25 17:21:45,744 [INFO] [Scan] File 83/166: 4.jpg
-[SCAN] _process_file started for: 4.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,744 [INFO] 📷 Processing: 4.jpg (451.3 KB)
-[SCAN] Processing: 4.jpg
-[SCAN] ✓ Metadata extracted: 4.jpg
-[SCAN] Starting file 84/166: ChatGPT Image 6. Mai 2025, 16_50_55.png
-2025-11-25 17:21:45,761 [INFO] [Scan] File 84/166: ChatGPT Image 6. Mai 2025, 16_50_55.png
-[SCAN] _process_file started for: ChatGPT Image 6. Mai 2025, 16_50_55.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,761 [INFO] 📷 Processing: ChatGPT Image 6. Mai 2025, 16_50_55.png (0.5 KB)
-[SCAN] Processing: ChatGPT Image 6. Mai 2025, 16_50_55.png
-[SCAN] ✓ Metadata extracted: ChatGPT Image 6. Mai 2025, 16_50_55.png
-[SCAN] Starting file 85/166: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4
-2025-11-25 17:21:45,868 [INFO] [Scan] File 85/166: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4
-[SCAN] _process_file started for: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,869 [INFO] 📷 Processing: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4 (13086.2 KB)
-[SCAN] Processing: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4
-[SCAN] ✓ Metadata extracted: Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4
-[SCAN] Starting file 86/166: Qouzleh_mitSubtitles.mp4
-2025-11-25 17:21:45,900 [INFO] [Scan] File 86/166: Qouzleh_mitSubtitles.mp4
-[SCAN] _process_file started for: Qouzleh_mitSubtitles.mp4
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,900 [INFO] 📷 Processing: Qouzleh_mitSubtitles.mp4 (57665.9 KB)
-[SCAN] Processing: Qouzleh_mitSubtitles.mp4
-[SCAN] ✓ Metadata extracted: Qouzleh_mitSubtitles.mp4
-[SCAN] Starting file 87/166: Syria-Song.mp4
-2025-11-25 17:21:45,929 [INFO] [Scan] File 87/166: Syria-Song.mp4
-[SCAN] _process_file started for: Syria-Song.mp4
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,929 [INFO] 📷 Processing: Syria-Song.mp4 (21765.8 KB)
-[SCAN] Processing: Syria-Song.mp4
-[SCAN] ✓ Metadata extracted: Syria-Song.mp4
-[SCAN] Starting file 88/166: 1.jpeg
-2025-11-25 17:21:45,955 [INFO] [Scan] File 88/166: 1.jpeg
-[SCAN] _process_file started for: 1.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,955 [INFO] 📷 Processing: 1.jpeg (150.5 KB)
-[SCAN] Processing: 1.jpeg
-[SCAN] ✓ Metadata extracted: 1.jpeg
-[SCAN] Starting file 89/166: 10.png
-2025-11-25 17:21:45,989 [INFO] [Scan] File 89/166: 10.png
-[SCAN] _process_file started for: 10.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:45,989 [INFO] 📷 Processing: 10.png (981.1 KB)
-[SCAN] Processing: 10.png
-[SCAN] ✓ Metadata extracted: 10.png
-[SCAN] Starting file 90/166: 11.jpg
-2025-11-25 17:21:46,027 [INFO] [Scan] File 90/166: 11.jpg
-[SCAN] _process_file started for: 11.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,027 [INFO] 📷 Processing: 11.jpg (282.8 KB)
-[SCAN] Processing: 11.jpg
-[SCAN] ✓ Metadata extracted: 11.jpg
-[SCAN] Starting file 91/166: 13.jpg
-2025-11-25 17:21:46,065 [INFO] [Scan] File 91/166: 13.jpg
-[SCAN] _process_file started for: 13.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,065 [INFO] 📷 Processing: 13.jpg (60.0 KB)
-[SCAN] Processing: 13.jpg
-[SCAN] ✓ Metadata extracted: 13.jpg
-[SCAN] Starting file 92/166: 14.jpg
-2025-11-25 17:21:46,096 [INFO] [Scan] File 92/166: 14.jpg
-[SCAN] _process_file started for: 14.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,096 [INFO] 📷 Processing: 14.jpg (182.3 KB)
-[SCAN] Processing: 14.jpg
-[SCAN] ✓ Metadata extracted: 14.jpg
-[SCAN] Starting file 93/166: 16.jpg
-2025-11-25 17:21:46,127 [INFO] [Scan] File 93/166: 16.jpg
-[SCAN] _process_file started for: 16.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,127 [INFO] 📷 Processing: 16.jpg (50.5 KB)
-[SCAN] Processing: 16.jpg
-[SCAN] ✓ Metadata extracted: 16.jpg
-[SCAN] Starting file 94/166: 18.jpg
-2025-11-25 17:21:46,163 [INFO] [Scan] File 94/166: 18.jpg
-[SCAN] _process_file started for: 18.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,163 [INFO] 📷 Processing: 18.jpg (104.4 KB)
-[SCAN] Processing: 18.jpg
-[SCAN] ✓ Metadata extracted: 18.jpg
-[SCAN] Starting file 95/166: 2.jpg
-2025-11-25 17:21:46,196 [INFO] [Scan] File 95/166: 2.jpg
-[SCAN] _process_file started for: 2.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,199 [INFO] 📷 Processing: 2.jpg (794.2 KB)
-[SCAN] Processing: 2.jpg
-[SCAN] ✓ Metadata extracted: 2.jpg
-[SCAN] Starting file 96/166: 3.png
-2025-11-25 17:21:46,227 [INFO] [Scan] File 96/166: 3.png
-[SCAN] _process_file started for: 3.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,232 [INFO] 📷 Processing: 3.png (1822.1 KB)
-[SCAN] Processing: 3.png
-[SCAN] ✓ Metadata extracted: 3.png
-[SCAN] Starting file 97/166: 4.jpg
-2025-11-25 17:21:46,279 [INFO] [Scan] File 97/166: 4.jpg
-[SCAN] _process_file started for: 4.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,279 [INFO] 📷 Processing: 4.jpg (211.7 KB)
-[SCAN] Processing: 4.jpg
-[SCAN] ✓ Metadata extracted: 4.jpg
-[SCAN] Starting file 98/166: 5.jpg
-2025-11-25 17:21:46,316 [INFO] [Scan] File 98/166: 5.jpg
-[SCAN] _process_file started for: 5.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,316 [INFO] 📷 Processing: 5.jpg (70.5 KB)
-[SCAN] Processing: 5.jpg
-[SCAN] ✓ Metadata extracted: 5.jpg
-[SCAN] Starting file 99/166: 6.jpg
-2025-11-25 17:21:46,344 [INFO] [Scan] File 99/166: 6.jpg
-[SCAN] _process_file started for: 6.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,344 [INFO] 📷 Processing: 6.jpg (57.2 KB)
-[SCAN] Processing: 6.jpg
-[SCAN] ✓ Metadata extracted: 6.jpg
-[SCAN] Starting file 100/166: 7.jpg
-2025-11-25 17:21:46,373 [INFO] [Scan] File 100/166: 7.jpg
-[SCAN] _process_file started for: 7.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,373 [INFO] 📷 Processing: 7.jpg (134.4 KB)
-[SCAN] Processing: 7.jpg
-[SCAN] ✓ Metadata extracted: 7.jpg
-[SCAN] Starting file 101/166: 8.png
-2025-11-25 17:21:46,405 [INFO] [Scan] File 101/166: 8.png
-[SCAN] _process_file started for: 8.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,411 [INFO] 📷 Processing: 8.png (413.4 KB)
-[SCAN] Processing: 8.png
-[SCAN] ✓ Metadata extracted: 8.png
-[SCAN] Starting file 102/166: 9.png
-2025-11-25 17:21:46,452 [INFO] [Scan] File 102/166: 9.png
-[SCAN] _process_file started for: 9.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,453 [INFO] 📷 Processing: 9.png (399.8 KB)
-[SCAN] Processing: 9.png
-[SCAN] ✓ Metadata extracted: 9.png
-[SCAN] Starting file 103/166: SuleimanAmmar-QRC.png
-2025-11-25 17:21:46,489 [INFO] [Scan] File 103/166: SuleimanAmmar-QRC.png
-[SCAN] _process_file started for: SuleimanAmmar-QRC.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,489 [INFO] 📷 Processing: SuleimanAmmar-QRC.png (62.3 KB)
-[SCAN] Processing: SuleimanAmmar-QRC.png
-[SCAN] ✓ Metadata extracted: SuleimanAmmar-QRC.png
-[SCAN] Starting file 104/166: output.png
-2025-11-25 17:21:46,500 [INFO] [Scan] File 104/166: output.png
-[SCAN] _process_file started for: output.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,500 [INFO] 📷 Processing: output.png (137.7 KB)
-[SCAN] Processing: output.png
-[SCAN] ✓ Metadata extracted: output.png
-[SCAN] Starting file 105/166: Projekt-Tracking und -Rollup.png
-2025-11-25 17:21:46,548 [INFO] [Scan] File 105/166: Projekt-Tracking und -Rollup.png
-[SCAN] _process_file started for: Projekt-Tracking und -Rollup.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,550 [INFO] 📷 Processing: Projekt-Tracking und -Rollup.png (164.0 KB)
-[SCAN] Processing: Projekt-Tracking und -Rollup.png
-[SCAN] ✓ Metadata extracted: Projekt-Tracking und -Rollup.png
-[SCAN] Starting file 106/166: Telco-ABIS-20240801.png
-2025-11-25 17:21:46,581 [INFO] [Scan] File 106/166: Telco-ABIS-20240801.png
-[SCAN] _process_file started for: Telco-ABIS-20240801.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,583 [INFO] 📷 Processing: Telco-ABIS-20240801.png (408.7 KB)
-[SCAN] Processing: Telco-ABIS-20240801.png
-[SCAN] ✓ Metadata extracted: Telco-ABIS-20240801.png
-[SCAN] Starting file 107/166: 20241028.png
-2025-11-25 17:21:46,615 [INFO] [Scan] File 107/166: 20241028.png
-[SCAN] _process_file started for: 20241028.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,615 [INFO] 📷 Processing: 20241028.png (1266.7 KB)
-[SCAN] Processing: 20241028.png
-[SCAN] ✓ Metadata extracted: 20241028.png
-[SCAN] Starting file 108/166: HTI-Project-OrganiGram.png
-2025-11-25 17:21:46,678 [INFO] [Scan] File 108/166: HTI-Project-OrganiGram.png
-[SCAN] _process_file started for: HTI-Project-OrganiGram.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,678 [INFO] 📷 Processing: HTI-Project-OrganiGram.png (170.8 KB)
-[SCAN] Processing: HTI-Project-OrganiGram.png
-[SCAN] ✓ Metadata extracted: HTI-Project-OrganiGram.png
-[SCAN] Starting file 109/166: 1.png
-2025-11-25 17:21:46,711 [INFO] [Scan] File 109/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,711 [INFO] 📷 Processing: 1.png (1487.3 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 110/166: 1111.png
-2025-11-25 17:21:46,765 [INFO] [Scan] File 110/166: 1111.png
-[SCAN] _process_file started for: 1111.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,766 [INFO] 📷 Processing: 1111.png (392.5 KB)
-[SCAN] Processing: 1111.png
-[SCAN] ✓ Metadata extracted: 1111.png
-[SCAN] Starting file 111/166: 2.png
-2025-11-25 17:21:46,802 [INFO] [Scan] File 111/166: 2.png
-[SCAN] _process_file started for: 2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,802 [INFO] 📷 Processing: 2.png (358.4 KB)
-[SCAN] Processing: 2.png
-[SCAN] ✓ Metadata extracted: 2.png
-[SCAN] Starting file 112/166: 20240812at1000h-Telco.png
-2025-11-25 17:21:46,834 [INFO] [Scan] File 112/166: 20240812at1000h-Telco.png
-[SCAN] _process_file started for: 20240812at1000h-Telco.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,836 [INFO] 📷 Processing: 20240812at1000h-Telco.png (836.9 KB)
-[SCAN] Processing: 20240812at1000h-Telco.png
-[SCAN] ✓ Metadata extracted: 20240812at1000h-Telco.png
-[SCAN] Starting file 113/166: 20240821at1500-Workhop.png
-2025-11-25 17:21:46,865 [INFO] [Scan] File 113/166: 20240821at1500-Workhop.png
-[SCAN] _process_file started for: 20240821at1500-Workhop.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,877 [INFO] 📷 Processing: 20240821at1500-Workhop.png (693.1 KB)
-[SCAN] Processing: 20240821at1500-Workhop.png
-[SCAN] ✓ Metadata extracted: 20240821at1500-Workhop.png
-[SCAN] Starting file 114/166: 20240826at1100-Workhop-Preparation.png
-2025-11-25 17:21:46,913 [INFO] [Scan] File 114/166: 20240826at1100-Workhop-Preparation.png
-[SCAN] _process_file started for: 20240826at1100-Workhop-Preparation.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,913 [INFO] 📷 Processing: 20240826at1100-Workhop-Preparation.png (1253.4 KB)
-[SCAN] Processing: 20240826at1100-Workhop-Preparation.png
-[SCAN] ✓ Metadata extracted: 20240826at1100-Workhop-Preparation.png
-[SCAN] Starting file 115/166: 20240828at1500-Workhop-Preparation-Part02-R.png
-2025-11-25 17:21:46,961 [INFO] [Scan] File 115/166: 20240828at1500-Workhop-Preparation-Part02-R.png
-[SCAN] _process_file started for: 20240828at1500-Workhop-Preparation-Part02-R.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:46,961 [INFO] 📷 Processing: 20240828at1500-Workhop-Preparation-Part02-R.png (1723.0 KB)
-[SCAN] Processing: 20240828at1500-Workhop-Preparation-Part02-R.png
-[SCAN] ✓ Metadata extracted: 20240828at1500-Workhop-Preparation-Part02-R.png
-[SCAN] Starting file 116/166: 20240828at1500-Workhop-Preparation-Part02.png
-2025-11-25 17:21:47,032 [INFO] [Scan] File 116/166: 20240828at1500-Workhop-Preparation-Part02.png
-[SCAN] _process_file started for: 20240828at1500-Workhop-Preparation-Part02.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,032 [INFO] 📷 Processing: 20240828at1500-Workhop-Preparation-Part02.png (1620.4 KB)
-[SCAN] Processing: 20240828at1500-Workhop-Preparation-Part02.png
-[SCAN] ✓ Metadata extracted: 20240828at1500-Workhop-Preparation-Part02.png
-[SCAN] Starting file 117/166: 20240903at1700-HTI-Intro.png
-2025-11-25 17:21:47,095 [INFO] [Scan] File 117/166: 20240903at1700-HTI-Intro.png
-[SCAN] _process_file started for: 20240903at1700-HTI-Intro.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,095 [INFO] 📷 Processing: 20240903at1700-HTI-Intro.png (880.7 KB)
-[SCAN] Processing: 20240903at1700-HTI-Intro.png
-[SCAN] ✓ Metadata extracted: 20240903at1700-HTI-Intro.png
-[SCAN] Starting file 118/166: 22222.png
-2025-11-25 17:21:47,135 [INFO] [Scan] File 118/166: 22222.png
-[SCAN] _process_file started for: 22222.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,135 [INFO] 📷 Processing: 22222.png (253.1 KB)
-[SCAN] Processing: 22222.png
-[SCAN] ✓ Metadata extracted: 22222.png
-[SCAN] Starting file 119/166: 3333.png
-2025-11-25 17:21:47,167 [INFO] [Scan] File 119/166: 3333.png
-[SCAN] _process_file started for: 3333.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,167 [INFO] 📷 Processing: 3333.png (286.6 KB)
-[SCAN] Processing: 3333.png
-[SCAN] ✓ Metadata extracted: 3333.png
-[SCAN] Starting file 120/166: 4444.png
-2025-11-25 17:21:47,206 [INFO] [Scan] File 120/166: 4444.png
-[SCAN] _process_file started for: 4444.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,206 [INFO] 📷 Processing: 4444.png (128.8 KB)
-[SCAN] Processing: 4444.png
-[SCAN] ✓ Metadata extracted: 4444.png
-[SCAN] Starting file 121/166: 5555.png
-2025-11-25 17:21:47,231 [INFO] [Scan] File 121/166: 5555.png
-[SCAN] _process_file started for: 5555.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,231 [INFO] 📷 Processing: 5555.png (56.9 KB)
-[SCAN] Processing: 5555.png
-[SCAN] ✓ Metadata extracted: 5555.png
-[SCAN] Starting file 122/166: Backend-CheckandClearanceWF.png
-2025-11-25 17:21:47,260 [INFO] [Scan] File 122/166: Backend-CheckandClearanceWF.png
-[SCAN] _process_file started for: Backend-CheckandClearanceWF.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,261 [INFO] 📷 Processing: Backend-CheckandClearanceWF.png (366.1 KB)
-[SCAN] Processing: Backend-CheckandClearanceWF.png
-[SCAN] ✓ Metadata extracted: Backend-CheckandClearanceWF.png
-[SCAN] Starting file 123/166: BorderControlSystem.png
-2025-11-25 17:21:47,294 [INFO] [Scan] File 123/166: BorderControlSystem.png
-[SCAN] _process_file started for: BorderControlSystem.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,294 [INFO] 📷 Processing: BorderControlSystem.png (452.8 KB)
-[SCAN] Processing: BorderControlSystem.png
-[SCAN] ✓ Metadata extracted: BorderControlSystem.png
-[SCAN] Starting file 124/166: Enr1.png
-2025-11-25 17:21:47,327 [INFO] [Scan] File 124/166: Enr1.png
-[SCAN] _process_file started for: Enr1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,327 [INFO] 📷 Processing: Enr1.png (256.9 KB)
-[SCAN] Processing: Enr1.png
-[SCAN] ✓ Metadata extracted: Enr1.png
-[SCAN] Starting file 125/166: Enr2.png
-2025-11-25 17:21:47,361 [INFO] [Scan] File 125/166: Enr2.png
-[SCAN] _process_file started for: Enr2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,361 [INFO] 📷 Processing: Enr2.png (330.2 KB)
-[SCAN] Processing: Enr2.png
-[SCAN] ✓ Metadata extracted: Enr2.png
-[SCAN] Starting file 126/166: Enr3.png
-2025-11-25 17:21:47,394 [INFO] [Scan] File 126/166: Enr3.png
-[SCAN] _process_file started for: Enr3.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,394 [INFO] 📷 Processing: Enr3.png (173.0 KB)
-[SCAN] Processing: Enr3.png
-[SCAN] ✓ Metadata extracted: Enr3.png
-[SCAN] Starting file 127/166: Enr4.png
-2025-11-25 17:21:47,424 [INFO] [Scan] File 127/166: Enr4.png
-[SCAN] _process_file started for: Enr4.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,425 [INFO] 📷 Processing: Enr4.png (148.9 KB)
-[SCAN] Processing: Enr4.png
-[SCAN] ✓ Metadata extracted: Enr4.png
-[SCAN] Starting file 128/166: Enr5.png
-2025-11-25 17:21:47,453 [INFO] [Scan] File 128/166: Enr5.png
-[SCAN] _process_file started for: Enr5.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,457 [INFO] 📷 Processing: Enr5.png (289.0 KB)
-[SCAN] Processing: Enr5.png
-[SCAN] ✓ Metadata extracted: Enr5.png
-[SCAN] Starting file 129/166: generalePP-Workflow.png
-2025-11-25 17:21:47,485 [INFO] [Scan] File 129/166: generalePP-Workflow.png
-[SCAN] _process_file started for: generalePP-Workflow.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,485 [INFO] 📷 Processing: generalePP-Workflow.png (532.6 KB)
-[SCAN] Processing: generalePP-Workflow.png
-[SCAN] ✓ Metadata extracted: generalePP-Workflow.png
-[SCAN] Starting file 130/166: Stop-List.png
-2025-11-25 17:21:47,520 [INFO] [Scan] File 130/166: Stop-List.png
-[SCAN] _process_file started for: Stop-List.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,520 [INFO] 📷 Processing: Stop-List.png (195.0 KB)
-[SCAN] Processing: Stop-List.png
-[SCAN] ✓ Metadata extracted: Stop-List.png
-[SCAN] Starting file 131/166: 1.png
-2025-11-25 17:21:47,548 [INFO] [Scan] File 131/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,548 [INFO] 📷 Processing: 1.png (786.3 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 132/166: 1.png
-2025-11-25 17:21:47,596 [INFO] [Scan] File 132/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,596 [INFO] 📷 Processing: 1.png (84.3 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 133/166: 2.png
-2025-11-25 17:21:47,617 [INFO] [Scan] File 133/166: 2.png
-[SCAN] _process_file started for: 2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,617 [INFO] 📷 Processing: 2.png (75.8 KB)
-[SCAN] Processing: 2.png
-[SCAN] ✓ Metadata extracted: 2.png
-[SCAN] Starting file 134/166: 3.png
-2025-11-25 17:21:47,643 [INFO] [Scan] File 134/166: 3.png
-[SCAN] _process_file started for: 3.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,644 [INFO] 📷 Processing: 3.png (39.5 KB)
-[SCAN] Processing: 3.png
-[SCAN] ✓ Metadata extracted: 3.png
-[SCAN] Starting file 135/166: Status-Meeting-20250203.png
-2025-11-25 17:21:47,659 [INFO] [Scan] File 135/166: Status-Meeting-20250203.png
-[SCAN] _process_file started for: Status-Meeting-20250203.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,661 [INFO] 📷 Processing: Status-Meeting-20250203.png (1325.3 KB)
-[SCAN] Processing: Status-Meeting-20250203.png
-[SCAN] ✓ Metadata extracted: Status-Meeting-20250203.png
-[SCAN] Starting file 136/166: Kenya_Gantt_Chart_Phase1.png
-2025-11-25 17:21:47,712 [INFO] [Scan] File 136/166: Kenya_Gantt_Chart_Phase1.png
-[SCAN] _process_file started for: Kenya_Gantt_Chart_Phase1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,712 [INFO] 📷 Processing: Kenya_Gantt_Chart_Phase1.png (453.8 KB)
-[SCAN] Processing: Kenya_Gantt_Chart_Phase1.png
-[SCAN] ✓ Metadata extracted: Kenya_Gantt_Chart_Phase1.png
-[SCAN] Starting file 137/166: 1.png
-2025-11-25 17:21:47,807 [INFO] [Scan] File 137/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,807 [INFO] 📷 Processing: 1.png (54.1 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 138/166: 2.png
-2025-11-25 17:21:47,833 [INFO] [Scan] File 138/166: 2.png
-[SCAN] _process_file started for: 2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,833 [INFO] 📷 Processing: 2.png (86.7 KB)
-[SCAN] Processing: 2.png
-[SCAN] ✓ Metadata extracted: 2.png
-[SCAN] Starting file 139/166: 3.png
-2025-11-25 17:21:47,857 [INFO] [Scan] File 139/166: 3.png
-[SCAN] _process_file started for: 3.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,857 [INFO] 📷 Processing: 3.png (82.2 KB)
-[SCAN] Processing: 3.png
-[SCAN] ✓ Metadata extracted: 3.png
-[SCAN] Starting file 140/166: Vmeet-1.png
-2025-11-25 17:21:47,877 [INFO] [Scan] File 140/166: Vmeet-1.png
-[SCAN] _process_file started for: Vmeet-1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,880 [INFO] 📷 Processing: Vmeet-1.png (769.9 KB)
-[SCAN] Processing: Vmeet-1.png
-[SCAN] ✓ Metadata extracted: Vmeet-1.png
-[SCAN] Starting file 141/166: Vmeet-2.png
-2025-11-25 17:21:47,913 [INFO] [Scan] File 141/166: Vmeet-2.png
-[SCAN] _process_file started for: Vmeet-2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,913 [INFO] 📷 Processing: Vmeet-2.png (745.2 KB)
-[SCAN] Processing: Vmeet-2.png
-[SCAN] ✓ Metadata extracted: Vmeet-2.png
-[SCAN] Starting file 142/166: Screenshot1.png
-2025-11-25 17:21:47,969 [INFO] [Scan] File 142/166: Screenshot1.png
-[SCAN] _process_file started for: Screenshot1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:47,971 [INFO] 📷 Processing: Screenshot1.png (1240.5 KB)
-[SCAN] Processing: Screenshot1.png
-[SCAN] ✓ Metadata extracted: Screenshot1.png
-[SCAN] Starting file 143/166: Deployment HighLevelOverview.png
-2025-11-25 17:21:48,023 [INFO] [Scan] File 143/166: Deployment HighLevelOverview.png
-[SCAN] _process_file started for: Deployment HighLevelOverview.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,023 [INFO] 📷 Processing: Deployment HighLevelOverview.png (431.8 KB)
-[SCAN] Processing: Deployment HighLevelOverview.png
-[SCAN] ✓ Metadata extracted: Deployment HighLevelOverview.png
-[SCAN] Starting file 144/166: MoVE5.png
-2025-11-25 17:21:48,061 [INFO] [Scan] File 144/166: MoVE5.png
-[SCAN] _process_file started for: MoVE5.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,061 [INFO] 📷 Processing: MoVE5.png (252.8 KB)
-[SCAN] Processing: MoVE5.png
-[SCAN] ✓ Metadata extracted: MoVE5.png
-[SCAN] Starting file 145/166: Platform components.png
-2025-11-25 17:21:48,096 [INFO] [Scan] File 145/166: Platform components.png
-[SCAN] _process_file started for: Platform components.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,096 [INFO] 📷 Processing: Platform components.png (336.3 KB)
-[SCAN] Processing: Platform components.png
-[SCAN] ✓ Metadata extracted: Platform components.png
-[SCAN] Starting file 146/166: User Authentication.png
-2025-11-25 17:21:48,127 [INFO] [Scan] File 146/166: User Authentication.png
-[SCAN] _process_file started for: User Authentication.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,127 [INFO] 📷 Processing: User Authentication.png (431.9 KB)
-[SCAN] Processing: User Authentication.png
-[SCAN] ✓ Metadata extracted: User Authentication.png
-[SCAN] Starting file 147/166: Vericore EIS - Main requirements.png
-2025-11-25 17:21:48,160 [INFO] [Scan] File 147/166: Vericore EIS - Main requirements.png
-[SCAN] _process_file started for: Vericore EIS - Main requirements.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,160 [INFO] 📷 Processing: Vericore EIS - Main requirements.png (748.6 KB)
-[SCAN] Processing: Vericore EIS - Main requirements.png
-[SCAN] ✓ Metadata extracted: Vericore EIS - Main requirements.png
-[SCAN] Starting file 148/166: Vericore EIS Platform - Source Code.png
-2025-11-25 17:21:48,197 [INFO] [Scan] File 148/166: Vericore EIS Platform - Source Code.png
-[SCAN] _process_file started for: Vericore EIS Platform - Source Code.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,197 [INFO] 📷 Processing: Vericore EIS Platform - Source Code.png (825.1 KB)
-[SCAN] Processing: Vericore EIS Platform - Source Code.png
-[SCAN] ✓ Metadata extracted: Vericore EIS Platform - Source Code.png
-[SCAN] Starting file 149/166: Screenshot1.png
-2025-11-25 17:21:48,245 [INFO] [Scan] File 149/166: Screenshot1.png
-[SCAN] _process_file started for: Screenshot1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,245 [INFO] 📷 Processing: Screenshot1.png (983.4 KB)
-[SCAN] Processing: Screenshot1.png
-[SCAN] ✓ Metadata extracted: Screenshot1.png
-[SCAN] Starting file 150/166: Screenshot.png
-2025-11-25 17:21:48,289 [INFO] [Scan] File 150/166: Screenshot.png
-[SCAN] _process_file started for: Screenshot.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,289 [INFO] 📷 Processing: Screenshot.png (1085.1 KB)
-[SCAN] Processing: Screenshot.png
-[SCAN] ✓ Metadata extracted: Screenshot.png
-[SCAN] Starting file 151/166: Screen-Shot.png
-2025-11-25 17:21:48,344 [INFO] [Scan] File 151/166: Screen-Shot.png
-[SCAN] _process_file started for: Screen-Shot.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,344 [INFO] 📷 Processing: Screen-Shot.png (1122.9 KB)
-[SCAN] Processing: Screen-Shot.png
-[SCAN] ✓ Metadata extracted: Screen-Shot.png
-[SCAN] Starting file 152/166: 20250121-Kickoff-Proposal.png
-2025-11-25 17:21:48,411 [INFO] [Scan] File 152/166: 20250121-Kickoff-Proposal.png
-[SCAN] _process_file started for: 20250121-Kickoff-Proposal.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,411 [INFO] 📷 Processing: 20250121-Kickoff-Proposal.png (1003.7 KB)
-[SCAN] Processing: 20250121-Kickoff-Proposal.png
-[SCAN] ✓ Metadata extracted: 20250121-Kickoff-Proposal.png
-[SCAN] Starting file 153/166: CRS Detailed Component Diagram - v2.1.jpg
-2025-11-25 17:21:48,459 [INFO] [Scan] File 153/166: CRS Detailed Component Diagram - v2.1.jpg
-[SCAN] _process_file started for: CRS Detailed Component Diagram - v2.1.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,461 [INFO] 📷 Processing: CRS Detailed Component Diagram - v2.1.jpg (195.2 KB)
-[SCAN] Processing: CRS Detailed Component Diagram - v2.1.jpg
-[SCAN] ✓ Metadata extracted: CRS Detailed Component Diagram - v2.1.jpg
-[SCAN] Starting file 154/166: Infrastructure Diagram.jpg
-2025-11-25 17:21:48,470 [INFO] [Scan] File 154/166: Infrastructure Diagram.jpg
-[SCAN] _process_file started for: Infrastructure Diagram.jpg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,477 [INFO] 📷 Processing: Infrastructure Diagram.jpg (179.8 KB)
-[SCAN] Processing: Infrastructure Diagram.jpg
-[SCAN] ✓ Metadata extracted: Infrastructure Diagram.jpg
-[SCAN] Starting file 155/166: UGA_BDAR System Overview_26April2022_MH.png
-2025-11-25 17:21:48,494 [INFO] [Scan] File 155/166: UGA_BDAR System Overview_26April2022_MH.png
-[SCAN] _process_file started for: UGA_BDAR System Overview_26April2022_MH.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,494 [INFO] 📷 Processing: UGA_BDAR System Overview_26April2022_MH.png (253.6 KB)
-[SCAN] Processing: UGA_BDAR System Overview_26April2022_MH.png
-[SCAN] ✓ Metadata extracted: UGA_BDAR System Overview_26April2022_MH.png
-[SCAN] Starting file 156/166: 20241108-um1500-Telco.png
-2025-11-25 17:21:48,547 [INFO] [Scan] File 156/166: 20241108-um1500-Telco.png
-[SCAN] _process_file started for: 20241108-um1500-Telco.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,547 [INFO] 📷 Processing: 20241108-um1500-Telco.png (1541.4 KB)
-[SCAN] Processing: 20241108-um1500-Telco.png
-[SCAN] ✓ Metadata extracted: 20241108-um1500-Telco.png
-[SCAN] Starting file 157/166: 20241112-um0930-1000.png
-2025-11-25 17:21:48,598 [INFO] [Scan] File 157/166: 20241112-um0930-1000.png
-[SCAN] _process_file started for: 20241112-um0930-1000.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,598 [INFO] 📷 Processing: 20241112-um0930-1000.png (1237.9 KB)
-[SCAN] Processing: 20241112-um0930-1000.png
-[SCAN] ✓ Metadata extracted: 20241112-um0930-1000.png
-[SCAN] Starting file 158/166: 20241113-at1600-1700-Meeting.png
-2025-11-25 17:21:48,647 [INFO] [Scan] File 158/166: 20241113-at1600-1700-Meeting.png
-[SCAN] _process_file started for: 20241113-at1600-1700-Meeting.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,647 [INFO] 📷 Processing: 20241113-at1600-1700-Meeting.png (1269.6 KB)
-[SCAN] Processing: 20241113-at1600-1700-Meeting.png
-[SCAN] ✓ Metadata extracted: 20241113-at1600-1700-Meeting.png
-[SCAN] Starting file 159/166: Tunisia eVisa HL Architecture.png
-2025-11-25 17:21:48,697 [INFO] [Scan] File 159/166: Tunisia eVisa HL Architecture.png
-[SCAN] _process_file started for: Tunisia eVisa HL Architecture.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,697 [INFO] 📷 Processing: Tunisia eVisa HL Architecture.png (218.4 KB)
-[SCAN] Processing: Tunisia eVisa HL Architecture.png
-[SCAN] ✓ Metadata extracted: Tunisia eVisa HL Architecture.png
-[SCAN] Starting file 160/166: 20241017-JF-at0900-Meeting.png
-2025-11-25 17:21:48,738 [INFO] [Scan] File 160/166: 20241017-JF-at0900-Meeting.png
-[SCAN] _process_file started for: 20241017-JF-at0900-Meeting.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,742 [INFO] 📷 Processing: 20241017-JF-at0900-Meeting.png (1104.0 KB)
-[SCAN] Processing: 20241017-JF-at0900-Meeting.png
-[SCAN] ✓ Metadata extracted: 20241017-JF-at0900-Meeting.png
-[SCAN] Starting file 161/166: Flag_of_Myanmar.svg.png
-2025-11-25 17:21:48,786 [INFO] [Scan] File 161/166: Flag_of_Myanmar.svg.png
-[SCAN] _process_file started for: Flag_of_Myanmar.svg.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,794 [INFO] 📷 Processing: Flag_of_Myanmar.svg.png (30.9 KB)
-[SCAN] Processing: Flag_of_Myanmar.svg.png
-[SCAN] ✓ Metadata extracted: Flag_of_Myanmar.svg.png
-[SCAN] Starting file 162/166: WBS THA MMR v 0.6.drawio.png
-2025-11-25 17:21:48,827 [INFO] [Scan] File 162/166: WBS THA MMR v 0.6.drawio.png
-[SCAN] _process_file started for: WBS THA MMR v 0.6.drawio.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,828 [INFO] 📷 Processing: WBS THA MMR v 0.6.drawio.png (205.5 KB)
-[SCAN] Processing: WBS THA MMR v 0.6.drawio.png
-[SCAN] ✓ Metadata extracted: WBS THA MMR v 0.6.drawio.png
-[SCAN] Starting file 163/166: 20240705-ScreenShot.png
-2025-11-25 17:21:48,867 [INFO] [Scan] File 163/166: 20240705-ScreenShot.png
-[SCAN] _process_file started for: 20240705-ScreenShot.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,869 [INFO] 📷 Processing: 20240705-ScreenShot.png (1789.9 KB)
-[SCAN] Processing: 20240705-ScreenShot.png
-[SCAN] ✓ Metadata extracted: 20240705-ScreenShot.png
-[SCAN] Starting file 164/166: Screen-Shot.png
-2025-11-25 17:21:48,997 [INFO] [Scan] File 164/166: Screen-Shot.png
-[SCAN] _process_file started for: Screen-Shot.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:48,997 [INFO] 📷 Processing: Screen-Shot.png (1736.6 KB)
-[SCAN] Processing: Screen-Shot.png
-[SCAN] ✓ Metadata extracted: Screen-Shot.png
-[SCAN] Starting file 165/166: 1.png
-2025-11-25 17:21:49,069 [INFO] [Scan] File 165/166: 1.png
-[SCAN] _process_file started for: 1.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:49,070 [INFO] 📷 Processing: 1.png (1080.4 KB)
-[SCAN] Processing: 1.png
-[SCAN] ✓ Metadata extracted: 1.png
-[SCAN] Starting file 166/166: 20240704-ProjectBoardMeeting-1600H.png
-2025-11-25 17:21:49,118 [INFO] [Scan] File 166/166: 20240704-ProjectBoardMeeting-1600H.png
-[SCAN] _process_file started for: 20240704-ProjectBoardMeeting-1600H.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 17:21:49,118 [INFO] 📷 Processing: 20240704-ProjectBoardMeeting-1600H.png (2375.2 KB)
-[SCAN] Processing: 20240704-ProjectBoardMeeting-1600H.png
-[SCAN] ✓ Metadata extracted: 20240704-ProjectBoardMeeting-1600H.png
-2025-11-25 17:21:49,218 [INFO] Bulk upserted 166 photos for project 1
-[SCAN] Shutting down executor
-2025-11-25 17:21:49,218 [INFO] Executor shutdown complete
-2025-11-25 17:21:49,218 [INFO] Processing 3 videos...
-2025-11-25 17:21:49,277 [INFO] Indexed video C:\Users\suleimaa\Desktop\eigen\Syria\Qouzleh_mitSubtitles-ezgif.com-resize-video.mp4 (id=1, status=pending)
-2025-11-25 17:21:49,298 [INFO] Indexed video C:\Users\suleimaa\Desktop\eigen\Syria\Qouzleh_mitSubtitles.mp4 (id=2, status=pending)
-2025-11-25 17:21:49,315 [INFO] Indexed video C:\Users\suleimaa\Desktop\eigen\Syria\Syria-Song.mp4 (id=3, status=pending)
-2025-11-25 17:21:49,315 [INFO] Indexed 3 videos (metadata extraction pending)
-2025-11-25 17:21:49,411 [INFO] Launching background workers for 3 videos...
-2025-11-25 17:21:49,423 [INFO] Using ffprobe from settings: C:\ffmpeg\bin\ffprobe.exe
-2025-11-25 17:21:49,478 [INFO] ffprobe detected at 'C:\ffmpeg\bin\ffprobe.exe' - video metadata extraction enabled
-2025-11-25 17:21:49,478 [INFO] Connected metadata finished callback for sidebar refresh
-2025-11-25 17:21:49,478 [INFO] ✓ Video metadata extraction worker started
-2025-11-25 17:21:49,478 [INFO] Using ffmpeg from same directory as ffprobe: C:\ffmpeg\bin\ffmpeg.exe
-2025-11-25 17:21:49,478 [INFO] [VideoMetadataWorker] Starting for project_id=1
-2025-11-25 17:21:49,478 [INFO] [VideoMetadataWorker] Found 3 videos to process
-2025-11-25 17:21:49,503 [INFO] [VideoMetadataWorker] Processing with 8 parallel workers
-2025-11-25 17:21:49,650 [INFO] ffmpeg detected at 'C:\ffmpeg\bin\ffmpeg.exe' - video thumbnail generation enabled
-2025-11-25 17:21:49,650 [INFO] ✓ Video thumbnail generation worker started
-2025-11-25 17:21:49,650 [INFO] 🎬 Processing 3 videos in background (check logs for progress)
-2025-11-25 17:21:49,650 [INFO] [VideoThumbnailWorker] Starting for project_id=1
-2025-11-25 17:21:49,650 [INFO] Scan complete: 166 photos indexed, 3 videos indexed, 0 skipped, 0 failed in 6.3s
-2025-11-25 17:21:49,661 [INFO] [VideoThumbnailWorker] Found 3 videos to process
-2025-11-25 17:21:49,662 [INFO] Scan completed: 166 photos, 3 videos, 45 folders in 6.3s
-2025-11-25 17:21:49,662 [INFO] [VideoThumbnailWorker] Processing with 8 parallel workers
-[ScanController] scan finished: 45 folders, 166 photos, 3 videos
-[ScanController] cleanup after scan
-2025-11-25 17:21:49,777 [INFO] [VideoMetadataWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-2025-11-25 17:21:49,789 [INFO] [VideoMetadataWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\syria-song.mp4
-2025-11-25 17:21:49,805 [INFO] [VideoMetadataWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles.mp4
-2025-11-25 17:21:49,805 [INFO] [VideoMetadataWorker] Finished: 3 success, 0 failed
-2025-11-25 17:21:49,928 [INFO] Generated thumbnail for c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4 at .thumb_cache\qouzleh_mitsubtitles-ezgif.com-resize-video_mp4_thumb.jpg
-2025-11-25 17:21:49,928 [INFO] Generated thumbnail for c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles.mp4 at .thumb_cache\qouzleh_mitsubtitles_mp4_thumb.jpg
-2025-11-25 17:21:49,934 [INFO] Generated thumbnail for c:\users\suleimaa\desktop\eigen\syria\syria-song.mp4 at .thumb_cache\syria-song_mp4_thumb.jpg
-2025-11-25 17:21:49,950 [INFO] [VideoThumbnailWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles.mp4
-2025-11-25 17:21:49,965 [INFO] [VideoThumbnailWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\syria-song.mp4
-2025-11-25 17:21:49,982 [INFO] [VideoThumbnailWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-2025-11-25 17:21:49,982 [INFO] [VideoThumbnailWorker] Finished: 3 success, 0 failed
-2025-11-25 17:22:08,687 [INFO] Building date branches...
-2025-11-25 17:22:08,689 [INFO] Building date branches for project_id=1
-[build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 181 photos for project 1
-[build_date_branches] Inserted 166/181 photos into 'all' branch
-[build_date_branches] Found 14 unique dates for project 1
-[build_date_branches] Date 2024-08-11: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg
-[build_date_branches] Date 2024-08-11: inserted 1/2 into project_images (new)
-[build_date_branches] Date 2024-10-07: found 7 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/desktop/eigen/mietwohnung/1-wohnzimmer.jpeg
-[build_date_branches] Date 2024-10-07: inserted 7/7 into project_images (new)
-[build_date_branches] Date 2024-11-18: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg
-[build_date_branches] Date 2024-11-18: inserted 1/2 into project_images (new)
-[build_date_branches] Date 2024-11-29: found 4 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
-[build_date_branches] Date 2024-11-29: inserted 1/4 into project_images (new)
-[build_date_branches] Date 2024-12-02: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg
-[build_date_branches] Date 2024-12-02: inserted 1/2 into project_images (new)
-[build_date_branches] Date 2024-12-16: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/desktop/eigen/syria/cnn/1.jpeg
-[build_date_branches] Date 2024-12-16: inserted 2/2 into project_images (new)
-[build_date_branches] Date 2025-03-07: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/desktop/eigen/syria/cnn/6.jpg
-[build_date_branches] Date 2025-03-07: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-04: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/desktop/eigen/alya/photos/inbox/alya5.jpeg
-[build_date_branches] Date 2025-07-04: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-06: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/desktop/eigen/alya/photos/inbox/alya6.jpeg
-[build_date_branches] Date 2025-07-06: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-07-30: found 2 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg
-[build_date_branches] Date 2025-07-30: inserted 1/2 into project_images (new)
-[build_date_branches] Date 2025-08-09: found 3 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg
-[build_date_branches] Date 2025-08-09: inserted 2/3 into project_images (new)
-[build_date_branches] Date 2025-08-21: found 5 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg
-[build_date_branches] Date 2025-08-21: inserted 5/5 into project_images (new)
-[build_date_branches] Date 2025-08-22: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png
-[build_date_branches] Date 2025-08-22: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-08-25: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg
-[build_date_branches] Date 2025-08-25: inserted 1/1 into project_images (new)
-[build_date_branches] Total entries processed: 34
-[build_date_branches] project_images table has 215 rows for project 1
-2025-11-25 17:22:08,708 [INFO] Created 34 photo date branch entries for project 1
-2025-11-25 17:22:08,711 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 3 videos with dates for project 1
-[build_video_date_branches] Inserted 3/3 videos into 'all' branch
-[build_video_date_branches] Found 1 unique video dates
-[build_video_date_branches] Date 2025-05-06: inserted 3/3 (new)
-[build_video_date_branches] Total entries processed: 3
-[build_video_date_branches] project_videos table has 6 rows for project 1
-2025-11-25 17:22:08,829 [INFO] Created 3 video date branch entries for project 1
-2025-11-25 17:22:08,831 [INFO] Backfilling created_date fields for photos...
-2025-11-25 17:22:08,850 [INFO] Backfilled 147 photo rows with created_date
-2025-11-25 17:22:08,851 [INFO] Backfilling created_date fields for videos...
-2025-11-25 17:22:08,853 [INFO] Reloading sidebar after date branches built...
-[SidebarQt] reload() blocked - widget not visible (likely being deleted)
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 2 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
 
 [GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
+[GRID] project_id=1, load_mode=date
 [GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 181 photos
 [DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/suleimaa/desktop/71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg'
-      orig='c:/users/suleimaa/desktop/71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg'
-  [1] norm='c:/users/suleimaa/desktop/eigen/1.png'
-      orig='c:/users/suleimaa/desktop/eigen/1.png'
-  [2] norm='c:/users/suleimaa/desktop/eigen/20241127-lastminutes.png'
-      orig='c:/users/suleimaa/desktop/eigen/20241127-lastminutes.png'
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
 [DB_TAGS_SQL] Photos query:
                         SELECT pm.path, t.name
                         FROM photo_metadata pm
@@ -2095,16 +634,16 @@ After download:
                         SELECT vm.path, t.name
                         FROM video_metadata vm
                         JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/desktop/71c1e57b-bf43-454d-9a1b-6a5d92851553.jpg', 'c:/users/suleimaa/desktop/eigen/1.png', 'c:/users/suleimaa/desktop/eigen/20241127-lastminutes.png']
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg']
 [DB_TAGS_SQL] project_id: 1
 [DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
 [DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
 [DB_TAGS_SQL] Sample tagged PHOTOS in DB:
 [DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/181 paths (project_id=1)
-[GRID] Fetched tags for 181 paths, got 181 entries
-[GRID] Loaded 181 thumbnails.
-[GRID] Reloaded 181 thumbnails in branch-mode (base=181)
+[DB_TAGS] Retrieved 0 tags for 0/7 paths (project_id=1)
+[GRID] Fetched tags for 7 paths, got 7 entries
+[GRID] Loaded 7 thumbnails.
+[GRID] Reloaded 7 thumbnails in date-mode (base=7)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
@@ -2127,19 +666,363 @@ After download:
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/3092)
-[GRID] Loading viewport range: 0-24 of 181
-[GRID] Queued 25 new thumbnail workers
-[GooglePhotosLayout] Loading photos from database...
-[GooglePhotosLayout] Loaded 27 photos in 11 date groups
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/desktop/eigen/syria/cnn/6.jpg
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/desktop/eigen/syria/cnn/6.jpg
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/desktop/eigen/alya/photos/inbox/alya5.jpeg
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/desktop/eigen/mietwohnung/warm.jpeg
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Queued 7 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[SIDEBAR] Section header 'Quick Dates' clicked
+[SIDEBAR] Section header 'Quick Dates' clicked
+[SIDEBAR] Section header '👥 People' clicked
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in date-mode (base=21)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 7 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/7 paths (project_id=1)
+[GRID] Fetched tags for 7 paths, got 7 entries
+[GRID] Loaded 7 thumbnails.
+[GRID] Reloaded 7 thumbnails in date-mode (base=7)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-6 of 7
+[GRID] Queued 7 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[GRID] Fetched tags for 0 paths, got 0 entries
+[GRID] Loaded 0 thumbnails.
+[GRID] Reloaded 0 thumbnails in date-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[SIDEBAR] Section header 'Folders' clicked
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 21 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 8 new thumbnail workers
+[SIDEBAR] Section header '👥 People' clicked
+[SIDEBAR] Section header 'Folders' clicked
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 21 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
 [Shutdown] Thumbnail cache cleared.
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>
