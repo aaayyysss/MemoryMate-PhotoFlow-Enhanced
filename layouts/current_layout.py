@@ -62,25 +62,39 @@ class CurrentLayout(BaseLayout):
 
         CRITICAL FIX: Refresh sidebar and grid to ensure all branches and sections
         show updated data after scanning in other layouts (e.g., Google layout).
+
+        Uses QTimer.singleShot to defer reload, allowing widget visibility to update
+        before reload() is called (prevents "widget not visible" blocking).
         """
-        print("[CurrentLayout] Layout activated - refreshing sidebar and grid")
+        print("[CurrentLayout] Layout activated - scheduling deferred refresh")
 
-        # Refresh sidebar to show updated folder/date/tag counts
-        sidebar = self.get_sidebar()
-        if sidebar and hasattr(sidebar, 'reload'):
-            try:
-                print("[CurrentLayout] Reloading sidebar...")
-                sidebar.reload()
-                print("[CurrentLayout] ✓ Sidebar reload completed")
-            except Exception as e:
-                print(f"[CurrentLayout] ⚠️ Error reloading sidebar: {e}")
+        # CRITICAL FIX: Defer reload to allow widget visibility to update
+        # The sidebar.reload() checks isVisible(), which might be False during
+        # layout switching. Deferring by 100ms ensures widget is fully shown.
+        from PySide6.QtCore import QTimer
 
-        # Refresh grid to show updated thumbnails
-        grid = self.get_grid()
-        if grid and hasattr(grid, 'reload'):
-            try:
-                print("[CurrentLayout] Reloading grid...")
-                grid.reload()
-                print("[CurrentLayout] ✓ Grid reload completed")
-            except Exception as e:
-                print(f"[CurrentLayout] ⚠️ Error reloading grid: {e}")
+        def deferred_reload():
+            print("[CurrentLayout] Executing deferred reload...")
+
+            # Refresh sidebar to show updated folder/date/tag counts
+            sidebar = self.get_sidebar()
+            if sidebar and hasattr(sidebar, 'reload'):
+                try:
+                    print("[CurrentLayout] Reloading sidebar...")
+                    sidebar.reload()
+                    print("[CurrentLayout] ✓ Sidebar reload completed")
+                except Exception as e:
+                    print(f"[CurrentLayout] ⚠️ Error reloading sidebar: {e}")
+
+            # Refresh grid to show updated thumbnails
+            grid = self.get_grid()
+            if grid and hasattr(grid, 'reload'):
+                try:
+                    print("[CurrentLayout] Reloading grid...")
+                    grid.reload()
+                    print("[CurrentLayout] ✓ Grid reload completed")
+                except Exception as e:
+                    print(f"[CurrentLayout] ⚠️ Error reloading grid: {e}")
+
+        # Schedule deferred reload (100ms delay to allow widget to become visible)
+        QTimer.singleShot(100, deferred_reload)

@@ -750,8 +750,14 @@ class GooglePhotosLayout(BaseLayout):
                 if child.widget():
                     child.widget().deleteLater()
 
-            # Clear timeline tree
-            self.timeline_tree.clear()
+            # CRITICAL FIX: Only clear trees when NOT filtering
+            # When filtering, we want to keep the tree structure visible
+            # so users can see all available years/months/folders and switch between them
+            has_filters = filter_year is not None or filter_month is not None or filter_folder is not None
+            if not has_filters:
+                # Clear trees only when showing all photos (no filters)
+                self.timeline_tree.clear()
+                self.folders_tree.clear()
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error clearing timeline: {e}")
             # Continue anyway
@@ -1562,13 +1568,14 @@ class GooglePhotosLayout(BaseLayout):
         """
         Rebuild timeline with search results.
         """
-        # Clear existing timeline
+        # Clear existing timeline and trees for search results
         while self.timeline_layout.count():
             child = self.timeline_layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
 
         self.timeline_tree.clear()
+        self.folders_tree.clear()  # Clear folders too for consistency
 
         if not rows:
             # No results
