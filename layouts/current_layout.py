@@ -55,3 +55,32 @@ class CurrentLayout(BaseLayout):
     def get_grid(self):
         """Get grid component from MainWindow."""
         return self.main_window.grid if hasattr(self.main_window, 'grid') else None
+
+    def on_layout_activated(self):
+        """
+        Called when Current layout becomes active.
+
+        CRITICAL FIX: Refresh sidebar and grid to ensure all branches and sections
+        show updated data after scanning in other layouts (e.g., Google layout).
+        """
+        print("[CurrentLayout] Layout activated - refreshing sidebar and grid")
+
+        # Refresh sidebar to show updated folder/date/tag counts
+        sidebar = self.get_sidebar()
+        if sidebar and hasattr(sidebar, 'reload'):
+            try:
+                print("[CurrentLayout] Reloading sidebar...")
+                sidebar.reload()
+                print("[CurrentLayout] ✓ Sidebar reload completed")
+            except Exception as e:
+                print(f"[CurrentLayout] ⚠️ Error reloading sidebar: {e}")
+
+        # Refresh grid to show updated thumbnails
+        grid = self.get_grid()
+        if grid and hasattr(grid, 'reload'):
+            try:
+                print("[CurrentLayout] Reloading grid...")
+                grid.reload()
+                print("[CurrentLayout] ✓ Grid reload completed")
+            except Exception as e:
+                print(f"[CurrentLayout] ⚠️ Error reloading grid: {e}")
