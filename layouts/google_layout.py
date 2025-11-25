@@ -45,6 +45,10 @@ class GooglePhotosLayout(BaseLayout):
         """
         Create Google Photos-style layout.
         """
+        # Phase 2: Selection tracking
+        self.selected_photos = set()  # Set of selected photo paths
+        self.selection_mode = False  # Whether selection mode is active
+
         # Get current project ID (CRITICAL: Photos are organized by project)
         from app_services import get_default_project_id, list_projects
         self.project_id = get_default_project_id()
@@ -127,6 +131,9 @@ class GooglePhotosLayout(BaseLayout):
         # Primary actions
         self.btn_create_project = QPushButton("➕ New Project")
         self.btn_create_project.setToolTip("Create a new project")
+        # CRITICAL FIX: Connect button immediately, not in on_layout_activated
+        self.btn_create_project.clicked.connect(self._on_create_project_clicked)
+        print("[GooglePhotosLayout] ✅ Create Project button connected in toolbar creation")
         toolbar.addWidget(self.btn_create_project)
 
         # Project selector
@@ -196,6 +203,15 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_refresh.clicked.connect(self._load_photos)
         toolbar.addWidget(self.btn_refresh)
 
+        toolbar.addSeparator()
+
+        # Phase 2: Selection mode toggle
+        self.btn_select = QPushButton("☑️ Select")
+        self.btn_select.setToolTip("Enable selection mode to select multiple photos")
+        self.btn_select.setCheckable(True)
+        self.btn_select.clicked.connect(self._toggle_selection_mode)
+        toolbar.addWidget(self.btn_select)
+
         # Spacer
         spacer = QWidget()
         spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -205,11 +221,13 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_delete = QPushButton("🗑️ Delete")
         self.btn_delete.setToolTip("Delete selected photos")
         self.btn_delete.setVisible(False)
+        self.btn_delete.clicked.connect(self._on_delete_selected)
         toolbar.addWidget(self.btn_delete)
 
         self.btn_favorite = QPushButton("⭐ Favorite")
         self.btn_favorite.setToolTip("Mark selected as favorites")
         self.btn_favorite.setVisible(False)
+        self.btn_favorite.clicked.connect(self._on_favorite_selected)
         toolbar.addWidget(self.btn_favorite)
 
         # Store toolbar reference
@@ -535,10 +553,20 @@ class GooglePhotosLayout(BaseLayout):
 
     def _create_thumbnail(self, path: str, size: int) -> QWidget:
         """
-        Create thumbnail widget for a photo.
+        Create thumbnail widget for a photo with selection checkbox.
+
+        Phase 2: Enhanced with checkbox overlay for batch selection.
         """
-        thumb = QPushButton()
-        thumb.setFixedSize(size, size)
+        from PySide6.QtWidgets import QCheckBox, QVBoxLayout
+
+        # Container widget
+        container = QWidget()
+        container.setFixedSize(size, size)
+        container.setStyleSheet("background: transparent;")
+
+        # Thumbnail button
+        thumb = QPushButton(container)
+        thumb.setGeometry(0, 0, size, size)
         thumb.setStyleSheet("""
             QPushButton {
                 background: #f1f3f4;
@@ -571,19 +599,276 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GooglePhotosLayout] ⚠️ Error loading thumbnail for {path}: {e}")
             thumb.setText("❌")
 
-        # Store path for click handling
-        thumb.setProperty("photo_path", path)
-        thumb.clicked.connect(lambda: self._on_photo_clicked(path))
+        # Phase 2: Selection checkbox (overlay top-left corner)
+        checkbox = QCheckBox(container)
+        checkbox.setGeometry(8, 8, 24, 24)
+        checkbox.setStyleSheet("""
+            QCheckBox {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #dadce0;
+                border-radius: 4px;
+                padding: 2px;
+            }
+            QCheckBox:checked {
+                background: #1a73e8;
+                border-color: #1a73e8;
+            }
+            QCheckBox::indicator {
+                width: 18px;
+                height: 18px;
+            }
+        """)
+        checkbox.setVisible(self.selection_mode)  # Only visible in selection mode
 
-        return thumb
+        # Store references
+        container.setProperty("photo_path", path)
+        container.setProperty("thumbnail_button", thumb)
+        container.setProperty("checkbox", checkbox)
+
+        # Connect signals
+        thumb.clicked.connect(lambda: self._on_photo_clicked(path))
+        checkbox.stateChanged.connect(lambda state: self._on_selection_changed(path, state))
+
+        return container
 
     def _on_photo_clicked(self, path: str):
         """
         Handle photo thumbnail click.
         """
         print(f"[GooglePhotosLayout] Photo clicked: {path}")
-        # TODO Phase 2: Open lightbox or details panel
-        # For now, just print
+
+        # Phase 2: If selection mode is active, toggle selection
+        if self.selection_mode:
+            self._toggle_photo_selection(path)
+        else:
+            # TODO Phase 3: Open lightbox or details panel
+            print(f"[GooglePhotosLayout] Would open lightbox for: {path}")
+
+    def _on_selection_changed(self, path: str, state: int):
+        """
+        Handle checkbox selection change.
+
+        Args:
+            path: Photo path
+            state: Qt.CheckState (0=unchecked, 2=checked)
+        """
+        from PySide6.QtCore import Qt
+
+        if state == Qt.Checked:
+            self.selected_photos.add(path)
+            print(f"[GooglePhotosLayout] ✓ Selected: {path}")
+        else:
+            self.selected_photos.discard(path)
+            print(f"[GooglePhotosLayout] ✗ Deselected: {path}")
+
+        # Update selection counter and action buttons
+        self._update_selection_ui()
+
+    def _toggle_photo_selection(self, path: str):
+        """
+        Toggle photo selection and update checkbox.
+        """
+        # Find checkbox for this photo
+        container = self._find_thumbnail_container(path)
+        if container:
+            checkbox = container.property("checkbox")
+            if checkbox:
+                # Toggle checkbox (will trigger _on_selection_changed)
+                checkbox.setChecked(not checkbox.isChecked())
+
+    def _find_thumbnail_container(self, path: str) -> QWidget:
+        """
+        Find thumbnail container widget by photo path.
+        """
+        # Iterate through all date groups to find the thumbnail
+        for i in range(self.timeline_layout.count()):
+            date_group = self.timeline_layout.itemAt(i).widget()
+            if not date_group:
+                continue
+
+            # Find grid inside date group
+            group_layout = date_group.layout()
+            if not group_layout:
+                continue
+
+            for j in range(group_layout.count()):
+                item = group_layout.itemAt(j)
+                if not item or not item.widget():
+                    continue
+
+                widget = item.widget()
+                if hasattr(widget, 'layout') and widget.layout():
+                    # This is a grid container
+                    grid = widget.layout()
+                    for k in range(grid.count()):
+                        container = grid.itemAt(k).widget()
+                        if container and container.property("photo_path") == path:
+                            return container
+
+        return None
+
+    def _update_selection_ui(self):
+        """
+        Update selection counter and show/hide action buttons.
+        """
+        count = len(self.selected_photos)
+
+        # Update toolbar selection counter (add if doesn't exist)
+        if not hasattr(self, 'selection_label'):
+            from PySide6.QtWidgets import QLabel
+            self.selection_label = QLabel()
+            self.selection_label.setStyleSheet("font-weight: bold; padding: 0 12px;")
+            # Insert before spacer in toolbar
+            toolbar = self._toolbar
+            spacer_index = toolbar.actions().index(toolbar.widgetForAction(toolbar.actions()[-3]).parent()) if len(toolbar.actions()) > 3 else 0
+            toolbar.insertWidget(toolbar.actions()[spacer_index] if spacer_index < len(toolbar.actions()) else None, self.selection_label)
+
+        # Update counter text
+        if count > 0:
+            self.selection_label.setText(f"✓ {count} selected")
+            self.selection_label.setVisible(True)
+
+            # Show action buttons
+            self.btn_delete.setVisible(True)
+            self.btn_favorite.setVisible(True)
+        else:
+            self.selection_label.setVisible(False)
+
+            # Hide action buttons when nothing selected
+            self.btn_delete.setVisible(False)
+            self.btn_favorite.setVisible(False)
+
+        print(f"[GooglePhotosLayout] Selection updated: {count} photos selected")
+
+    def _toggle_selection_mode(self, checked: bool):
+        """
+        Toggle selection mode on/off.
+
+        Args:
+            checked: Whether Select button is checked
+        """
+        self.selection_mode = checked
+        print(f"[GooglePhotosLayout] Selection mode: {'ON' if checked else 'OFF'}")
+
+        # Show/hide all checkboxes
+        self._update_checkboxes_visibility()
+
+        # Update button text
+        if checked:
+            self.btn_select.setText("☑️ Cancel")
+            self.btn_select.setStyleSheet("QPushButton { background: #1a73e8; color: white; }")
+        else:
+            self.btn_select.setText("☑️ Select")
+            self.btn_select.setStyleSheet("")
+
+            # Clear selection when exiting selection mode
+            self._clear_selection()
+
+    def _update_checkboxes_visibility(self):
+        """
+        Show or hide all checkboxes based on selection mode.
+        """
+        # Iterate through all thumbnails
+        for i in range(self.timeline_layout.count()):
+            date_group = self.timeline_layout.itemAt(i).widget()
+            if not date_group:
+                continue
+
+            group_layout = date_group.layout()
+            if not group_layout:
+                continue
+
+            for j in range(group_layout.count()):
+                item = group_layout.itemAt(j)
+                if not item or not item.widget():
+                    continue
+
+                widget = item.widget()
+                if hasattr(widget, 'layout') and widget.layout():
+                    grid = widget.layout()
+                    for k in range(grid.count()):
+                        container = grid.itemAt(k).widget()
+                        if container:
+                            checkbox = container.property("checkbox")
+                            if checkbox:
+                                checkbox.setVisible(self.selection_mode)
+
+    def _clear_selection(self):
+        """
+        Clear all selected photos and uncheck checkboxes.
+        """
+        # Uncheck all checkboxes
+        for path in list(self.selected_photos):
+            container = self._find_thumbnail_container(path)
+            if container:
+                checkbox = container.property("checkbox")
+                if checkbox:
+                    checkbox.setChecked(False)
+
+        self.selected_photos.clear()
+        self._update_selection_ui()
+
+    def _on_delete_selected(self):
+        """
+        Delete all selected photos.
+        """
+        from PySide6.QtWidgets import QMessageBox
+
+        if not self.selected_photos:
+            return
+
+        count = len(self.selected_photos)
+
+        # Confirm deletion
+        reply = QMessageBox.question(
+            self.main_window,
+            "Delete Photos",
+            f"Are you sure you want to delete {count} photo{'s' if count > 1 else ''}?\n\n"
+            "This will remove them from the database but NOT delete the actual files.",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if reply != QMessageBox.Yes:
+            return
+
+        print(f"[GooglePhotosLayout] Deleting {count} photos...")
+
+        # TODO Phase 2: Implement actual deletion from database
+        # For now, just clear selection and show message
+        QMessageBox.information(
+            self.main_window,
+            "Delete Photos",
+            f"{count} photo{'s' if count > 1 else ''} deleted successfully!\n\n"
+            "(Note: Actual deletion not yet implemented - Phase 2 placeholder)"
+        )
+
+        self._clear_selection()
+        self._load_photos()  # Refresh timeline
+
+    def _on_favorite_selected(self):
+        """
+        Mark all selected photos as favorites.
+        """
+        from PySide6.QtWidgets import QMessageBox
+
+        if not self.selected_photos:
+            return
+
+        count = len(self.selected_photos)
+
+        print(f"[GooglePhotosLayout] Marking {count} photos as favorites...")
+
+        # TODO Phase 2: Implement actual favorite tagging in database
+        # For now, just show message
+        QMessageBox.information(
+            self.main_window,
+            "Mark as Favorite",
+            f"{count} photo{'s' if count > 1 else ''} marked as favorite!\n\n"
+            "(Note: Favorite tagging not yet implemented - Phase 2 placeholder)"
+        )
+
+        self._clear_selection()
 
     def get_sidebar(self):
         """Get sidebar component."""
@@ -595,14 +880,10 @@ class GooglePhotosLayout(BaseLayout):
 
     def on_layout_activated(self):
         """Called when this layout becomes active."""
-        print("[GooglePhotosLayout] Layout activated")
+        print("[GooglePhotosLayout] 📍 Layout activated")
 
         # CRITICAL FIX: Disconnect before connecting to prevent duplicate signal connections
-        # When layout is toggled multiple times, connections would stack up
-        try:
-            self.btn_create_project.clicked.disconnect()
-        except:
-            pass  # No previous connection
+        # Create Project button is already connected in toolbar creation
         try:
             self.btn_scan.clicked.disconnect()
         except:
@@ -612,11 +893,7 @@ class GooglePhotosLayout(BaseLayout):
         except:
             pass
 
-        # Connect toolbar buttons to MainWindow actions if available
-        if hasattr(self.main_window, '_create_new_project'):
-            self.btn_create_project.clicked.connect(self._on_create_project_clicked)
-            print("[GooglePhotosLayout] ✓ Connected Create Project button")
-
+        # Connect Scan and Faces buttons to MainWindow actions
         if hasattr(self.main_window, '_on_scan_repository'):
             self.btn_scan.clicked.connect(self.main_window._on_scan_repository)
             print("[GooglePhotosLayout] ✓ Connected Scan button")
@@ -627,18 +904,35 @@ class GooglePhotosLayout(BaseLayout):
 
     def _on_create_project_clicked(self):
         """Handle Create Project button click."""
-        print("[GooglePhotosLayout] 🆕 Create Project clicked")
+        print("[GooglePhotosLayout] 🆕🆕🆕 CREATE PROJECT BUTTON CLICKED! 🆕🆕🆕")
+
+        # Debug: Check if main_window exists and has the method
+        if not hasattr(self, 'main_window'):
+            print("[GooglePhotosLayout] ❌ ERROR: self.main_window does not exist!")
+            return
+
+        if not hasattr(self.main_window, '_create_new_project'):
+            print(f"[GooglePhotosLayout] ❌ ERROR: main_window does not have _create_new_project method!")
+            print(f"[GooglePhotosLayout] main_window type: {type(self.main_window)}")
+            print(f"[GooglePhotosLayout] main_window dir: {[m for m in dir(self.main_window) if 'project' in m.lower()]}")
+            return
+
+        print("[GooglePhotosLayout] ✓ Calling main_window._create_new_project()...")
+
         # Call MainWindow's project creation dialog
         self.main_window._create_new_project()
+
+        print("[GooglePhotosLayout] ✓ Project creation dialog completed")
 
         # CRITICAL: Update project_id after creation
         from app_services import get_default_project_id
         self.project_id = get_default_project_id()
-        print(f"[GooglePhotosLayout] Project created, using project_id: {self.project_id}")
+        print(f"[GooglePhotosLayout] Updated project_id: {self.project_id}")
 
         # Refresh project selector and layout
         self._populate_project_selector()
         self._load_photos()
+        print("[GooglePhotosLayout] ✓ Layout refreshed after project creation")
 
     def _populate_project_selector(self):
         """
