@@ -125,6 +125,12 @@ class GooglePhotosLayout(BaseLayout):
         """)
 
         # Primary actions
+        self.btn_create_project = QPushButton("➕ New Project")
+        self.btn_create_project.setToolTip("Create a new project")
+        toolbar.addWidget(self.btn_create_project)
+
+        toolbar.addSeparator()
+
         self.btn_scan = QPushButton("📂 Scan Repository")
         self.btn_scan.setToolTip("Scan folder to add new photos to database")
         toolbar.addWidget(self.btn_scan)
@@ -290,7 +296,7 @@ class GooglePhotosLayout(BaseLayout):
             # CRITICAL: Check if we have a valid project
             if self.project_id is None:
                 # No project - show empty state with instructions
-                empty_label = QLabel("📂 No project selected\n\nPlease create a project first")
+                empty_label = QLabel("📂 No project selected\n\nClick '➕ New Project' to create your first project")
                 empty_label.setAlignment(Qt.AlignCenter)
                 empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
                 self.timeline_layout.addWidget(empty_label)
@@ -516,14 +522,15 @@ class GooglePhotosLayout(BaseLayout):
             }
         """)
 
-        # Load thumbnail
+        # Load thumbnail using app_services (correct method)
         try:
-            from thumb_cache_db import get_cache
-            cache = get_cache()
-            pixmap = cache.get_qt_pixmap(path, size)
+            from app_services import get_thumbnail
 
-            if pixmap:
-                # Scale pixmap to fit button
+            # Get thumbnail pixmap (handles both images and videos)
+            pixmap = get_thumbnail(path, size)
+
+            if pixmap and not pixmap.isNull():
+                # Scale pixmap to fit button while maintaining aspect ratio
                 scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                 thumb.setIcon(QIcon(scaled))
                 thumb.setIconSize(QSize(size - 4, size - 4))
@@ -532,7 +539,7 @@ class GooglePhotosLayout(BaseLayout):
                 thumb.setText("📷")
 
         except Exception as e:
-            print(f"[GooglePhotosLayout] Error loading thumbnail for {path}: {e}")
+            print(f"[GooglePhotosLayout] ⚠️ Error loading thumbnail for {path}: {e}")
             thumb.setText("❌")
 
         # Store path for click handling
@@ -562,6 +569,10 @@ class GooglePhotosLayout(BaseLayout):
         print("[GooglePhotosLayout] Layout activated")
 
         # Connect toolbar buttons to MainWindow actions if available
+        if hasattr(self.main_window, '_create_new_project'):
+            self.btn_create_project.clicked.connect(self._on_create_project_clicked)
+            print("[GooglePhotosLayout] Connected Create Project button")
+
         if hasattr(self.main_window, '_on_scan_repository'):
             self.btn_scan.clicked.connect(self.main_window._on_scan_repository)
             print("[GooglePhotosLayout] Connected Scan button to MainWindow")
@@ -569,3 +580,11 @@ class GooglePhotosLayout(BaseLayout):
         if hasattr(self.main_window, '_on_detect_and_group_faces'):
             self.btn_faces.clicked.connect(self.main_window._on_detect_and_group_faces)
             print("[GooglePhotosLayout] Connected Faces button to MainWindow")
+
+    def _on_create_project_clicked(self):
+        """Handle Create Project button click."""
+        print("[GooglePhotosLayout] Create Project clicked")
+        # Call MainWindow's project creation dialog
+        self.main_window._create_new_project()
+        # Refresh the layout after project creation
+        self._load_photos()
