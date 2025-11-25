@@ -193,6 +193,9 @@ class GooglePhotosLayout(BaseLayout):
                 border-color: #1a73e8;
             }
         """)
+        # Phase 2: Connect search functionality
+        self.search_box.textChanged.connect(self._on_search_text_changed)
+        self.search_box.returnPressed.connect(self._perform_search)
         toolbar.addWidget(self.search_box)
 
         toolbar.addSeparator()
@@ -211,6 +214,29 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_select.setCheckable(True)
         self.btn_select.clicked.connect(self._toggle_selection_mode)
         toolbar.addWidget(self.btn_select)
+
+        toolbar.addSeparator()
+
+        # Phase 2: Zoom slider for thumbnail size
+        from PySide6.QtWidgets import QLabel, QSlider
+        zoom_label = QLabel("🔎 Zoom:")
+        zoom_label.setStyleSheet("padding: 0 4px;")
+        toolbar.addWidget(zoom_label)
+
+        self.zoom_slider = QSlider(Qt.Horizontal)
+        self.zoom_slider.setMinimum(100)  # 100px thumbnails
+        self.zoom_slider.setMaximum(400)  # 400px thumbnails
+        self.zoom_slider.setValue(200)    # Default 200px
+        self.zoom_slider.setFixedWidth(120)
+        self.zoom_slider.setToolTip("Adjust thumbnail size")
+        self.zoom_slider.valueChanged.connect(self._on_zoom_changed)
+        toolbar.addWidget(self.zoom_slider)
+
+        # Zoom value label
+        self.zoom_value_label = QLabel("200px")
+        self.zoom_value_label.setFixedWidth(50)
+        self.zoom_value_label.setStyleSheet("padding: 0 4px; font-size: 10pt;")
+        toolbar.addWidget(self.zoom_value_label)
 
         # Spacer
         spacer = QWidget()
@@ -320,14 +346,20 @@ class GooglePhotosLayout(BaseLayout):
 
         return scroll
 
-    def _load_photos(self):
+    def _load_photos(self, thumb_size: int = 200):
         """
         Load photos from database and populate timeline.
+
+        Args:
+            thumb_size: Thumbnail size in pixels (default 200)
 
         CRITICAL: Wrapped in comprehensive error handling to prevent crashes
         during/after scan operations when database might be in inconsistent state.
         """
-        print("[GooglePhotosLayout] Loading photos from database...")
+        # Store current thumbnail size
+        self.current_thumb_size = thumb_size
+
+        print(f"[GooglePhotosLayout] Loading photos from database (thumb size: {thumb_size}px)...")
 
         # Clear existing timeline
         try:
@@ -402,7 +434,7 @@ class GooglePhotosLayout(BaseLayout):
 
             # Create date group widgets
             for date_str, photos in photos_by_date.items():
-                date_group = self._create_date_group(date_str, photos)
+                date_group = self._create_date_group(date_str, photos, thumb_size)
                 self.timeline_layout.addWidget(date_group)
 
             # Add spacer at bottom
@@ -492,7 +524,7 @@ class GooglePhotosLayout(BaseLayout):
                 month_item = QTreeWidgetItem([f"  • {month_name} ({count})"])
                 year_item.addChild(month_item)
 
-    def _create_date_group(self, date_str: str, photos: List[Tuple]) -> QWidget:
+    def _create_date_group(self, date_str: str, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
         Create a date group widget (header + photo grid).
 
@@ -517,8 +549,8 @@ class GooglePhotosLayout(BaseLayout):
         header = self._create_date_header(date_str, len(photos))
         layout.addWidget(header)
 
-        # Photo grid
-        grid = self._create_photo_grid(photos)
+        # Photo grid (pass thumb_size)
+        grid = self._create_photo_grid(photos, thumb_size)
         layout.addWidget(grid)
 
         return group
@@ -552,7 +584,7 @@ class GooglePhotosLayout(BaseLayout):
 
         return header
 
-    def _create_photo_grid(self, photos: List[Tuple]) -> QWidget:
+    def _create_photo_grid(self, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
         Create photo grid with thumbnails.
         """
@@ -561,12 +593,15 @@ class GooglePhotosLayout(BaseLayout):
         grid.setSpacing(8)
         grid.setContentsMargins(0, 0, 0, 0)
 
-        # Default thumbnail size (will make zoomable in Phase 2)
-        thumb_size = 200
-
-        # Calculate columns based on container width
-        # For now, use fixed 5 columns
-        columns = 5
+        # Calculate grid layout - responsive columns based on thumbnail size
+        if thumb_size <= 150:
+            columns = 7  # Small thumbs → more columns
+        elif thumb_size <= 200:
+            columns = 5  # Default
+        elif thumb_size <= 300:
+            columns = 4  # Large thumbs
+        else:
+            columns = 3  # Extra large thumbs
 
         # Add photo thumbnails
         for i, photo in enumerate(photos):
@@ -898,6 +933,137 @@ class GooglePhotosLayout(BaseLayout):
         )
 
         self._clear_selection()
+
+    # ============ Phase 2: Search Functionality ============
+
+    def _on_search_text_changed(self, text: str):
+        """
+        Handle search text change (real-time filtering).
+        """
+        # Debounce: only search after user stops typing for 300ms
+        if hasattr(self, '_search_timer'):
+            self._search_timer.stop()
+
+        from PySide6.QtCore import QTimer
+        self._search_timer = QTimer()
+        self._search_timer.setSingleShot(True)
+        self._search_timer.timeout.connect(lambda: self._perform_search(text))
+        self._search_timer.start(300)  # 300ms debounce
+
+    def _perform_search(self, text: str = None):
+        """
+        Perform search and filter photos.
+
+        Args:
+            text: Search query (if None, use search_box text)
+        """
+        if text is None:
+            text = self.search_box.text()
+
+        text = text.strip().lower()
+
+        print(f"[GooglePhotosLayout] 🔍 Searching for: '{text}'")
+
+        if not text:
+            # Empty search - reload all photos
+            self._load_photos()
+            return
+
+        # Search in photo paths (filename search)
+        # Future: could extend to EXIF data, tags, etc.
+        try:
+            from reference_db import ReferenceDB
+            db = ReferenceDB()
+
+            # Search query with LIKE pattern
+            query = """
+                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND pm.date_taken IS NOT NULL
+                AND LOWER(pm.path) LIKE ?
+                ORDER BY pm.date_taken DESC
+            """
+
+            search_pattern = f"%{text}%"
+
+            with db._connect() as conn:
+                conn.execute("PRAGMA busy_timeout = 5000")
+                cur = conn.cursor()
+                cur.execute(query, (self.project_id, search_pattern))
+                rows = cur.fetchall()
+
+            # Clear and rebuild timeline with search results
+            self._rebuild_timeline_with_results(rows, text)
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Search error: {e}")
+
+    def _rebuild_timeline_with_results(self, rows, search_text: str):
+        """
+        Rebuild timeline with search results.
+        """
+        # Clear existing timeline
+        while self.timeline_layout.count():
+            child = self.timeline_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        self.timeline_tree.clear()
+
+        if not rows:
+            # No results
+            empty_label = QLabel(f"🔍 No results for '{search_text}'\n\nTry different search terms")
+            empty_label.setAlignment(Qt.AlignCenter)
+            empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
+            self.timeline_layout.addWidget(empty_label)
+            print(f"[GooglePhotosLayout] No search results for: '{search_text}'")
+            return
+
+        # Group and display results
+        photos_by_date = self._group_photos_by_date(rows)
+        self._build_timeline_tree(photos_by_date)
+
+        # Add search results header
+        header = QLabel(f"🔍 Found {len(rows)} results for '{search_text}'")
+        header.setStyleSheet("font-size: 11pt; font-weight: bold; padding: 10px 20px; color: #1a73e8;")
+        self.timeline_layout.insertWidget(0, header)
+
+        # Create date groups (use current thumb size)
+        thumb_size = getattr(self, 'current_thumb_size', 200)
+        for date_str, photos in photos_by_date.items():
+            date_group = self._create_date_group(date_str, photos, thumb_size)
+            self.timeline_layout.addWidget(date_group)
+
+        self.timeline_layout.addStretch()
+
+        print(f"[GooglePhotosLayout] Search results: {len(rows)} photos in {len(photos_by_date)} dates")
+
+    # ============ Phase 2: Zoom Functionality ============
+
+    def _on_zoom_changed(self, value: int):
+        """
+        Handle zoom slider change - adjust thumbnail size.
+
+        Args:
+            value: New thumbnail size in pixels (100-400)
+        """
+        print(f"[GooglePhotosLayout] 🔎 Zoom changed to: {value}px")
+
+        # Update label
+        self.zoom_value_label.setText(f"{value}px")
+
+        # Reload photos with new thumbnail size
+        # Store current scroll position
+        scroll_pos = self.timeline.verticalScrollBar().value()
+
+        # Reload with new size
+        self._load_photos(thumb_size=value)
+
+        # Restore scroll position (approximate)
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(100, lambda: self.timeline.verticalScrollBar().setValue(scroll_pos))
 
     def get_sidebar(self):
         """Get sidebar component."""
