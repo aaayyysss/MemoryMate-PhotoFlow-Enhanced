@@ -1,43 +1,48 @@
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-07>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-11>cd C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01
 
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09>python main_qt.py
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01>python main_qt.py
 [Startup] pillow_heif available — HEIC/HEIF support enabled.
 🔇 Decoder warnings suppressed per settings.
 🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\locales\en.json
+✅ Loaded en translations from C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\locales\en.json
 🌍 Language initialized: en
-2025-11-25 12:34:58,728 [INFO] ================================================================================
-2025-11-25 12:34:58,729 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-25 12:34:58,729 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\app_log.txt
-2025-11-25 12:34:58,730 [INFO] ================================================================================
-2025-11-25 12:34:58,821 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-25 12:34:58,907 [INFO] Qt message handler installed to suppress TIFF warnings
+2025-11-25 14:33:18,984 [INFO] ================================================================================
+2025-11-25 14:33:18,984 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 14:33:18,984 [INFO] Log file: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\app_log.txt
+2025-11-25 14:33:18,984 [INFO] ================================================================================
+2025-11-25 14:33:19,082 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 14:33:19,082 [INFO] Qt message handler installed to suppress TIFF warnings
 [Main] Starting Qt event loop...
 [Startup] Database schema initialized successfully
-[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.36.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-09\\thumbnails_cache.db', 'last_updated': '2025-11-25 12:34'}
-2025-11-25 12:34:59,184 [INFO] SearchService initialized
+[Cache] {'entries': 0, 'size_mb': 0.0, 'path': 'C:\\Users\\suleimaa\\Downloads\\Photo-Sorter\\09.37.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-01\\thumbnails_cache.db', 'last_updated': '2025-11-25 14:33'}
+2025-11-25 14:33:24,802 [INFO] SearchService initialized
 [Startup] SearchService initialized
-2025-11-25 12:34:59,187 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-25 12:34:59,187 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-25 12:34:59,187 [INFO] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 14:33:24,806 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 14:33:24,806 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 14:33:24,806 [INFO] Global ThumbnailService created with Phase 1B memory limits
 [Startup] ThumbnailService initialized
 🌍 Language switched to: en
 [MainWindow] Language loaded from settings: en
+[LayoutManager] Registered layout: Current Layout (id=current)
+[LayoutManager] Registered layout: Google Photos Style (id=google)
+[LayoutManager] Registered layout: Apple Photos Style (id=apple)
+[LayoutManager] Registered layout: Lightroom Style (id=lightroom)
+[MainWindow] Layout manager initialized
 🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-25 12:34:59,193 [INFO] SearchService initialized
+2025-11-25 14:33:24,929 [INFO] SearchService initialized
 [Sidebar] Device auto-detection disabled (manual refresh only)
-[12:35:02.057] [Tabs] __init__ started
-[12:35:02.057] [Tabs] _build_tabs → building tab widgets
-[12:35:02.057] [Tabs] _on_tab_changed(idx=0)
-[12:35:02.057] [Tabs] _start_timeout idx=0 type=branches
-[12:35:02.057] [Tabs] _populate_tab(branches, idx=0, force=False)
-[12:35:02.057] [Tabs]   populated=False, loading=False
-[12:35:02.057] [Tabs]   Starting load for branches
-[12:35:02.057] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[12:35:02.057] [Tabs] _clear_tab idx=0
-[12:35:02.057] [Tabs] _on_tab_changed → tab_type=branches
-[12:35:02.057] [Tabs] _build_tabs → added 6 tabs
-[12:35:02.057] [Tabs] __init__ completed
+[14:33:24.935] [Tabs] __init__ started
+[14:33:24.935] [Tabs] _build_tabs → building tab widgets
+[14:33:24.935] [Tabs] _on_tab_changed(idx=0)
+[14:33:24.935] [Tabs] _start_timeout idx=0 type=branches
+[14:33:24.935] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:33:24.935] [Tabs]   populated=False, loading=False
+[14:33:24.935] [Tabs]   Starting load for branches
+[14:33:24.935] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:33:24.935] [Tabs] _clear_tab idx=0
+[14:33:24.935] [Tabs] _on_tab_changed → tab_type=branches
+[14:33:24.935] [Tabs] _build_tabs → added 6 tabs
+[14:33:24.935] [Tabs] __init__ completed
 [SidebarQt] _build_tree_model() called with project_id=None
 [Sidebar] Detaching old model from tree view
 [Sidebar] Pending events processed (skipped explicit processEvents)
@@ -48,7 +53,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000029AD1E6EC10>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002BC0CFD95D0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -90,7 +95,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] switch_display_mode(list) - canceling old workers
 [SidebarQt] Hiding tabs controller
-[12:35:02.637] [Tabs] hide_tabs() called - canceling pending workers
+[14:33:25.433] [Tabs] hide_tabs() called - canceling pending workers
 [SidebarQt] Canceled tab workers via hide_tabs()
 [SidebarQt] Clearing tree view selection before rebuild
 [SidebarQt] Showing tree view
@@ -105,7 +110,7 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] Found 0 videos in project None
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000029AD1E6EC10>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000002BC0CFD95D0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Using cached scan results =====
@@ -120,17 +125,20 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 [Sidebar] No mobile devices detected - added help message
 [SidebarQt] _build_tree_model() completed
 [GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
+[LayoutManager] Initializing default layout: current
+[LayoutManager] Already using layout: current
+[Startup] Layout system initialized successfully
 [Startup] Database schema initialized successfully
-[12:35:03.290] [Tabs] _finish_branches (stale gen=1) — ignoring
-[12:35:03.290] [Tabs] _on_tab_changed(idx=0)
-[12:35:03.290] [Tabs] _start_timeout idx=0 type=branches
-[12:35:03.290] [Tabs] _populate_tab(branches, idx=0, force=False)
-[12:35:03.290] [Tabs]   populated=False, loading=False
-[12:35:03.290] [Tabs]   Starting load for branches
-[12:35:03.290] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[12:35:03.291] [Tabs] _clear_tab idx=0
-[12:35:03.291] [Tabs] _on_tab_changed → tab_type=branches
-[12:35:03.293] [Tabs] _clear_tab idx=0
+[14:33:26.268] [Tabs] _finish_branches (stale gen=1) — ignoring
+[14:33:26.268] [Tabs] _on_tab_changed(idx=0)
+[14:33:26.268] [Tabs] _start_timeout idx=0 type=branches
+[14:33:26.268] [Tabs] _populate_tab(branches, idx=0, force=False)
+[14:33:26.268] [Tabs]   populated=False, loading=False
+[14:33:26.273] [Tabs]   Starting load for branches
+[14:33:26.273] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[14:33:26.273] [Tabs] _clear_tab idx=0
+[14:33:26.273] [Tabs] _on_tab_changed → tab_type=branches
+[14:33:26.273] [Tabs] _clear_tab idx=0
 
 [Breadcrumb] _update_breadcrumb() CALLED
 [Breadcrumb] Grid state: navigation_mode=None, project_id=None
@@ -148,275 +156,50 @@ C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoF
 
 ✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
 ✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\models\buffalo_l
-[Breadcrumb] _show_project_menu() called
-[Breadcrumb] Refreshed project list: 0 projects
-[Breadcrumb] No projects found in main_window._projects
-[Breadcrumb] Showing menu...
-[Breadcrumb] _switch_project(1) called
-
-[MainWindow] ========== _on_project_changed_by_id(1) STARTED ==========
-[MainWindow] Current project_id: None
-[MainWindow] Step 1: Updating grid.project_id...
-[MainWindow] Step 1: ✓ Set grid.project_id = 1
-[MainWindow] Step 2: Updating sidebar...
-[SidebarQt] set_project(1) called
-[12:35:22.585] [Tabs] refresh_all(force=True) called
-[12:35:22.585] [Tabs] refresh_all: key=branches, idx=0, force=True
-[12:35:22.585] [Tabs] _populate_tab(branches, idx=0, force=True)
-[12:35:22.585] [Tabs]   populated=True, loading=False
-[12:35:22.585] [Tabs]   Force refresh: removing branches from populated set
-[12:35:22.588] [Tabs]   Starting load for branches
-[12:35:22.588] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[12:35:22.588] [Tabs] _clear_tab idx=0
-[12:35:22.589] [Tabs] refresh_all: key=folders, idx=1, force=True
-[12:35:22.589] [Tabs] _populate_tab(folders, idx=1, force=True)
-[12:35:22.589] [Tabs]   populated=False, loading=False
-[12:35:22.591] [Tabs]   Starting load for folders
-[12:35:22.591] [Tabs] _show_loading idx=1 label='Loading Folders…'
-[12:35:22.591] [Tabs] _clear_tab idx=1
-[12:35:22.593] [Tabs] refresh_all: key=dates, idx=2, force=True
-[12:35:22.593] [Tabs] _load_folders → got 0 rows for project_id=1
-[12:35:22.593] [Tabs] _populate_tab(dates, idx=2, force=True)
-[12:35:22.596] [Tabs]   populated=False, loading=False
-[12:35:22.596] [Tabs]   Starting load for dates
-[12:35:22.596] [Tabs] _show_loading idx=2 label='Loading Dates…'
-[12:35:22.596] [Tabs] _clear_tab idx=2
-[12:35:22.597] [Tabs] refresh_all: key=tags, idx=3, force=True
-[12:35:22.598] [Tabs] _populate_tab(tags, idx=3, force=True)
-[12:35:22.598] [Tabs]   populated=False, loading=False
-[12:35:22.598] [Tabs] _load_dates → got hierarchy data for project_id=1
-[12:35:22.598] [Tabs]   Starting load for tags
-[12:35:22.598] [Tabs] _show_loading idx=3 label='Loading Tags…'
-[12:35:22.598] [Tabs] _clear_tab idx=3
-[12:35:22.599] [Tabs] refresh_all: key=quick, idx=5, force=True
-[12:35:22.600] [Tabs] _populate_tab(quick, idx=5, force=True)
-[12:35:22.600] [Tabs]   populated=False, loading=False
-[12:35:22.600] [Tabs]   Starting load for quick
-[12:35:22.600] [Tabs] _show_loading idx=5 label='Loading Quick Dates…'
-[12:35:22.600] [Tabs] _clear_tab idx=5
-[12:35:22.600] [Tabs] _load_tags → got 0 rows for project_id=1
-[12:35:22.601] [Tabs] refresh_all(force=True) completed
-[SidebarQt] Calling reload() after setting project_id
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[12:35:22.602] [Tabs] _load_quick → got 6 rows
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 0}]
-[Sidebar] Loaded 0 folder counts in batch (performance optimization)
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000029AD1E6EC10>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan  =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive H: exists, checking...
-[DeviceScanner]           Checking path: H:\
-[DeviceScanner]           Directories found: []
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive H:
-[DeviceScanner]     Drive P: exists, checking...
-[DeviceScanner]           Checking path: P:\
-[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]           REJECTED: No DCIM or alternate structure
-[DeviceScanner]       ✗ No device on drive P:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-[DeviceScanner] Results cached for 5.0s
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=4] running for 1 targets...
-[MainWindow] Step 2: ✓ Sidebar.set_project(1) completed
-[MainWindow] Step 3: Reloading grid to 'all' branch...
-
-[GRID] >>>>>> set_branch('all') CALLED
-[GRID]   Current state: project_id=1, load_mode=None
-[GRID]   State updated, calling reload()...
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[12:35:22.913] [Tabs] _clear_tab idx=0
-[TAG FILTER] Cleared by navigation.
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] reload() blocked - already reloading (prevents concurrent reload crash)
-[GRID] ====== reload() BLOCKED ======
-
-[12:35:22.929] [Tabs] _clear_tab idx=1
-[12:35:22.929] [Tabs] _clear_tab idx=2
-[12:35:22.929] [Tabs] _finish_tags called: idx=3, gen=2, rows_count=0
-[12:35:22.929] [Tabs] _clear_tab idx=3
-[12:35:22.929] [Tabs] _clear_tab idx=5
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in None-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Added project segment: My Photos
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: My Photos
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] <<<<<< set_branch('all') COMPLETED
-
-[MainWindow] Step 3: ✓ Grid.set_branch('all') completed
-[MainWindow] Step 4: Breadcrumb will auto-update via gridReloaded signal
-[MainWindow] Step 5: ✓✓✓ Switched to project ID: 1
-[MainWindow] ========== _on_project_changed_by_id(1) COMPLETED ==========
-
-[Breadcrumb] Switched to project ID: 1
-[MainWindow] Refreshed project list: 1 projects
-[Sidebar][counts applied] updated UI with counts
-[Schema] Database schema initialized successfully
-[ScanController] Creating ScanWorker for folder: C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-[ScanController] ScanWorker imported successfully
-[ScanController] QThread created
-[ScanController] ScanWorker instance created with project_id=1
-[ScanController] Worker moved to thread
-[ScanController] Signals connected
-[ScanController] Starting scan thread...
-[ScanController] thread.start() called
-2025-11-25 12:35:39,746 [INFO] DBWriter timer started in worker thread
-[ScanWorkerAdapter] run() method called!
-[ScanWorkerAdapter] folder=C:/Users/suleimaa/Downloads/Photo-Sorter/Images, incremental=True
-2025-11-25 12:35:39,754 [INFO] ScanWorkerAdapter starting scan of C:/Users/suleimaa/Downloads/Photo-Sorter/Images
-[ScanWorkerAdapter] Starting scan...
-2025-11-25 12:35:39,756 [INFO] Starting scan: C:/Users/suleimaa/Downloads/Photo-Sorter/Images (incremental=True)
-2025-11-25 12:35:39,760 [INFO] Discovered 15 candidate image files and 0 video files
-[ScanController] QThread STARTED!
-2025-11-25 12:35:39,762 [INFO] Loading existing metadata for incremental scan...
-2025-11-25 12:35:39,763 [INFO] ✓ Loaded 0 existing file records
-[SCAN] Starting file 1/15: Alya1_2_2_2.jpeg
-2025-11-25 12:35:39,765 [INFO] [Scan] File 1/15: Alya1_2_2_2.jpeg
-[SCAN] Created fresh executor for file 1
-[SCAN] _process_file started for: Alya1_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:39,885 [INFO] 📷 Processing: Alya1_2_2_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_2_2_2.jpeg
-[SCAN] Starting file 2/15: Alya1_3_2.jpeg
-2025-11-25 12:35:40,079 [INFO] [Scan] File 2/15: Alya1_3_2.jpeg
-[SCAN] _process_file started for: Alya1_3_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,103 [INFO] 📷 Processing: Alya1_3_2.jpeg (345.2 KB)
-[SCAN] Processing: Alya1_3_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya1_3_2.jpeg
-[SCAN] Starting file 3/15: Alya2_2_2_2_2.jpeg
-2025-11-25 12:35:40,118 [INFO] [Scan] File 3/15: Alya2_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya2_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,118 [INFO] 📷 Processing: Alya2_2_2_2_2.jpeg (107.1 KB)
-[SCAN] Processing: Alya2_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya2_2_2_2_2.jpeg
-[SCAN] Starting file 4/15: Alya3_2_2_2_2.jpeg
-2025-11-25 12:35:40,136 [INFO] [Scan] File 4/15: Alya3_2_2_2_2.jpeg
-[SCAN] _process_file started for: Alya3_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,136 [INFO] 📷 Processing: Alya3_2_2_2_2.jpeg (97.2 KB)
-[SCAN] Processing: Alya3_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya3_2_2_2_2.jpeg
-[SCAN] Starting file 5/15: Alya_2_2.jpeg
-2025-11-25 12:35:40,149 [INFO] [Scan] File 5/15: Alya_2_2.jpeg
-[SCAN] _process_file started for: Alya_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,149 [INFO] 📷 Processing: Alya_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2.jpeg
-[SCAN] Starting file 6/15: Alya_2_2_2_2.jpeg
-2025-11-25 12:35:40,162 [INFO] [Scan] File 6/15: Alya_2_2_2_2.jpeg
-[SCAN] Executor batch complete (5 files)
-[SCAN] Created fresh executor for file 6
-[SCAN] _process_file started for: Alya_2_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,163 [INFO] 📷 Processing: Alya_2_2_2_2.jpeg (181.4 KB)
-[SCAN] Processing: Alya_2_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Alya_2_2_2_2.jpeg
-[SCAN] Starting file 7/15: Ammar-Ref(1)_2_2.png
-2025-11-25 12:35:40,175 [INFO] [Scan] File 7/15: Ammar-Ref(1)_2_2.png
-[SCAN] _process_file started for: Ammar-Ref(1)_2_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,178 [INFO] 📷 Processing: Ammar-Ref(1)_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref(1)_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref(1)_2_2.png
-[SCAN] Starting file 8/15: Ammar-Ref_2_2_2.png
-2025-11-25 12:35:40,224 [INFO] [Scan] File 8/15: Ammar-Ref_2_2_2.png
-[SCAN] _process_file started for: Ammar-Ref_2_2_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,303 [INFO] 📷 Processing: Ammar-Ref_2_2_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_2_2_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_2_2_2.png
-[SCAN] Starting file 9/15: Ammar-Ref_3_2.png
-2025-11-25 12:35:40,333 [INFO] [Scan] File 9/15: Ammar-Ref_3_2.png
-[SCAN] _process_file started for: Ammar-Ref_3_2.png
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,335 [INFO] 📷 Processing: Ammar-Ref_3_2.png (800.9 KB)
-[SCAN] Processing: Ammar-Ref_3_2.png
-[SCAN] ✓ Metadata extracted: Ammar-Ref_3_2.png
-[SCAN] Starting file 10/15: Ammar1_2_2_2.jpeg
-2025-11-25 12:35:40,358 [INFO] [Scan] File 10/15: Ammar1_2_2_2.jpeg
-[SCAN] _process_file started for: Ammar1_2_2_2.jpeg
-[SCAN] Getting file stats...
-[SCAN] File stats retrieved successfully
-2025-11-25 12:35:40,358 [INFO] 📷 Processing: Ammar1_2_2_2.jpeg (4364.7 KB)
-[SCAN] Processing: Ammar1_2_2_2.jpeg
-[SCAN] ✓ Metadata extracted: Ammar1_2_2_2.jpeg
+   Location: C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\models\buffalo_l
+[LayoutManager] Switching layout: current → google
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
+[LayoutManager] Switching layout: google → apple
+[LayoutManager] ✓ Switched to: Apple Photos Style
+[MainWindow] ✓ Switched to layout: apple
+[LayoutManager] Switching layout: apple → lightroom
+[LayoutManager] ✓ Switched to: Lightroom Style
+[MainWindow] ✓ Switched to layout: lightroom
+[LayoutManager] Switching layout: lightroom → current
+[LayoutManager] ✓ Switched to: Current Layout
+[MainWindow] ✓ Switched to layout: current
+[LayoutManager] Already using layout: current
+[MainWindow] ✓ Switched to layout: current
+================================================================================
+UNHANDLED EXCEPTION CAUGHT:
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 3235, in <lambda>
+    self.btn_grid_small.clicked.connect(lambda: self._set_grid_preset("small"))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 4216, in _set_grid_preset
+    self.grid._animate_zoom_to(zoom_factor, duration=150)
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\thumbnail_grid_qt.py", line 1961, in _animate_zoom_to
+    self.setProperty("_zoom_factor_prop", self._zoom_factor)
+RuntimeError: Internal C++ object (ThumbnailGridQt) already deleted.
+2025-11-25 14:34:10,957 [ERROR] Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 3235, in <lambda>
+    self.btn_grid_small.clicked.connect(lambda: self._set_grid_preset("small"))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 4216, in _set_grid_preset
+    self.grid._animate_zoom_to(zoom_factor, duration=150)
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\thumbnail_grid_qt.py", line 1961, in _animate_zoom_to
+    self.setProperty("_zoom_factor_prop", self._zoom_factor)
+RuntimeError: Internal C++ object (ThumbnailGridQt) already deleted.
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 3235, in <lambda>
+    self.btn_grid_small.clicked.connect(lambda: self._set_grid_preset("small"))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\main_window_qt.py", line 4216, in _set_grid_preset
+    self.grid._animate_zoom_to(zoom_factor, duration=150)
+  File "C:\Users\suleimaa\Downloads\Photo-Sorter\09.37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-01\thumbnail_grid_qt.py", line 1961, in _animate_zoom_to
+    self.setProperty("_zoom_factor_prop", self._zoom_factor)
+RuntimeError: Internal C++ object (ThumbnailGridQt) already deleted.
