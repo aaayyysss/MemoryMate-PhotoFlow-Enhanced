@@ -323,17 +323,24 @@ class GooglePhotosLayout(BaseLayout):
     def _load_photos(self):
         """
         Load photos from database and populate timeline.
+
+        CRITICAL: Wrapped in comprehensive error handling to prevent crashes
+        during/after scan operations when database might be in inconsistent state.
         """
         print("[GooglePhotosLayout] Loading photos from database...")
 
         # Clear existing timeline
-        while self.timeline_layout.count():
-            child = self.timeline_layout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
+        try:
+            while self.timeline_layout.count():
+                child = self.timeline_layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
 
-        # Clear timeline tree
-        self.timeline_tree.clear()
+            # Clear timeline tree
+            self.timeline_tree.clear()
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error clearing timeline: {e}")
+            # Continue anyway
 
         # Get photos from database
         try:
@@ -361,11 +368,22 @@ class GooglePhotosLayout(BaseLayout):
                 ORDER BY pm.date_taken DESC
             """
 
-            # Use ReferenceDB's connection pattern
-            with db._connect() as conn:
-                cur = conn.cursor()
-                cur.execute(query, (self.project_id,))
-                rows = cur.fetchall()
+            # Use ReferenceDB's connection pattern with timeout protection
+            try:
+                with db._connect() as conn:
+                    # Set a timeout to prevent blocking if database is locked
+                    conn.execute("PRAGMA busy_timeout = 5000")  # 5 second timeout
+                    cur = conn.cursor()
+                    cur.execute(query, (self.project_id,))
+                    rows = cur.fetchall()
+            except Exception as db_error:
+                print(f"[GooglePhotosLayout] ⚠️ Database query failed: {db_error}")
+                # Show error state but don't crash
+                error_label = QLabel(f"⚠️ Error loading photos\n\n{str(db_error)}\n\nTry clicking Refresh")
+                error_label.setAlignment(Qt.AlignCenter)
+                error_label.setStyleSheet("font-size: 11pt; color: #d32f2f; padding: 60px;")
+                self.timeline_layout.addWidget(error_label)
+                return
 
             if not rows:
                 # No photos in project - show empty state
@@ -393,15 +411,26 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GooglePhotosLayout] Loaded {len(rows)} photos in {len(photos_by_date)} date groups")
 
         except Exception as e:
-            print(f"[GooglePhotosLayout] Error loading photos: {e}")
+            # CRITICAL: Catch ALL exceptions to prevent layout crashes
+            print(f"[GooglePhotosLayout] ⚠️ CRITICAL ERROR loading photos: {e}")
             import traceback
             traceback.print_exc()
 
-            # Show error message
-            error_label = QLabel(f"❌ Error loading photos:\n{str(e)}")
-            error_label.setAlignment(Qt.AlignCenter)
-            error_label.setStyleSheet("font-size: 11pt; color: #d93025; padding: 40px;")
-            self.timeline_layout.addWidget(error_label)
+            # Show error state with actionable message
+            try:
+                error_label = QLabel(
+                    f"⚠️ Failed to load photos\n\n"
+                    f"Error: {str(e)}\n\n"
+                    f"Try:\n"
+                    f"• Click Refresh button\n"
+                    f"• Switch to Current layout and back\n"
+                    f"• Restart the application"
+                )
+                error_label.setAlignment(Qt.AlignCenter)
+                error_label.setStyleSheet("font-size: 11pt; color: #d32f2f; padding: 40px;")
+                self.timeline_layout.addWidget(error_label)
+            except:
+                pass  # Even error display failed - just log it
 
     def _group_photos_by_date(self, rows) -> Dict[str, List[Tuple]]:
         """
