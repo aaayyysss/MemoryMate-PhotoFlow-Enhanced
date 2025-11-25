@@ -530,6 +530,23 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_refresh.clicked.connect(self._load_photos)
         toolbar.addWidget(self.btn_refresh)
 
+        # Clear Filter button (initially hidden)
+        self.btn_clear_filter = QPushButton("✕ Clear Filter")
+        self.btn_clear_filter.setToolTip("Show all photos (remove date/folder filters)")
+        self.btn_clear_filter.clicked.connect(self._clear_filter)
+        self.btn_clear_filter.setVisible(False)
+        self.btn_clear_filter.setStyleSheet("""
+            QPushButton {
+                background: #fff3cd;
+                border: 1px solid #ffc107;
+                color: #856404;
+            }
+            QPushButton:hover {
+                background: #ffeaa7;
+            }
+        """)
+        toolbar.addWidget(self.btn_clear_filter)
+
         toolbar.addSeparator()
 
         # Phase 2: Selection mode toggle
@@ -587,7 +604,7 @@ class GooglePhotosLayout(BaseLayout):
 
     def _create_sidebar(self) -> QWidget:
         """
-        Create minimal sidebar with search + timeline navigation.
+        Create minimal sidebar with search + timeline navigation + folders.
         """
         sidebar = QWidget()
         sidebar.setMinimumWidth(180)
@@ -628,16 +645,38 @@ class GooglePhotosLayout(BaseLayout):
                 color: #1a73e8;
             }
         """)
+        # Connect click signal to filter handler
+        self.timeline_tree.itemClicked.connect(self._on_timeline_item_clicked)
         layout.addWidget(self.timeline_tree)
 
-        # Albums section (placeholder for Phase 2)
-        albums_header = QLabel("📁 Albums")
-        albums_header.setStyleSheet("font-size: 12pt; font-weight: bold; color: #202124; margin-top: 12px;")
-        layout.addWidget(albums_header)
+        # Folders section
+        folders_header = QLabel("📁 Folders")
+        folders_header.setStyleSheet("font-size: 12pt; font-weight: bold; color: #202124; margin-top: 12px;")
+        layout.addWidget(folders_header)
 
-        albums_label = QLabel("Coming in Phase 2...")
-        albums_label.setStyleSheet("font-size: 9pt; color: #888; margin-left: 8px;")
-        layout.addWidget(albums_label)
+        # Folders tree
+        self.folders_tree = QTreeWidget()
+        self.folders_tree.setHeaderHidden(True)
+        self.folders_tree.setStyleSheet("""
+            QTreeWidget {
+                border: none;
+                background: transparent;
+                font-size: 10pt;
+            }
+            QTreeWidget::item {
+                padding: 4px;
+            }
+            QTreeWidget::item:hover {
+                background: #f1f3f4;
+            }
+            QTreeWidget::item:selected {
+                background: #e8f0fe;
+                color: #1a73e8;
+            }
+        """)
+        # Connect click signal to filter handler
+        self.folders_tree.itemClicked.connect(self._on_folder_item_clicked)
+        layout.addWidget(self.folders_tree)
 
         # Spacer at bottom
         layout.addStretch()
@@ -670,20 +709,39 @@ class GooglePhotosLayout(BaseLayout):
 
         return scroll
 
-    def _load_photos(self, thumb_size: int = 200):
+    def _load_photos(self, thumb_size: int = 200, filter_year: int = None, filter_month: int = None, filter_folder: str = None):
         """
         Load photos from database and populate timeline.
 
         Args:
             thumb_size: Thumbnail size in pixels (default 200)
+            filter_year: Optional year filter (e.g., 2024)
+            filter_month: Optional month filter (1-12, requires filter_year)
+            filter_folder: Optional folder path filter
 
         CRITICAL: Wrapped in comprehensive error handling to prevent crashes
         during/after scan operations when database might be in inconsistent state.
         """
-        # Store current thumbnail size
+        # Store current thumbnail size and filters
         self.current_thumb_size = thumb_size
+        self.current_filter_year = filter_year
+        self.current_filter_month = filter_month
+        self.current_filter_folder = filter_folder
 
-        print(f"[GooglePhotosLayout] Loading photos from database (thumb size: {thumb_size}px)...")
+        filter_desc = []
+        if filter_year:
+            filter_desc.append(f"year={filter_year}")
+        if filter_month:
+            filter_desc.append(f"month={filter_month}")
+        if filter_folder:
+            filter_desc.append(f"folder={filter_folder}")
+
+        filter_str = f" [{', '.join(filter_desc)}]" if filter_desc else ""
+        print(f"[GooglePhotosLayout] Loading photos from database (thumb size: {thumb_size}px){filter_str}...")
+
+        # Show/hide Clear Filter button based on whether filters are active
+        has_filters = filter_year is not None or filter_month is not None or filter_folder is not None
+        self.btn_clear_filter.setVisible(has_filters)
 
         # Clear existing timeline
         try:
@@ -715,14 +773,34 @@ class GooglePhotosLayout(BaseLayout):
 
             # Query photos for the current project (join with project_images)
             # CRITICAL FIX: Filter by project_id using project_images table
-            query = """
+            # Build query with optional filters
+            query_parts = ["""
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
                 FROM photo_metadata pm
                 JOIN project_images pi ON pm.path = pi.image_path
                 WHERE pi.project_id = ?
                 AND pm.date_taken IS NOT NULL
-                ORDER BY pm.date_taken DESC
-            """
+            """]
+
+            params = [self.project_id]
+
+            # Add year filter
+            if filter_year is not None:
+                query_parts.append("AND strftime('%Y', pm.date_taken) = ?")
+                params.append(str(filter_year))
+
+            # Add month filter (requires year)
+            if filter_month is not None and filter_year is not None:
+                query_parts.append("AND strftime('%m', pm.date_taken) = ?")
+                params.append(f"{filter_month:02d}")
+
+            # Add folder filter
+            if filter_folder is not None:
+                query_parts.append("AND pm.path LIKE ?")
+                params.append(f"{filter_folder}%")
+
+            query_parts.append("ORDER BY pm.date_taken DESC")
+            query = "\n".join(query_parts)
 
             # Use ReferenceDB's connection pattern with timeout protection
             try:
@@ -730,7 +808,7 @@ class GooglePhotosLayout(BaseLayout):
                     # Set a timeout to prevent blocking if database is locked
                     conn.execute("PRAGMA busy_timeout = 5000")  # 5 second timeout
                     cur = conn.cursor()
-                    cur.execute(query, (self.project_id,))
+                    cur.execute(query, tuple(params))
                     rows = cur.fetchall()
             except Exception as db_error:
                 print(f"[GooglePhotosLayout] ⚠️ Database query failed: {db_error}")
@@ -753,8 +831,11 @@ class GooglePhotosLayout(BaseLayout):
             # Group photos by date
             photos_by_date = self._group_photos_by_date(rows)
 
-            # Build timeline tree
-            self._build_timeline_tree(photos_by_date)
+            # Build timeline and folders trees (only if not filtering)
+            # This shows ALL years/months/folders, not just filtered ones
+            if filter_year is None and filter_month is None and filter_folder is None:
+                self._build_timeline_tree(photos_by_date)
+                self._build_folders_tree(rows)
 
             # Create date group widgets
             for date_str, photos in photos_by_date.items():
@@ -839,6 +920,7 @@ class GooglePhotosLayout(BaseLayout):
         # Build tree
         for year in sorted(years_months.keys(), reverse=True):
             year_item = QTreeWidgetItem([f"📅 {year}"])
+            year_item.setData(0, Qt.UserRole, {"type": "year", "year": year})
             year_item.setExpanded(True)
             self.timeline_tree.addTopLevelItem(year_item)
 
@@ -846,7 +928,96 @@ class GooglePhotosLayout(BaseLayout):
                 count = years_months[year][month]
                 month_name = datetime(year, month, 1).strftime("%B")
                 month_item = QTreeWidgetItem([f"  • {month_name} ({count})"])
+                month_item.setData(0, Qt.UserRole, {"type": "month", "year": year, "month": month})
                 year_item.addChild(month_item)
+
+    def _build_folders_tree(self, rows):
+        """
+        Build folders tree in sidebar (folder hierarchy with counts).
+
+        Args:
+            rows: List of (path, date_taken, width, height) tuples
+        """
+        # Group photos by parent folder
+        folder_counts = defaultdict(int)
+
+        for row in rows:
+            path = row[0]
+            parent_folder = os.path.dirname(path)
+            folder_counts[parent_folder] += 1
+
+        # Sort folders by count (most photos first)
+        sorted_folders = sorted(folder_counts.items(), key=lambda x: x[1], reverse=True)
+
+        # Build tree (show top 10 folders)
+        for folder, count in sorted_folders[:10]:
+            # Show only folder name, not full path
+            folder_name = os.path.basename(folder) if folder else "(Root)"
+            if not folder_name:
+                folder_name = folder  # Show full path if basename is empty
+
+            folder_item = QTreeWidgetItem([f"📁 {folder_name} ({count})"])
+            folder_item.setData(0, Qt.UserRole, {"type": "folder", "path": folder})
+            folder_item.setToolTip(0, folder)  # Show full path on hover
+            self.folders_tree.addTopLevelItem(folder_item)
+
+    def _on_timeline_item_clicked(self, item: QTreeWidgetItem, column: int):
+        """
+        Handle timeline tree item click - filter by year or month.
+
+        Args:
+            item: Clicked tree item
+            column: Column index (always 0)
+        """
+        data = item.data(0, Qt.UserRole)
+        if not data:
+            return
+
+        item_type = data.get("type")
+
+        if item_type == "year":
+            year = data.get("year")
+            print(f"[GooglePhotosLayout] Filtering by year: {year}")
+            self._load_photos(
+                thumb_size=self.current_thumb_size,
+                filter_year=year,
+                filter_month=None,
+                filter_folder=None
+            )
+        elif item_type == "month":
+            year = data.get("year")
+            month = data.get("month")
+            month_name = datetime(year, month, 1).strftime("%B %Y")
+            print(f"[GooglePhotosLayout] Filtering by month: {month_name}")
+            self._load_photos(
+                thumb_size=self.current_thumb_size,
+                filter_year=year,
+                filter_month=month,
+                filter_folder=None
+            )
+
+    def _on_folder_item_clicked(self, item: QTreeWidgetItem, column: int):
+        """
+        Handle folder tree item click - filter by folder.
+
+        Args:
+            item: Clicked tree item
+            column: Column index (always 0)
+        """
+        data = item.data(0, Qt.UserRole)
+        if not data:
+            return
+
+        folder_path = data.get("path")
+        if folder_path:
+            folder_name = os.path.basename(folder_path) if folder_path else "(Root)"
+            print(f"[GooglePhotosLayout] Filtering by folder: {folder_name}")
+            self._load_photos(
+                thumb_size=self.current_thumb_size,
+                filter_year=None,
+                filter_month=None,
+                filter_folder=folder_path
+            )
 
     def _create_date_group(self, date_str: str, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
@@ -1451,6 +1622,24 @@ class GooglePhotosLayout(BaseLayout):
         # Restore scroll position (approximate)
         from PySide6.QtCore import QTimer
         QTimer.singleShot(100, lambda: self.timeline.verticalScrollBar().setValue(scroll_pos))
+
+    def _clear_filter(self):
+        """
+        Clear all date/folder filters and show all photos.
+        """
+        print("[GooglePhotosLayout] Clearing all filters")
+
+        # Reload without filters
+        self._load_photos(
+            thumb_size=self.current_thumb_size,
+            filter_year=None,
+            filter_month=None,
+            filter_folder=None
+        )
+
+        # Clear search box as well if it has text
+        if self.search_box.text():
+            self.search_box.clear()
 
     def get_sidebar(self):
         """Get sidebar component."""
