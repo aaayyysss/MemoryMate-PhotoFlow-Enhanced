@@ -45,6 +45,21 @@ class GooglePhotosLayout(BaseLayout):
         """
         Create Google Photos-style layout.
         """
+        # Get current project ID (CRITICAL: Photos are organized by project)
+        from app_services import get_default_project_id, list_projects
+        self.project_id = get_default_project_id()
+
+        # Fallback to first project if no default
+        if self.project_id is None:
+            projects = list_projects()
+            if projects:
+                self.project_id = projects[0]["id"]
+                print(f"[GooglePhotosLayout] Using first project: {self.project_id}")
+            else:
+                print("[GooglePhotosLayout] ⚠️ WARNING: No projects found! Please create a project first.")
+        else:
+            print(f"[GooglePhotosLayout] Using default project: {self.project_id}")
+
         # Main container
         main_widget = QWidget()
         main_layout = QVBoxLayout(main_widget)
@@ -272,27 +287,40 @@ class GooglePhotosLayout(BaseLayout):
             from reference_db import ReferenceDB
             db = ReferenceDB()
 
-            # Query all photos with date_taken
+            # CRITICAL: Check if we have a valid project
+            if self.project_id is None:
+                # No project - show empty state with instructions
+                empty_label = QLabel("📂 No project selected\n\nPlease create a project first")
+                empty_label.setAlignment(Qt.AlignCenter)
+                empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
+                self.timeline_layout.addWidget(empty_label)
+                print("[GooglePhotosLayout] ⚠️ No project selected")
+                return
+
+            # Query photos for the current project (join with project_images)
+            # CRITICAL FIX: Filter by project_id using project_images table
             query = """
-                SELECT path, date_taken, width, height
-                FROM photo_metadata
-                WHERE date_taken IS NOT NULL
-                ORDER BY date_taken DESC
+                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND pm.date_taken IS NOT NULL
+                ORDER BY pm.date_taken DESC
             """
 
             # Use ReferenceDB's connection pattern
             with db._connect() as conn:
                 cur = conn.cursor()
-                cur.execute(query)
+                cur.execute(query, (self.project_id,))
                 rows = cur.fetchall()
 
             if not rows:
-                # No photos - show empty state
-                empty_label = QLabel("📷 No photos yet\n\nClick 'Scan Repository' to add photos")
+                # No photos in project - show empty state
+                empty_label = QLabel("📷 No photos in this project yet\n\nClick 'Scan Repository' to add photos")
                 empty_label.setAlignment(Qt.AlignCenter)
                 empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
                 self.timeline_layout.addWidget(empty_label)
-                print("[GooglePhotosLayout] No photos found in database")
+                print(f"[GooglePhotosLayout] No photos found in project {self.project_id}")
                 return
 
             # Group photos by date
