@@ -1,1058 +1,550 @@
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02> python main_qt.py
-[Startup] pillow_heif available — HEIC/HEIF support enabled.
-🔇 Decoder warnings suppressed per settings.
-🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
-✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\locales\en.json
-🌍 Language initialized: en
-2025-11-24 19:26:38,079 [INFO] ================================================================================
-2025-11-24 19:26:38,079 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
-2025-11-24 19:26:38,079 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02\app_log.txt
-2025-11-24 19:26:38,079 [INFO] ================================================================================
-2025-11-24 19:26:38,110 [INFO] Installed Qt message handler to suppress TIFF warnings
-2025-11-24 19:26:38,116 [INFO] Qt message handler installed to suppress TIFF warnings
-[Main] Starting Qt event loop...
-[Startup] Database schema initialized successfully
-[Cache] {'entries': 17, 'size_mb': 0.05, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_34.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-02\\thumbnails_cache.db', 'last_updated': '2025-11-24 19:26'}
-[ThumbCacheDB] Purged 17 stale thumbnails (> 30 days).
-2025-11-24 19:26:38,339 [INFO] SearchService initialized
-[Startup] SearchService initialized
-2025-11-24 19:26:38,339 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
-2025-11-24 19:26:38,339 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
-2025-11-24 19:26:38,339 [INFO] Global ThumbnailService created with Phase 1B memory limits
-[Startup] ThumbnailService initialized
-🌍 Language switched to: en
-[MainWindow] Language loaded from settings: en
-🔇 Qt/Pillow decoder warnings silenced (per user settings).
-2025-11-24 19:26:38,351 [INFO] SearchService initialized
-[19:26:38.722] [Tabs] __init__ started
-[19:26:38.722] [Tabs] _build_tabs → building tab widgets
-[19:26:38.722] [Tabs] _on_tab_changed(idx=0)
-[19:26:38.722] [Tabs] _start_timeout idx=0 type=branches
-[19:26:38.722] [Tabs] _populate_tab(branches, idx=0, force=False)
-[19:26:38.722] [Tabs]   populated=False, loading=False
-[19:26:38.722] [Tabs]   Starting load for branches
-[19:26:38.722] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[19:26:38.722] [Tabs] _clear_tab idx=0
-[19:26:38.722] [Tabs] _on_tab_changed → tab_type=branches
-[19:26:38.722] [Tabs] _build_tabs → added 6 tabs
-[19:26:38.722] [Tabs] __init__ completed
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
-[Sidebar] Loaded 4 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=2] running for 1 targets...
-[SidebarQt] switch_display_mode(list) - canceling old workers
-[SidebarQt] Hiding tabs controller
-[Sidebar][counts worker gen=2] finished scanning targets, scheduling UI update
-[19:26:38.924] [Tabs] hide_tabs() called - canceling pending workers
-[SidebarQt] Canceled tab workers via hide_tabs()
-[SidebarQt] Clearing tree view selection before rebuild
-[SidebarQt] Showing tree view
-[SidebarQt] Calling _build_tree_model()
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
-[Sidebar] Loaded 4 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=4] running for 1 targets...
-[SidebarQt] _build_tree_model() completed
-[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
-[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
-[Startup] Database schema initialized successfully
-[19:26:39.159] [Tabs] _on_tab_changed(idx=0)
-[19:26:39.159] [Tabs] _start_timeout idx=0 type=branches
-[19:26:39.159] [Tabs] _populate_tab(branches, idx=0, force=False)
-[19:26:39.159] [Tabs]   populated=False, loading=False
-[19:26:39.165] [Tabs]   Starting load for branches
-[19:26:39.165] [Tabs] _show_loading idx=0 label='Loading Branches…'
-[19:26:39.165] [Tabs] _clear_tab idx=0
-[19:26:39.165] [Tabs] _on_tab_changed → tab_type=branches
-[19:26:39.165] [Tabs] _finish_branches (stale gen=1) — ignoring
-[Sidebar][counts] Ignoring stale worker results (gen=2, current=4)
-[Sidebar][counts applied] updated UI with counts
-[19:26:39.165] [Tabs] _clear_tab idx=0
-[TAG FILTER] Cleared by navigation.
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in None-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 0 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=None
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 17 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/17 paths (project_id=1)
-[GRID] Fetched tags for 17 paths, got 17 entries
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-16 of 17
-[GRID] Queued 17 new thumbnail workers
-[GRID] Loaded 17 thumbnails.
-[GRID] Reloaded 17 thumbnails in branch-mode (base=17)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-16 of 17
-[GRID] Queued 3 new thumbnail workers
-💾 Saved FFprobe path to settings: C:\ffmpeg\bin\ffprobe.exe
-✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
-✅ InsightFace detected with buffalo_l models
-   Location: C:\Users\ASUS\.insightface\models\buffalo_l
-[MainWindow] Launching clustering worker for 19 detected faces
-2025-11-24 19:26:52,460 [INFO] [FaceClusterWorker] Starting face clustering for project 1
-2025-11-24 19:26:52,476 [INFO] [FaceClusterWorker] Loaded 19 face embeddings
-[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-[FaceCluster] Loading face embeddings...
-[FaceCluster] Clustering 19 faces...
-2025-11-24 19:26:52,492 [INFO] [FaceClusterWorker] Found 4 clusters
-2025-11-24 19:26:52,492 [INFO] [FaceClusterWorker] Found 3 unclustered faces (will create 'Unidentified' branch)
-[FaceCluster] Found 4 person groups...
-2025-11-24 19:26:52,508 [INFO] [FaceClusterWorker] Cluster 0 → 6 faces
-[FaceCluster] Saving cluster 1/4: Person 1 (6 faces)
-2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 1 → 6 faces
-[FaceCluster] Saving cluster 2/4: Person 2 (6 faces)
-2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
-[FaceCluster] Saving cluster 3/4: Person 3 (2 faces)
-2025-11-24 19:26:52,518 [INFO] [FaceClusterWorker] Cluster 3 → 2 faces
-[FaceCluster] Saving cluster 4/4: Person 4 (2 faces)
-[FaceCluster] Processing 3 unidentified faces...
-2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 3 faces from 3 photos
-2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 3 unidentified faces
-2025-11-24 19:26:52,523 [INFO] [FaceClusterWorker] Cancellation requested
-[FaceCluster] Complete: 4 person groups created
-[SidebarQt] reload() called, display_mode=list, tabs_visible=False
-[SidebarQt] Calling _build_tree_model() instead of tabs refresh
-[SidebarQt] _build_tree_model() called with project_id=1
-[Sidebar] Detaching old model from tree view
-[Sidebar] Pending events processed (skipped explicit processEvents)
-[Sidebar] Creating fresh model (avoiding Qt segfault)
-[Sidebar] Attaching fresh model to tree view
-[SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 17}]
-[Sidebar] Loaded 4 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 3 years, 7 months, 12 days
-[Sidebar] Loading videos for project_id=1
-[Sidebar] Found 0 videos in project 1
-
-[Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
-[Sidebar] Register devices: True
-
-[DeviceScanner] ===== Starting device scan =====
-[DeviceScanner] Platform: Windows
-[DeviceScanner] Database registration: enabled
-[DeviceScanner] Scanning Windows drives...
-[DeviceScanner]   Checking drive letters D:-Z:...
-[DeviceScanner]     Drive D: exists, checking...
-[DeviceScanner]           Checking path: D:\
-[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
-[DeviceScanner]           Has DCIM folder: False
-[DeviceScanner]           No alternate structure found
-[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
-[DeviceScanner]             Checking subdirectory: IPhone
-[DeviceScanner]               Checking nested: IPhone/202202__
-[DeviceScanner]               Checking nested: IPhone/242CLOUD
-[DeviceScanner]               Checking nested: IPhone/Family
-[DeviceScanner]               Checking nested: IPhone/French Video
-[DeviceScanner]               Checking nested: IPhone/To draw
-[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
-[DeviceScanner]               Checking nested: IPhone/خواطر
-[DeviceScanner]               Checking nested: IPhone/عن الموت
-[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
-[DeviceScanner]             Checking subdirectory: My Phone
-[DeviceScanner]               Checking nested: My Phone/Android
-[DeviceScanner]               Checking nested: My Phone/DCM
-[DeviceScanner]               Checking nested: My Phone/Document Scanner
-[DeviceScanner]               Checking nested: My Phone/Final
-[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
-[DeviceScanner]           Has DCIM in subdirectory: True
-[DeviceScanner]           Device type: android
-[DeviceScanner]           Device label: 🤖 Mobile Device
-[DeviceScanner]           Scanning for media folders...
-[DeviceScanner]           Found 0 media folder(s)
-[DeviceScanner]           REJECTED: No media folders with photos/videos
-[DeviceScanner]       ✗ No device on drive D:
-[DeviceScanner]   Checking portable devices (MTP/PTP)...
-[DeviceScanner]     Attempting Shell COM enumeration...
-[DeviceScanner]     COM initialized for current thread
-[DeviceScanner]     Found 3 items under 'This PC'
-[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
-[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
-[DeviceScanner]     COM uninitialized
-[DeviceScanner] ===== Scan complete: 0 device(s) found =====
-
-[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
-[Sidebar]   ✗ No devices found
-[Sidebar] ===== End device scan =====
-
-[Sidebar] No mobile devices detected - added help message
-[Sidebar] starting async count population for 1 branch targets
-[Sidebar][counts worker gen=6] running for 1 targets...
-[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
-[Sidebar][counts applied] updated UI with counts
-[FaceCluster] Clustering complete: 5 branches created
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_unidentified'
-[get_images_by_branch] Found 3 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
-[GRID] Fetched tags for 3 paths, got 3 entries
-[GRID] Loaded 3 thumbnails.
-[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-2 of 3
-[GRID] Queued 3 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_000'
-[get_images_by_branch] Found 6 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_001'
-[get_images_by_branch] Found 6 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_003'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_unidentified'
-[get_images_by_branch] Found 3 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
-[GRID] Fetched tags for 3 paths, got 3 entries
-[GRID] Loaded 3 thumbnails.
-[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-2 of 3
-[GRID] Queued 3 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_unidentified'
-[get_images_by_branch] Found 3 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_e3122.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/4/img_1779.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/3 paths (project_id=1)
-[GRID] Fetched tags for 3 paths, got 3 entries
-[GRID] Loaded 3 thumbnails.
-[GRID] Reloaded 3 thumbnails in branch-mode (base=3)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-2 of 3
-[GRID] Queued 3 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_000'
-[get_images_by_branch] Found 6 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/11.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/gpic6664.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_001'
-[get_images_by_branch] Found 6 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_1550.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8920.png', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_9570.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
-[GRID] Fetched tags for 6 paths, got 6 entries
-[GRID] Loaded 6 thumbnails.
-[GRID] Reloaded 6 thumbnails in branch-mode (base=6)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-5 of 6
-[GRID] Queued 6 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_002'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8152.jpeg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2/img_8158.jpeg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_003'
-[get_images_by_branch] Found 2 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3091.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/5/img_e3106.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
-[GRID] Fetched tags for 2 paths, got 2 entries
-[GRID] Loaded 2 thumbnails.
-[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=None, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: Default Project
-[Breadcrumb] Added project segment: Default Project
-[Breadcrumb] Added fallback segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: Default Project
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-1 of 2
-[GRID] Queued 2 new thumbnail workers
-[open_lightbox] self.grid=<thumbnail_grid_qt.ThumbnailGridQt(0x1c8d1209960) at 0x000001C887D31A00>
-[open_lightbox] folder_id=None
-[open_lightbox] paths=[]
-[open_lightbox] branch_key=None
-[open_lightbox] date_key=None
-[open_lightbox] paths=[]
-[open_lightbox] context=visible_paths, total=2
-[open_lightbox] paths=['c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3091.jpg', 'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg']
-[open_lightbox] path=c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
-[UnifiedPreview] Opening media in unified dialog: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
-[UnifiedPreview] Media type: photo
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent=<main_window_qt.MainWindow(0x1c8d0f281c0) at 0x000001C8E7584100>
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent type=MainWindow
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.db exists: False
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.reference_db exists: False
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] parent.project_id exists: False
-2025-11-24 19:27:24,526 [WARNING] [LightboxDialog.__init__] Parent has NO db - creating new ReferenceDB instance
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] Created new db instance: <reference_db.ReferenceDB object at 0x000001C8D038B1F0>
-2025-11-24 19:27:24,526 [INFO] [LightboxDialog.__init__] Got project_id from parent.grid: 1
-[LightboxDialog] Video player signals connected successfully
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (3024, 4032)
-[PhotoLoad] 🔍 DIAGNOSTIC: Loading photo from path: c:\users\asus\onedrive\documents\python\test-photos\test-photos - copy\refs\5\img_e3106.jpg
-[PhotoLoad] ✅ DIAGNOSTIC: Successfully loaded photo, _orig_pil size: (3024, 4032)
-[ContextMenu] Got tags for 1 path(s): {'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg': []}
-[ContextMenu] present_tags = set()
-2025-11-24 19:27:30,457 [INFO] Added tag 1 to 1 photos (out of 1 requested)
-2025-11-24 19:27:30,457 [INFO] Bulk assigned tag 'favorite' to 1 photos
-[Tag] Added 'favorite' → 1 photo(s)
-[TagCache] Refreshing tags for 1 paths, got 1 entries
-[TagCache] ✅ P2-17: Updated 1/1 items (optimized)
-[Sidebar] reload_tags_only → got 1 tags for project_id=1
-[ContextMenu] Got tags for 1 path(s): {'c:\\users\\asus\\onedrive\\documents\\python\\test-photos\\test-photos - copy\\refs\\5\\img_e3106.jpg': ['favorite']}
-[ContextMenu] present_tags = {'favorite'}
-2025-11-24 19:27:33,726 [INFO] Added tag 2 to 1 photos (out of 1 requested)
-2025-11-24 19:27:33,726 [INFO] Bulk assigned tag 'face' to 1 photos
-[Tag] Added 'face' → 1 photo(s)
-[TagCache] Refreshing tags for 1 paths, got 1 entries
-[TagCache] ✅ P2-17: Updated 1/1 items (optimized)
-[Sidebar] reload_tags_only → got 2 tags for project_id=1
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[Main] Qt event loop exited with code: 0
-[ThumbCacheDB] Closing cache gracefully...
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_34.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-02>
+2025-11-25 00:47:57,010 [INFO] [root:118] ================================================================================
+2025-11-25 00:47:57,012 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 00:47:57,012 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 00:47:57,012 [INFO] [root:121] ================================================================================
+2025-11-25 00:47:57,039 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 00:47:57,039 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 00:47:57,340 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:47:57,342 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 00:47:57,342 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 00:47:57,342 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 00:47:57,350 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:48:05,281 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:34] ======================================================================
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:35] InsightFace Model Path Test
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:36] ======================================================================
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:37] Testing path: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:56] ✓ Detected: buffalo_l directory (detector: det_10g.onnx)
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:90] 
+Verifying model files...
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:98]   ✓ det_10g.onnx (16.1 MB) [DETECTOR]
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:110]   ✓ w600k_r50.onnx (166.3 MB) [RECOGNITION]
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:115] 
+Testing InsightFace initialization...
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:128]   ✓ Detected: CPU only
+2025-11-25 00:48:54,944 [INFO] [utils.test_insightface_models:132] 
+  Initializing with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 00:49:05,503 [INFO] [utils.test_insightface_models:138]   Using CPU (ctx_id=-1)
+2025-11-25 00:49:06,285 [INFO] [utils.test_insightface_models:143] 
+✅ SUCCESS! InsightFace initialized successfully
+2025-11-25 00:49:06,286 [INFO] [utils.test_insightface_models:144] ======================================================================
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:34] ======================================================================
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:35] InsightFace Model Path Test
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:36] ======================================================================
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:37] Testing path: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:56] ✓ Detected: buffalo_l directory (detector: det_10g.onnx)
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:90] 
+Verifying model files...
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:98]   ✓ det_10g.onnx (16.1 MB) [DETECTOR]
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:110]   ✓ w600k_r50.onnx (166.3 MB) [RECOGNITION]
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:115] 
+Testing InsightFace initialization...
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:128]   ✓ Detected: CPU only
+2025-11-25 00:49:13,430 [INFO] [utils.test_insightface_models:132] 
+  Initializing with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 00:49:14,447 [INFO] [utils.test_insightface_models:138]   Using CPU (ctx_id=-1)
+2025-11-25 00:49:15,263 [INFO] [utils.test_insightface_models:143] 
+✅ SUCCESS! InsightFace initialized successfully
+2025-11-25 00:49:15,264 [INFO] [utils.test_insightface_models:144] ======================================================================
+2025-11-25 00:49:33,721 [INFO] [root:118] ================================================================================
+2025-11-25 00:49:33,721 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 00:49:33,721 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 00:49:33,721 [INFO] [root:121] ================================================================================
+2025-11-25 00:49:33,757 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 00:49:33,757 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 00:49:33,921 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:49:33,921 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 00:49:33,928 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 00:49:33,928 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 00:49:33,944 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:49:38,368 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 00:50:05,850 [INFO] [root:118] ================================================================================
+2025-11-25 00:50:05,850 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 00:50:05,850 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 00:50:05,850 [INFO] [root:121] ================================================================================
+2025-11-25 00:50:05,898 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 00:50:05,898 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 00:50:06,115 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:50:06,115 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 00:50:06,120 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 00:50:06,120 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 00:50:06,136 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 00:50:08,948 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 00:50:57,336 [INFO] [db_writer:80] DBWriter timer started in worker thread
+2025-11-25 00:50:57,336 [INFO] [services.scan_worker_adapter:86] ScanWorkerAdapter starting scan of C:/Users/Alya/Desktop/تصويري
+2025-11-25 00:50:57,336 [INFO] [services.photo_scan_service:225] Starting scan: C:/Users/Alya/Desktop/تصويري (incremental=True)
+2025-11-25 00:50:57,352 [INFO] [services.photo_scan_service:242] Discovered 122 candidate image files and 0 video files
+2025-11-25 00:50:57,352 [INFO] [services.photo_scan_service:252] Loading existing metadata for incremental scan...
+2025-11-25 00:50:57,352 [INFO] [services.photo_scan_service:254] ✓ Loaded 0 existing file records
+2025-11-25 00:50:57,352 [INFO] [services.photo_scan_service:280] [Scan] File 1/122: 1b2d6782-2b1d-468d-a0b2-cb3465ee8b20-6500pixel.jpg
+2025-11-25 00:50:57,352 [INFO] [services.photo_scan_service:703] 📷 Processing: 1b2d6782-2b1d-468d-a0b2-cb3465ee8b20-6500pixel.jpg (7875.7 KB)
+2025-11-25 00:50:57,368 [INFO] [services.photo_scan_service:280] [Scan] File 2/122: 2607651.5dcba8bdabea5.jpg
+2025-11-25 00:50:57,384 [INFO] [services.photo_scan_service:703] 📷 Processing: 2607651.5dcba8bdabea5.jpg (439.1 KB)
+2025-11-25 00:50:57,400 [INFO] [services.photo_scan_service:280] [Scan] File 3/122: 3ca4ec12-d71a-4d44-8893-829153904c27-6500pixel.jpg
+2025-11-25 00:50:57,400 [INFO] [services.photo_scan_service:703] 📷 Processing: 3ca4ec12-d71a-4d44-8893-829153904c27-6500pixel.jpg (7030.2 KB)
+2025-11-25 00:50:57,416 [INFO] [services.photo_scan_service:280] [Scan] File 4/122: 69123db6-8a5c-4fb0-9408-3aa9c9df1267-6500pixel.jpg
+2025-11-25 00:50:57,416 [INFO] [services.photo_scan_service:703] 📷 Processing: 69123db6-8a5c-4fb0-9408-3aa9c9df1267-6500pixel.jpg (6803.3 KB)
+2025-11-25 00:50:57,442 [INFO] [services.photo_scan_service:280] [Scan] File 5/122: a8a174b4-9aa4-4d59-9e88-3cdfa8e85ea0-6000pixel.jpg
+2025-11-25 00:50:57,445 [INFO] [services.photo_scan_service:703] 📷 Processing: a8a174b4-9aa4-4d59-9e88-3cdfa8e85ea0-6000pixel.jpg (8183.6 KB)
+2025-11-25 00:50:57,452 [INFO] [services.photo_scan_service:280] [Scan] File 6/122: c2b40a0d-ea4a-4ef8-998e-b0e19e86f4ac-8000pixel.jpg
+2025-11-25 00:50:57,463 [INFO] [services.photo_scan_service:703] 📷 Processing: c2b40a0d-ea4a-4ef8-998e-b0e19e86f4ac-8000pixel.jpg (11781.5 KB)
+2025-11-25 00:50:57,469 [INFO] [services.photo_scan_service:280] [Scan] File 7/122: c2ebab94-a882-4747-9dff-509de4378662-6667pixel.jpg
+2025-11-25 00:50:57,479 [INFO] [services.photo_scan_service:703] 📷 Processing: c2ebab94-a882-4747-9dff-509de4378662-6667pixel.jpg (3098.5 KB)
+2025-11-25 00:50:57,488 [INFO] [services.photo_scan_service:280] [Scan] File 8/122: d4706057-378e-4b3e-b8c6-57690e63e9d4.jpg 7000pixel يس.jpg
+2025-11-25 00:50:57,495 [INFO] [services.photo_scan_service:703] 📷 Processing: d4706057-378e-4b3e-b8c6-57690e63e9d4.jpg 7000pixel يس.jpg (17160.5 KB)
+2025-11-25 00:50:57,511 [INFO] [services.photo_scan_service:280] [Scan] File 9/122: d59eb100-0580-4be9-abc2-b5a5a8424a30-6500pixel.jpg
+2025-11-25 00:50:57,511 [INFO] [services.photo_scan_service:703] 📷 Processing: d59eb100-0580-4be9-abc2-b5a5a8424a30-6500pixel.jpg (8405.9 KB)
+2025-11-25 00:50:57,529 [INFO] [services.photo_scan_service:280] [Scan] File 10/122: d9dd89e6-3178-4562-aa97-a920a0d7e90a-6500pixel.jpg
+2025-11-25 00:50:57,529 [INFO] [services.photo_scan_service:703] 📷 Processing: d9dd89e6-3178-4562-aa97-a920a0d7e90a-6500pixel.jpg (16022.1 KB)
+2025-11-25 00:50:57,554 [INFO] [services.photo_scan_service:280] [Scan] File 11/122: db2d3a3b-8dec-480d-ad12-07546bb4b1aa-6500pixel.jpg
+2025-11-25 00:50:57,559 [INFO] [services.photo_scan_service:703] 📷 Processing: db2d3a3b-8dec-480d-ad12-07546bb4b1aa-6500pixel.jpg (7597.6 KB)
+2025-11-25 00:50:57,575 [INFO] [services.photo_scan_service:280] [Scan] File 12/122: lama3.png
+2025-11-25 00:50:57,575 [INFO] [services.photo_scan_service:703] 📷 Processing: lama3.png (73.5 KB)
+2025-11-25 00:50:57,605 [INFO] [services.photo_scan_service:280] [Scan] File 13/122: 1c67016d-080d-4ea1-89a0-310ce555a49f-6500pixel.jpg
+2025-11-25 00:50:57,607 [INFO] [services.photo_scan_service:703] 📷 Processing: 1c67016d-080d-4ea1-89a0-310ce555a49f-6500pixel.jpg (7115.8 KB)
+2025-11-25 00:50:57,637 [INFO] [services.photo_scan_service:280] [Scan] File 14/122: 34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg
+2025-11-25 00:50:57,639 [INFO] [services.photo_scan_service:703] 📷 Processing: 34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg (11465.2 KB)
+2025-11-25 00:50:57,655 [INFO] [services.photo_scan_service:280] [Scan] File 15/122: 35dbbd87-2175-49a2-ba3c-28a696198060-6500pixel.jpg
+2025-11-25 00:50:57,655 [INFO] [services.photo_scan_service:703] 📷 Processing: 35dbbd87-2175-49a2-ba3c-28a696198060-6500pixel.jpg (6514.1 KB)
+2025-11-25 00:50:57,670 [INFO] [services.photo_scan_service:280] [Scan] File 16/122: 516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg
+2025-11-25 00:50:57,670 [INFO] [services.photo_scan_service:703] 📷 Processing: 516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg (10043.9 KB)
+2025-11-25 00:50:57,702 [INFO] [services.photo_scan_service:280] [Scan] File 17/122: 64153b36-1d8f-40d9-a10e-53615729bfa1-7000pixel.jpg
+2025-11-25 00:50:57,702 [INFO] [services.photo_scan_service:703] 📷 Processing: 64153b36-1d8f-40d9-a10e-53615729bfa1-7000pixel.jpg (44109.4 KB)
+2025-11-25 00:50:57,718 [INFO] [services.photo_scan_service:280] [Scan] File 18/122: d85a0824-abb8-4bc9-b7d7-69543d16597a-8000pixel.jpg
+2025-11-25 00:50:57,734 [INFO] [services.photo_scan_service:703] 📷 Processing: d85a0824-abb8-4bc9-b7d7-69543d16597a-8000pixel.jpg (13594.5 KB)
+2025-11-25 00:50:57,751 [INFO] [services.photo_scan_service:280] [Scan] File 19/122: 18bc7440-e54b-43b5-9902-e2a0d9ed5e2a.jpg
+2025-11-25 00:50:57,762 [INFO] [services.photo_scan_service:703] 📷 Processing: 18bc7440-e54b-43b5-9902-e2a0d9ed5e2a.jpg (2864.1 KB)
+2025-11-25 00:50:57,798 [INFO] [services.photo_scan_service:280] [Scan] File 20/122: 33e205f2-d734-4d90-8551-66048eddfe96.jpg
+2025-11-25 00:50:57,798 [INFO] [services.photo_scan_service:703] 📷 Processing: 33e205f2-d734-4d90-8551-66048eddfe96.jpg (963.9 KB)
+2025-11-25 00:50:57,830 [INFO] [services.photo_scan_service:280] [Scan] File 21/122: 36022963-b34c-40c8-b7f8-26e09f4f16f1.jpg
+2025-11-25 00:50:57,830 [INFO] [services.photo_scan_service:703] 📷 Processing: 36022963-b34c-40c8-b7f8-26e09f4f16f1.jpg (2164.0 KB)
+2025-11-25 00:50:57,861 [INFO] [services.photo_scan_service:280] [Scan] File 22/122: 58b9b62b-4d38-48fd-965a-6a25d2a201fa.jpg
+2025-11-25 00:50:57,861 [INFO] [services.photo_scan_service:703] 📷 Processing: 58b9b62b-4d38-48fd-965a-6a25d2a201fa.jpg (1054.5 KB)
+2025-11-25 00:50:57,900 [INFO] [services.photo_scan_service:280] [Scan] File 23/122: 5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg
+2025-11-25 00:50:57,902 [INFO] [services.photo_scan_service:703] 📷 Processing: 5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg (2203.8 KB)
+2025-11-25 00:50:57,927 [INFO] [services.photo_scan_service:280] [Scan] File 24/122: 5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg
+2025-11-25 00:50:57,927 [INFO] [services.photo_scan_service:703] 📷 Processing: 5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg (3152.5 KB)
+2025-11-25 00:50:57,972 [INFO] [services.photo_scan_service:280] [Scan] File 25/122: 65e16229-7ef4-46e5-bcfb-2a59e21032ea.jpg
+2025-11-25 00:50:57,972 [INFO] [services.photo_scan_service:703] 📷 Processing: 65e16229-7ef4-46e5-bcfb-2a59e21032ea.jpg (685.2 KB)
+2025-11-25 00:50:58,004 [INFO] [services.photo_scan_service:280] [Scan] File 26/122: 7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg
+2025-11-25 00:50:58,004 [INFO] [services.photo_scan_service:703] 📷 Processing: 7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg (4292.5 KB)
+2025-11-25 00:50:58,036 [INFO] [services.photo_scan_service:280] [Scan] File 27/122: 805a575a-3f43-45be-b985-9b06fa0906f9.jpg
+2025-11-25 00:50:58,052 [INFO] [services.photo_scan_service:703] 📷 Processing: 805a575a-3f43-45be-b985-9b06fa0906f9.jpg (1397.9 KB)
+2025-11-25 00:50:58,100 [INFO] [services.photo_scan_service:280] [Scan] File 28/122: 9841394f-e772-4841-bd5d-f9f96431c350.jpg
+2025-11-25 00:50:58,108 [INFO] [services.photo_scan_service:703] 📷 Processing: 9841394f-e772-4841-bd5d-f9f96431c350.jpg (965.3 KB)
+2025-11-25 00:50:58,163 [INFO] [services.photo_scan_service:280] [Scan] File 29/122: a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg
+2025-11-25 00:50:58,163 [INFO] [services.photo_scan_service:703] 📷 Processing: a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg (22799.1 KB)
+2025-11-25 00:50:58,195 [INFO] [services.photo_scan_service:280] [Scan] File 30/122: a52ebc1a-7f35-4546-995a-9acc284f964b.jpg
+2025-11-25 00:50:58,195 [INFO] [services.photo_scan_service:703] 📷 Processing: a52ebc1a-7f35-4546-995a-9acc284f964b.jpg (1479.2 KB)
+2025-11-25 00:50:58,253 [INFO] [services.photo_scan_service:280] [Scan] File 31/122: bf92eecb-a645-498a-a8d3-2b234b3d3442.jpg
+2025-11-25 00:50:58,258 [INFO] [services.photo_scan_service:703] 📷 Processing: bf92eecb-a645-498a-a8d3-2b234b3d3442.jpg (1764.1 KB)
+2025-11-25 00:50:58,305 [INFO] [services.photo_scan_service:280] [Scan] File 32/122: c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg
+2025-11-25 00:50:58,305 [INFO] [services.photo_scan_service:703] 📷 Processing: c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg (451.0 KB)
+2025-11-25 00:50:58,337 [INFO] [services.photo_scan_service:280] [Scan] File 33/122: d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg
+2025-11-25 00:50:58,353 [INFO] [services.photo_scan_service:703] 📷 Processing: d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg (2402.9 KB)
+2025-11-25 00:50:58,389 [INFO] [services.photo_scan_service:280] [Scan] File 34/122: deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg
+2025-11-25 00:50:58,389 [INFO] [services.photo_scan_service:703] 📷 Processing: deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg (438.9 KB)
+2025-11-25 00:50:58,433 [INFO] [services.photo_scan_service:280] [Scan] File 35/122: e83687b8-702b-4866-bde7-3922efea82a4.jpg
+2025-11-25 00:50:58,433 [INFO] [services.photo_scan_service:703] 📷 Processing: e83687b8-702b-4866-bde7-3922efea82a4.jpg (2157.5 KB)
+2025-11-25 00:50:58,464 [INFO] [services.photo_scan_service:280] [Scan] File 36/122: f5621c03-071f-4881-88cb-eb2e7d2deb28.jpg
+2025-11-25 00:50:58,464 [INFO] [services.photo_scan_service:703] 📷 Processing: f5621c03-071f-4881-88cb-eb2e7d2deb28.jpg (1240.9 KB)
+2025-11-25 00:50:58,496 [INFO] [services.photo_scan_service:280] [Scan] File 37/122: f64be291-c0cd-4c8e-8a8a-4fad6629c605.jpg
+2025-11-25 00:50:58,496 [INFO] [services.photo_scan_service:703] 📷 Processing: f64be291-c0cd-4c8e-8a8a-4fad6629c605.jpg (2845.0 KB)
+2025-11-25 00:50:58,528 [INFO] [services.photo_scan_service:280] [Scan] File 38/122: 08c7466e-666e-428b-a74e-161802520a0b-8000-300pixel.jpg
+2025-11-25 00:50:58,528 [INFO] [services.photo_scan_service:703] 📷 Processing: 08c7466e-666e-428b-a74e-161802520a0b-8000-300pixel.jpg (19879.9 KB)
+2025-11-25 00:50:58,559 [INFO] [services.photo_scan_service:280] [Scan] File 39/122: 16e376d5-8eb4-4db4-ac72-f32f03c51062-8000-300pixel.jpg
+2025-11-25 00:50:58,559 [INFO] [services.photo_scan_service:703] 📷 Processing: 16e376d5-8eb4-4db4-ac72-f32f03c51062-8000-300pixel.jpg (29198.7 KB)
+2025-11-25 00:50:58,591 [INFO] [services.photo_scan_service:280] [Scan] File 40/122: 26daaef3-d2bb-430e-9b9a-dc239d85bae0-8000-300pixel.jpg
+2025-11-25 00:50:58,591 [INFO] [services.photo_scan_service:703] 📷 Processing: 26daaef3-d2bb-430e-9b9a-dc239d85bae0-8000-300pixel.jpg (16146.3 KB)
+2025-11-25 00:50:58,639 [INFO] [services.photo_scan_service:280] [Scan] File 41/122: 4b6ca959-33f8-4b54-b571-f37b6b2cf829-8000-300pixel.jpg
+2025-11-25 00:50:58,639 [INFO] [services.photo_scan_service:703] 📷 Processing: 4b6ca959-33f8-4b54-b571-f37b6b2cf829-8000-300pixel.jpg (20725.5 KB)
+2025-11-25 00:50:58,671 [INFO] [services.photo_scan_service:280] [Scan] File 42/122: 552291827_17923813593152199_5317019554240726053_n-8000-300pixel.jpg
+2025-11-25 00:50:58,671 [INFO] [services.photo_scan_service:703] 📷 Processing: 552291827_17923813593152199_5317019554240726053_n-8000-300pixel.jpg (21533.9 KB)
+2025-11-25 00:50:58,734 [INFO] [services.photo_scan_service:280] [Scan] File 43/122: 61c3c1d9-217a-41bf-a0e6-6022e8470bf9-8000-300pixel.jpg
+2025-11-25 00:50:58,734 [INFO] [services.photo_scan_service:703] 📷 Processing: 61c3c1d9-217a-41bf-a0e6-6022e8470bf9-8000-300pixel.jpg (27834.3 KB)
+2025-11-25 00:50:58,782 [INFO] [services.photo_scan_service:280] [Scan] File 44/122: 6ddf1759-f865-42ae-a866-a860c39fb4ee-8000-300pixel.jpg
+2025-11-25 00:50:58,788 [INFO] [services.photo_scan_service:703] 📷 Processing: 6ddf1759-f865-42ae-a866-a860c39fb4ee-8000-300pixel.jpg (17213.4 KB)
+2025-11-25 00:50:58,813 [INFO] [services.photo_scan_service:280] [Scan] File 45/122: 6e2676ad-5888-4322-bb2d-42584e4d5e9a-8000-300pixel.jpg
+2025-11-25 00:50:58,813 [INFO] [services.photo_scan_service:703] 📷 Processing: 6e2676ad-5888-4322-bb2d-42584e4d5e9a-8000-300pixel.jpg (17587.8 KB)
+2025-11-25 00:50:58,845 [INFO] [services.photo_scan_service:280] [Scan] File 46/122: 6e7c89e9-b685-4d33-a52b-db46473b0d2d-8000-300pixel.jpg
+2025-11-25 00:50:58,860 [INFO] [services.photo_scan_service:703] 📷 Processing: 6e7c89e9-b685-4d33-a52b-db46473b0d2d-8000-300pixel.jpg (8878.3 KB)
+2025-11-25 00:50:58,892 [INFO] [services.photo_scan_service:280] [Scan] File 47/122: 7ff195fd-d11b-4b82-bafc-cc184a335acd-8000-300pixel.jpg
+2025-11-25 00:50:58,892 [INFO] [services.photo_scan_service:703] 📷 Processing: 7ff195fd-d11b-4b82-bafc-cc184a335acd-8000-300pixel.jpg (13627.1 KB)
+2025-11-25 00:50:58,940 [INFO] [services.photo_scan_service:280] [Scan] File 48/122: 8fff1b01-29f8-412d-a8fe-f8b3aa0e4d1f-8000-300pixel.jpg
+2025-11-25 00:50:58,940 [INFO] [services.photo_scan_service:703] 📷 Processing: 8fff1b01-29f8-412d-a8fe-f8b3aa0e4d1f-8000-300pixel.jpg (18708.5 KB)
+2025-11-25 00:50:58,956 [INFO] [services.photo_scan_service:280] [Scan] File 49/122: 95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg
+2025-11-25 00:50:58,956 [INFO] [services.photo_scan_service:703] 📷 Processing: 95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg (46984.1 KB)
+2025-11-25 00:50:58,997 [INFO] [services.photo_scan_service:280] [Scan] File 50/122: 9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg
+2025-11-25 00:50:58,997 [INFO] [services.photo_scan_service:703] 📷 Processing: 9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg (25627.4 KB)
+2025-11-25 00:50:59,019 [INFO] [services.photo_scan_service:280] [Scan] File 51/122: e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg
+2025-11-25 00:50:59,019 [INFO] [services.photo_scan_service:703] 📷 Processing: e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg (20479.3 KB)
+2025-11-25 00:50:59,050 [INFO] [services.photo_scan_service:280] [Scan] File 52/122: 96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg
+2025-11-25 00:50:59,050 [INFO] [services.photo_scan_service:703] 📷 Processing: 96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg (15786.7 KB)
+2025-11-25 00:50:59,090 [INFO] [services.photo_scan_service:280] [Scan] File 53/122: c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg
+2025-11-25 00:50:59,090 [INFO] [services.photo_scan_service:703] 📷 Processing: c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg (21954.7 KB)
+2025-11-25 00:50:59,130 [INFO] [services.photo_scan_service:280] [Scan] File 54/122: fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg
+2025-11-25 00:50:59,130 [INFO] [services.photo_scan_service:703] 📷 Processing: fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg (12364.9 KB)
+2025-11-25 00:50:59,193 [INFO] [services.photo_scan_service:280] [Scan] File 55/122: 22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg
+2025-11-25 00:50:59,193 [INFO] [services.photo_scan_service:703] 📷 Processing: 22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg (1167.7 KB)
+2025-11-25 00:50:59,257 [INFO] [services.photo_scan_service:280] [Scan] File 56/122: 5f54c29f-deac-492d-9217-2f296127cf0f-7000pixel.jpg
+2025-11-25 00:50:59,257 [INFO] [services.photo_scan_service:703] 📷 Processing: 5f54c29f-deac-492d-9217-2f296127cf0f-7000pixel.jpg (5605.1 KB)
+2025-11-25 00:50:59,295 [INFO] [services.photo_scan_service:280] [Scan] File 57/122: d53acc7b-497a-49c9-9781-bf261d17bc58.jpg
+2025-11-25 00:50:59,295 [INFO] [services.photo_scan_service:703] 📷 Processing: d53acc7b-497a-49c9-9781-bf261d17bc58.jpg (1321.4 KB)
+2025-11-25 00:50:59,337 [INFO] [services.photo_scan_service:280] [Scan] File 58/122: 06edf365-7fff-425a-a129-efef5fdf478b-8000pixel.jpg
+2025-11-25 00:50:59,337 [INFO] [services.photo_scan_service:703] 📷 Processing: 06edf365-7fff-425a-a129-efef5fdf478b-8000pixel.jpg (18011.8 KB)
+2025-11-25 00:50:59,368 [INFO] [services.photo_scan_service:280] [Scan] File 59/122: 24a343cd-a251-4976-93d6-2c6f1bb17adf-8000pixel.jpg
+2025-11-25 00:50:59,368 [INFO] [services.photo_scan_service:703] 📷 Processing: 24a343cd-a251-4976-93d6-2c6f1bb17adf-8000pixel.jpg (20914.3 KB)
+2025-11-25 00:50:59,400 [INFO] [services.photo_scan_service:280] [Scan] File 60/122: 92f3c2ae-da11-40f7-8fc6-07d848f7fe16-8000pixel.jpg
+2025-11-25 00:50:59,400 [INFO] [services.photo_scan_service:703] 📷 Processing: 92f3c2ae-da11-40f7-8fc6-07d848f7fe16-8000pixel.jpg (17213.0 KB)
+2025-11-25 00:50:59,448 [INFO] [services.photo_scan_service:280] [Scan] File 61/122: b8d2fdc9-d7ee-4dc2-9c52-2c3a2ea28310-8000pixel.jpg
+2025-11-25 00:50:59,456 [INFO] [services.photo_scan_service:703] 📷 Processing: b8d2fdc9-d7ee-4dc2-9c52-2c3a2ea28310-8000pixel.jpg (20357.2 KB)
+2025-11-25 00:50:59,495 [INFO] [services.photo_scan_service:280] [Scan] File 62/122: f81c2950-14ff-492e-93fc-3d4d83f5d319-8000pixel.jpg
+2025-11-25 00:50:59,495 [INFO] [services.photo_scan_service:703] 📷 Processing: f81c2950-14ff-492e-93fc-3d4d83f5d319-8000pixel.jpg (20647.5 KB)
+2025-11-25 00:50:59,543 [INFO] [services.photo_scan_service:280] [Scan] File 63/122: 0bc5b7aa-33eb-4f7d-9b38-08a2b23a379d-8000pixel.jpg
+2025-11-25 00:50:59,554 [INFO] [services.photo_scan_service:703] 📷 Processing: 0bc5b7aa-33eb-4f7d-9b38-08a2b23a379d-8000pixel.jpg (28447.6 KB)
+2025-11-25 00:50:59,606 [INFO] [services.photo_scan_service:280] [Scan] File 64/122: 19d1a287-592b-4002-b221-c44ed95c67d0-8000pixel.jpg
+2025-11-25 00:50:59,606 [INFO] [services.photo_scan_service:703] 📷 Processing: 19d1a287-592b-4002-b221-c44ed95c67d0-8000pixel.jpg (23023.4 KB)
+2025-11-25 00:50:59,645 [INFO] [services.photo_scan_service:280] [Scan] File 65/122: 3f35aa78-e124-4b79-a3d4-373ff1305b81-8000pixel.jpg
+2025-11-25 00:50:59,645 [INFO] [services.photo_scan_service:703] 📷 Processing: 3f35aa78-e124-4b79-a3d4-373ff1305b81-8000pixel.jpg (37799.4 KB)
+2025-11-25 00:50:59,669 [INFO] [services.photo_scan_service:280] [Scan] File 66/122: 4bc074c3-adf6-4703-a122-156f8e44ac07-8000pixel.jpg
+2025-11-25 00:50:59,685 [INFO] [services.photo_scan_service:703] 📷 Processing: 4bc074c3-adf6-4703-a122-156f8e44ac07-8000pixel.jpg (27654.5 KB)
+2025-11-25 00:50:59,732 [INFO] [services.photo_scan_service:280] [Scan] File 67/122: f991b13a-0438-4a28-8a75-d9f0141dea38-8000pixel.jpg
+2025-11-25 00:50:59,732 [INFO] [services.photo_scan_service:703] 📷 Processing: f991b13a-0438-4a28-8a75-d9f0141dea38-8000pixel.jpg (31857.6 KB)
+2025-11-25 00:50:59,792 [INFO] [services.photo_scan_service:280] [Scan] File 68/122: IMAG3017-8000pixel.jpg
+2025-11-25 00:50:59,796 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG3017-8000pixel.jpg (13973.1 KB)
+2025-11-25 00:50:59,828 [INFO] [services.photo_scan_service:280] [Scan] File 69/122: IMAG3017.jpg
+2025-11-25 00:50:59,828 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG3017.jpg (2617.1 KB)
+2025-11-25 00:50:59,860 [INFO] [services.photo_scan_service:280] [Scan] File 70/122: IMAG4540.jpg
+2025-11-25 00:50:59,860 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4540.jpg (2678.8 KB)
+2025-11-25 00:50:59,892 [INFO] [services.photo_scan_service:280] [Scan] File 71/122: IMAG4540_1.jpg
+2025-11-25 00:50:59,892 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4540_1.jpg (1547.0 KB)
+2025-11-25 00:50:59,939 [INFO] [services.photo_scan_service:280] [Scan] File 72/122: IMAG4638.jpg
+2025-11-25 00:50:59,945 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4638.jpg (1830.6 KB)
+2025-11-25 00:50:59,971 [INFO] [services.photo_scan_service:280] [Scan] File 73/122: IMAG4638_1.jpg
+2025-11-25 00:50:59,971 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4638_1.jpg (891.6 KB)
+2025-11-25 00:51:00,009 [INFO] [services.photo_scan_service:280] [Scan] File 74/122: IMAG4745-8000pixel.jpg
+2025-11-25 00:51:00,009 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4745-8000pixel.jpg (34370.9 KB)
+2025-11-25 00:51:00,050 [INFO] [services.photo_scan_service:280] [Scan] File 75/122: IMAG4745.jpg
+2025-11-25 00:51:00,050 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG4745.jpg (2734.7 KB)
+2025-11-25 00:51:00,082 [INFO] [services.photo_scan_service:280] [Scan] File 76/122: IMAG6481-17600pixel.jpg
+2025-11-25 00:51:00,082 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG6481-17600pixel.jpg (39102.9 KB)
+2025-11-25 00:51:00,113 [INFO] [services.photo_scan_service:280] [Scan] File 77/122: IMAG6481.jpg
+2025-11-25 00:51:00,113 [INFO] [services.photo_scan_service:703] 📷 Processing: IMAG6481.jpg (2942.5 KB)
+2025-11-25 00:51:00,145 [INFO] [services.photo_scan_service:280] [Scan] File 78/122: 488538592_9581373438598113_6575557635851001198_n.jpg
+2025-11-25 00:51:00,153 [INFO] [services.photo_scan_service:703] 📷 Processing: 488538592_9581373438598113_6575557635851001198_n.jpg (501.4 KB)
+2025-11-25 00:51:00,193 [INFO] [services.photo_scan_service:280] [Scan] File 79/122: 492369913_9723801707688618_1388782763913187461_n.jpg
+2025-11-25 00:51:00,195 [INFO] [services.photo_scan_service:703] 📷 Processing: 492369913_9723801707688618_1388782763913187461_n.jpg (98.0 KB)
+2025-11-25 00:51:00,241 [INFO] [services.photo_scan_service:280] [Scan] File 80/122: 954dde6e-bbcd-450d-99a2-82168d3aae97.jpg
+2025-11-25 00:51:00,241 [INFO] [services.photo_scan_service:703] 📷 Processing: 954dde6e-bbcd-450d-99a2-82168d3aae97.jpg (878.5 KB)
+2025-11-25 00:51:00,301 [INFO] [services.photo_scan_service:280] [Scan] File 81/122: August 04 2022.jpg
+2025-11-25 00:51:00,304 [INFO] [services.photo_scan_service:703] 📷 Processing: August 04 2022.jpg (290.7 KB)
+2025-11-25 00:51:00,337 [INFO] [services.photo_scan_service:280] [Scan] File 82/122: e00e0f57-046a-402c-b696-d10828585c96-5000pixel.jpg
+2025-11-25 00:51:00,353 [INFO] [services.photo_scan_service:703] 📷 Processing: e00e0f57-046a-402c-b696-d10828585c96-5000pixel.jpg (8315.5 KB)
+2025-11-25 00:51:00,385 [INFO] [services.photo_scan_service:280] [Scan] File 83/122: November 23 2023.jpg
+2025-11-25 00:51:00,385 [INFO] [services.photo_scan_service:703] 📷 Processing: November 23 2023.jpg (82.5 KB)
+2025-11-25 00:51:00,443 [INFO] [services.photo_scan_service:280] [Scan] File 84/122: UXDK4458.PNG
+2025-11-25 00:51:00,443 [INFO] [services.photo_scan_service:703] 📷 Processing: UXDK4458.PNG (6196.1 KB)
+2025-11-25 00:51:00,478 [INFO] [services.photo_scan_service:280] [Scan] File 85/122: IMG_E7704.JPG
+2025-11-25 00:51:00,480 [INFO] [services.photo_scan_service:703] 📷 Processing: IMG_E7704.JPG (3571.7 KB)
+2025-11-25 00:51:00,512 [INFO] [services.photo_scan_service:280] [Scan] File 86/122: 02820bd6-72d7-47ef-9a4a-6c8818755fe0.jpg
+2025-11-25 00:51:00,512 [INFO] [services.photo_scan_service:703] 📷 Processing: 02820bd6-72d7-47ef-9a4a-6c8818755fe0.jpg (1041.9 KB)
+2025-11-25 00:51:00,573 [INFO] [services.photo_scan_service:280] [Scan] File 87/122: 10f876ff-b1b2-4268-82fe-e1f09e72fe5e-8000pixel.jpg
+2025-11-25 00:51:00,575 [INFO] [services.photo_scan_service:703] 📷 Processing: 10f876ff-b1b2-4268-82fe-e1f09e72fe5e-8000pixel.jpg (11784.9 KB)
+2025-11-25 00:51:00,609 [INFO] [services.photo_scan_service:280] [Scan] File 88/122: 4f7d4b32-e500-459c-a959-bdeb645f418a-8000pixel.jpg
+2025-11-25 00:51:00,612 [INFO] [services.photo_scan_service:703] 📷 Processing: 4f7d4b32-e500-459c-a959-bdeb645f418a-8000pixel.jpg (17117.6 KB)
+2025-11-25 00:51:00,639 [INFO] [services.photo_scan_service:280] [Scan] File 89/122: 4f7d4b32-e500-459c-a959-bdeb645f418a.jpg
+2025-11-25 00:51:00,639 [INFO] [services.photo_scan_service:703] 📷 Processing: 4f7d4b32-e500-459c-a959-bdeb645f418a.jpg (824.4 KB)
+2025-11-25 00:51:00,671 [INFO] [services.photo_scan_service:280] [Scan] File 90/122: 53c1c678-63ba-4687-87bb-86ae10539532.jpg
+2025-11-25 00:51:00,671 [INFO] [services.photo_scan_service:703] 📷 Processing: 53c1c678-63ba-4687-87bb-86ae10539532.jpg (931.9 KB)
+2025-11-25 00:51:00,703 [INFO] [services.photo_scan_service:280] [Scan] File 91/122: 5e8a6412-09ee-4276-bfab-1da5580e495e-8000pixel.jpg
+2025-11-25 00:51:00,703 [INFO] [services.photo_scan_service:703] 📷 Processing: 5e8a6412-09ee-4276-bfab-1da5580e495e-8000pixel.jpg (15333.2 KB)
+2025-11-25 00:51:00,719 [INFO] [services.photo_scan_service:280] [Scan] File 92/122: 5e8a6412-09ee-4276-bfab-1da5580e495e.jpg
+2025-11-25 00:51:00,735 [INFO] [services.photo_scan_service:703] 📷 Processing: 5e8a6412-09ee-4276-bfab-1da5580e495e.jpg (728.3 KB)
+2025-11-25 00:51:00,767 [INFO] [services.photo_scan_service:280] [Scan] File 93/122: 6fbaf768-98b4-43fe-a433-db94065527d5.jpg
+2025-11-25 00:51:00,767 [INFO] [services.photo_scan_service:703] 📷 Processing: 6fbaf768-98b4-43fe-a433-db94065527d5.jpg (1011.6 KB)
+2025-11-25 00:51:00,817 [INFO] [services.photo_scan_service:280] [Scan] File 94/122: bfbc8ba3-4a50-4a44-90c6-7277bc8f35b5.jpg
+2025-11-25 00:51:00,817 [INFO] [services.photo_scan_service:703] 📷 Processing: bfbc8ba3-4a50-4a44-90c6-7277bc8f35b5.jpg (1550.5 KB)
+2025-11-25 00:51:00,863 [INFO] [services.photo_scan_service:280] [Scan] File 95/122: cd541589-59ca-47f9-83b1-ffec358ff9b0-8000pixel.jpg
+2025-11-25 00:51:00,863 [INFO] [services.photo_scan_service:703] 📷 Processing: cd541589-59ca-47f9-83b1-ffec358ff9b0-8000pixel.jpg (15256.9 KB)
+2025-11-25 00:51:00,894 [INFO] [services.photo_scan_service:280] [Scan] File 96/122: cd541589-59ca-47f9-83b1-ffec358ff9b0.jpg
+2025-11-25 00:51:00,894 [INFO] [services.photo_scan_service:703] 📷 Processing: cd541589-59ca-47f9-83b1-ffec358ff9b0.jpg (263.2 KB)
+2025-11-25 00:51:00,955 [INFO] [services.photo_scan_service:280] [Scan] File 97/122: dcede00c-b7a3-4bc7-88ef-617205f34d5f-8000pixel.jpg
+2025-11-25 00:51:00,958 [INFO] [services.photo_scan_service:703] 📷 Processing: dcede00c-b7a3-4bc7-88ef-617205f34d5f-8000pixel.jpg (16029.4 KB)
+2025-11-25 00:51:00,977 [INFO] [services.photo_scan_service:280] [Scan] File 98/122: dcede00c-b7a3-4bc7-88ef-617205f34d5f.jpg
+2025-11-25 00:51:00,977 [INFO] [services.photo_scan_service:703] 📷 Processing: dcede00c-b7a3-4bc7-88ef-617205f34d5f.jpg (796.7 KB)
+2025-11-25 00:51:01,038 [INFO] [services.photo_scan_service:280] [Scan] File 99/122: ecab2a13-0bb9-45d5-a376-31871588bb87-8000pixel.jpg
+2025-11-25 00:51:01,038 [INFO] [services.photo_scan_service:703] 📷 Processing: ecab2a13-0bb9-45d5-a376-31871588bb87-8000pixel.jpg (29089.1 KB)
+2025-11-25 00:51:01,071 [INFO] [services.photo_scan_service:280] [Scan] File 100/122: ecab2a13-0bb9-45d5-a376-31871588bb87.jpg
+2025-11-25 00:51:01,071 [INFO] [services.photo_scan_service:703] 📷 Processing: ecab2a13-0bb9-45d5-a376-31871588bb87.jpg (979.7 KB)
+2025-11-25 00:51:01,132 [INFO] [services.photo_scan_service:280] [Scan] File 101/122: f23a8571-cbed-4a78-9d02-21a6522dcec3-8000pixel.jpg
+2025-11-25 00:51:01,134 [INFO] [services.photo_scan_service:703] 📷 Processing: f23a8571-cbed-4a78-9d02-21a6522dcec3-8000pixel.jpg (12943.6 KB)
+2025-11-25 00:51:01,165 [INFO] [services.photo_scan_service:280] [Scan] File 102/122: f23a8571-cbed-4a78-9d02-21a6522dcec3.jpg
+2025-11-25 00:51:01,165 [INFO] [services.photo_scan_service:703] 📷 Processing: f23a8571-cbed-4a78-9d02-21a6522dcec3.jpg (670.2 KB)
+2025-11-25 00:51:01,224 [INFO] [services.photo_scan_service:280] [Scan] File 103/122: 6fbaf768-98b4-43fe-a433-db94065527d4-8000pixel.jpg
+2025-11-25 00:51:01,224 [INFO] [services.photo_scan_service:703] 📷 Processing: 6fbaf768-98b4-43fe-a433-db94065527d4-8000pixel.jpg (12492.9 KB)
+2025-11-25 00:51:01,245 [INFO] [services.photo_scan_service:280] [Scan] File 104/122: 14d6ecef-9a1f-492d-89c4-d932ec264585-6500pixel.jpg
+2025-11-25 00:51:01,261 [INFO] [services.photo_scan_service:703] 📷 Processing: 14d6ecef-9a1f-492d-89c4-d932ec264585-6500pixel.jpg (9053.5 KB)
+2025-11-25 00:51:01,277 [INFO] [services.photo_scan_service:280] [Scan] File 105/122: 2e40f60e-db20-42fe-9c9d-fbe13b5d29b7-5000pixel.jpg
+2025-11-25 00:51:01,277 [INFO] [services.photo_scan_service:703] 📷 Processing: 2e40f60e-db20-42fe-9c9d-fbe13b5d29b7-5000pixel.jpg (6845.1 KB)
+2025-11-25 00:51:01,309 [INFO] [services.photo_scan_service:280] [Scan] File 106/122: 496549718_9861897087212412_207767369670450848_n-8000pixel.jpg
+2025-11-25 00:51:01,309 [INFO] [services.photo_scan_service:703] 📷 Processing: 496549718_9861897087212412_207767369670450848_n-8000pixel.jpg (8296.1 KB)
+2025-11-25 00:51:01,341 [INFO] [services.photo_scan_service:280] [Scan] File 107/122: 50e55f3d-9a0a-4583-b89d-fd94e04bb73b-6500pixel.jpg
+2025-11-25 00:51:01,341 [INFO] [services.photo_scan_service:703] 📷 Processing: 50e55f3d-9a0a-4583-b89d-fd94e04bb73b-6500pixel.jpg (7510.0 KB)
+2025-11-25 00:51:01,377 [INFO] [services.photo_scan_service:280] [Scan] File 108/122: a5b9613c-29c5-4053-84a0-346ea71c4e9a.jpg
+2025-11-25 00:51:01,384 [INFO] [services.photo_scan_service:703] 📷 Processing: a5b9613c-29c5-4053-84a0-346ea71c4e9a.jpg (1864.3 KB)
+2025-11-25 00:51:01,436 [INFO] [services.photo_scan_service:280] [Scan] File 109/122: f40f91a7-a3cf-441e-8447-570c76519af0-6500pixel.jpg
+2025-11-25 00:51:01,443 [INFO] [services.photo_scan_service:703] 📷 Processing: f40f91a7-a3cf-441e-8447-570c76519af0-6500pixel.jpg (8887.1 KB)
+2025-11-25 00:51:01,466 [INFO] [services.photo_scan_service:280] [Scan] File 110/122: 296127c5-d9b8-4e1c-b34d-7e07ce9e6f77-8000pixel.jpg
+2025-11-25 00:51:01,466 [INFO] [services.photo_scan_service:703] 📷 Processing: 296127c5-d9b8-4e1c-b34d-7e07ce9e6f77-8000pixel.jpg (12301.7 KB)
+2025-11-25 00:51:01,545 [INFO] [services.photo_scan_service:280] [Scan] File 111/122: 296127c5-d9b8-4e1c-b34d-7e07ce9e6f77.jpg
+2025-11-25 00:51:01,549 [INFO] [services.photo_scan_service:703] 📷 Processing: 296127c5-d9b8-4e1c-b34d-7e07ce9e6f77.jpg (1068.2 KB)
+2025-11-25 00:51:01,622 [INFO] [services.photo_scan_service:280] [Scan] File 112/122: 357aef0d-d048-405f-a2f8-194ea4c31717-8000pixel.jpg
+2025-11-25 00:51:01,624 [INFO] [services.photo_scan_service:703] 📷 Processing: 357aef0d-d048-405f-a2f8-194ea4c31717-8000pixel.jpg (10494.2 KB)
+2025-11-25 00:51:01,671 [INFO] [services.photo_scan_service:280] [Scan] File 113/122: 409644bf-e7eb-42db-8bac-9b6fb70beb80-8000pixel.jpg
+2025-11-25 00:51:01,671 [INFO] [services.photo_scan_service:703] 📷 Processing: 409644bf-e7eb-42db-8bac-9b6fb70beb80-8000pixel.jpg (19826.0 KB)
+2025-11-25 00:51:01,719 [INFO] [services.photo_scan_service:280] [Scan] File 114/122: 409644bf-e7eb-42db-8bac-9b6fb70beb80.jpg
+2025-11-25 00:51:01,719 [INFO] [services.photo_scan_service:703] 📷 Processing: 409644bf-e7eb-42db-8bac-9b6fb70beb80.jpg (1827.6 KB)
+2025-11-25 00:51:01,783 [INFO] [services.photo_scan_service:280] [Scan] File 115/122: 56d5afac-e26d-4622-8dde-e161de7402b0-8000pixel.jpg
+2025-11-25 00:51:01,792 [INFO] [services.photo_scan_service:703] 📷 Processing: 56d5afac-e26d-4622-8dde-e161de7402b0-8000pixel.jpg (10908.5 KB)
+2025-11-25 00:51:01,831 [INFO] [services.photo_scan_service:280] [Scan] File 116/122: 56d5afac-e26d-4622-8dde-e161de7402b0.jpg
+2025-11-25 00:51:01,831 [INFO] [services.photo_scan_service:703] 📷 Processing: 56d5afac-e26d-4622-8dde-e161de7402b0.jpg (927.8 KB)
+2025-11-25 00:51:01,873 [INFO] [services.photo_scan_service:280] [Scan] File 117/122: 7dcc1f24-0878-46c0-b3c7-18e7d8b97c4e-8000pixel.jpg
+2025-11-25 00:51:01,873 [INFO] [services.photo_scan_service:703] 📷 Processing: 7dcc1f24-0878-46c0-b3c7-18e7d8b97c4e-8000pixel.jpg (23493.1 KB)
+2025-11-25 00:51:01,896 [INFO] [services.photo_scan_service:280] [Scan] File 118/122: 7dcc1f24-0878-46c0-b3c7-18e7d8b97c4e.jpg
+2025-11-25 00:51:01,896 [INFO] [services.photo_scan_service:703] 📷 Processing: 7dcc1f24-0878-46c0-b3c7-18e7d8b97c4e.jpg (2248.5 KB)
+2025-11-25 00:51:01,942 [INFO] [services.photo_scan_service:280] [Scan] File 119/122: cd6237aa-187d-4742-a6f9-9deee3bf6184-8000pixel.jpg
+2025-11-25 00:51:01,942 [INFO] [services.photo_scan_service:703] 📷 Processing: cd6237aa-187d-4742-a6f9-9deee3bf6184-8000pixel.jpg (24061.3 KB)
+2025-11-25 00:51:01,989 [INFO] [services.photo_scan_service:280] [Scan] File 120/122: cd6237aa-187d-4742-a6f9-9deee3bf6184.jpg
+2025-11-25 00:51:01,996 [INFO] [services.photo_scan_service:703] 📷 Processing: cd6237aa-187d-4742-a6f9-9deee3bf6184.jpg (2333.4 KB)
+2025-11-25 00:51:02,053 [INFO] [services.photo_scan_service:280] [Scan] File 121/122: 7c658e8d96ae27439c8c2f9dfdc55250.jpg
+2025-11-25 00:51:02,053 [INFO] [services.photo_scan_service:703] 📷 Processing: 7c658e8d96ae27439c8c2f9dfdc55250.jpg (181.0 KB)
+2025-11-25 00:51:02,111 [INFO] [services.photo_scan_service:280] [Scan] File 122/122: 8a49cde71b476845895379473c19392f.jpg
+2025-11-25 00:51:02,116 [INFO] [services.photo_scan_service:703] 📷 Processing: 8a49cde71b476845895379473c19392f.jpg (44.0 KB)
+2025-11-25 00:51:02,196 [INFO] [PhotoRepository:249] Bulk upserted 122 photos for project 1
+2025-11-25 00:51:02,196 [INFO] [services.photo_scan_service:362] Executor shutdown complete
+2025-11-25 00:51:02,212 [INFO] [services.photo_scan_service:385] Scan complete: 122 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 4.9s
+2025-11-25 00:51:02,212 [INFO] [services.scan_worker_adapter:120] Scan completed: 122 photos, 0 videos, 16 folders in 4.9s
+2025-11-25 00:51:03,559 [INFO] [main_window_qt:418] Building date branches...
+2025-11-25 00:51:03,559 [INFO] [main_window_qt:434] Building date branches for project_id=1
+2025-11-25 00:51:03,579 [INFO] [main_window_qt:436] Created 70 photo date branch entries for project 1
+2025-11-25 00:51:03,579 [INFO] [main_window_qt:439] Building video date branches for project_id=1
+2025-11-25 00:51:03,579 [INFO] [main_window_qt:441] Created 0 video date branch entries for project 1
+2025-11-25 00:51:03,579 [INFO] [main_window_qt:450] Backfilling created_date fields for photos...
+2025-11-25 00:51:03,591 [INFO] [main_window_qt:453] Backfilled 52 photo rows with created_date
+2025-11-25 00:51:03,591 [INFO] [main_window_qt:456] Backfilling created_date fields for videos...
+2025-11-25 00:51:03,591 [INFO] [main_window_qt:631] Reloading sidebar after date branches built...
+2025-11-25 00:51:16,603 [INFO] [TagRepository:506] Added tag 1 to 1 photos (out of 1 requested)
+2025-11-25 00:51:16,603 [INFO] [services.tag_service:271] Bulk assigned tag 'favorite' to 1 photos
+2025-11-25 00:51:21,314 [INFO] [TagRepository:506] Added tag 2 to 1 photos (out of 1 requested)
+2025-11-25 00:51:21,314 [INFO] [services.tag_service:271] Bulk assigned tag 'face' to 1 photos
+2025-11-25 00:51:38,642 [INFO] [workers.face_detection_worker:100] [FaceDetectionWorker] Starting face detection for project 1
+2025-11-25 00:51:38,642 [INFO] [services.face_detection_service:48] 💻 Using CPU for face detection (CUDA not available)
+2025-11-25 00:51:38,644 [INFO] [services.face_detection_service:88] 🎯 Using custom model path (buffalo_l directory): C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 00:51:38,652 [INFO] [services.face_detection_service:213] ✓ Initializing InsightFace with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 00:51:38,654 [INFO] [services.face_detection_service:219] 📦 InsightFace version: 0.7.3
+2025-11-25 00:51:38,654 [INFO] [services.face_detection_service:271] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
+2025-11-25 00:51:39,649 [INFO] [services.face_detection_service:277] ✓ Using CPU acceleration (ctx_id=-1)
+2025-11-25 00:51:40,420 [INFO] [services.face_detection_service:285] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=640x640)
+2025-11-25 00:51:40,420 [INFO] [services.face_detection_service:430] [FaceDetection] Initialized InsightFace with model=hog
+2025-11-25 00:51:40,435 [INFO] [workers.face_detection_worker:129] [FaceDetectionWorker] Processing 122 photos
+2025-11-25 00:51:48,664 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:49,850 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:53,709 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:54,101 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:54,864 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:55,225 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/805a575a-3f43-45be-b985-9b06fa0906f9.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:55,442 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/9841394f-e772-4841-bd5d-f9f96431c350.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:57,364 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:58,323 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:58,771 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:51:59,004 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:10,621 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:11,939 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:13,418 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:14,622 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:16,216 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:16,973 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:17,437 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/light and shadow/22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:35,221 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/new folder (2)/img_e7704.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:36,959 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/02820bd6-72d7-47ef-9a4a-6c8818755fe0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:37,684 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/10f876ff-b1b2-4268-82fe-e1f09e72fe5e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:38,922 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/53c1c678-63ba-4687-87bb-86ae10539532.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:39,712 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:39,907 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:40,201 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/6fbaf768-98b4-43fe-a433-db94065527d5.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:45,288 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/oman/new folder/6fbaf768-98b4-43fe-a433-db94065527d4-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 00:52:54,372 [INFO] [workers.face_detection_worker:188] [FaceDetectionWorker] Complete in 75.7s: 122 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
+2025-11-25 01:25:24,989 [INFO] [root:118] ================================================================================
+2025-11-25 01:25:24,989 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 01:25:24,989 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 01:25:24,989 [INFO] [root:121] ================================================================================
+2025-11-25 01:25:25,037 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 01:25:25,037 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 01:25:25,256 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:25:25,256 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 01:25:25,256 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 01:25:25,256 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 01:25:25,281 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:25:29,336 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 01:25:38,237 [INFO] [workers.face_detection_worker:100] [FaceDetectionWorker] Starting face detection for project 1
+2025-11-25 01:25:38,237 [INFO] [services.face_detection_service:48] 💻 Using CPU for face detection (CUDA not available)
+2025-11-25 01:25:38,237 [INFO] [services.face_detection_service:88] 🎯 Using custom model path (buffalo_l directory): C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:25:38,241 [INFO] [services.face_detection_service:213] ✓ Initializing InsightFace with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:25:38,241 [INFO] [services.face_detection_service:219] 📦 InsightFace version: 0.7.3
+2025-11-25 01:25:38,241 [INFO] [services.face_detection_service:271] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
+2025-11-25 01:25:39,423 [INFO] [services.face_detection_service:277] ✓ Using CPU acceleration (ctx_id=-1)
+2025-11-25 01:25:40,273 [INFO] [services.face_detection_service:285] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=640x640)
+2025-11-25 01:25:40,275 [INFO] [services.face_detection_service:430] [FaceDetection] Initialized InsightFace with model=hog
+2025-11-25 01:25:40,278 [INFO] [workers.face_detection_worker:129] [FaceDetectionWorker] Processing 122 photos
+2025-11-25 01:25:50,847 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:51,966 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:55,670 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:56,044 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:56,818 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:57,163 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/805a575a-3f43-45be-b985-9b06fa0906f9.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:57,382 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/9841394f-e772-4841-bd5d-f9f96431c350.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:25:59,171 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:00,129 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:00,555 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:00,754 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:12,921 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:14,211 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:15,619 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:16,611 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:18,143 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:18,900 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:19,403 [ERROR] [services.face_detection_service:621] Error detecting faces in c:/users/alya/desktop/تصويري/light and shadow/22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:26:22,174 [INFO] [workers.face_detection_worker:95] [FaceDetectionWorker] Cancellation requested
+2025-11-25 01:26:22,534 [INFO] [workers.face_detection_worker:138] [FaceDetectionWorker] Cancelled by user
+2025-11-25 01:26:22,534 [INFO] [workers.face_detection_worker:188] [FaceDetectionWorker] Complete in 44.3s: 59 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
+2025-11-25 01:26:35,456 [INFO] [root:118] ================================================================================
+2025-11-25 01:26:35,456 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 01:26:35,456 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 01:26:35,456 [INFO] [root:121] ================================================================================
+2025-11-25 01:26:35,535 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 01:26:35,535 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 01:26:35,743 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:26:35,759 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 01:26:35,759 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 01:26:35,759 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 01:26:35,785 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:26:48,491 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 01:27:00,010 [INFO] [utils.test_insightface_models:34] ======================================================================
+2025-11-25 01:27:00,012 [INFO] [utils.test_insightface_models:35] InsightFace Model Path Test
+2025-11-25 01:27:00,012 [INFO] [utils.test_insightface_models:36] ======================================================================
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:37] Testing path: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:56] ✓ Detected: buffalo_l directory (detector: det_10g.onnx)
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:90] 
+Verifying model files...
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:98]   ✓ det_10g.onnx (16.1 MB) [DETECTOR]
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:110]   ✓ w600k_r50.onnx (166.3 MB) [RECOGNITION]
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:115] 
+Testing InsightFace initialization...
+2025-11-25 01:27:00,013 [INFO] [utils.test_insightface_models:128]   ✓ Detected: CPU only
+2025-11-25 01:27:00,019 [INFO] [utils.test_insightface_models:132] 
+  Initializing with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:27:01,119 [INFO] [utils.test_insightface_models:138]   Using CPU (ctx_id=-1)
+2025-11-25 01:27:01,904 [INFO] [utils.test_insightface_models:143] 
+✅ SUCCESS! InsightFace initialized successfully
+2025-11-25 01:27:01,905 [INFO] [utils.test_insightface_models:144] ======================================================================
+2025-11-25 01:27:47,262 [INFO] [root:118] ================================================================================
+2025-11-25 01:27:47,262 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 01:27:47,262 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 01:27:47,262 [INFO] [root:121] ================================================================================
+2025-11-25 01:27:47,294 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 01:27:47,294 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 01:27:47,500 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:27:47,500 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 01:27:47,500 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 01:27:47,500 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 01:27:47,516 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:27:59,104 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 01:28:01,602 [INFO] [workers.face_detection_worker:100] [FaceDetectionWorker] Starting face detection for project 1
+2025-11-25 01:28:01,602 [INFO] [services.face_detection_service:48] 💻 Using CPU for face detection (CUDA not available)
+2025-11-25 01:28:01,605 [INFO] [services.face_detection_service:88] 🎯 Using custom model path (buffalo_l directory): C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:28:01,605 [INFO] [services.face_detection_service:213] ✓ Initializing InsightFace with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:28:01,605 [INFO] [services.face_detection_service:219] 📦 InsightFace version: 0.7.3
+2025-11-25 01:28:01,607 [INFO] [services.face_detection_service:271] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
+2025-11-25 01:28:02,700 [INFO] [services.face_detection_service:277] ✓ Using CPU acceleration (ctx_id=-1)
+2025-11-25 01:28:03,595 [INFO] [services.face_detection_service:285] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=640x640)
+2025-11-25 01:28:03,595 [INFO] [services.face_detection_service:430] [FaceDetection] Initialized InsightFace with model=hog
+2025-11-25 01:28:03,595 [INFO] [workers.face_detection_worker:129] [FaceDetectionWorker] Processing 122 photos
+2025-11-25 01:28:12,201 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:13,219 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:16,684 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:17,037 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:17,768 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:18,074 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/805a575a-3f43-45be-b985-9b06fa0906f9.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:18,254 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/9841394f-e772-4841-bd5d-f9f96431c350.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:19,979 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:20,762 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:21,193 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:21,362 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:33,433 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:34,714 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:36,105 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:37,118 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:38,665 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:39,370 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:39,822 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/light and shadow/22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:56,864 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/new folder (2)/img_e7704.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:58,624 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/02820bd6-72d7-47ef-9a4a-6c8818755fe0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:28:59,327 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/10f876ff-b1b2-4268-82fe-e1f09e72fe5e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:00,533 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/53c1c678-63ba-4687-87bb-86ae10539532.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:01,317 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:01,515 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:01,806 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/6fbaf768-98b4-43fe-a433-db94065527d5.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:06,840 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/new folder/6fbaf768-98b4-43fe-a433-db94065527d4-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:29:16,039 [INFO] [workers.face_detection_worker:188] [FaceDetectionWorker] Complete in 74.4s: 122 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
+2025-11-25 01:29:40,758 [INFO] [root:118] ================================================================================
+2025-11-25 01:29:40,758 [INFO] [root:119] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-25 01:29:40,758 [INFO] [root:120] Log file: C:\Users\Alya\Downloads\MemoryMate\MemoryMatePhotoFlow\MemoryMate-PhotoFlow\app_log.txt
+2025-11-25 01:29:40,758 [INFO] [root:121] ================================================================================
+2025-11-25 01:29:40,792 [INFO] [services.thumbnail_service:96] Installed Qt message handler to suppress TIFF warnings
+2025-11-25 01:29:40,796 [INFO] [__main__:81] Qt message handler installed to suppress TIFF warnings
+2025-11-25 01:29:41,037 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:29:41,037 [INFO] [services.thumbnail_service:128] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-25 01:29:41,037 [INFO] [services.thumbnail_service:327] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-25 01:29:41,037 [INFO] [services.thumbnail_service:906] Global ThumbnailService created with Phase 1B memory limits
+2025-11-25 01:29:41,053 [INFO] [services.search_service:103] SearchService initialized
+2025-11-25 01:29:48,304 [INFO] [matplotlib.font_manager:1639] generated new fontManager
+2025-11-25 01:29:51,359 [INFO] [workers.face_detection_worker:100] [FaceDetectionWorker] Starting face detection for project 1
+2025-11-25 01:29:51,359 [INFO] [services.face_detection_service:48] 💻 Using CPU for face detection (CUDA not available)
+2025-11-25 01:29:51,359 [INFO] [services.face_detection_service:88] 🎯 Using custom model path (buffalo_l directory): C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:29:51,366 [INFO] [services.face_detection_service:213] ✓ Initializing InsightFace with buffalo_l directory: C:/Users/Alya/Downloads/MemoryMate/MemoryMatePhotoFlow/models
+2025-11-25 01:29:51,366 [INFO] [services.face_detection_service:219] 📦 InsightFace version: 0.7.3
+2025-11-25 01:29:51,366 [INFO] [services.face_detection_service:271] ✓ Using ctx_id approach (older InsightFace, proof of concept compatible)
+2025-11-25 01:29:52,473 [INFO] [services.face_detection_service:277] ✓ Using CPU acceleration (ctx_id=-1)
+2025-11-25 01:29:53,305 [INFO] [services.face_detection_service:285] ✅ InsightFace (buffalo_l) loaded successfully with CPU acceleration (det_size=640x640)
+2025-11-25 01:29:53,312 [INFO] [services.face_detection_service:430] [FaceDetection] Initialized InsightFace with model=hog
+2025-11-25 01:29:53,314 [INFO] [workers.face_detection_worker:129] [FaceDetectionWorker] Processing 122 photos
+2025-11-25 01:30:03,121 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/34f19d1b-fdab-44cb-b436-dd87e5d4b363-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:04,132 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falakey/516212651_17914498839152199_1890547590708993007_n-6500pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:07,658 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5a861bc6-92dd-4090-bf2c-aa0019c4ab0a.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:08,003 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/5fd56a6d-aa92-4da1-a0ba-1bff8361e5b4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:08,679 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/7575fd82-955b-467a-b6e2-b47a8ad586e4.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:08,989 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/805a575a-3f43-45be-b985-9b06fa0906f9.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:09,173 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/9841394f-e772-4841-bd5d-f9f96431c350.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:10,884 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/a317ba0d-ee97-4592-9284-ed28510d8f0e-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:11,685 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/c027cf6f-bf93-4de8-80f9-1c5224d244e0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:12,081 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/d28d72b4-dfd7-4b9a-b1bc-3a2d4c7a8ec3.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:12,253 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/deb61a9c-7ebf-4cf3-9475-3d9fb95a1864.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:23,636 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/95ec90a2-49d4-4ac1-bd05-cebf80dbfb7b-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:24,920 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/9e52538a-c472-4222-96ea-74681d90d18f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:26,279 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/e7e1b13d-bf58-449b-86dc-163d4c87417a-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:27,282 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/96c5fecc-d7d5-4473-9a8a-fefa244d5468-10000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:28,789 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/c0d0220b-2c3d-49ea-b6a2-64c1047bf1e5-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:29,509 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/falaky/new folder/seite/fd25341f-d169-4e6d-ba4a-65809cc7bd1f-8000-300pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:29,919 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/light and shadow/22e14596-f011-4aaf-b857-1b4ed75aba1c.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:47,048 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/new folder (2)/img_e7704.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:48,807 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/02820bd6-72d7-47ef-9a4a-6c8818755fe0.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:49,511 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/10f876ff-b1b2-4268-82fe-e1f09e72fe5e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:50,734 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/53c1c678-63ba-4687-87bb-86ae10539532.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:51,516 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:51,713 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/5e8a6412-09ee-4276-bfab-1da5580e495e.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:52,004 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/6fbaf768-98b4-43fe-a433-db94065527d5.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:30:57,110 [ERROR] [services.face_detection_service:628] Error detecting faces in c:/users/alya/desktop/تصويري/oman/new folder/6fbaf768-98b4-43fe-a433-db94065527d4-8000pixel.jpg: 'NoneType' object has no attribute 'shape'
+2025-11-25 01:31:06,269 [INFO] [workers.face_detection_worker:188] [FaceDetectionWorker] Complete in 74.9s: 122 processed (0 with faces), 0 skipped, 0 faces detected, 0 failed
