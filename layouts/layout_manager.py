@@ -36,6 +36,10 @@ class LayoutManager:
         self._current_layout: Optional[BaseLayout] = None
         self._current_layout_id: str = "current"
 
+        # CRITICAL: Store reference to original central widget
+        # This preserves the original layout when switching to other layouts
+        self._original_central_widget: Optional[QWidget] = None
+
         # Register built-in layouts
         self._register_builtin_layouts()
 
@@ -96,13 +100,19 @@ class LayoutManager:
 
         print(f"[LayoutManager] Switching layout: {self._current_layout_id} → {layout_id}")
 
+        # CRITICAL FIX: Save reference to original central widget on first switch
+        # This happens when switching AWAY from "current" layout for the first time
+        if self._original_central_widget is None and self._current_layout_id == "current":
+            self._original_central_widget = self.main_window.centralWidget()
+            print(f"[LayoutManager] 💾 Saved original central widget: {type(self._original_central_widget).__name__}")
+
         # Save current layout state
         if self._current_layout:
             state = self._current_layout.save_state()
             if self.settings:
                 self.settings.set(f"layout_{self._current_layout_id}_state", state)
 
-            # Cleanup current layout
+            # Cleanup current layout (but don't destroy the original widget)
             self._current_layout.cleanup()
 
         # Create new layout instance
@@ -114,12 +124,19 @@ class LayoutManager:
 
         # Handle layout switching in MainWindow
         if layout_widget is not None:
-            # New layout provides its own widget
+            # New layout provides its own widget (placeholder layouts)
+            print(f"[LayoutManager] Setting new central widget: {type(layout_widget).__name__}")
             self.main_window.setCentralWidget(layout_widget)
         else:
-            # Layout uses MainWindow's existing components (like CurrentLayout)
-            # No change needed - MainWindow already has the layout
-            pass
+            # Layout uses MainWindow's existing components (CurrentLayout)
+            # CRITICAL FIX: Restore the original central widget
+            if layout_id == "current" and self._original_central_widget is not None:
+                print(f"[LayoutManager] 🔄 Restoring original central widget: {type(self._original_central_widget).__name__}")
+                self.main_window.setCentralWidget(self._original_central_widget)
+            else:
+                # First initialization - widget is already set in MainWindow.__init__
+                print(f"[LayoutManager] Keeping existing central widget (first initialization)")
+                pass
 
         # Update current layout
         self._current_layout = new_layout
