@@ -261,13 +261,18 @@ class PhotoScanService:
             batch_rows = []
             folders_seen: Set[str] = set()
 
-            # DEADLOCK FIX: Use batch-based executor strategy
-            # PROBLEM: Fresh executor per file causes overhead + thread leaks at progress points
-            # SOLUTION: Create fresh executor every 5 files to balance overhead vs stability
-            # This prevents both: 1) accumulation deadlocks and 2) per-file overhead
-            executor = None
-            executor_file_count = 0
-            EXECUTOR_BATCH_SIZE = 5  # Recreate executor after this many files
+            # DEADLOCK FIX v2: Use single executor for entire scan
+            # PROBLEM v1: Fresh executor per file = 105 executors, massive overhead, thread leaks
+            # PROBLEM v2: Batch approach (every 5 files) = shutdown(wait=True) DEADLOCKS at boundaries
+            #   - Root cause: Main thread blocks on executor.shutdown(wait=True)
+            #   - While blocking, database/Qt operations can't proceed → circular wait
+            #   - Observed: Freeze at file 10/15 (66%) when recreating executor
+            # SOLUTION v2: Single executor for entire scan, shutdown only at end
+            #   - No mid-scan shutdown calls = no deadlock opportunities
+            #   - All futures properly awaited via .result() calls
+            #   - Clean shutdown in finally block when scan completes
+            executor = ThreadPoolExecutor(max_workers=2)
+            print(f"[SCAN] Created single executor for scan ({total_files} files)")
 
             try:
                 for i, file_path in enumerate(all_files, 1):
@@ -278,22 +283,6 @@ class PhotoScanService:
                     # DIAGNOSTIC: Log which file we're about to process
                     print(f"[SCAN] Starting file {i}/{total_files}: {file_path.name}")
                     logger.info(f"[Scan] File {i}/{total_files}: {file_path.name}")
-
-                    # DEADLOCK FIX: Create/recreate executor in batches
-                    if executor is None or executor_file_count >= EXECUTOR_BATCH_SIZE:
-                        # Shutdown old executor if exists
-                        if executor is not None:
-                            try:
-                                # CRITICAL: wait=True ensures threads finish before continuing
-                                executor.shutdown(wait=True, cancel_futures=False)
-                                print(f"[SCAN] Executor batch complete ({executor_file_count} files)")
-                            except Exception as e:
-                                logger.debug(f"Executor shutdown warning: {e}")
-
-                        # Create fresh executor for next batch
-                        executor = ThreadPoolExecutor(max_workers=2)
-                        executor_file_count = 0
-                        print(f"[SCAN] Created fresh executor for file {i}")
 
                     try:
                         # Process file
@@ -306,7 +295,6 @@ class PhotoScanService:
                             extract_exif_date=extract_exif_date,
                             executor=executor
                         )
-                        executor_file_count += 1
                     except Exception as file_error:
                         logger.error(f"File processing error: {file_error}")
                         self._stats['photos_failed'] += 1
@@ -354,11 +342,12 @@ class PhotoScanService:
                     self._write_batch(batch_rows, project_id)
 
             finally:
-                # DEADLOCK FIX: Shutdown final executor batch
+                # DEADLOCK FIX v2: Shutdown executor with wait=False to avoid blocking
+                # All futures are already awaited via .result() calls, so wait=False is safe
                 if executor is not None:
                     try:
-                        print(f"[SCAN] Shutting down final executor (processed {executor_file_count} files)")
-                        executor.shutdown(wait=True, cancel_futures=False)
+                        print(f"[SCAN] Shutting down executor")
+                        executor.shutdown(wait=False, cancel_futures=True)
                         logger.info(f"Executor shutdown complete")
                     except Exception as e:
                         logger.warning(f"Final executor shutdown error: {e}")
