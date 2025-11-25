@@ -129,6 +129,35 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_create_project.setToolTip("Create a new project")
         toolbar.addWidget(self.btn_create_project)
 
+        # Project selector
+        from PySide6.QtWidgets import QComboBox, QLabel
+        project_label = QLabel("Project:")
+        project_label.setStyleSheet("padding: 0 8px; font-weight: bold;")
+        toolbar.addWidget(project_label)
+
+        self.project_combo = QComboBox()
+        self.project_combo.setMinimumWidth(150)
+        self.project_combo.setStyleSheet("""
+            QComboBox {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 6px 12px;
+                font-size: 11pt;
+            }
+            QComboBox:hover {
+                border-color: #bdc1c6;
+            }
+            QComboBox::drop-down {
+                border: none;
+            }
+        """)
+        self.project_combo.setToolTip("Select project to view")
+        toolbar.addWidget(self.project_combo)
+
+        # Populate project selector
+        self._populate_project_selector()
+
         toolbar.addSeparator()
 
         self.btn_scan = QPushButton("📂 Scan Repository")
@@ -568,23 +597,99 @@ class GooglePhotosLayout(BaseLayout):
         """Called when this layout becomes active."""
         print("[GooglePhotosLayout] Layout activated")
 
+        # CRITICAL FIX: Disconnect before connecting to prevent duplicate signal connections
+        # When layout is toggled multiple times, connections would stack up
+        try:
+            self.btn_create_project.clicked.disconnect()
+        except:
+            pass  # No previous connection
+        try:
+            self.btn_scan.clicked.disconnect()
+        except:
+            pass
+        try:
+            self.btn_faces.clicked.disconnect()
+        except:
+            pass
+
         # Connect toolbar buttons to MainWindow actions if available
         if hasattr(self.main_window, '_create_new_project'):
             self.btn_create_project.clicked.connect(self._on_create_project_clicked)
-            print("[GooglePhotosLayout] Connected Create Project button")
+            print("[GooglePhotosLayout] ✓ Connected Create Project button")
 
         if hasattr(self.main_window, '_on_scan_repository'):
             self.btn_scan.clicked.connect(self.main_window._on_scan_repository)
-            print("[GooglePhotosLayout] Connected Scan button to MainWindow")
+            print("[GooglePhotosLayout] ✓ Connected Scan button")
 
         if hasattr(self.main_window, '_on_detect_and_group_faces'):
             self.btn_faces.clicked.connect(self.main_window._on_detect_and_group_faces)
-            print("[GooglePhotosLayout] Connected Faces button to MainWindow")
+            print("[GooglePhotosLayout] ✓ Connected Faces button")
 
     def _on_create_project_clicked(self):
         """Handle Create Project button click."""
-        print("[GooglePhotosLayout] Create Project clicked")
+        print("[GooglePhotosLayout] 🆕 Create Project clicked")
         # Call MainWindow's project creation dialog
         self.main_window._create_new_project()
-        # Refresh the layout after project creation
+
+        # CRITICAL: Update project_id after creation
+        from app_services import get_default_project_id
+        self.project_id = get_default_project_id()
+        print(f"[GooglePhotosLayout] Project created, using project_id: {self.project_id}")
+
+        # Refresh project selector and layout
+        self._populate_project_selector()
+        self._load_photos()
+
+    def _populate_project_selector(self):
+        """
+        Populate the project selector combobox with available projects.
+        """
+        try:
+            from app_services import list_projects
+            projects = list_projects()
+
+            # Block signals while updating to prevent triggering change handler
+            self.project_combo.blockSignals(True)
+            self.project_combo.clear()
+
+            if not projects:
+                self.project_combo.addItem("(No projects)", None)
+                self.project_combo.setEnabled(False)
+            else:
+                for proj in projects:
+                    self.project_combo.addItem(proj["name"], proj["id"])
+                self.project_combo.setEnabled(True)
+
+                # Select current project
+                if self.project_id:
+                    for i in range(self.project_combo.count()):
+                        if self.project_combo.itemData(i) == self.project_id:
+                            self.project_combo.setCurrentIndex(i)
+                            break
+
+            # Unblock signals and connect change handler
+            self.project_combo.blockSignals(False)
+            try:
+                self.project_combo.currentIndexChanged.disconnect()
+            except:
+                pass  # No previous connection
+            self.project_combo.currentIndexChanged.connect(self._on_project_changed)
+
+            print(f"[GooglePhotosLayout] Project selector populated with {len(projects)} projects")
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error populating project selector: {e}")
+
+    def _on_project_changed(self, index: int):
+        """
+        Handle project selection change in combobox.
+        """
+        new_project_id = self.project_combo.itemData(index)
+        if new_project_id is None or new_project_id == self.project_id:
+            return
+
+        print(f"[GooglePhotosLayout] 📂 Project changed: {self.project_id} → {new_project_id}")
+        self.project_id = new_project_id
+
+        # Reload photos for the new project
         self._load_photos()
