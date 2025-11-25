@@ -604,7 +604,7 @@ class GooglePhotosLayout(BaseLayout):
 
     def _create_sidebar(self) -> QWidget:
         """
-        Create minimal sidebar with search + timeline navigation + folders.
+        Create minimal sidebar with timeline navigation, folders, and people.
         """
         sidebar = QWidget()
         sidebar.setMinimumWidth(180)
@@ -620,10 +620,26 @@ class GooglePhotosLayout(BaseLayout):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(12)
 
-        # Timeline navigation header
-        header = QLabel("📅 Timeline")
-        header.setStyleSheet("font-size: 12pt; font-weight: bold; color: #202124;")
-        layout.addWidget(header)
+        # Timeline navigation header (clickable to clear filters)
+        timeline_header = QPushButton("📅 Timeline")
+        timeline_header.setFlat(True)
+        timeline_header.setCursor(Qt.PointingHandCursor)
+        timeline_header.setStyleSheet("""
+            QPushButton {
+                text-align: left;
+                font-size: 12pt;
+                font-weight: bold;
+                color: #202124;
+                border: none;
+                padding: 4px 0px;
+            }
+            QPushButton:hover {
+                color: #1a73e8;
+                background: transparent;
+            }
+        """)
+        timeline_header.clicked.connect(self._on_section_header_clicked)
+        layout.addWidget(timeline_header)
 
         # Timeline tree (Years > Months)
         self.timeline_tree = QTreeWidget()
@@ -649,9 +665,26 @@ class GooglePhotosLayout(BaseLayout):
         self.timeline_tree.itemClicked.connect(self._on_timeline_item_clicked)
         layout.addWidget(self.timeline_tree)
 
-        # Folders section
-        folders_header = QLabel("📁 Folders")
-        folders_header.setStyleSheet("font-size: 12pt; font-weight: bold; color: #202124; margin-top: 12px;")
+        # Folders section header (clickable to clear filters)
+        folders_header = QPushButton("📁 Folders")
+        folders_header.setFlat(True)
+        folders_header.setCursor(Qt.PointingHandCursor)
+        folders_header.setStyleSheet("""
+            QPushButton {
+                text-align: left;
+                font-size: 12pt;
+                font-weight: bold;
+                color: #202124;
+                border: none;
+                padding: 4px 0px;
+                margin-top: 12px;
+            }
+            QPushButton:hover {
+                color: #1a73e8;
+                background: transparent;
+            }
+        """)
+        folders_header.clicked.connect(self._on_section_header_clicked)
         layout.addWidget(folders_header)
 
         # Folders tree
@@ -677,6 +710,52 @@ class GooglePhotosLayout(BaseLayout):
         # Connect click signal to filter handler
         self.folders_tree.itemClicked.connect(self._on_folder_item_clicked)
         layout.addWidget(self.folders_tree)
+
+        # People section header (clickable to clear filters)
+        people_header = QPushButton("👥 People")
+        people_header.setFlat(True)
+        people_header.setCursor(Qt.PointingHandCursor)
+        people_header.setStyleSheet("""
+            QPushButton {
+                text-align: left;
+                font-size: 12pt;
+                font-weight: bold;
+                color: #202124;
+                border: none;
+                padding: 4px 0px;
+                margin-top: 12px;
+            }
+            QPushButton:hover {
+                color: #1a73e8;
+                background: transparent;
+            }
+        """)
+        people_header.clicked.connect(self._on_section_header_clicked)
+        layout.addWidget(people_header)
+
+        # People tree
+        self.people_tree = QTreeWidget()
+        self.people_tree.setHeaderHidden(True)
+        self.people_tree.setStyleSheet("""
+            QTreeWidget {
+                border: none;
+                background: transparent;
+                font-size: 10pt;
+            }
+            QTreeWidget::item {
+                padding: 4px;
+            }
+            QTreeWidget::item:hover {
+                background: #f1f3f4;
+            }
+            QTreeWidget::item:selected {
+                background: #e8f0fe;
+                color: #1a73e8;
+            }
+        """)
+        # Connect click signal to filter handler
+        self.people_tree.itemClicked.connect(self._on_people_item_clicked)
+        layout.addWidget(self.people_tree)
 
         # Spacer at bottom
         layout.addStretch()
@@ -709,7 +788,7 @@ class GooglePhotosLayout(BaseLayout):
 
         return scroll
 
-    def _load_photos(self, thumb_size: int = 200, filter_year: int = None, filter_month: int = None, filter_folder: str = None):
+    def _load_photos(self, thumb_size: int = 200, filter_year: int = None, filter_month: int = None, filter_folder: str = None, filter_person: str = None):
         """
         Load photos from database and populate timeline.
 
@@ -718,6 +797,7 @@ class GooglePhotosLayout(BaseLayout):
             filter_year: Optional year filter (e.g., 2024)
             filter_month: Optional month filter (1-12, requires filter_year)
             filter_folder: Optional folder path filter
+            filter_person: Optional person/face cluster filter (branch_key)
 
         CRITICAL: Wrapped in comprehensive error handling to prevent crashes
         during/after scan operations when database might be in inconsistent state.
@@ -727,6 +807,7 @@ class GooglePhotosLayout(BaseLayout):
         self.current_filter_year = filter_year
         self.current_filter_month = filter_month
         self.current_filter_folder = filter_folder
+        self.current_filter_person = filter_person
 
         filter_desc = []
         if filter_year:
@@ -735,12 +816,14 @@ class GooglePhotosLayout(BaseLayout):
             filter_desc.append(f"month={filter_month}")
         if filter_folder:
             filter_desc.append(f"folder={filter_folder}")
+        if filter_person:
+            filter_desc.append(f"person={filter_person}")
 
         filter_str = f" [{', '.join(filter_desc)}]" if filter_desc else ""
         print(f"[GooglePhotosLayout] Loading photos from database (thumb size: {thumb_size}px){filter_str}...")
 
         # Show/hide Clear Filter button based on whether filters are active
-        has_filters = filter_year is not None or filter_month is not None or filter_folder is not None
+        has_filters = filter_year is not None or filter_month is not None or filter_folder is not None or filter_person is not None
         self.btn_clear_filter.setVisible(has_filters)
 
         # Clear existing timeline
@@ -752,12 +835,13 @@ class GooglePhotosLayout(BaseLayout):
 
             # CRITICAL FIX: Only clear trees when NOT filtering
             # When filtering, we want to keep the tree structure visible
-            # so users can see all available years/months/folders and switch between them
-            has_filters = filter_year is not None or filter_month is not None or filter_folder is not None
+            # so users can see all available years/months/folders/people and switch between them
+            has_filters = filter_year is not None or filter_month is not None or filter_folder is not None or filter_person is not None
             if not has_filters:
                 # Clear trees only when showing all photos (no filters)
                 self.timeline_tree.clear()
                 self.folders_tree.clear()
+                self.people_tree.clear()
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error clearing timeline: {e}")
             # Continue anyway
@@ -805,6 +889,18 @@ class GooglePhotosLayout(BaseLayout):
                 query_parts.append("AND pm.path LIKE ?")
                 params.append(f"{filter_folder}%")
 
+            # Add person/face filter (photos containing this person)
+            if filter_person is not None:
+                query_parts.append("""
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+                """)
+                params.append(self.project_id)
+                params.append(filter_person)
+
             query_parts.append("ORDER BY pm.date_taken DESC")
             query = "\n".join(query_parts)
 
@@ -837,11 +933,12 @@ class GooglePhotosLayout(BaseLayout):
             # Group photos by date
             photos_by_date = self._group_photos_by_date(rows)
 
-            # Build timeline and folders trees (only if not filtering)
-            # This shows ALL years/months/folders, not just filtered ones
-            if filter_year is None and filter_month is None and filter_folder is None:
+            # Build timeline, folders, and people trees (only if not filtering)
+            # This shows ALL years/months/folders/people, not just filtered ones
+            if filter_year is None and filter_month is None and filter_folder is None and filter_person is None:
                 self._build_timeline_tree(photos_by_date)
                 self._build_folders_tree(rows)
+                self._build_people_tree()
 
             # Create date group widgets
             for date_str, photos in photos_by_date.items():
@@ -988,7 +1085,8 @@ class GooglePhotosLayout(BaseLayout):
                 thumb_size=self.current_thumb_size,
                 filter_year=year,
                 filter_month=None,
-                filter_folder=None
+                filter_folder=None,
+                filter_person=None
             )
         elif item_type == "month":
             year = data.get("year")
@@ -999,7 +1097,8 @@ class GooglePhotosLayout(BaseLayout):
                 thumb_size=self.current_thumb_size,
                 filter_year=year,
                 filter_month=month,
-                filter_folder=None
+                filter_folder=None,
+                filter_person=None
             )
 
     def _on_folder_item_clicked(self, item: QTreeWidgetItem, column: int):
@@ -1022,8 +1121,98 @@ class GooglePhotosLayout(BaseLayout):
                 thumb_size=self.current_thumb_size,
                 filter_year=None,
                 filter_month=None,
-                filter_folder=folder_path
+                filter_folder=folder_path,
+                filter_person=None
             )
+
+    def _build_people_tree(self):
+        """
+        Build people tree in sidebar (face clusters with counts).
+
+        Queries face_branch_reps table for detected faces/people.
+        """
+        try:
+            from reference_db import ReferenceDB
+            db = ReferenceDB()
+
+            # Query face clusters for current project
+            query = """
+                SELECT branch_key, label, count
+                FROM face_branch_reps
+                WHERE project_id = ?
+                ORDER BY count DESC
+                LIMIT 10
+            """
+
+            with db._connect() as conn:
+                conn.execute("PRAGMA busy_timeout = 5000")
+                cur = conn.cursor()
+                cur.execute(query, (self.project_id,))
+                rows = cur.fetchall()
+
+            if not rows:
+                # No face clusters found - show placeholder
+                no_faces_item = QTreeWidgetItem(["  (Run face detection first)"])
+                no_faces_item.setDisabled(True)
+                self.people_tree.addTopLevelItem(no_faces_item)
+                return
+
+            # Build tree
+            for branch_key, label, count in rows:
+                # Use label if set, otherwise use "Unnamed Person X"
+                display_name = label if label else f"Unnamed Person"
+
+                person_item = QTreeWidgetItem([f"👤 {display_name} ({count})"])
+                person_item.setData(0, Qt.UserRole, {"type": "person", "branch_key": branch_key, "label": label})
+                self.people_tree.addTopLevelItem(person_item)
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error building people tree: {e}")
+
+    def _on_people_item_clicked(self, item: QTreeWidgetItem, column: int):
+        """
+        Handle people tree item click - filter by person/face cluster.
+
+        Args:
+            item: Clicked tree item
+            column: Column index (always 0)
+        """
+        data = item.data(0, Qt.UserRole)
+        if not data:
+            return
+
+        branch_key = data.get("branch_key")
+        if branch_key:
+            label = data.get("label") or "Unnamed Person"
+            print(f"[GooglePhotosLayout] Filtering by person: {label} (branch_key={branch_key})")
+            self._load_photos(
+                thumb_size=self.current_thumb_size,
+                filter_year=None,
+                filter_month=None,
+                filter_folder=None,
+                filter_person=branch_key
+            )
+
+    def _on_section_header_clicked(self):
+        """
+        Handle section header click - clear all filters and show all photos.
+
+        Based on Google Photos UX: Clicking section headers returns to "All Photos" view.
+        """
+        print("[GooglePhotosLayout] Section header clicked - clearing all filters")
+
+        # Clear all filters
+        self._load_photos(
+            thumb_size=self.current_thumb_size,
+            filter_year=None,
+            filter_month=None,
+            filter_folder=None,
+            filter_person=None
+        )
+
+        # Also clear search box
+        if self.search_box.text():
+            self.search_box.clear()
 
     def _create_date_group(self, date_str: str, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
@@ -1576,6 +1765,7 @@ class GooglePhotosLayout(BaseLayout):
 
         self.timeline_tree.clear()
         self.folders_tree.clear()  # Clear folders too for consistency
+        self.people_tree.clear()  # Clear people too for consistency
 
         if not rows:
             # No results
