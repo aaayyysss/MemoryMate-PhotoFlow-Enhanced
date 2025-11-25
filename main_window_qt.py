@@ -654,11 +654,14 @@ class ScanController:
                     self.logger.debug("Skipping sidebar reload - already updated by set_project()")
             except Exception as e:
                 self.logger.error(f"Error reloading sidebar: {e}", exc_info=True)
+
+            # CRITICAL FIX: Always reload grid - needed for Current layout even if Google is active
             try:
                 if hasattr(self.main.grid, "reload"):
                     self.main.grid.reload()
-            except Exception:
-                pass
+                    self.logger.debug("Grid reload completed")
+            except Exception as e:
+                self.logger.error(f"Error reloading grid: {e}", exc_info=True)
 
             progress.setLabelText("Loading thumbnails...")
             progress.setValue(4)
@@ -668,8 +671,9 @@ class ScanController:
             if self.main.thumbnails and hasattr(self.main.grid, "get_visible_paths"):
                 self.main.thumbnails.load_thumbnails(self.main.grid.get_visible_paths())
 
-            # CRITICAL FIX: Refresh Google Photos layout if active
-            # Wrap in try-except with timeout to prevent blocking
+            # CRITICAL FIX: Also refresh Google Photos layout if active
+            # This is IN ADDITION to refreshing Current layout above
+            # Both layouts are kept in sync after scan
             try:
                 if hasattr(self.main, 'layout_manager') and self.main.layout_manager:
                     current_layout_id = self.main.layout_manager._current_layout_id
