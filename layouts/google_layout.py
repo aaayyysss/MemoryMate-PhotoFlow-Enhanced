@@ -906,21 +906,25 @@ class GooglePhotosLayout(BaseLayout):
         """Handle Create Project button click."""
         print("[GooglePhotosLayout] 🆕🆕🆕 CREATE PROJECT BUTTON CLICKED! 🆕🆕🆕")
 
-        # Debug: Check if main_window exists and has the method
+        # Debug: Check if main_window exists and has breadcrumb_nav
         if not hasattr(self, 'main_window'):
             print("[GooglePhotosLayout] ❌ ERROR: self.main_window does not exist!")
             return
 
-        if not hasattr(self.main_window, '_create_new_project'):
-            print(f"[GooglePhotosLayout] ❌ ERROR: main_window does not have _create_new_project method!")
-            print(f"[GooglePhotosLayout] main_window type: {type(self.main_window)}")
-            print(f"[GooglePhotosLayout] main_window dir: {[m for m in dir(self.main_window) if 'project' in m.lower()]}")
+        # CRITICAL FIX: _create_new_project is in BreadcrumbNavigation, not MainWindow!
+        # MainWindow has self.breadcrumb_nav which contains the method
+        if not hasattr(self.main_window, 'breadcrumb_nav'):
+            print(f"[GooglePhotosLayout] ❌ ERROR: main_window does not have breadcrumb_nav!")
             return
 
-        print("[GooglePhotosLayout] ✓ Calling main_window._create_new_project()...")
+        if not hasattr(self.main_window.breadcrumb_nav, '_create_new_project'):
+            print(f"[GooglePhotosLayout] ❌ ERROR: breadcrumb_nav does not have _create_new_project method!")
+            return
 
-        # Call MainWindow's project creation dialog
-        self.main_window._create_new_project()
+        print("[GooglePhotosLayout] ✓ Calling breadcrumb_nav._create_new_project()...")
+
+        # Call BreadcrumbNavigation's project creation dialog
+        self.main_window.breadcrumb_nav._create_new_project()
 
         print("[GooglePhotosLayout] ✓ Project creation dialog completed")
 
