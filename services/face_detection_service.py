@@ -561,10 +561,17 @@ class FaceDetectionService:
                 max_dim = max(img.shape[0], img.shape[1])
                 if max_dim > 3000:
                     scale = 2000.0 / max_dim
-                    img = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
-                    logger.debug(f"Downscaled image for detection: scale={scale:.3f}")
-            except Exception:
-                pass
+                    resized_img = cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+                    # CRITICAL: Check if resize succeeded before replacing img
+                    # cv2.resize can return None for corrupted images or Unicode path issues
+                    if resized_img is not None:
+                        img = resized_img
+                        logger.debug(f"Downscaled image for detection: scale={scale:.3f}")
+                    else:
+                        logger.warning(f"Image resize failed for {image_path}, using original size")
+            except Exception as resize_error:
+                logger.warning(f"Failed to resize {image_path}: {resize_error}")
+                # Continue with original img (don't modify it)
             detected_faces = self.app.get(img)
 
             if not detected_faces:
