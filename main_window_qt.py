@@ -91,6 +91,9 @@ from thumbnail_grid_qt import ThumbnailGridQt
 from video_player_qt import VideoPlayerPanel
 from thumbnail_grid_qt import is_video_file
 
+# Layout system for UI/UX switching
+from layouts.layout_manager import LayoutManager
+
 from app_services import (
     list_projects, get_default_project_id, 
     scan_signals, scan_repository, 
@@ -2825,6 +2828,10 @@ class MainWindow(QMainWindow):
         tm.set_language(saved_language)
         print(f"[MainWindow] Language loaded from settings: {saved_language}")
 
+        # Initialize layout manager (for UI/UX layout switching)
+        self.layout_manager = LayoutManager(self)
+        print("[MainWindow] Layout manager initialized")
+
         self.setAttribute(Qt.WA_AcceptTouchEvents, True)
         QApplication.instance().setAttribute(Qt.AA_SynthesizeMouseForUnhandledTouchEvents, True)
         QApplication.instance().setAttribute(Qt.AA_SynthesizeTouchForUnhandledMouseEvents, True)
@@ -2974,6 +2981,33 @@ class MainWindow(QMainWindow):
         act_toggle_sidebar_mode.setShortcut("Ctrl+Alt+S")
         act_toggle_sidebar_mode.setToolTip("Toggle Sidebar between List and Tabs (Ctrl+Alt+S)")
         menu_sidebar.addAction(act_toggle_sidebar_mode)
+
+        menu_view.addSeparator()
+
+        # Layout submenu (UI/UX switching)
+        menu_layout = menu_view.addMenu("Layout")
+        menu_layout.setToolTip("Switch between different UI layouts")
+
+        # Create action group for exclusive layout selection
+        self.layout_action_group = QActionGroup(self)
+        self.layout_action_group.setExclusive(True)
+
+        # Get available layouts from manager and create menu actions
+        available_layouts = self.layout_manager.get_available_layouts()
+        for layout_id, layout_name in available_layouts.items():
+            action = QAction(layout_name, self)
+            action.setCheckable(True)
+            action.setData(layout_id)
+
+            # Set Current Layout as checked by default
+            if layout_id == "current":
+                action.setChecked(True)
+
+            # Connect to layout switching handler
+            action.triggered.connect(lambda checked, lid=layout_id: self._switch_layout(lid))
+
+            self.layout_action_group.addAction(action)
+            menu_layout.addAction(action)
 
         # ========== FILTERS MENU ==========
         menu_filters = menu_bar.addMenu("Filters")
@@ -3501,6 +3535,17 @@ class MainWindow(QMainWindow):
         # Phase 2: Initialize breadcrumb navigation
         QTimer.singleShot(100, self._update_breadcrumb)
 
+        # === Initialize default layout (UI/UX system) ===
+        # Load user's preferred layout or default to "current"
+        # This must happen after all UI components are created
+        try:
+            self.layout_manager.initialize_default_layout()
+            print("[Startup] Layout system initialized successfully")
+        except Exception as e:
+            print(f"[Startup] ⚠️ Layout initialization failed: {e}")
+            import traceback
+            traceback.print_exc()
+
         # === Initialize database schema at startup ===
         try:
             from repository.base_repository import DatabaseConnection
@@ -3707,6 +3752,35 @@ class MainWindow(QMainWindow):
                 self._apply_dark_mode()
             else:
                 self._apply_light_mode()
+
+
+    def _switch_layout(self, layout_id: str):
+        """
+        Switch to a different UI layout.
+
+        Args:
+            layout_id: ID of the layout to switch to (e.g., "current", "google", "apple")
+        """
+        try:
+            success = self.layout_manager.switch_layout(layout_id)
+            if success:
+                print(f"[MainWindow] ✓ Switched to layout: {layout_id}")
+            else:
+                print(f"[MainWindow] ✗ Failed to switch to layout: {layout_id}")
+                QMessageBox.warning(
+                    self,
+                    "Layout Switch Failed",
+                    f"Could not switch to layout: {layout_id}"
+                )
+        except Exception as e:
+            print(f"[MainWindow] ✗ Error switching layout: {e}")
+            import traceback
+            traceback.print_exc()
+            QMessageBox.critical(
+                self,
+                "Layout Error",
+                f"An error occurred while switching layouts:\n{e}"
+            )
 
 
     def _apply_dark_mode(self):
