@@ -1,35 +1,36 @@
+2025-11-26 02:46:33,210 [INFO] [FaceDetectionWorker] Complete in 13.2s: 21 processed (21 with faces), 0 skipped, 33 faces detected, 0 failed
 [FaceDetection] Complete: 21 photos, 33 faces detected
-2025-11-26 02:40:56,768 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-26 02:46:33,210 [INFO] [FaceClusterWorker] Starting face clustering for project 1
 [FaceCluster] Loading face embeddings...
-2025-11-26 02:40:56,773 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
+2025-11-26 02:46:33,210 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
 [FaceCluster] Clustering 33 faces...
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Found 12 clusters
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Found 12 clusters
 [FaceCluster] Found 12 person groups...
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
 [FaceCluster] Saving cluster 1/12: Person 1 (8 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
 [FaceCluster] Saving cluster 2/12: Person 2 (2 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
 [FaceCluster] Saving cluster 3/12: Person 3 (3 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
 [FaceCluster] Saving cluster 4/12: Person 4 (1 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
 [FaceCluster] Saving cluster 5/12: Person 5 (3 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
+2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
 [FaceCluster] Saving cluster 6/12: Person 6 (1 faces)
-2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
+2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
 [FaceCluster] Saving cluster 7/12: Person 7 (7 faces)
-2025-11-26 02:40:56,788 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
+2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
 [FaceCluster] Saving cluster 8/12: Person 8 (1 faces)
+2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
 [FaceCluster] Saving cluster 9/12: Person 9 (1 faces)
-2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
-2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
+2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
 [FaceCluster] Saving cluster 10/12: Person 10 (2 faces)
-2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
+2025-11-26 02:46:33,236 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
 [FaceCluster] Saving cluster 11/12: Person 11 (1 faces)
-2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
+2025-11-26 02:46:33,236 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
 [FaceCluster] Saving cluster 12/12: Person 12 (3 faces)
-2025-11-26 02:40:56,799 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
+2025-11-26 02:46:33,241 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
 [FaceCluster] Clustering complete: 12 branches created
 [FaceCluster] Complete: 12 person groups created
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
@@ -47,7 +48,7 @@
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001DBB3A2ABF0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001FC9FC7ABF0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -156,6 +157,18 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_000 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/244008930_565686944637059_4279754871252118785_n.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/7f5e15df-e9c6-4914-90fb-c5cf06fd51f5.jfif'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/gpic6664.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -192,6 +205,18 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_006 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e9569.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -228,6 +253,16 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_002 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -264,6 +299,16 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_004 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -300,6 +345,16 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_011 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3091.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3092.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3093.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -336,6 +391,15 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_001 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -372,6 +436,15 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_009 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -408,6 +481,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_003 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -444,6 +525,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_005 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -480,6 +569,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_003: 1 crops
 [GooglePhotosLayout]   - face_005: 1 crops
 [GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_007 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -499,3 +596,10 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_007']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_007
 [GooglePhotosLayout] Loaded 1 photos in 1 date groups
+[Shutdown] Grid threads shut down.
+[ThumbnailManager] Thread pool shut down.
+[Shutdown] ThumbnailManager threads shut down.
+[Shutdown] Thumbnail cache cleared.
+[Main] Qt event loop exited with code: 0
+[ThumbCacheDB] Closing cache gracefully...
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-14>
