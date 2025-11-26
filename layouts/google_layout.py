@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
 )
 from PySide6.QtCore import Qt, Signal, QSize, QEvent
-from PySide6.QtGui import QPixmap, QIcon, QKeyEvent
+from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage
 from .base_layout import BaseLayout
 from typing import Dict, List, Tuple
 from collections import defaultdict
@@ -898,6 +898,46 @@ class GooglePhotosLayout(BaseLayout):
 
             # Add person/face filter (photos containing this person)
             if filter_person is not None:
+                # DEBUG: Check what's actually in face_crops for this branch_key
+                try:
+                    with db._connect() as debug_conn:
+                        debug_cur = debug_conn.cursor()
+
+                        # Count total face_crops for this project
+                        debug_cur.execute("""
+                            SELECT COUNT(*), COUNT(DISTINCT branch_key)
+                            FROM face_crops
+                            WHERE project_id = ?
+                        """, (self.project_id,))
+                        total_crops, unique_branches = debug_cur.fetchone()
+                        print(f"[GooglePhotosLayout] 🔍 DEBUG: face_crops has {total_crops} total entries, {unique_branches} unique branch_keys for project {self.project_id}")
+
+                        # Check for this specific branch_key
+                        debug_cur.execute("""
+                            SELECT COUNT(*), COUNT(DISTINCT image_path)
+                            FROM face_crops
+                            WHERE project_id = ? AND branch_key = ?
+                        """, (self.project_id, filter_person))
+                        crops_count, unique_images = debug_cur.fetchone()
+                        print(f"[GooglePhotosLayout] 🔍 DEBUG: branch_key='{filter_person}' has {crops_count} face crops across {unique_images} unique images")
+
+                        # Show sample of branch_keys in face_crops
+                        debug_cur.execute("""
+                            SELECT DISTINCT branch_key, COUNT(*) as cnt
+                            FROM face_crops
+                            WHERE project_id = ?
+                            GROUP BY branch_key
+                            ORDER BY cnt DESC
+                            LIMIT 10
+                        """, (self.project_id,))
+                        branch_samples = debug_cur.fetchall()
+                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:")
+                        for bk, cnt in branch_samples:
+                            print(f"[GooglePhotosLayout]   - {bk}: {cnt} crops")
+
+                except Exception as debug_error:
+                    print(f"[GooglePhotosLayout] ⚠️ DEBUG query failed: {debug_error}")
+
                 query_parts.append("""
                     AND pm.path IN (
                         SELECT DISTINCT image_path
@@ -1148,9 +1188,9 @@ class GooglePhotosLayout(BaseLayout):
             from reference_db import ReferenceDB
             db = ReferenceDB()
 
-            # Query face clusters for current project
+            # Query face clusters for current project (with representative image)
             query = """
-                SELECT branch_key, label, count
+                SELECT branch_key, label, count, rep_path, rep_thumb_png
                 FROM face_branch_reps
                 WHERE project_id = ?
                 ORDER BY count DESC
@@ -1166,7 +1206,7 @@ class GooglePhotosLayout(BaseLayout):
                 rows = cur.fetchall()
 
             print(f"[GooglePhotosLayout] 👥 Found {len(rows)} face clusters")
-            for branch_key, label, count in rows:
+            for branch_key, label, count, rep_path, rep_thumb_png in rows:
                 print(f"[GooglePhotosLayout]   - {branch_key}: {label or 'Unnamed'} ({count} photos)")
 
             if not rows:
@@ -1176,19 +1216,84 @@ class GooglePhotosLayout(BaseLayout):
                 self.people_tree.addTopLevelItem(no_faces_item)
                 return
 
-            # Build tree
-            for branch_key, label, count in rows:
-                # Use label if set, otherwise use "Unnamed Person X"
+            # Build tree with thumbnails
+            for branch_key, label, count, rep_path, rep_thumb_png in rows:
+                # Use label if set, otherwise use "Unnamed Person"
                 display_name = label if label else f"Unnamed Person"
 
-                person_item = QTreeWidgetItem([f"👤 {display_name} ({count})"])
+                # Create tree item
+                person_item = QTreeWidgetItem([f"{display_name} ({count})"])
                 person_item.setData(0, Qt.UserRole, {"type": "person", "branch_key": branch_key, "label": label})
+
+                # Load and set face thumbnail as icon
+                icon = self._load_face_thumbnail(rep_path, rep_thumb_png)
+                if icon:
+                    person_item.setIcon(0, icon)
+                else:
+                    # Fallback to emoji icon if no thumbnail available
+                    person_item.setText(0, f"👤 {display_name} ({count})")
+
                 self.people_tree.addTopLevelItem(person_item)
 
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error building people tree: {e}")
             import traceback
             traceback.print_exc()
+
+    def _load_face_thumbnail(self, rep_path: str, rep_thumb_png: bytes) -> QIcon:
+        """
+        Load face thumbnail from rep_path or rep_thumb_png BLOB.
+
+        Args:
+            rep_path: Path to representative face crop image
+            rep_thumb_png: PNG thumbnail as BLOB data
+
+        Returns:
+            QIcon with face thumbnail, or None if unavailable
+        """
+        try:
+            from PIL import Image
+            import io
+
+            # Try loading from BLOB first (faster, already in DB)
+            if rep_thumb_png:
+                try:
+                    # Load from BLOB
+                    image_data = io.BytesIO(rep_thumb_png)
+                    with Image.open(image_data) as img:
+                        # Convert to QPixmap
+                        img_rgb = img.convert('RGB')
+                        data = img_rgb.tobytes('raw', 'RGB')
+                        qimg = QImage(data, img.width, img.height, QImage.Format_RGB888)
+                        pixmap = QPixmap.fromImage(qimg)
+
+                        # Scale to tree item size (32x32 for better visibility)
+                        scaled = pixmap.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                        return QIcon(scaled)
+                except Exception as blob_error:
+                    print(f"[GooglePhotosLayout] Failed to load thumbnail from BLOB: {blob_error}")
+
+            # Fallback: Try loading from file path
+            if rep_path and os.path.exists(rep_path):
+                try:
+                    with Image.open(rep_path) as img:
+                        # Convert to QPixmap
+                        img_rgb = img.convert('RGB')
+                        data = img_rgb.tobytes('raw', 'RGB')
+                        qimg = QImage(data, img.width, img.height, QImage.Format_RGB888)
+                        pixmap = QPixmap.fromImage(qimg)
+
+                        # Scale to tree item size
+                        scaled = pixmap.scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                        return QIcon(scaled)
+                except Exception as file_error:
+                    print(f"[GooglePhotosLayout] Failed to load thumbnail from {rep_path}: {file_error}")
+
+            return None
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] Error loading face thumbnail: {e}")
+            return None
 
     def _on_people_item_clicked(self, item: QTreeWidgetItem, column: int):
         """
