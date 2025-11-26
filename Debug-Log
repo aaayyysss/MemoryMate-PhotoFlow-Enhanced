@@ -1,35 +1,97 @@
-2025-11-26 13:11:20,898 [INFO] [FaceDetectionWorker] Complete in 7.1s: 15 processed (15 with faces), 0 skipped, 20 faces detected, 0 failed
+2025-11-26 13:50:03,516 [INFO] [FaceDetectionWorker] Complete in 7.2s: 15 processed (15 with faces), 0 skipped, 20 faces detected, 0 failed
 [FaceDetection] Complete: 15 photos, 20 faces detected
-2025-11-26 13:11:20,898 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-26 13:50:03,516 [INFO] [FaceClusterWorker] Starting face clustering for project 1
 [FaceCluster] Loading face embeddings...
-2025-11-26 13:11:20,898 [INFO] [FaceClusterWorker] Loaded 20 face embeddings
+2025-11-26 13:50:03,516 [INFO] [FaceClusterWorker] Loaded 20 face embeddings
 [FaceCluster] Clustering 20 faces...
-2025-11-26 13:11:20,914 [INFO] [FaceClusterWorker] Found 4 clusters
-2025-11-26 13:11:20,914 [INFO] [FaceClusterWorker] Found 8 unclustered faces (will create 'Unidentified' branch)
+2025-11-26 13:50:03,548 [INFO] [FaceClusterWorker] Found 4 clusters
+2025-11-26 13:50:03,548 [INFO] [FaceClusterWorker] Found 8 unclustered faces (will create 'Unidentified' branch)
 [FaceCluster] Found 4 person groups...
-2025-11-26 13:11:20,914 [INFO] [FaceClusterWorker] Cluster 0 → 4 faces
+2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 0 → 4 faces
 [FaceCluster] Saving cluster 1/4: Person 1 (4 faces)
-2025-11-26 13:11:20,914 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
+2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
 [FaceCluster] Saving cluster 2/4: Person 2 (2 faces)
-2025-11-26 13:11:20,929 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
+2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
 [FaceCluster] Saving cluster 3/4: Person 3 (2 faces)
-2025-11-26 13:11:20,930 [INFO] [FaceClusterWorker] Cluster 3 → 4 faces
+2025-11-26 13:50:03,564 [INFO] [FaceClusterWorker] Cluster 3 → 4 faces
 [FaceCluster] Saving cluster 4/4: Person 4 (4 faces)
 [FaceCluster] Processing 8 unidentified faces...
-2025-11-26 13:11:20,930 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 8 faces from 5 photos
-2025-11-26 13:11:21,013 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 8 unidentified faces
+2025-11-26 13:50:03,564 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 8 faces from 5 photos
+2025-11-26 13:50:03,570 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 8 unidentified faces
 [FaceCluster] Clustering complete: 5 branches created
 [FaceCluster] Complete: 4 person groups created
-[SidebarQt] reload() blocked - widget not visible (likely being deleted)
-[GooglePhotosLayout] Section header clicked - clearing all filters
+[SidebarQt] reload() called, display_mode=list, tabs_visible=False
+[SidebarQt] Calling _build_tree_model() instead of tabs refresh
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
+[Sidebar] Loaded 2 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000227F2245550>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan  =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive H: exists, checking...
+[DeviceScanner]           Checking path: H:\
+[DeviceScanner]           Directories found: []
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive H:
+[DeviceScanner]     Drive P: exists, checking...
+[DeviceScanner]           Checking path: P:\
+[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=8] running for 1 targets...
+[Sidebar][counts worker gen=8] finished scanning targets, scheduling UI update
+[Sidebar][counts applied] updated UI with counts
+[LayoutManager] Switching layout: current → google
+[LayoutManager] 💾 Took ownership of original central widget: QWidget
+[GooglePhotosLayout] Using default project: 1
+[GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
+[GooglePhotosLayout] Project selector populated with 1 projects
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
 
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
@@ -41,42 +103,21 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]   - face_001: Unnamed (2 photos)
 [GooglePhotosLayout]   - face_002: Unnamed (2 photos)
 [GooglePhotosLayout] Loaded 8 photos in 6 date groups
+[LayoutManager] Setting new central widget: QWidget
+[GooglePhotosLayout] 📍 Layout activated
+[GooglePhotosLayout] ✓ Connected Scan button
+[GooglePhotosLayout] ✓ Connected Faces button
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_unidentified)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_unidentified]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_unidentified
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 20 total entries, 5 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_unidentified' has 8 face crops across 5 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_unidentified: 8 crops
-[GooglePhotosLayout]   - face_000: 4 crops
-[GooglePhotosLayout]   - face_003: 4 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_002: 2 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_unidentified (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg' is in project_images:
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout] 🔍 DEBUG: 5 out of 5 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] Filtering by person: face_unidentified
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
 
 
                     AND pm.path IN (
@@ -88,42 +129,18 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_unidentified']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_unidentified
-[GooglePhotosLayout] Loaded 3 photos in 3 date groups
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 5 photos in 3 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_000)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_000]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_000
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 20 total entries, 5 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_000' has 4 face crops across 4 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_unidentified: 8 crops
-[GooglePhotosLayout]   - face_000: 4 crops
-[GooglePhotosLayout]   - face_003: 4 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_002: 2 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_000 (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/عليا_2_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg' is in project_images:
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout] 🔍 DEBUG: 4 out of 4 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] Filtering by person: face_000
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
 
 
                     AND pm.path IN (
@@ -138,38 +155,13 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 4 photos in 2 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_003
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 20 total entries, 5 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_003' has 4 face crops across 4 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_unidentified: 8 crops
-[GooglePhotosLayout]   - face_000: 4 crops
-[GooglePhotosLayout]   - face_003: 4 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_002: 2 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_003 (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png' is in project_images:
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout] 🔍 DEBUG: 4 out of 4 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] Filtering by person: face_003
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
 
 
                     AND pm.path IN (
@@ -181,40 +173,19 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
-[GooglePhotosLayout] Loaded 1 photos in 1 date groups
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 4 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_001
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 20 total entries, 5 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_001' has 2 face crops across 2 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_unidentified: 8 crops
-[GooglePhotosLayout]   - face_000: 4 crops
-[GooglePhotosLayout]   - face_003: 4 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_002: 2 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_001 (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg' is in project_images:
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout] 🔍 DEBUG: 2 out of 2 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] Filtering by person: face_001
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
 
 
                     AND pm.path IN (
@@ -226,39 +197,18 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_001']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_001
-[GooglePhotosLayout] No photos found in project 1
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 2 photos in 0 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_002]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_002
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 20 total entries, 5 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_002' has 2 face crops across 2 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_unidentified: 8 crops
-[GooglePhotosLayout]   - face_000: 4 crops
-[GooglePhotosLayout]   - face_003: 4 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_002: 2 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_002 (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
-[GooglePhotosLayout]     'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
-[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg' is in project_images:
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
-[GooglePhotosLayout] 🔍 DEBUG: 2 out of 2 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] Filtering by person: face_002
 [GooglePhotosLayout] 🔍 SQL Query:
 
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
 
 
                     AND pm.path IN (
@@ -270,4 +220,148 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
-[GooglePhotosLayout] No photos found in project 1
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 2 photos in 0 date groups
+[GooglePhotosLayout] Section header clicked - clearing all filters
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1]
+[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
+[GooglePhotosLayout] 👥 Found 5 face clusters
+[GooglePhotosLayout]   - face_unidentified: Unnamed (b'\x08\x00\x00\x00' photos)
+[GooglePhotosLayout]   - face_000: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_003: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_001: Unnamed (2 photos)
+[GooglePhotosLayout]   - face_002: Unnamed (2 photos)
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_002]...
+[GooglePhotosLayout] Filtering by person: face_002
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 2 photos in 0 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
+[GooglePhotosLayout] Filtering by person: face_001
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_001']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_001
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 2 photos in 0 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
+[GooglePhotosLayout] Filtering by person: face_003
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 4 photos in 1 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_000)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_000]...
+[GooglePhotosLayout] Filtering by person: face_000
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_000']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_000
+[GooglePhotosLayout] Loaded 4 photos in 2 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_unidentified)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_unidentified]...
+[GooglePhotosLayout] Filtering by person: face_unidentified
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_unidentified']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_unidentified
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
+[GooglePhotosLayout] Loaded 5 photos in 3 date groups
+[Shutdown] Grid threads shut down.
+[ThumbnailManager] Thread pool shut down.
+[Shutdown] ThumbnailManager threads shut down.
+[Shutdown] Thumbnail cache cleared.
+[Main] Qt event loop exited with code: 0
+[ThumbCacheDB] Closing cache gracefully...
+
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.38.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>
