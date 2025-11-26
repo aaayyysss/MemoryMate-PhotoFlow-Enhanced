@@ -1118,31 +1118,46 @@ class ThumbnailGridQt(QWidget):
 
             print(f"[GRID] Loading viewport range: {start}-{end} of {self.model.rowCount()}")
 
+            # CRASH FIX: Validate placeholder pixmap before starting workers
+            if not self._placeholder_pixmap or self._placeholder_pixmap.isNull():
+                print(f"[GRID] ⚠️ Placeholder pixmap is invalid, skipping thumbnail loading")
+                return
+
             token = self._reload_token
             loaded_count = 0
             for row in range(start, end + 1):
-                item = self.model.item(row)
-                if not item:
+                try:
+                    item = self.model.item(row)
+                    if not item:
+                        continue
+
+                    npath = item.data(Qt.UserRole)        # normalized key
+                    rpath = item.data(Qt.UserRole + 6)    # real path
+                    if not npath or not rpath:
+                        continue
+
+                    # avoid resubmitting while already scheduled
+                    if item.data(Qt.UserRole + 5):
+                        continue
+
+                    # schedule worker
+                    item.setData(True, Qt.UserRole + 5)  # mark scheduled
+                    thumb_h = int(self._thumb_base * self._zoom_factor)
+
+                    # CRASH FIX: Validate parameters before creating worker
+                    if thumb_h <= 0 or thumb_h > 4000:
+                        print(f"[GRID] ⚠️ Invalid thumb_h={thumb_h}, skipping row {row}")
+                        continue
+
+                    w = ThumbWorker(rpath, npath, thumb_h, row, self.thumb_signal,
+                                    self._thumb_cache, token, self._placeholder_pixmap)
+
+                    self.thread_pool.start(w)
+                    loaded_count += 1
+
+                except Exception as row_error:
+                    print(f"[GRID] ⚠️ Error processing row {row}: {row_error}")
                     continue
-
-                npath = item.data(Qt.UserRole)        # normalized key
-                rpath = item.data(Qt.UserRole + 6)    # real path
-                if not npath or not rpath:
-                    continue
-
-                # avoid resubmitting while already scheduled
-                if item.data(Qt.UserRole + 5):
-                    continue
-
-                # schedule worker
-                item.setData(True, Qt.UserRole + 5)  # mark scheduled
-                thumb_h = int(self._thumb_base * self._zoom_factor)
-
-                w = ThumbWorker(rpath, npath, thumb_h, row, self.thumb_signal,
-                                self._thumb_cache, token, self._placeholder_pixmap)
-
-                self.thread_pool.start(w)
-                loaded_count += 1
 
             if loaded_count > 0:
                 print(f"[GRID] Queued {loaded_count} new thumbnail workers")
