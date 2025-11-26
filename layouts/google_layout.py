@@ -40,9 +40,10 @@ class PhotoLightbox(QDialog):
         self.photo_path = photo_path
         self.all_photos = all_photos
         self.current_index = all_photos.index(photo_path) if photo_path in all_photos else 0
+        self._photo_loaded = False  # Track if photo has been loaded
 
         self._setup_ui()
-        self._load_photo()
+        # Don't load photo here - wait for showEvent when window has proper size
 
     def _setup_ui(self):
         """Setup lightbox UI."""
@@ -325,6 +326,15 @@ class PhotoLightbox(QDialog):
             self.current_index += 1
             self.photo_path = self.all_photos[self.current_index]
             self._load_photo()
+
+    def showEvent(self, event):
+        """Load photo when dialog is first shown (after window has proper size)."""
+        super().showEvent(event)
+        if not self._photo_loaded:
+            self._photo_loaded = True
+            # Use QTimer to ensure window is fully laid out
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(0, self._load_photo)
 
     def keyPressEvent(self, event: QKeyEvent):
         """Handle keyboard shortcuts."""
@@ -1626,10 +1636,10 @@ class GooglePhotosLayout(BaseLayout):
             from PySide6.QtWidgets import QLabel
             self.selection_label = QLabel()
             self.selection_label.setStyleSheet("font-weight: bold; padding: 0 12px;")
-            # Insert before spacer in toolbar
+            # Insert selection label in toolbar (after existing actions)
             toolbar = self._toolbar
-            spacer_index = toolbar.actions().index(toolbar.widgetForAction(toolbar.actions()[-3]).parent()) if len(toolbar.actions()) > 3 else 0
-            toolbar.insertWidget(toolbar.actions()[spacer_index] if spacer_index < len(toolbar.actions()) else None, self.selection_label)
+            # Simply add to toolbar without complex index logic
+            toolbar.addWidget(self.selection_label)
 
         # Update counter text
         if count > 0:
