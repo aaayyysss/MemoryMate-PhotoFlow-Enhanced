@@ -4,7 +4,7 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QSplitter, QToolBar, QLineEdit, QTreeWidget,
-    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
+    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog, QStackedLayout
 )
 from PySide6.QtCore import Qt, Signal, QSize, QEvent
 from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
@@ -61,66 +61,165 @@ class MediaLightbox(QDialog):
         # Don't load media here - wait for showEvent when window has proper size
 
     def _setup_ui(self):
-        """Setup lightbox UI with support for photos and videos."""
+        """Setup Google Photos-style lightbox UI with overlay controls."""
         # Window settings
         self.setWindowTitle("Media Viewer")
         self.setWindowState(Qt.WindowMaximized)
-        self.setStyleSheet("background: #1a1a1a;")
+        self.setStyleSheet("background: #000000;")  # Pure black background
 
-        # Main layout
-        main_layout = QHBoxLayout(self)
-        main_layout.setContentsMargins(0, 0, 0, 0)
-        main_layout.setSpacing(0)
+        # Main stacked layout (for overlaying controls)
+        main_layout = QStackedLayout(self)
+        main_layout.setStackingMode(QStackedLayout.StackAll)
 
-        # Left: Image display area
-        image_container = QWidget()
-        image_container.setStyleSheet("background: #1a1a1a;")
-        image_layout = QVBoxLayout(image_container)
-        image_layout.setContentsMargins(20, 20, 20, 20)
+        # === LAYER 1: Media Display Area (Bottom Layer) ===
+        media_widget = QWidget()
+        media_widget.setStyleSheet("background: #000000;")
+        media_layout = QVBoxLayout(media_widget)
+        media_layout.setContentsMargins(0, 0, 0, 0)
+        media_layout.setSpacing(0)
 
-        # Top bar with close button
-        top_bar = QHBoxLayout()
-        top_bar.addStretch()
+        # Image/Video display (centered)
+        self.image_label = QLabel()
+        self.image_label.setAlignment(Qt.AlignCenter)
+        self.image_label.setStyleSheet("background: transparent;")
+        self.image_label.setScaledContents(False)
+        media_layout.addWidget(self.image_label)
 
-        close_btn = QPushButton("✕ Close")
-        close_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
-        close_btn.setStyleSheet("""
+        main_layout.addWidget(media_widget)
+
+        # === LAYER 2: Overlay Controls (Top Layer) ===
+        overlay_widget = QWidget()
+        overlay_widget.setAttribute(Qt.WA_TransparentForMouseEvents, False)
+        overlay_widget.setStyleSheet("background: transparent;")
+        overlay_layout = QVBoxLayout(overlay_widget)
+        overlay_layout.setContentsMargins(0, 0, 0, 0)
+        overlay_layout.setSpacing(0)
+
+        # Top toolbar (gradient overlay)
+        self.top_toolbar = self._create_top_toolbar()
+        overlay_layout.addWidget(self.top_toolbar)
+
+        overlay_layout.addStretch()
+
+        # Bottom toolbar (gradient overlay)
+        self.bottom_toolbar = self._create_bottom_toolbar()
+        overlay_layout.addWidget(self.bottom_toolbar)
+
+        main_layout.addWidget(overlay_widget)
+
+        # === LAYER 3: Info Panel (Toggleable, slides from right) ===
+        self.info_panel = self._create_info_panel()
+        self.info_panel.hide()  # Hidden by default
+        main_layout.addWidget(self.info_panel)
+
+        # Track info panel state
+        self.info_panel_visible = False
+
+    def _create_top_toolbar(self) -> QWidget:
+        """Create top overlay toolbar with close, info, and action buttons."""
+        toolbar = QWidget()
+        toolbar.setFixedHeight(60)
+        toolbar.setStyleSheet("""
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(0, 0, 0, 0.8),
+                    stop:1 rgba(0, 0, 0, 0));
+            }
+        """)
+
+        layout = QHBoxLayout(toolbar)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(8)
+
+        # Close button (left)
+        self.close_btn = QPushButton("✕")
+        self.close_btn.setFocusPolicy(Qt.NoFocus)
+        self.close_btn.setFixedSize(36, 36)
+        self.close_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
                 color: white;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 4px;
-                padding: 8px 16px;
-                font-size: 11pt;
+                border: none;
+                border-radius: 18px;
+                font-size: 16pt;
+                font-weight: bold;
             }
             QPushButton:hover {
                 background: rgba(255, 255, 255, 0.2);
             }
         """)
-        close_btn.clicked.connect(self.close)
-        top_bar.addWidget(close_btn)
-        image_layout.addLayout(top_bar)
+        self.close_btn.clicked.connect(self.close)
+        layout.addWidget(self.close_btn)
 
-        # Image display
-        self.image_label = QLabel()
-        self.image_label.setAlignment(Qt.AlignCenter)
-        self.image_label.setStyleSheet("background: transparent;")
-        self.image_label.setScaledContents(False)
-        image_layout.addWidget(self.image_label, 1)
+        layout.addStretch()
 
-        # Navigation buttons (bottom)
+        # Counter label (center)
+        self.counter_label = QLabel()
+        self.counter_label.setStyleSheet("""
+            color: white;
+            font-size: 11pt;
+            background: transparent;
+        """)
+        layout.addWidget(self.counter_label)
+
+        layout.addStretch()
+
+        # Info toggle button (right)
+        self.info_btn = QPushButton("ℹ️")
+        self.info_btn.setFocusPolicy(Qt.NoFocus)
+        self.info_btn.setFixedSize(36, 36)
+        self.info_btn.setStyleSheet("""
+            QPushButton {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: none;
+                border-radius: 18px;
+                font-size: 14pt;
+            }
+            QPushButton:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+        """)
+        self.info_btn.clicked.connect(self._toggle_info_panel)
+        layout.addWidget(self.info_btn)
+
+        return toolbar
+
+    def _create_bottom_toolbar(self) -> QWidget:
+        """Create bottom overlay toolbar with navigation and video controls."""
+        toolbar = QWidget()
+        toolbar.setFixedHeight(80)
+        toolbar.setStyleSheet("""
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(0, 0, 0, 0),
+                    stop:1 rgba(0, 0, 0, 0.8));
+            }
+        """)
+
+        layout = QVBoxLayout(toolbar)
+        layout.setContentsMargins(16, 12, 16, 16)
+        layout.setSpacing(12)
+
+        # Video controls container (hidden by default, shown for videos)
+        self.video_controls_widget = self._create_video_controls()
+        layout.addWidget(self.video_controls_widget)
+
+        # Navigation controls
         nav_layout = QHBoxLayout()
+        nav_layout.setSpacing(16)
 
-        self.prev_btn = QPushButton("← Previous")
-        self.prev_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
+        # Previous button
+        self.prev_btn = QPushButton("◄")
+        self.prev_btn.setFocusPolicy(Qt.NoFocus)
+        self.prev_btn.setFixedSize(44, 44)
         self.prev_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
                 color: white;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 4px;
-                padding: 10px 20px;
-                font-size: 11pt;
+                border: none;
+                border-radius: 22px;
+                font-size: 16pt;
             }
             QPushButton:hover {
                 background: rgba(255, 255, 255, 0.2);
@@ -135,23 +234,17 @@ class MediaLightbox(QDialog):
 
         nav_layout.addStretch()
 
-        # Photo counter
-        self.counter_label = QLabel()
-        self.counter_label.setStyleSheet("color: white; font-size: 10pt;")
-        nav_layout.addWidget(self.counter_label)
-
-        nav_layout.addStretch()
-
-        self.next_btn = QPushButton("Next →")
-        self.next_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
+        # Next button
+        self.next_btn = QPushButton("►")
+        self.next_btn.setFocusPolicy(Qt.NoFocus)
+        self.next_btn.setFixedSize(44, 44)
         self.next_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
                 color: white;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 4px;
-                padding: 10px 20px;
-                font-size: 11pt;
+                border: none;
+                border-radius: 22px;
+                font-size: 16pt;
             }
             QPushButton:hover {
                 background: rgba(255, 255, 255, 0.2);
@@ -164,28 +257,132 @@ class MediaLightbox(QDialog):
         self.next_btn.clicked.connect(self._next_media)
         nav_layout.addWidget(self.next_btn)
 
-        image_layout.addLayout(nav_layout)
+        layout.addLayout(nav_layout)
 
-        main_layout.addWidget(image_container, 3)
+        return toolbar
 
-        # Right: Metadata panel
-        metadata_panel = QWidget()
-        metadata_panel.setFixedWidth(350)
-        metadata_panel.setStyleSheet("""
+    def _create_video_controls(self) -> QWidget:
+        """Create video playback controls (play/pause, seek, volume, time)."""
+        controls = QWidget()
+        controls.setStyleSheet("background: transparent;")
+        controls.hide()  # Hidden by default, shown for videos
+
+        layout = QHBoxLayout(controls)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(12)
+
+        # Play/Pause button
+        self.play_pause_btn = QPushButton("▶")
+        self.play_pause_btn.setFocusPolicy(Qt.NoFocus)
+        self.play_pause_btn.setFixedSize(36, 36)
+        self.play_pause_btn.setStyleSheet("""
+            QPushButton {
+                background: rgba(255, 255, 255, 0.15);
+                color: white;
+                border: none;
+                border-radius: 18px;
+                font-size: 12pt;
+            }
+            QPushButton:hover {
+                background: rgba(255, 255, 255, 0.25);
+            }
+        """)
+        self.play_pause_btn.clicked.connect(self._toggle_play_pause)
+        layout.addWidget(self.play_pause_btn)
+
+        # Time label (current)
+        self.time_current_label = QLabel("0:00")
+        self.time_current_label.setStyleSheet("color: white; font-size: 9pt; background: transparent;")
+        layout.addWidget(self.time_current_label)
+
+        # Seek slider
+        from PySide6.QtWidgets import QSlider
+        self.seek_slider = QSlider(Qt.Horizontal)
+        self.seek_slider.setFocusPolicy(Qt.NoFocus)
+        self.seek_slider.setStyleSheet("""
+            QSlider::groove:horizontal {
+                background: rgba(255, 255, 255, 0.2);
+                height: 4px;
+                border-radius: 2px;
+            }
+            QSlider::handle:horizontal {
+                background: white;
+                width: 12px;
+                height: 12px;
+                margin: -4px 0;
+                border-radius: 6px;
+            }
+            QSlider::sub-page:horizontal {
+                background: rgba(66, 133, 244, 0.8);
+                border-radius: 2px;
+            }
+        """)
+        self.seek_slider.sliderPressed.connect(self._on_seek_pressed)
+        self.seek_slider.sliderReleased.connect(self._on_seek_released)
+        layout.addWidget(self.seek_slider, 1)
+
+        # Time label (total)
+        self.time_total_label = QLabel("0:00")
+        self.time_total_label.setStyleSheet("color: white; font-size: 9pt; background: transparent;")
+        layout.addWidget(self.time_total_label)
+
+        # Volume icon
+        volume_icon = QLabel("🔊")
+        volume_icon.setStyleSheet("font-size: 12pt; background: transparent;")
+        layout.addWidget(volume_icon)
+
+        # Volume slider
+        self.volume_slider = QSlider(Qt.Horizontal)
+        self.volume_slider.setFocusPolicy(Qt.NoFocus)
+        self.volume_slider.setFixedWidth(80)
+        self.volume_slider.setMinimum(0)
+        self.volume_slider.setMaximum(100)
+        self.volume_slider.setValue(80)
+        self.volume_slider.setStyleSheet("""
+            QSlider::groove:horizontal {
+                background: rgba(255, 255, 255, 0.2);
+                height: 4px;
+                border-radius: 2px;
+            }
+            QSlider::handle:horizontal {
+                background: white;
+                width: 10px;
+                height: 10px;
+                margin: -3px 0;
+                border-radius: 5px;
+            }
+            QSlider::sub-page:horizontal {
+                background: white;
+                border-radius: 2px;
+            }
+        """)
+        self.volume_slider.valueChanged.connect(self._on_volume_changed)
+        layout.addWidget(self.volume_slider)
+
+        return controls
+
+    def _create_info_panel(self) -> QWidget:
+        """Create toggleable info panel with metadata (slides from right)."""
+        panel = QWidget()
+        panel.setFixedWidth(350)
+        panel.setStyleSheet("""
             QWidget {
-                background: #2a2a2a;
-                border-left: 1px solid #404040;
+                background: rgba(32, 33, 36, 0.95);
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
             }
         """)
 
-        metadata_layout = QVBoxLayout(metadata_panel)
-        metadata_layout.setContentsMargins(20, 20, 20, 20)
-        metadata_layout.setSpacing(16)
+        # Position on right side
+        panel.setGeometry(self.width() - 350, 0, 350, self.height())
 
-        # Metadata header
-        header = QLabel("📊 Photo Information")
-        header.setStyleSheet("color: white; font-size: 13pt; font-weight: bold;")
-        metadata_layout.addWidget(header)
+        panel_layout = QVBoxLayout(panel)
+        panel_layout.setContentsMargins(20, 60, 20, 20)  # Top margin for toolbar
+        panel_layout.setSpacing(16)
+
+        # Panel header
+        header = QLabel("Media Information")
+        header.setStyleSheet("color: white; font-size: 12pt; font-weight: bold; background: transparent;")
+        panel_layout.addWidget(header)
 
         # Metadata content (scrollable)
         metadata_scroll = QScrollArea()
@@ -200,9 +397,52 @@ class MediaLightbox(QDialog):
         self.metadata_layout.setAlignment(Qt.AlignTop)
 
         metadata_scroll.setWidget(self.metadata_content)
-        metadata_layout.addWidget(metadata_scroll)
+        panel_layout.addWidget(metadata_scroll)
 
-        main_layout.addWidget(metadata_panel)
+        return panel
+
+    def _toggle_info_panel(self):
+        """Toggle info panel visibility."""
+        if self.info_panel_visible:
+            self.info_panel.hide()
+            self.info_panel_visible = False
+        else:
+            # Update position in case window was resized
+            self.info_panel.setGeometry(
+                self.width() - 350, 0, 350, self.height()
+            )
+            self.info_panel.show()
+            self.info_panel_visible = True
+
+    def _toggle_play_pause(self):
+        """Toggle video playback (play/pause)."""
+        if hasattr(self, 'video_player'):
+            from PySide6.QtMultimedia import QMediaPlayer
+            if self.video_player.playbackState() == QMediaPlayer.PlayingState:
+                self.video_player.pause()
+                self.play_pause_btn.setText("▶")
+            else:
+                self.video_player.play()
+                self.play_pause_btn.setText("⏸")
+
+    def _on_volume_changed(self, value: int):
+        """Handle volume slider change."""
+        if hasattr(self, 'audio_output'):
+            volume = value / 100.0
+            self.audio_output.setVolume(volume)
+
+    def _on_seek_pressed(self):
+        """Handle seek slider press (pause position updates)."""
+        if hasattr(self, 'position_timer'):
+            self.position_timer.stop()
+
+    def _on_seek_released(self):
+        """Handle seek slider release (seek to position)."""
+        if hasattr(self, 'video_player'):
+            position = self.seek_slider.value()
+            self.video_player.setPosition(position)
+            if hasattr(self, 'position_timer'):
+                self.position_timer.start()
 
     def _is_video(self, path: str) -> bool:
         """Check if file is a video based on extension."""
@@ -223,7 +463,7 @@ class MediaLightbox(QDialog):
         try:
             from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
             from PySide6.QtMultimediaWidgets import QVideoWidget
-            from PySide6.QtCore import QUrl
+            from PySide6.QtCore import QUrl, QTimer
 
             # Clear previous content
             self.image_label.clear()
@@ -248,16 +488,38 @@ class MediaLightbox(QDialog):
                     self.image_label.hide()
                     # Add video widget if not already added
                     if self.video_widget.parent() is None:
-                        parent_layout.insertWidget(1, self.video_widget, 1)
+                        parent_layout.insertWidget(0, self.video_widget, 1)
+
+                # Connect video player signals
+                self.video_player.durationChanged.connect(self._on_duration_changed)
+                self.video_player.positionChanged.connect(self._on_position_changed)
+
+                # Create position update timer
+                self.position_timer = QTimer()
+                self.position_timer.timeout.connect(self._update_video_position)
+                self.position_timer.setInterval(100)  # Update every 100ms
 
             # Show video widget, hide image label
             self.image_label.hide()
             self.video_widget.show()
 
+            # Show video controls
+            self.video_controls_widget.show()
+
+            # Set initial volume
+            volume = self.volume_slider.value() / 100.0
+            self.audio_output.setVolume(volume)
+
             # Load and play video
             video_url = QUrl.fromLocalFile(self.media_path)
             self.video_player.setSource(video_url)
             self.video_player.play()
+
+            # Update play/pause button
+            self.play_pause_btn.setText("⏸")
+
+            # Start position timer
+            self.position_timer.start()
 
             print(f"[MediaLightbox] ✓ Video player started: {os.path.basename(self.media_path)}")
 
@@ -270,6 +532,7 @@ class MediaLightbox(QDialog):
             self.image_label.show()
             if hasattr(self, 'video_widget'):
                 self.video_widget.hide()
+            self.video_controls_widget.hide()
             self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\n⚠️ Playback error")
             self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
 
@@ -283,14 +546,44 @@ class MediaLightbox(QDialog):
         # Load video metadata
         self._load_metadata()
 
+    def _on_duration_changed(self, duration: int):
+        """Handle video duration change (set seek slider range)."""
+        self.seek_slider.setMaximum(duration)
+        # Format duration as mm:ss
+        minutes = duration // 60000
+        seconds = (duration % 60000) // 1000
+        self.time_total_label.setText(f"{minutes}:{seconds:02d}")
+
+    def _on_position_changed(self, position: int):
+        """Handle video position change (update seek slider and time)."""
+        # Update seek slider (only if not being dragged)
+        if not self.seek_slider.isSliderDown():
+            self.seek_slider.setValue(position)
+
+    def _update_video_position(self):
+        """Update video position display."""
+        if hasattr(self, 'video_player'):
+            position = self.video_player.position()
+            # Format position as mm:ss
+            minutes = position // 60000
+            seconds = (position % 60000) // 1000
+            self.time_current_label.setText(f"{minutes}:{seconds:02d}")
+
     def _load_photo(self):
         """Load and display the current photo with EXIF orientation correction."""
         try:
-            # Hide video widget if it exists, show image label
+            # Hide video widget and controls if they exist, show image label
             if hasattr(self, 'video_widget'):
                 self.video_widget.hide()
                 if hasattr(self, 'video_player'):
                     self.video_player.stop()
+                    if hasattr(self, 'position_timer'):
+                        self.position_timer.stop()
+
+            # Hide video controls
+            if hasattr(self, 'video_controls_widget'):
+                self.video_controls_widget.hide()
+
             self.image_label.show()
             self.image_label.setStyleSheet("")  # Reset any custom styling
 
@@ -536,6 +829,11 @@ class MediaLightbox(QDialog):
                 self.media_path = self.all_media[-1]
                 self._load_media()
                 event.accept()
+
+        # I: Toggle info panel
+        elif key == Qt.Key_I:
+            self._toggle_info_panel()
+            event.accept()
 
         else:
             super().keyPressEvent(event)
