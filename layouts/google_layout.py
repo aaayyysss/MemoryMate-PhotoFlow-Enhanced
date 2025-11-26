@@ -149,6 +149,9 @@ class MediaLightbox(QDialog):
         self.scroll_start_x = 0
         self.scroll_start_y = 0
 
+        # Button positioning retry counter (safety limit)
+        self._position_retry_count = 0
+
     def _create_top_toolbar(self) -> QWidget:
         """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
         toolbar = QWidget()
@@ -919,9 +922,15 @@ class MediaLightbox(QDialog):
         # Get scroll area geometry
         scroll_rect = self.scroll_area.geometry()
         if scroll_rect.width() == 0 or scroll_rect.height() == 0:
-            from PySide6.QtCore import QTimer
-            QTimer.singleShot(50, self._position_nav_buttons)
+            # Safety limit: stop retrying after 20 attempts (1 second total)
+            if self._position_retry_count < 20:
+                self._position_retry_count += 1
+                from PySide6.QtCore import QTimer
+                QTimer.singleShot(50, self._position_nav_buttons)
             return
+
+        # Reset retry counter on success
+        self._position_retry_count = 0
 
         # Button dimensions
         btn_size = 48
