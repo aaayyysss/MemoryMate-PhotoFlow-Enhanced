@@ -6,13 +6,41 @@ from PySide6.QtWidgets import (
     QScrollArea, QSplitter, QToolBar, QLineEdit, QTreeWidget,
     QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
 )
-from PySide6.QtCore import Qt, Signal, QSize, QEvent
+from PySide6.QtCore import Qt, Signal, QSize, QEvent, QRunnable, QThreadPool, QObject
 from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
 from .base_layout import BaseLayout
 from typing import Dict, List, Tuple
 from collections import defaultdict
 from datetime import datetime
 import os
+
+
+# === ASYNC THUMBNAIL LOADING ===
+class ThumbnailSignals(QObject):
+    """Signals for async thumbnail loading."""
+    loaded = Signal(str, QPixmap)  # (path, pixmap)
+
+
+class ThumbnailLoader(QRunnable):
+    """Async thumbnail loader using QThreadPool."""
+
+    def __init__(self, path: str, size: int):
+        super().__init__()
+        self.path = path
+        self.size = size
+        self.signals = ThumbnailSignals()
+
+    def run(self):
+        """Load thumbnail in background thread."""
+        try:
+            from app_services import get_thumbnail
+            pixmap = get_thumbnail(self.path, self.size)
+
+            if pixmap and not pixmap.isNull():
+                # Emit loaded signal with pixmap
+                self.signals.loaded.emit(self.path, pixmap)
+        except Exception as e:
+            print(f"[ThumbnailLoader] Error loading {self.path}: {e}")
 
 
 class MediaLightbox(QDialog):
@@ -1427,6 +1455,11 @@ class GooglePhotosLayout(BaseLayout):
         self.last_selected_path = None  # For Shift range selection
         self.all_displayed_paths = []  # Track all photos in current view for range selection
 
+        # Async thumbnail loading
+        self.thumbnail_thread_pool = QThreadPool()
+        self.thumbnail_thread_pool.setMaxThreadCount(8)  # Limit concurrent loads
+        self.thumbnail_buttons = {}  # Map path -> button widget for async updates
+
         # Initialize filter state
         self.current_thumb_size = 200
         self.current_filter_year = None
@@ -1933,12 +1966,15 @@ class GooglePhotosLayout(BaseLayout):
         has_filters = filter_year is not None or filter_month is not None or filter_folder is not None or filter_person is not None
         self.btn_clear_filter.setVisible(has_filters)
 
-        # Clear existing timeline
+        # Clear existing timeline and thumbnail cache
         try:
             while self.timeline_layout.count():
                 child = self.timeline_layout.takeAt(0)
                 if child.widget():
                     child.widget().deleteLater()
+
+            # Clear thumbnail button cache to prevent memory leaks
+            self.thumbnail_buttons.clear()
 
             # CRITICAL FIX: Only clear trees when NOT filtering
             # When filtering, we want to keep the tree structure visible
@@ -2925,11 +2961,32 @@ class GooglePhotosLayout(BaseLayout):
 
         return grid_container
 
+    def _on_thumbnail_loaded(self, path: str, pixmap: QPixmap, size: int):
+        """Callback when async thumbnail loading completes."""
+        # Find the button for this path
+        button = self.thumbnail_buttons.get(path)
+        if not button:
+            return  # Button was destroyed (e.g., during reload)
+
+        try:
+            # Update button with loaded thumbnail
+            if pixmap and not pixmap.isNull():
+                scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                button.setIcon(QIcon(scaled))
+                button.setIconSize(QSize(size - 4, size - 4))
+                button.setText("")  # Clear placeholder text
+            else:
+                button.setText("📷")  # No thumbnail - show placeholder
+        except Exception as e:
+            print(f"[GooglePhotosLayout] Error updating thumbnail for {path}: {e}")
+            button.setText("❌")
+
     def _create_thumbnail(self, path: str, size: int) -> QWidget:
         """
         Create thumbnail widget for a photo with selection checkbox.
 
         Phase 2: Enhanced with checkbox overlay for batch selection.
+        Phase 3: ASYNC thumbnail loading to prevent UI freeze with large photo sets.
         """
         from PySide6.QtWidgets import QCheckBox, QVBoxLayout
 
@@ -2938,7 +2995,7 @@ class GooglePhotosLayout(BaseLayout):
         container.setFixedSize(size, size)
         container.setStyleSheet("background: transparent;")
 
-        # Thumbnail button
+        # Thumbnail button with placeholder
         thumb = QPushButton(container)
         thumb.setGeometry(0, 0, size, size)
         thumb.setStyleSheet("""
@@ -2953,25 +3010,16 @@ class GooglePhotosLayout(BaseLayout):
             }
         """)
 
-        # Load thumbnail using app_services (correct method)
-        try:
-            from app_services import get_thumbnail
+        # Show placeholder while loading
+        thumb.setText("⏳")
 
-            # Get thumbnail pixmap (handles both images and videos)
-            pixmap = get_thumbnail(path, size)
+        # Store button for async update
+        self.thumbnail_buttons[path] = thumb
 
-            if pixmap and not pixmap.isNull():
-                # Scale pixmap to fit button while maintaining aspect ratio
-                scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                thumb.setIcon(QIcon(scaled))
-                thumb.setIconSize(QSize(size - 4, size - 4))
-            else:
-                # No thumbnail - show placeholder
-                thumb.setText("📷")
-
-        except Exception as e:
-            print(f"[GooglePhotosLayout] ⚠️ Error loading thumbnail for {path}: {e}")
-            thumb.setText("❌")
+        # Queue async thumbnail loading
+        loader = ThumbnailLoader(path, size)
+        loader.signals.loaded.connect(lambda p, pixmap: self._on_thumbnail_loaded(p, pixmap, size))
+        self.thumbnail_thread_pool.start(loader)
 
         # Phase 2: Selection checkbox (overlay top-left corner)
         checkbox = QCheckBox(container)
