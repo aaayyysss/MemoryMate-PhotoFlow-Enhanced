@@ -373,6 +373,13 @@ class GooglePhotosLayout(BaseLayout):
         self.selected_photos = set()  # Set of selected photo paths
         self.selection_mode = False  # Whether selection mode is active
 
+        # Initialize filter state
+        self.current_thumb_size = 200
+        self.current_filter_year = None
+        self.current_filter_month = None
+        self.current_filter_folder = None
+        self.current_filter_person = None
+
         # Get current project ID (CRITICAL: Photos are organized by project)
         from app_services import get_default_project_id, list_projects
         self.project_id = get_default_project_id()
@@ -904,6 +911,12 @@ class GooglePhotosLayout(BaseLayout):
             query_parts.append("ORDER BY pm.date_taken DESC")
             query = "\n".join(query_parts)
 
+            # Debug: Log SQL query and parameters
+            print(f"[GooglePhotosLayout] 🔍 SQL Query:\n{query}")
+            print(f"[GooglePhotosLayout] 🔍 Parameters: {params}")
+            if filter_person is not None:
+                print(f"[GooglePhotosLayout] 🔍 Person filter: project_id={self.project_id}, branch_key={filter_person}")
+
             # Use ReferenceDB's connection pattern with timeout protection
             try:
                 with db._connect() as conn:
@@ -1144,11 +1157,17 @@ class GooglePhotosLayout(BaseLayout):
                 LIMIT 10
             """
 
+            print(f"[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id={self.project_id}")
+
             with db._connect() as conn:
                 conn.execute("PRAGMA busy_timeout = 5000")
                 cur = conn.cursor()
                 cur.execute(query, (self.project_id,))
                 rows = cur.fetchall()
+
+            print(f"[GooglePhotosLayout] 👥 Found {len(rows)} face clusters")
+            for branch_key, label, count in rows:
+                print(f"[GooglePhotosLayout]   - {branch_key}: {label or 'Unnamed'} ({count} photos)")
 
             if not rows:
                 # No face clusters found - show placeholder
@@ -1168,6 +1187,8 @@ class GooglePhotosLayout(BaseLayout):
 
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error building people tree: {e}")
+            import traceback
+            traceback.print_exc()
 
     def _on_people_item_clicked(self, item: QTreeWidgetItem, column: int):
         """
@@ -1822,7 +1843,7 @@ class GooglePhotosLayout(BaseLayout):
 
     def _clear_filter(self):
         """
-        Clear all date/folder filters and show all photos.
+        Clear all date/folder/person filters and show all photos.
         """
         print("[GooglePhotosLayout] Clearing all filters")
 
@@ -1831,7 +1852,8 @@ class GooglePhotosLayout(BaseLayout):
             thumb_size=self.current_thumb_size,
             filter_year=None,
             filter_month=None,
-            filter_folder=None
+            filter_folder=None,
+            filter_person=None
         )
 
         # Clear search box as well if it has text
