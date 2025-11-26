@@ -536,16 +536,6 @@ class MediaLightbox(QDialog):
                 self.video_widget.setStyleSheet("background: black;")
                 self.video_player.setVideoOutput(self.video_widget)
 
-                # Replace image_label with video_widget temporarily
-                # Get the image_label's parent layout
-                parent_layout = self.image_label.parent().layout()
-                if parent_layout:
-                    # Hide image label, show video widget
-                    self.image_label.hide()
-                    # Add video widget if not already added
-                    if self.video_widget.parent() is None:
-                        parent_layout.insertWidget(0, self.video_widget, 1)
-
                 # Connect video player signals
                 self.video_player.durationChanged.connect(self._on_duration_changed)
                 self.video_player.positionChanged.connect(self._on_position_changed)
@@ -555,8 +545,8 @@ class MediaLightbox(QDialog):
                 self.position_timer.timeout.connect(self._update_video_position)
                 self.position_timer.setInterval(100)  # Update every 100ms
 
-            # Show video widget, hide image label
-            self.image_label.hide()
+            # Replace image label with video widget in scroll area
+            self.scroll_area.setWidget(self.video_widget)
             self.video_widget.show()
 
             # Show video controls
@@ -640,6 +630,8 @@ class MediaLightbox(QDialog):
             if hasattr(self, 'video_controls_widget'):
                 self.video_controls_widget.hide()
 
+            # Set image label as scroll area widget (switch from video)
+            self.scroll_area.setWidget(self.image_label)
             self.image_label.show()
             self.image_label.setStyleSheet("")  # Reset any custom styling
 
@@ -734,6 +726,7 @@ class MediaLightbox(QDialog):
                 )
 
             self.image_label.setPixmap(scaled_pixmap)
+            self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
             print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}, zoom={self.zoom_level}")
 
             # Update counter
@@ -1023,6 +1016,7 @@ class MediaLightbox(QDialog):
         )
 
         self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
 
     def _update_status_label(self):
         """Update status label with zoom level or slideshow status."""
