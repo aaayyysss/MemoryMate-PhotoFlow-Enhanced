@@ -871,26 +871,15 @@ class GooglePhotosLayout(BaseLayout):
             # Query photos for the current project (join with project_images)
             # CRITICAL FIX: Filter by project_id using project_images table
             # Build query with optional filters
-            # CRITICAL FIX: When filtering by person, we need to show ALL photos of that person
-            # even if they don't have date_taken metadata. The date_taken filter should only
-            # apply to timeline view, not person-filtered view.
-            if filter_person is not None:
-                # Person filter: Don't require date_taken (show all photos of this person)
-                query_parts = ["""
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-                """]
-            else:
-                # Timeline view: Require date_taken for chronological display
-                query_parts = ["""
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-                    AND pm.date_taken IS NOT NULL
-                """]
+            # CRITICAL FIX: Show ALL photos in project, regardless of date_taken
+            # Photos without dates will be grouped in "No Date" section (handled by _group_photos_by_date)
+            # This matches Google Photos behavior: all photos visible, sorted by date when available
+            query_parts = ["""
+                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+            """]
 
             params = [self.project_id]
 
@@ -939,6 +928,34 @@ class GooglePhotosLayout(BaseLayout):
                     cur = conn.cursor()
                     cur.execute(query, tuple(params))
                     rows = cur.fetchall()
+
+                    # CRITICAL DEBUG: Check if date_taken filter is removing photos
+                    if filter_person is None and filter_year is None and filter_month is None and filter_folder is None:
+                        # In default timeline view, check how many photos are being filtered
+                        cur.execute("""
+                            SELECT COUNT(DISTINCT pm.path)
+                            FROM photo_metadata pm
+                            JOIN project_images pi ON pm.path = pi.image_path
+                            WHERE pi.project_id = ?
+                        """, (self.project_id,))
+                        total_photos = cur.fetchone()[0]
+
+                        cur.execute("""
+                            SELECT COUNT(DISTINCT pm.path)
+                            FROM photo_metadata pm
+                            JOIN project_images pi ON pm.path = pi.image_path
+                            WHERE pi.project_id = ?
+                            AND pm.date_taken IS NOT NULL
+                        """, (self.project_id,))
+                        photos_with_dates = cur.fetchone()[0]
+
+                        photos_without_dates = total_photos - photos_with_dates
+                        print(f"[GooglePhotosLayout] 📊 STATS: Total photos={total_photos}, With dates={photos_with_dates}, Without dates={photos_without_dates}")
+                        print(f"[GooglePhotosLayout] 📊 Query returned {len(rows)} photos")
+
+                        if photos_without_dates > 0:
+                            print(f"[GooglePhotosLayout] ⚠️ WARNING: {photos_without_dates} photos are being HIDDEN because date_taken IS NULL!")
+
             except Exception as db_error:
                 print(f"[GooglePhotosLayout] ⚠️ Database query failed: {db_error}")
                 # Show error state but don't crash
