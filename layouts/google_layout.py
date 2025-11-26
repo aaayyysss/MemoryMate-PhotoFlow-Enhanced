@@ -187,10 +187,36 @@ class PhotoLightbox(QDialog):
         main_layout.addWidget(metadata_panel)
 
     def _load_photo(self):
-        """Load and display the current photo."""
+        """Load and display the current photo with EXIF orientation correction."""
         try:
-            # Load image
-            pixmap = QPixmap(self.photo_path)
+            print(f"[PhotoLightbox] Loading photo: {os.path.basename(self.photo_path)}")
+            print(f"[PhotoLightbox] Window size: {self.width()}x{self.height()}")
+
+            # CRITICAL FIX: Load image using PIL first for EXIF orientation correction
+            from PIL import Image, ImageOps
+
+            try:
+                # Load with PIL and auto-rotate based on EXIF orientation
+                pil_image = Image.open(self.photo_path)
+
+                # EXIF ORIENTATION FIX: Auto-rotate based on EXIF orientation tag
+                # This fixes photos that appear rotated incorrectly
+                pil_image = ImageOps.exif_transpose(pil_image)
+
+                # Convert PIL image to QPixmap
+                if pil_image.mode != 'RGB':
+                    pil_image = pil_image.convert('RGB')
+
+                data = pil_image.tobytes('raw', 'RGB')
+                qimg = QImage(data, pil_image.width, pil_image.height, QImage.Format_RGB888)
+                pixmap = QPixmap.fromImage(qimg)
+
+                print(f"[PhotoLightbox] ✓ Image loaded with EXIF orientation: {pil_image.width}x{pil_image.height}")
+
+            except Exception as pil_error:
+                print(f"[PhotoLightbox] PIL loading failed, falling back to QPixmap: {pil_error}")
+                # Fallback to QPixmap if PIL fails
+                pixmap = QPixmap(self.photo_path)
 
             if pixmap.isNull():
                 self.image_label.setText("❌ Failed to load image")
@@ -199,8 +225,14 @@ class PhotoLightbox(QDialog):
 
             # Scale to fit while maintaining aspect ratio
             # Get available space (accounting for padding and nav buttons)
-            max_width = self.width() - 400  # Leave space for metadata panel
-            max_height = self.height() - 200  # Leave space for top/bottom bars
+            # ROBUST FIX: Ensure we have valid window dimensions
+            window_width = max(self.width(), 800)  # Minimum 800px
+            window_height = max(self.height(), 600)  # Minimum 600px
+
+            max_width = window_width - 400  # Leave space for metadata panel
+            max_height = window_height - 200  # Leave space for top/bottom bars
+
+            print(f"[PhotoLightbox] Scaling to: max_width={max_width}, max_height={max_height}")
 
             scaled_pixmap = pixmap.scaled(
                 max_width, max_height,
@@ -209,6 +241,7 @@ class PhotoLightbox(QDialog):
             )
 
             self.image_label.setPixmap(scaled_pixmap)
+            print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}")
 
             # Update counter
             self.counter_label.setText(
@@ -332,9 +365,11 @@ class PhotoLightbox(QDialog):
         super().showEvent(event)
         if not self._photo_loaded:
             self._photo_loaded = True
-            # Use QTimer to ensure window is fully laid out
+            # ROBUST FIX: Use longer delay to ensure window is fully sized and rendered
+            # QTimer.singleShot(0) was too fast - window size not yet updated
             from PySide6.QtCore import QTimer
-            QTimer.singleShot(0, self._load_photo)
+            print(f"[PhotoLightbox] showEvent triggered, scheduling photo load...")
+            QTimer.singleShot(100, self._load_photo)  # 100ms delay for proper layout
 
     def keyPressEvent(self, event: QKeyEvent):
         """Handle keyboard shortcuts."""
@@ -382,6 +417,8 @@ class GooglePhotosLayout(BaseLayout):
         # Phase 2: Selection tracking
         self.selected_photos = set()  # Set of selected photo paths
         self.selection_mode = False  # Whether selection mode is active
+        self.last_selected_path = None  # For Shift range selection
+        self.all_displayed_paths = []  # Track all photos in current view for range selection
 
         # Initialize filter state
         self.current_thumb_size = 200
@@ -1017,6 +1054,10 @@ class GooglePhotosLayout(BaseLayout):
                 self._build_folders_tree(rows)
                 self._build_people_tree()
                 self._build_videos_tree()
+
+            # Track all displayed paths for Shift+Ctrl multi-selection
+            self.all_displayed_paths = [photo[0] for photos_list in photos_by_date.values() for photo in photos_list]
+            print(f"[GooglePhotosLayout] Tracking {len(self.all_displayed_paths)} paths for multi-selection")
 
             # Create date group widgets
             for date_str, photos in photos_by_date.items():
@@ -1656,7 +1697,7 @@ class GooglePhotosLayout(BaseLayout):
         # Video grid
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
-        grid.setSpacing(8)
+        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Minimal spacing
         grid.setContentsMargins(0, 0, 0, 0)
 
         columns = 5  # Match photo grid default
@@ -1805,10 +1846,12 @@ class GooglePhotosLayout(BaseLayout):
     def _create_photo_grid(self, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
         Create photo grid with thumbnails.
+
+        Google Photos Style: Minimal spacing for dense, clean grid
         """
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
-        grid.setSpacing(8)
+        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Reduced from 8px to 2px for minimal padding
         grid.setContentsMargins(0, 0, 0, 0)
 
         # Calculate grid layout - responsive columns based on thumbnail size
@@ -1915,15 +1958,62 @@ class GooglePhotosLayout(BaseLayout):
 
     def _on_photo_clicked(self, path: str):
         """
-        Handle photo thumbnail click.
+        Handle photo thumbnail click with Shift+Ctrl multi-selection support.
+
+        - Normal click: Open lightbox
+        - Ctrl+Click: Add/remove from selection (toggle)
+        - Shift+Click: Range select from last selected to current
+        - Selection mode: Toggle selection
         """
+        from PySide6.QtWidgets import QApplication
+        from PySide6.QtCore import Qt
+
         print(f"[GooglePhotosLayout] Photo clicked: {path}")
 
-        # Phase 2: If selection mode is active, toggle selection
+        # Get keyboard modifiers
+        modifiers = QApplication.keyboardModifiers()
+        ctrl_pressed = bool(modifiers & Qt.ControlModifier)
+        shift_pressed = bool(modifiers & Qt.ShiftModifier)
+
+        # SHIFT+CLICK: Range selection (from last selected to current)
+        if shift_pressed and self.last_selected_path and self.all_displayed_paths:
+            print(f"[GooglePhotosLayout] Shift+Click range selection from {self.last_selected_path} to {path}")
+            try:
+                # Find indices of last selected and current photo
+                last_idx = self.all_displayed_paths.index(self.last_selected_path)
+                current_idx = self.all_displayed_paths.index(path)
+
+                # Select all photos in range
+                start_idx = min(last_idx, current_idx)
+                end_idx = max(last_idx, current_idx)
+
+                for idx in range(start_idx, end_idx + 1):
+                    range_path = self.all_displayed_paths[idx]
+                    if range_path not in self.selected_photos:
+                        self.selected_photos.add(range_path)
+                        self._update_checkbox_state(range_path, True)
+
+                self._update_selection_ui()
+                print(f"[GooglePhotosLayout] ✓ Range selected: {end_idx - start_idx + 1} photos")
+                return
+
+            except (ValueError, IndexError) as e:
+                print(f"[GooglePhotosLayout] ⚠️ Range selection error: {e}")
+                # Fall through to normal selection
+
+        # CTRL+CLICK: Toggle selection (add/remove)
+        if ctrl_pressed:
+            print(f"[GooglePhotosLayout] Ctrl+Click toggle selection: {path}")
+            self._toggle_photo_selection(path)
+            self.last_selected_path = path  # Update last selected for future Shift+Click
+            return
+
+        # NORMAL CLICK in selection mode: Toggle selection
         if self.selection_mode:
             self._toggle_photo_selection(path)
+            self.last_selected_path = path
         else:
-            # Phase 2: Open lightbox/preview
+            # NORMAL CLICK: Open lightbox/preview
             self._open_photo_lightbox(path)
 
     def _open_photo_lightbox(self, path: str):
@@ -2051,6 +2141,23 @@ class GooglePhotosLayout(BaseLayout):
                             return container
 
         return None
+
+    def _update_checkbox_state(self, path: str, checked: bool):
+        """
+        Update checkbox state for a specific photo (for multi-selection support).
+
+        Args:
+            path: Photo path
+            checked: True to check, False to uncheck
+        """
+        container = self._find_thumbnail_container(path)
+        if container:
+            checkbox = container.property("checkbox")
+            if checkbox:
+                # Update checkbox state without triggering signal
+                checkbox.blockSignals(True)
+                checkbox.setChecked(checked)
+                checkbox.blockSignals(False)
 
     def _update_selection_ui(self):
         """
