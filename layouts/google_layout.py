@@ -83,6 +83,7 @@ class MediaLightbox(QDialog):
         top_bar.addStretch()
 
         close_btn = QPushButton("✕ Close")
+        close_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
         close_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
@@ -111,6 +112,7 @@ class MediaLightbox(QDialog):
         nav_layout = QHBoxLayout()
 
         self.prev_btn = QPushButton("← Previous")
+        self.prev_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
         self.prev_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
@@ -141,6 +143,7 @@ class MediaLightbox(QDialog):
         nav_layout.addStretch()
 
         self.next_btn = QPushButton("Next →")
+        self.next_btn.setFocusPolicy(Qt.NoFocus)  # CRITICAL: Prevent Space from triggering button
         self.next_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
@@ -214,13 +217,61 @@ class MediaLightbox(QDialog):
             self._load_photo()
 
     def _load_video(self):
-        """Load and display video."""
+        """Load and display video with playback controls."""
         print(f"[MediaLightbox] Loading video: {os.path.basename(self.media_path)}")
 
-        # For now, show a placeholder with video icon
-        # TODO: Implement actual video player widget
-        self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\nClick to play")
-        self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
+        try:
+            from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+            from PySide6.QtMultimediaWidgets import QVideoWidget
+            from PySide6.QtCore import QUrl
+
+            # Clear previous content
+            self.image_label.clear()
+            self.image_label.setStyleSheet("")
+
+            # Create video player if not exists
+            if not hasattr(self, 'video_player'):
+                self.video_player = QMediaPlayer()
+                self.audio_output = QAudioOutput()
+                self.video_player.setAudioOutput(self.audio_output)
+
+                # Create video widget
+                self.video_widget = QVideoWidget()
+                self.video_widget.setStyleSheet("background: black;")
+                self.video_player.setVideoOutput(self.video_widget)
+
+                # Replace image_label with video_widget temporarily
+                # Get the image_label's parent layout
+                parent_layout = self.image_label.parent().layout()
+                if parent_layout:
+                    # Hide image label, show video widget
+                    self.image_label.hide()
+                    # Add video widget if not already added
+                    if self.video_widget.parent() is None:
+                        parent_layout.insertWidget(1, self.video_widget, 1)
+
+            # Show video widget, hide image label
+            self.image_label.hide()
+            self.video_widget.show()
+
+            # Load and play video
+            video_url = QUrl.fromLocalFile(self.media_path)
+            self.video_player.setSource(video_url)
+            self.video_player.play()
+
+            print(f"[MediaLightbox] ✓ Video player started: {os.path.basename(self.media_path)}")
+
+        except Exception as e:
+            print(f"[MediaLightbox] ⚠️ Error loading video: {e}")
+            import traceback
+            traceback.print_exc()
+
+            # Fallback to placeholder
+            self.image_label.show()
+            if hasattr(self, 'video_widget'):
+                self.video_widget.hide()
+            self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\n⚠️ Playback error")
+            self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
 
         # Update counter
         self.counter_label.setText(f"{self.current_index + 1} of {len(self.all_media)}")
@@ -235,6 +286,14 @@ class MediaLightbox(QDialog):
     def _load_photo(self):
         """Load and display the current photo with EXIF orientation correction."""
         try:
+            # Hide video widget if it exists, show image label
+            if hasattr(self, 'video_widget'):
+                self.video_widget.hide()
+                if hasattr(self, 'video_player'):
+                    self.video_player.stop()
+            self.image_label.show()
+            self.image_label.setStyleSheet("")  # Reset any custom styling
+
             print(f"[MediaLightbox] Loading photo: {os.path.basename(self.media_path)}")
             print(f"[MediaLightbox] Window size: {self.width()}x{self.height()}")
 
