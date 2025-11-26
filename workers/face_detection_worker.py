@@ -210,27 +210,36 @@ class FaceDetectionWorker(QRunnable):
         Get list of photos to process.
 
         Returns photos that haven't been processed yet (if skip_processed=True).
+
+        CRITICAL FIX: Uses project_images table to respect project hierarchy.
+        Only processes photos that are actually linked to this project via project_images.
         """
         with db._connect() as conn:
             cur = conn.cursor()
 
-            # Get total photo count
-            cur.execute("SELECT COUNT(*) FROM photo_metadata WHERE project_id = ?", (self.project_id,))
+            # SOLID FIX: Get total photo count from project_images (not photo_metadata.project_id)
+            cur.execute("""
+                SELECT COUNT(DISTINCT pi.image_path)
+                FROM project_images pi
+                WHERE pi.project_id = ?
+            """, (self.project_id,))
             total_count = cur.fetchone()[0]
 
             if self.skip_processed:
-                # Get photos not in face_crops table
+                # SOLID FIX: Get photos not in face_crops table, using project_images JOIN
                 cur.execute("""
-                    SELECT DISTINCT pm.path, pm.project_id
-                    FROM photo_metadata pm
-                    WHERE pm.project_id = ?
-                      AND pm.path NOT IN (
-                          SELECT DISTINCT image_path FROM face_crops WHERE project_id = ?
+                    SELECT DISTINCT pi.image_path
+                    FROM project_images pi
+                    WHERE pi.project_id = ?
+                      AND pi.image_path NOT IN (
+                          SELECT DISTINCT image_path
+                          FROM face_crops
+                          WHERE project_id = ?
                       )
-                    ORDER BY pm.path
+                    ORDER BY pi.image_path
                 """, (self.project_id, self.project_id))
 
-                photos = [{'path': row[0], 'project_id': row[1]} for row in cur.fetchall()]
+                photos = [{'path': row[0], 'project_id': self.project_id} for row in cur.fetchall()]
                 skipped_count = total_count - len(photos)
 
                 if skipped_count > 0:
@@ -242,15 +251,17 @@ class FaceDetectionWorker(QRunnable):
 
                 return photos
             else:
-                # Get all photos
+                # SOLID FIX: Get all photos from project_images (not photo_metadata)
                 cur.execute("""
-                    SELECT path, project_id
-                    FROM photo_metadata
-                    WHERE project_id = ?
-                    ORDER BY path
+                    SELECT DISTINCT pi.image_path
+                    FROM project_images pi
+                    WHERE pi.project_id = ?
+                    ORDER BY pi.image_path
                 """, (self.project_id,))
 
-                return [{'path': row[0], 'project_id': row[1]} for row in cur.fetchall()]
+                photos = [{'path': row[0], 'project_id': self.project_id} for row in cur.fetchall()]
+                logger.info(f"[FaceDetectionWorker] Processing all {len(photos)} photos in project {self.project_id}")
+                return photos
 
     def _save_face(self, db: ReferenceDB, image_path: str, face: dict,
                    face_idx: int, face_crops_dir: str):
