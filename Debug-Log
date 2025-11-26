@@ -1,35 +1,35 @@
 [FaceDetection] Complete: 21 photos, 33 faces detected
-2025-11-26 02:33:59,393 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-26 02:40:56,768 [INFO] [FaceClusterWorker] Starting face clustering for project 1
 [FaceCluster] Loading face embeddings...
-2025-11-26 02:33:59,393 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
+2025-11-26 02:40:56,773 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
 [FaceCluster] Clustering 33 faces...
-2025-11-26 02:33:59,393 [INFO] [FaceClusterWorker] Found 12 clusters
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Found 12 clusters
 [FaceCluster] Found 12 person groups...
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
 [FaceCluster] Saving cluster 1/12: Person 1 (8 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
 [FaceCluster] Saving cluster 2/12: Person 2 (2 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
 [FaceCluster] Saving cluster 3/12: Person 3 (3 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
 [FaceCluster] Saving cluster 4/12: Person 4 (1 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
 [FaceCluster] Saving cluster 5/12: Person 5 (3 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
 [FaceCluster] Saving cluster 6/12: Person 6 (1 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
+2025-11-26 02:40:56,778 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
 [FaceCluster] Saving cluster 7/12: Person 7 (7 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
+2025-11-26 02:40:56,788 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
 [FaceCluster] Saving cluster 8/12: Person 8 (1 faces)
-2025-11-26 02:33:59,403 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
 [FaceCluster] Saving cluster 9/12: Person 9 (1 faces)
-2025-11-26 02:33:59,414 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
+2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
+2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
 [FaceCluster] Saving cluster 10/12: Person 10 (2 faces)
-2025-11-26 02:33:59,414 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
+2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
 [FaceCluster] Saving cluster 11/12: Person 11 (1 faces)
-2025-11-26 02:33:59,414 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
+2025-11-26 02:40:56,790 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
 [FaceCluster] Saving cluster 12/12: Person 12 (3 faces)
-2025-11-26 02:33:59,418 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
+2025-11-26 02:40:56,799 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
 [FaceCluster] Clustering complete: 12 branches created
 [FaceCluster] Complete: 12 person groups created
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
@@ -47,7 +47,7 @@
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000274B772ABF0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001DBB3A2ABF0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -104,63 +104,6 @@
 [Sidebar][counts worker gen=8] running for 1 targets...
 [Sidebar][counts worker gen=8] finished scanning targets, scheduling UI update
 [Sidebar][counts applied] updated UI with counts
-[TAG FILTER] Cleared tag filter when navigating to people
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[get_images_by_branch] project_id=1, branch_key='face_000'
-[get_images_by_branch] Found 8 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/244008930_565686944637059_4279754871252118785_n.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/244008930_565686944637059_4279754871252118785_n.jpg'
-[DB_TAGS_SQL] Photos query:
-                        SELECT pm.path, t.name
-                        FROM photo_metadata pm
-                        JOIN photo_tags pt ON pt.photo_...
-[DB_TAGS_SQL] Videos query:
-                        SELECT vm.path, t.name
-                        FROM video_metadata vm
-                        JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/2/244008930_565686944637059_4279754871252118785_n.jpg']
-[DB_TAGS_SQL] project_id: 1
-[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
-[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
-[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
-[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/8 paths (project_id=1)
-[GRID] Fetched tags for 8 paths, got 8 entries
-[GRID] Loaded 8 thumbnails.
-[GRID] Reloaded 8 thumbnails in branch-mode (base=8)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
-[GRID] Step 5: ✓ gridReloaded signal emitted
-[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
-
-[GRID] Finally block: Setting _reloading=False
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-7 of 8
-[GRID] Queued 8 new thumbnail workers
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] Using default project: 1
@@ -198,6 +141,8 @@ ORDER BY pm.date_taken DESC
 [MainWindow] ✓ Switched to layout: google
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_000)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_000]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_000
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_000' has 8 face crops across 8 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -232,6 +177,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_006)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_006]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_006
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_006' has 7 face crops across 7 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -266,6 +213,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 6 photos in 4 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_002]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_002
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_002' has 3 face crops across 3 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -300,6 +249,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 1 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_004)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_004]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_004
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_004' has 3 face crops across 3 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -334,6 +285,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 1 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_011)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_011]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_011
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_011' has 3 face crops across 3 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -368,6 +321,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 3 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_001
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_001' has 2 face crops across 2 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -402,6 +357,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_009)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_009]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_009
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_009' has 2 face crops across 2 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -436,6 +393,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] Loaded 2 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_003
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_003' has 1 face crops across 1 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -470,6 +429,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_005)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_005]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_005
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_005' has 1 face crops across 1 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
@@ -504,6 +465,8 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_007)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_007]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_007
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
 [GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
 [GooglePhotosLayout] 🔍 DEBUG: branch_key='face_007' has 1 face crops across 1 unique images
 [GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
