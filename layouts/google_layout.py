@@ -968,6 +968,32 @@ class GooglePhotosLayout(BaseLayout):
                         for pp in pm_paths:
                             print(f"[GooglePhotosLayout]     '{pp}'")
 
+                        # CRITICAL DEBUG: Check if face_crops paths are in project_images
+                        if face_paths:
+                            sample_path = face_paths[0]
+                            debug_cur.execute("""
+                                SELECT image_path, project_id
+                                FROM project_images
+                                WHERE image_path = ?
+                            """, (sample_path,))
+                            pi_result = debug_cur.fetchall()
+                            print(f"[GooglePhotosLayout] 🔍 DEBUG: Checking if '{sample_path}' is in project_images:")
+                            if pi_result:
+                                for img_path, proj_id in pi_result:
+                                    print(f"[GooglePhotosLayout]     ✅ Found in project_images: project_id={proj_id}")
+                            else:
+                                print(f"[GooglePhotosLayout]     ❌ NOT found in project_images! This is why query returns 0 results!")
+
+                            # Also check how many face_crop paths are actually in project_images for this project
+                            debug_cur.execute("""
+                                SELECT COUNT(DISTINCT fc.image_path)
+                                FROM face_crops fc
+                                JOIN project_images pi ON fc.image_path = pi.image_path
+                                WHERE fc.project_id = ? AND fc.branch_key = ? AND pi.project_id = ?
+                            """, (self.project_id, filter_person, self.project_id))
+                            joined_count = debug_cur.fetchone()[0]
+                            print(f"[GooglePhotosLayout] 🔍 DEBUG: {joined_count} out of {len(face_paths)} face_crop paths are actually in project_images for project {self.project_id}")
+
                         sys.stdout.flush()
 
                 except Exception as debug_error:
