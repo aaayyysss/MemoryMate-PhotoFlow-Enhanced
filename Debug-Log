@@ -1,23 +1,23 @@
-2025-11-26 13:50:03,516 [INFO] [FaceDetectionWorker] Complete in 7.2s: 15 processed (15 with faces), 0 skipped, 20 faces detected, 0 failed
+2025-11-26 14:04:23,896 [INFO] [FaceDetectionWorker] Complete in 6.7s: 15 processed (15 with faces), 0 skipped, 20 faces detected, 0 failed
 [FaceDetection] Complete: 15 photos, 20 faces detected
-2025-11-26 13:50:03,516 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-26 14:04:23,896 [INFO] [FaceClusterWorker] Starting face clustering for project 1
 [FaceCluster] Loading face embeddings...
-2025-11-26 13:50:03,516 [INFO] [FaceClusterWorker] Loaded 20 face embeddings
+2025-11-26 14:04:23,896 [INFO] [FaceClusterWorker] Loaded 20 face embeddings
 [FaceCluster] Clustering 20 faces...
-2025-11-26 13:50:03,548 [INFO] [FaceClusterWorker] Found 4 clusters
-2025-11-26 13:50:03,548 [INFO] [FaceClusterWorker] Found 8 unclustered faces (will create 'Unidentified' branch)
+2025-11-26 14:04:23,941 [INFO] [FaceClusterWorker] Found 4 clusters
+2025-11-26 14:04:23,941 [INFO] [FaceClusterWorker] Found 8 unclustered faces (will create 'Unidentified' branch)
 [FaceCluster] Found 4 person groups...
-2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 0 → 4 faces
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Cluster 0 → 4 faces
 [FaceCluster] Saving cluster 1/4: Person 1 (4 faces)
-2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
 [FaceCluster] Saving cluster 2/4: Person 2 (2 faces)
-2025-11-26 13:50:03,561 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Cluster 2 → 2 faces
 [FaceCluster] Saving cluster 3/4: Person 3 (2 faces)
-2025-11-26 13:50:03,564 [INFO] [FaceClusterWorker] Cluster 3 → 4 faces
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Cluster 3 → 4 faces
 [FaceCluster] Saving cluster 4/4: Person 4 (4 faces)
 [FaceCluster] Processing 8 unidentified faces...
-2025-11-26 13:50:03,564 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 8 faces from 5 photos
-2025-11-26 13:50:03,570 [INFO] [FaceClusterWorker] Complete in 0.1s: 4 person clusters + 8 unidentified faces
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Created 'Unidentified' branch with 8 faces from 5 photos
+2025-11-26 14:04:23,945 [INFO] [FaceClusterWorker] Complete in 0.0s: 4 person clusters + 8 unidentified faces
 [FaceCluster] Clustering complete: 5 branches created
 [FaceCluster] Complete: 4 person groups created
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
@@ -35,7 +35,7 @@
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x00000227F2245550>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000022D88275550>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -79,6 +79,395 @@
 [Sidebar][counts worker gen=8] running for 1 targets...
 [Sidebar][counts worker gen=8] finished scanning targets, scheduling UI update
 [Sidebar][counts applied] updated UI with counts
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in date-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/9 paths (project_id=1)
+[GRID] Fetched tags for 9 paths, got 9 entries
+[GRID] Loaded 9 thumbnails.
+[GRID] Reloaded 9 thumbnails in date-mode (base=9)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-8 of 9
+[GRID] Queued 9 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_unidentified'
+[get_images_by_branch] Found 5 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/5 paths (project_id=1)
+[GRID] Fetched tags for 5 paths, got 5 entries
+[GRID] Loaded 5 thumbnails.
+[GRID] Reloaded 5 thumbnails in branch-mode (base=5)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-4 of 5
+[GRID] Queued 5 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_000'
+[get_images_by_branch] Found 4 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
+[GRID] Fetched tags for 4 paths, got 4 entries
+[GRID] Loaded 4 thumbnails.
+[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-3 of 4
+[GRID] Queued 4 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_003'
+[get_images_by_branch] Found 4 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref(1)_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_2_2_2.png', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar-ref_3_2.png']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/4 paths (project_id=1)
+[GRID] Fetched tags for 4 paths, got 4 entries
+[GRID] Loaded 4 thumbnails.
+[GRID] Reloaded 4 thumbnails in branch-mode (base=4)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-3 of 4
+[GRID] Queued 4 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_001'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya3_2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar3_2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to people
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_002'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] Using default project: 1
@@ -97,7 +486,7 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 5 face clusters
-[GooglePhotosLayout]   - face_unidentified: Unnamed (b'\x08\x00\x00\x00' photos)
+[GooglePhotosLayout]   - face_unidentified: Unnamed (5 photos)
 [GooglePhotosLayout]   - face_000: Unnamed (4 photos)
 [GooglePhotosLayout]   - face_003: Unnamed (4 photos)
 [GooglePhotosLayout]   - face_001: Unnamed (2 photos)
@@ -109,6 +498,34 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] ✓ Connected Faces button
 [LayoutManager] ✓ Switched to: Google Photos Style
 [MainWindow] ✓ Switched to layout: google
+[GooglePhotosLayout] Filtering by year: 2025
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2025]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+AND strftime('%Y', pm.date_taken) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2025']
+[GooglePhotosLayout] Loaded 2 photos in 2 date groups
+[GooglePhotosLayout] Filtering by folder: output6
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/suleimaa/downloads/photo-sorter/images/output6]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+AND pm.path LIKE ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/suleimaa/downloads/photo-sorter/images/output6%']
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_unidentified)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_unidentified]...
 [GooglePhotosLayout] Filtering by person: face_unidentified
@@ -129,102 +546,9 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_unidentified']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_unidentified
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 5 photos in 3 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_000)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_000]...
-[GooglePhotosLayout] Filtering by person: face_000
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_000']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_000
-[GooglePhotosLayout] Loaded 4 photos in 2 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
-[GooglePhotosLayout] Filtering by person: face_003
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 4 photos in 1 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
-[GooglePhotosLayout] Filtering by person: face_001
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_001']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_001
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 2 photos in 0 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_002]...
-[GooglePhotosLayout] Filtering by person: face_002
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 2 photos in 0 date groups
-[GooglePhotosLayout] Section header clicked - clearing all filters
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
+[GooglePhotosLayout] Loaded 5 photos in 4 date groups
+[GooglePhotosLayout] 🔎 Zoom changed to: 100px
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
                     SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -237,15 +561,15 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 5 face clusters
-[GooglePhotosLayout]   - face_unidentified: Unnamed (b'\x08\x00\x00\x00' photos)
+[GooglePhotosLayout]   - face_unidentified: Unnamed (5 photos)
 [GooglePhotosLayout]   - face_000: Unnamed (4 photos)
 [GooglePhotosLayout]   - face_003: Unnamed (4 photos)
 [GooglePhotosLayout]   - face_001: Unnamed (2 photos)
 [GooglePhotosLayout]   - face_002: Unnamed (2 photos)
 [GooglePhotosLayout] Loaded 8 photos in 6 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_002]...
-[GooglePhotosLayout] Filtering by person: face_002
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_unidentified)
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [person=face_unidentified]...
+[GooglePhotosLayout] Filtering by person: face_unidentified
 [GooglePhotosLayout] 🔍 SQL Query:
 
                     SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -261,60 +585,11 @@ ORDER BY pm.date_taken DESC
                     )
 
 ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 2 photos in 0 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
-[GooglePhotosLayout] Filtering by person: face_001
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_001']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_001
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 2 photos in 0 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
-[GooglePhotosLayout] Filtering by person: face_003
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                    FROM photo_metadata pm
-                    JOIN project_images pi ON pm.path = pi.image_path
-                    WHERE pi.project_id = ?
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 4 photos in 1 date groups
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_unidentified']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_unidentified
+[GooglePhotosLayout] Loaded 5 photos in 4 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_000)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_000]...
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [person=face_000]...
 [GooglePhotosLayout] Filtering by person: face_000
 [GooglePhotosLayout] 🔍 SQL Query:
 
@@ -334,9 +609,9 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_000']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_000
 [GooglePhotosLayout] Loaded 4 photos in 2 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_unidentified)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_unidentified]...
-[GooglePhotosLayout] Filtering by person: face_unidentified
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [person=face_003]...
+[GooglePhotosLayout] Filtering by person: face_003
 [GooglePhotosLayout] 🔍 SQL Query:
 
                     SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -352,11 +627,419 @@ ORDER BY pm.date_taken DESC
                     )
 
 ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_unidentified']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_unidentified
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Error parsing date 'None': 'NoneType' object has no attribute 'strftime'
-[GooglePhotosLayout] Loaded 5 photos in 3 date groups
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
+[GooglePhotosLayout] Loaded 4 photos in 2 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [person=face_001]...
+[GooglePhotosLayout] Filtering by person: face_001
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_001']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_001
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_002)
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [person=face_002]...
+[GooglePhotosLayout] Filtering by person: face_002
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
+[GooglePhotosLayout] Filtering by folder: output6
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [folder=c:/users/suleimaa/downloads/photo-sorter/images/output6]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+AND pm.path LIKE ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/suleimaa/downloads/photo-sorter/images/output6%']
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
+[GooglePhotosLayout] Section header clicked - clearing all filters
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px)...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1]
+[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
+[GooglePhotosLayout] 👥 Found 5 face clusters
+[GooglePhotosLayout]   - face_unidentified: Unnamed (5 photos)
+[GooglePhotosLayout]   - face_000: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_003: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_001: Unnamed (2 photos)
+[GooglePhotosLayout]   - face_002: Unnamed (2 photos)
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
+[GooglePhotosLayout] Section header clicked - clearing all filters
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px)...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1]
+[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
+[GooglePhotosLayout] 👥 Found 5 face clusters
+[GooglePhotosLayout]   - face_unidentified: Unnamed (5 photos)
+[GooglePhotosLayout]   - face_000: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_003: Unnamed (4 photos)
+[GooglePhotosLayout]   - face_001: Unnamed (2 photos)
+[GooglePhotosLayout]   - face_002: Unnamed (2 photos)
+[GooglePhotosLayout] Loaded 8 photos in 6 date groups
+[GooglePhotosLayout] Filtering by year: 2025
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [year=2025]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+AND strftime('%Y', pm.date_taken) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2025']
+[GooglePhotosLayout] Loaded 2 photos in 2 date groups
+[GooglePhotosLayout] Filtering by year: 2024
+[GooglePhotosLayout] Loading photos from database (thumb size: 100px) [year=2024]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+
+AND strftime('%Y', pm.date_taken) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2024']
+[GooglePhotosLayout] Loaded 6 photos in 4 date groups
+[LayoutManager] Switching layout: google → current
+[LayoutManager] 🔄 Restoring original central widget: QWidget
+[CurrentLayout] Layout activated - scheduling deferred refresh
+[LayoutManager] ✓ Switched to: Current Layout
+[MainWindow] ✓ Switched to layout: current
+[CurrentLayout] Executing deferred reload...
+[CurrentLayout] Reloading sidebar...
+[SidebarQt] reload() called, display_mode=list, tabs_visible=False
+[SidebarQt] Calling _build_tree_model() instead of tabs refresh
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 15}]
+[Sidebar] Loaded 2 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 2 years, 5 months, 9 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000022D88275550>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan  =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive H: exists, checking...
+[DeviceScanner]           Checking path: H:\
+[DeviceScanner]           Directories found: []
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive H:
+[DeviceScanner]     Drive P: exists, checking...
+[DeviceScanner]           Checking path: P:\
+[DeviceScanner]           Directories found: ['ALT', 'ALT2', 'ALT3', 'CITRIX', 'CONFIDENTIAL', 'GLOBAL', 'HOME', 'PROJECTS1', 'PROJECTS2', 'PROJECTS3', 'PROJECTS4', 'PROJECTS5', 'PROJECTS6', 'PROJECTS7']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]           REJECTED: No DCIM or alternate structure
+[DeviceScanner]       ✗ No device on drive P:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: '(C:) Lokaler Datenträger' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(H:) SULEIMAA (\\ACCOUNTS.INTERN\SHARES\HOME)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: '(P:) SHARES (\\ACCOUNTS.INTERN)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=10] running for 1 targets...
+[CurrentLayout] ✓ Sidebar reload completed
+[CurrentLayout] Reloading grid...
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='face_002'
+[get_images_by_branch] Found 2 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/2 paths (project_id=1)
+[GRID] Fetched tags for 2 paths, got 2 entries
+[Sidebar][counts worker gen=10] finished scanning targets, scheduling UI update
+[GRID] Loaded 2 thumbnails.
+[GRID] Reloaded 2 thumbnails in branch-mode (base=2)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[CurrentLayout] ✓ Grid reload completed
+[Sidebar][counts applied] updated UI with counts
+[GRID] Loading viewport range: 0-1 of 2
+[GRID] Queued 2 new thumbnail workers
+[SIDEBAR] Section header '📅 By Date' clicked
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 15 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_3_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya2_2_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/15 paths (project_id=1)
+[GRID] Fetched tags for 15 paths, got 15 entries
+[GRID] Loaded 15 thumbnails.
+[GRID] Reloaded 15 thumbnails in branch-mode (base=15)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-14 of 15
+[GRID] Queued 15 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar1_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/ammar2_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya1_2_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/6 paths (project_id=1)
+[GRID] Fetched tags for 6 paths, got 6 entries
+[GRID] Loaded 6 thumbnails.
+[GRID] Reloaded 6 thumbnails in date-mode (base=6)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-5 of 6
+[GRID] Queued 6 new thumbnail workers
+[TAG FILTER] Cleared tag filter when navigating to branch
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=date
+[GRID] Step 1: Setting _reloading=True
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg'
+  [1] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg'
+  [2] norm='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+      orig='c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6850_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/img_6995_2_2_2.jpeg', 'c:/users/suleimaa/downloads/photo-sorter/images/output6/alya_2_2.jpeg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/9 paths (project_id=1)
+[GRID] Fetched tags for 9 paths, got 9 entries
+[GRID] Loaded 9 thumbnails.
+[GRID] Reloaded 9 thumbnails in date-mode (base=9)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+[GRID] Loading viewport range: 0-8 of 9
+[GRID] Queued 9 new thumbnail workers
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
@@ -364,4 +1047,4 @@ ORDER BY pm.date_taken DESC
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
 
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.38.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-04>
+C:\Users\suleimaa\Downloads\Photo-Sorter\09.38.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05>
