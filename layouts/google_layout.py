@@ -51,11 +51,16 @@ class MediaLightbox(QDialog):
         self.zoom_level = 1.0
         self.min_zoom = 0.1
         self.max_zoom = 5.0
+        self.zoom_mode = "fit"  # "fit", "fill", or "100%"
+        self.original_pixmap = None  # Store original for zoom
 
         # Slideshow state
         self.slideshow_active = False
         self.slideshow_timer = None
         self.slideshow_interval = 3000  # 3 seconds
+
+        # Rating state
+        self.current_rating = 0  # 0-5 stars
 
         self._setup_ui()
         # Don't load media here - wait for showEvent when window has proper size
@@ -105,7 +110,7 @@ class MediaLightbox(QDialog):
         self.info_panel_visible = False
 
     def _create_top_toolbar(self) -> QWidget:
-        """Create top overlay toolbar with close, info, and action buttons."""
+        """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
         toolbar = QWidget()
         toolbar.setFixedHeight(60)
         toolbar.setStyleSheet("""
@@ -120,44 +125,8 @@ class MediaLightbox(QDialog):
         layout.setContentsMargins(16, 12, 16, 12)
         layout.setSpacing(8)
 
-        # Close button (left)
-        self.close_btn = QPushButton("✕")
-        self.close_btn.setFocusPolicy(Qt.NoFocus)
-        self.close_btn.setFixedSize(36, 36)
-        self.close_btn.setStyleSheet("""
-            QPushButton {
-                background: rgba(255, 255, 255, 0.1);
-                color: white;
-                border: none;
-                border-radius: 18px;
-                font-size: 16pt;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background: rgba(255, 255, 255, 0.2);
-            }
-        """)
-        self.close_btn.clicked.connect(self.close)
-        layout.addWidget(self.close_btn)
-
-        layout.addStretch()
-
-        # Counter label (center)
-        self.counter_label = QLabel()
-        self.counter_label.setStyleSheet("""
-            color: white;
-            font-size: 11pt;
-            background: transparent;
-        """)
-        layout.addWidget(self.counter_label)
-
-        layout.addStretch()
-
-        # Info toggle button (right)
-        self.info_btn = QPushButton("ℹ️")
-        self.info_btn.setFocusPolicy(Qt.NoFocus)
-        self.info_btn.setFixedSize(36, 36)
-        self.info_btn.setStyleSheet("""
+        # Button style (shared)
+        btn_style = """
             QPushButton {
                 background: rgba(255, 255, 255, 0.1);
                 color: white;
@@ -168,8 +137,102 @@ class MediaLightbox(QDialog):
             QPushButton:hover {
                 background: rgba(255, 255, 255, 0.2);
             }
-        """)
+            QPushButton:pressed {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        """
+
+        # === LEFT SIDE: Close + Quick Actions ===
+        # Close button
+        self.close_btn = QPushButton("✕")
+        self.close_btn.setFocusPolicy(Qt.NoFocus)
+        self.close_btn.setFixedSize(36, 36)
+        self.close_btn.setStyleSheet(btn_style)
+        self.close_btn.clicked.connect(self.close)
+        layout.addWidget(self.close_btn)
+
+        layout.addSpacing(12)
+
+        # Delete button
+        self.delete_btn = QPushButton("🗑️")
+        self.delete_btn.setFocusPolicy(Qt.NoFocus)
+        self.delete_btn.setFixedSize(36, 36)
+        self.delete_btn.setStyleSheet(btn_style)
+        self.delete_btn.clicked.connect(self._delete_current_media)
+        self.delete_btn.setToolTip("Delete (D)")
+        layout.addWidget(self.delete_btn)
+
+        # Favorite button
+        self.favorite_btn = QPushButton("♡")
+        self.favorite_btn.setFocusPolicy(Qt.NoFocus)
+        self.favorite_btn.setFixedSize(36, 36)
+        self.favorite_btn.setStyleSheet(btn_style)
+        self.favorite_btn.clicked.connect(self._toggle_favorite)
+        self.favorite_btn.setToolTip("Favorite (F)")
+        layout.addWidget(self.favorite_btn)
+
+        layout.addStretch()
+
+        # === CENTER: Counter + Zoom Indicator + Rating ===
+        center_widget = QWidget()
+        center_widget.setStyleSheet("background: transparent;")
+        center_layout = QVBoxLayout(center_widget)
+        center_layout.setContentsMargins(0, 0, 0, 0)
+        center_layout.setSpacing(2)
+
+        # Counter label
+        self.counter_label = QLabel()
+        self.counter_label.setAlignment(Qt.AlignCenter)
+        self.counter_label.setStyleSheet("color: white; font-size: 11pt; background: transparent;")
+        center_layout.addWidget(self.counter_label)
+
+        # Zoom/Status indicator
+        self.status_label = QLabel()
+        self.status_label.setAlignment(Qt.AlignCenter)
+        self.status_label.setStyleSheet("color: rgba(255,255,255,0.7); font-size: 9pt; background: transparent;")
+        center_layout.addWidget(self.status_label)
+
+        layout.addWidget(center_widget)
+
+        layout.addStretch()
+
+        # === RIGHT SIDE: Zoom + Slideshow + Info ===
+        # Zoom out button
+        self.zoom_out_btn = QPushButton("−")
+        self.zoom_out_btn.setFocusPolicy(Qt.NoFocus)
+        self.zoom_out_btn.setFixedSize(32, 32)
+        self.zoom_out_btn.setStyleSheet(btn_style + "QPushButton { font-size: 18pt; font-weight: bold; }")
+        self.zoom_out_btn.clicked.connect(self._zoom_out)
+        self.zoom_out_btn.setToolTip("Zoom Out (-)")
+        layout.addWidget(self.zoom_out_btn)
+
+        # Zoom in button
+        self.zoom_in_btn = QPushButton("+")
+        self.zoom_in_btn.setFocusPolicy(Qt.NoFocus)
+        self.zoom_in_btn.setFixedSize(32, 32)
+        self.zoom_in_btn.setStyleSheet(btn_style + "QPushButton { font-size: 16pt; font-weight: bold; }")
+        self.zoom_in_btn.clicked.connect(self._zoom_in)
+        self.zoom_in_btn.setToolTip("Zoom In (+)")
+        layout.addWidget(self.zoom_in_btn)
+
+        layout.addSpacing(8)
+
+        # Slideshow button
+        self.slideshow_btn = QPushButton("▶")
+        self.slideshow_btn.setFocusPolicy(Qt.NoFocus)
+        self.slideshow_btn.setFixedSize(36, 36)
+        self.slideshow_btn.setStyleSheet(btn_style)
+        self.slideshow_btn.clicked.connect(self._toggle_slideshow)
+        self.slideshow_btn.setToolTip("Slideshow (S)")
+        layout.addWidget(self.slideshow_btn)
+
+        # Info toggle button
+        self.info_btn = QPushButton("ℹ️")
+        self.info_btn.setFocusPolicy(Qt.NoFocus)
+        self.info_btn.setFixedSize(36, 36)
+        self.info_btn.setStyleSheet(btn_style)
         self.info_btn.clicked.connect(self._toggle_info_panel)
+        self.info_btn.setToolTip("Info (I)")
         layout.addWidget(self.info_btn)
 
         return toolbar
@@ -635,25 +698,39 @@ class MediaLightbox(QDialog):
                 self.image_label.setStyleSheet("color: white; font-size: 14pt;")
                 return
 
+            # Store original pixmap for zoom operations
+            self.original_pixmap = pixmap
+
             # Scale to fit while maintaining aspect ratio
             # Get available space (accounting for padding and nav buttons)
             # ROBUST FIX: Ensure we have valid window dimensions
             window_width = max(self.width(), 800)  # Minimum 800px
             window_height = max(self.height(), 600)  # Minimum 600px
 
-            max_width = window_width - 400  # Leave space for metadata panel
+            max_width = window_width - 100  # Leave space for UI
             max_height = window_height - 200  # Leave space for top/bottom bars
 
             print(f"[PhotoLightbox] Scaling to: max_width={max_width}, max_height={max_height}")
 
-            scaled_pixmap = pixmap.scaled(
-                max_width, max_height,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
-            )
+            # Apply zoom if set
+            if self.zoom_mode == "fit":
+                scaled_pixmap = pixmap.scaled(
+                    max_width, max_height,
+                    Qt.KeepAspectRatio,
+                    Qt.SmoothTransformation
+                )
+            else:
+                # Apply manual zoom level
+                zoomed_width = int(pixmap.width() * self.zoom_level)
+                zoomed_height = int(pixmap.height() * self.zoom_level)
+                scaled_pixmap = pixmap.scaled(
+                    zoomed_width, zoomed_height,
+                    Qt.KeepAspectRatio,
+                    Qt.SmoothTransformation
+                )
 
             self.image_label.setPixmap(scaled_pixmap)
-            print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}")
+            print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}, zoom={self.zoom_level}")
 
             # Update counter
             self.counter_label.setText(
@@ -666,6 +743,9 @@ class MediaLightbox(QDialog):
 
             # Load metadata
             self._load_metadata()
+
+            # Update status label (zoom indicator)
+            self._update_status_label()
 
         except Exception as e:
             print(f"[MediaLightbox] Error loading photo: {e}")
@@ -845,9 +925,236 @@ class MediaLightbox(QDialog):
             self._toggle_info_panel()
             event.accept()
 
+        # +/-: Zoom (for photos)
+        elif key in (Qt.Key_Plus, Qt.Key_Equal):  # + or =
+            print("[MediaLightbox] + pressed - zoom in")
+            self._zoom_in()
+            event.accept()
+        elif key in (Qt.Key_Minus, Qt.Key_Underscore):  # - or _
+            print("[MediaLightbox] - pressed - zoom out")
+            self._zoom_out()
+            event.accept()
+
+        # 0: Fit to window (reset zoom)
+        elif key == Qt.Key_0:
+            print("[MediaLightbox] 0 pressed - fit to window")
+            self.zoom_level = 1.0
+            self.zoom_mode = "fit"
+            if not self._is_video(self.media_path):
+                self._load_photo()
+            event.accept()
+
+        # D: Delete
+        elif key == Qt.Key_D:
+            print("[MediaLightbox] D pressed - delete")
+            self._delete_current_media()
+            event.accept()
+
+        # F: Toggle favorite
+        elif key == Qt.Key_F:
+            print("[MediaLightbox] F pressed - toggle favorite")
+            self._toggle_favorite()
+            event.accept()
+
+        # S: Toggle slideshow
+        elif key == Qt.Key_S:
+            print("[MediaLightbox] S pressed - toggle slideshow")
+            self._toggle_slideshow()
+            event.accept()
+
+        # 1-5: Rate
+        elif key in (Qt.Key_1, Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5):
+            rating = int(event.text())
+            print(f"[MediaLightbox] {rating} pressed - rate {rating} stars")
+            self._rate_media(rating)
+            event.accept()
+
+        # F11: Toggle fullscreen
+        elif key == Qt.Key_F11:
+            print("[MediaLightbox] F11 pressed - toggle fullscreen")
+            self._toggle_fullscreen()
+            event.accept()
+
         else:
             print(f"[MediaLightbox] Unhandled key: {key}")
             super().keyPressEvent(event)
+
+    def wheelEvent(self, event):
+        """Handle mouse wheel for Ctrl+Wheel zoom."""
+        if event.modifiers() & Qt.ControlModifier:
+            # Ctrl+Wheel for zoom
+            if event.angleDelta().y() > 0:
+                self._zoom_in()
+            else:
+                self._zoom_out()
+            event.accept()
+        else:
+            super().wheelEvent(event)
+
+    def _zoom_in(self):
+        """Zoom in on photo."""
+        if self._is_video(self.media_path):
+            return  # Zoom only works for photos
+
+        self.zoom_level = min(self.zoom_level * 1.2, self.max_zoom)
+        self.zoom_mode = "manual"
+        self._apply_zoom()
+        self._update_status_label()
+
+    def _zoom_out(self):
+        """Zoom out on photo."""
+        if self._is_video(self.media_path):
+            return  # Zoom only works for photos
+
+        self.zoom_level = max(self.zoom_level / 1.2, self.min_zoom)
+        self.zoom_mode = "manual"
+        self._apply_zoom()
+        self._update_status_label()
+
+    def _apply_zoom(self):
+        """Apply current zoom level to displayed photo."""
+        if not self.original_pixmap or self.original_pixmap.isNull():
+            return
+
+        # Calculate zoomed size
+        zoomed_width = int(self.original_pixmap.width() * self.zoom_level)
+        zoomed_height = int(self.original_pixmap.height() * self.zoom_level)
+
+        # Scale pixmap
+        scaled_pixmap = self.original_pixmap.scaled(
+            zoomed_width, zoomed_height,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        self.image_label.setPixmap(scaled_pixmap)
+
+    def _update_status_label(self):
+        """Update status label with zoom level or slideshow status."""
+        status_parts = []
+
+        # Zoom indicator (for photos)
+        if not self._is_video(self.media_path):
+            zoom_pct = int(self.zoom_level * 100)
+            if self.zoom_mode == "fit":
+                status_parts.append("Fit")
+            elif self.zoom_mode == "fill":
+                status_parts.append("Fill")
+            else:
+                status_parts.append(f"{zoom_pct}%")
+
+        # Slideshow indicator
+        if self.slideshow_active:
+            status_parts.append("⏵ Slideshow")
+
+        self.status_label.setText(" | ".join(status_parts) if status_parts else "")
+
+    def _toggle_slideshow(self):
+        """Toggle slideshow mode."""
+        if self.slideshow_active:
+            # Stop slideshow
+            self.slideshow_active = False
+            if self.slideshow_timer:
+                self.slideshow_timer.stop()
+            self.slideshow_btn.setText("▶")
+            self.slideshow_btn.setToolTip("Slideshow (S)")
+        else:
+            # Start slideshow
+            self.slideshow_active = True
+            from PySide6.QtCore import QTimer
+            if not self.slideshow_timer:
+                self.slideshow_timer = QTimer()
+                self.slideshow_timer.timeout.connect(self._slideshow_advance)
+            self.slideshow_timer.start(self.slideshow_interval)
+            self.slideshow_btn.setText("⏸")
+            self.slideshow_btn.setToolTip("Pause Slideshow (S)")
+
+        self._update_status_label()
+
+    def _slideshow_advance(self):
+        """Advance to next media in slideshow."""
+        if self.slideshow_active:
+            self._next_media()
+
+    def _delete_current_media(self):
+        """Delete current media file."""
+        from PySide6.QtWidgets import QMessageBox
+
+        reply = QMessageBox.question(
+            self,
+            "Delete Media",
+            f"Are you sure you want to delete this file?\n\n{os.path.basename(self.media_path)}",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            try:
+                import os
+                # Remove from database first
+                # TODO: Add database deletion logic here
+
+                # Delete file
+                os.remove(self.media_path)
+                print(f"[MediaLightbox] Deleted: {self.media_path}")
+
+                # Remove from list
+                self.all_media.remove(self.media_path)
+
+                # Load next or previous
+                if self.all_media:
+                    if self.current_index >= len(self.all_media):
+                        self.current_index = len(self.all_media) - 1
+                    self.media_path = self.all_media[self.current_index]
+                    self._load_media()
+                else:
+                    # No more media, close lightbox
+                    self.close()
+
+            except Exception as e:
+                QMessageBox.critical(
+                    self,
+                    "Delete Error",
+                    f"Failed to delete file:\n{str(e)}"
+                )
+
+    def _toggle_favorite(self):
+        """Toggle favorite status of current media."""
+        # TODO: Implement favorite in database
+        # For now, just toggle button appearance
+        if self.favorite_btn.text() == "♡":
+            self.favorite_btn.setText("♥")
+            self.favorite_btn.setStyleSheet(self.favorite_btn.styleSheet() + "\nQPushButton { color: #ff4444; }")
+            print(f"[MediaLightbox] Favorited: {os.path.basename(self.media_path)}")
+        else:
+            self.favorite_btn.setText("♡")
+            self.favorite_btn.setStyleSheet(self.favorite_btn.styleSheet().replace("\nQPushButton { color: #ff4444; }", ""))
+            print(f"[MediaLightbox] Unfavorited: {os.path.basename(self.media_path)}")
+
+    def _rate_media(self, rating: int):
+        """Rate current media with 1-5 stars."""
+        self.current_rating = rating
+        stars = "★" * rating + "☆" * (5 - rating)
+        print(f"[MediaLightbox] Rated {rating}/5: {os.path.basename(self.media_path)}")
+        # TODO: Save to database
+
+        # Update status label to show rating
+        from PySide6.QtWidgets import QMessageBox
+        QMessageBox.information(
+            self,
+            "Rating",
+            f"Rated {stars} ({rating}/5)",
+            QMessageBox.Ok
+        )
+
+    def _toggle_fullscreen(self):
+        """Toggle fullscreen mode."""
+        if self.isFullScreen():
+            self.showMaximized()
+            print("[MediaLightbox] Exited fullscreen")
+        else:
+            self.showFullScreen()
+            print("[MediaLightbox] Entered fullscreen")
 
 
 class GooglePhotosLayout(BaseLayout):
