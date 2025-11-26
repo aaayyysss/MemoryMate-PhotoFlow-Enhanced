@@ -192,7 +192,11 @@ class FaceClusterWorker(QRunnable):
                     centroid = centroid_vec.tobytes()
                     branch_key = f"face_{cid:03d}"
                     display_name = f"Person {cid+1}"
-                    member_count = len(cluster_paths)
+
+                    # CRITICAL FIX: Count should be unique PHOTOS, not face crops
+                    # A person can appear multiple times in one photo (e.g., mirror selfie)
+                    unique_photos = set(cluster_image_paths)
+                    member_count = len(unique_photos)
 
                     # Insert into face_branch_reps
                     cur.execute("""
@@ -214,7 +218,7 @@ class FaceClusterWorker(QRunnable):
 
                     # CRITICAL FIX: Link photos to this face branch in project_images
                     # This allows get_images_by_branch() to return photos for face clusters
-                    unique_photos = set(cluster_image_paths)
+                    # (unique_photos already calculated above for count)
                     for photo_path in unique_photos:
                         cur.execute("""
                             INSERT OR IGNORE INTO project_images (project_id, branch_key, image_path)
@@ -247,6 +251,10 @@ class FaceClusterWorker(QRunnable):
                     centroid = np.mean(noise_vecs, axis=0).astype(np.float32).tobytes()
                     rep_path = noise_paths[0] if noise_paths else None
 
+                    # CRITICAL FIX: Count unique PHOTOS, not face crops
+                    unique_noise_photos = set(noise_image_paths)
+                    photo_count = len(unique_noise_photos)
+
                     # Special branch for unidentified faces
                     branch_key = "face_unidentified"
                     display_name = f"⚠️ Unidentified ({noise_count} faces)"
@@ -255,7 +263,7 @@ class FaceClusterWorker(QRunnable):
                     cur.execute("""
                         INSERT INTO face_branch_reps (project_id, branch_key, centroid, rep_path, count)
                         VALUES (?, ?, ?, ?, ?)
-                    """, (self.project_id, branch_key, centroid, rep_path, noise_count))
+                    """, (self.project_id, branch_key, centroid, rep_path, photo_count))
 
                     # Insert into branches (for sidebar display)
                     cur.execute("""
@@ -270,7 +278,7 @@ class FaceClusterWorker(QRunnable):
                     """, (branch_key, self.project_id, *noise_ids))
 
                     # Link photos to unidentified branch
-                    unique_noise_photos = set(noise_image_paths)
+                    # (unique_noise_photos already calculated above for count)
                     for photo_path in unique_noise_photos:
                         cur.execute("""
                             INSERT OR IGNORE INTO project_images (project_id, branch_key, image_path)
@@ -357,11 +365,14 @@ def cluster_faces_1st(project_id: int, eps: float = 0.35, min_samples: int = 2):
         rep_path = cluster_paths[0]
         branch_key = f"face_{cid:03d}"
         display_name = f"Person {cid+1}"
-        member_count = len(cluster_paths)
+
+        # CRITICAL FIX: Count unique PHOTOS, not face crops
+        unique_photos = set(cluster_image_paths)
+        member_count = len(unique_photos)
 
         # Insert into face_branch_reps
         cur.execute("""
-            INSERT INTO face_branch_reps (project_id, branch_key, centroid, rep_path, member_count)
+            INSERT INTO face_branch_reps (project_id, branch_key, centroid, rep_path, count)
             VALUES (?, ?, ?, ?, ?)
         """, (project_id, branch_key, centroid, rep_path, member_count))
 
@@ -378,14 +389,14 @@ def cluster_faces_1st(project_id: int, eps: float = 0.35, min_samples: int = 2):
         (branch_key, project_id, *np.array(ids)[mask].tolist()))
 
         # CRITICAL FIX: Link photos to this face branch in project_images
-        unique_photos = set(cluster_image_paths)
+        # (unique_photos already calculated above for count)
         for photo_path in unique_photos:
             cur.execute("""
                 INSERT OR IGNORE INTO project_images (project_id, branch_key, image_path)
                 VALUES (?, ?, ?)
             """, (project_id, branch_key, photo_path))
 
-        print(f"[FaceCluster] Cluster {cid} → {member_count} faces ({len(unique_photos)} unique photos)")
+        print(f"[FaceCluster] Cluster {cid} → {len(cluster_paths)} faces across {member_count} unique photos")
 
     conn.commit()
     conn.close()
@@ -471,7 +482,10 @@ def cluster_faces(project_id: int, eps: float = 0.35, min_samples: int = 2):
         rep_path = cluster_paths[0]
         branch_key = f"face_{cid:03d}"
         display_name = f"Person {cid+1}"
-        member_count = len(cluster_paths)
+
+        # CRITICAL FIX: Count unique PHOTOS, not face crops
+        unique_photos = set(cluster_image_paths)
+        member_count = len(unique_photos)
 
         # Insert into face_branch_reps
         cur.execute("""
@@ -491,7 +505,7 @@ def cluster_faces(project_id: int, eps: float = 0.35, min_samples: int = 2):
         """, (branch_key, project_id, *np.array(ids)[mask].tolist()))
 
         # CRITICAL FIX: Link photos to this face branch in project_images
-        unique_photos = set(cluster_image_paths)
+        # (unique_photos already calculated above for count)
         for photo_path in unique_photos:
             cur.execute("""
                 INSERT OR IGNORE INTO project_images (project_id, branch_key, image_path)
@@ -502,7 +516,7 @@ def cluster_faces(project_id: int, eps: float = 0.35, min_samples: int = 2):
         write_status(status_path, "clustering", processed_clusters, total_clusters)
         _log_progress("clustering", processed_clusters, total_clusters)
 
-        print(f"[FaceCluster] Cluster {cid} → {member_count} faces ({len(unique_photos)} unique photos)")
+        print(f"[FaceCluster] Cluster {cid} → {len(cluster_paths)} faces across {member_count} unique photos")
 
     # Step 5: Handle unclustered faces (noise from DBSCAN, label == -1)
     if noise_count > 0:
@@ -517,10 +531,14 @@ def cluster_faces(project_id: int, eps: float = 0.35, min_samples: int = 2):
         branch_key = "face_unidentified"
         display_name = f"⚠️ Unidentified ({noise_count} faces)"
 
+        # CRITICAL FIX: Count unique PHOTOS, not face crops
+        unique_noise_photos = set(noise_image_paths)
+        photo_count = len(unique_noise_photos)
+
         cur.execute("""
             INSERT INTO face_branch_reps (project_id, branch_key, centroid, rep_path, count)
             VALUES (?, ?, ?, ?, ?)
-        """, (project_id, branch_key, centroid, rep_path, noise_count))
+        """, (project_id, branch_key, centroid, rep_path, photo_count))
 
         cur.execute("""
             INSERT INTO branches (project_id, branch_key, display_name)
@@ -531,7 +549,7 @@ def cluster_faces(project_id: int, eps: float = 0.35, min_samples: int = 2):
             UPDATE face_crops SET branch_key=? WHERE project_id=? AND id IN ({','.join(['?'] * len(noise_ids))})
         """, (branch_key, project_id, *noise_ids))
 
-        unique_noise_photos = set(noise_image_paths)
+        # (unique_noise_photos already calculated above for count)
         for photo_path in unique_noise_photos:
             cur.execute("""
                 INSERT OR IGNORE INTO project_images (project_id, branch_key, image_path)

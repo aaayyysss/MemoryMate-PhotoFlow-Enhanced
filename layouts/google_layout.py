@@ -1003,6 +1003,9 @@ class GooglePhotosLayout(BaseLayout):
         """
         Group photos by date (YYYY-MM-DD).
 
+        CRITICAL FIX: Photos without date_taken (None) are grouped under "No Date"
+        to ensure they still appear when filtering by person.
+
         Returns:
             dict: {date_str: [(path, date_taken, width, height), ...]}
         """
@@ -1010,6 +1013,12 @@ class GooglePhotosLayout(BaseLayout):
 
         for row in rows:
             path, date_taken, width, height = row
+
+            # CRITICAL FIX: Handle photos without date metadata
+            if date_taken is None or date_taken == '':
+                # Group photos without dates under "No Date" category
+                groups["No Date"].append((path, date_taken, width, height))
+                continue
 
             # Parse date
             try:
@@ -1026,7 +1035,8 @@ class GooglePhotosLayout(BaseLayout):
 
             except Exception as e:
                 print(f"[GooglePhotosLayout] Error parsing date '{date_taken}': {e}")
-                continue
+                # If parsing fails, put in "No Date" rather than skipping
+                groups["No Date"].append((path, date_taken, width, height))
 
         return dict(groups)
 
