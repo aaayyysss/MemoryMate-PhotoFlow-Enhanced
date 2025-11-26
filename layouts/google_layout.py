@@ -567,6 +567,16 @@ class MediaLightbox(QDialog):
             self.image_label.hide()
             self.video_widget.show()
 
+            # CRITICAL FIX: Resize video widget and container (same pattern as photos!)
+            # Calculate video display size based on scroll area dimensions
+            video_width = self.scroll_area.width() - 100  # Leave margin for scroll bars
+            video_height = self.scroll_area.height() - 200  # Leave space for toolbars
+
+            # Resize both video widget and container (QScrollArea needs explicit size!)
+            self.video_widget.resize(video_width, video_height)
+            self.media_container.resize(video_width, video_height)
+            print(f"[MediaLightbox] ✓ Video widget sized: {video_width}x{video_height}")
+
             # Show video controls
             self.video_controls_widget.show()
 
