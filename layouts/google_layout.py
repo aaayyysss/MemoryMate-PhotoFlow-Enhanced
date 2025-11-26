@@ -81,30 +81,41 @@ class MediaLightbox(QDialog):
         self.top_toolbar = self._create_top_toolbar()
         main_layout.addWidget(self.top_toolbar)
 
-        # === MEDIA DISPLAY AREA (Center, expands) ===
-        media_container = QWidget()
-        media_container.setStyleSheet("background: #000000;")
-        media_layout = QVBoxLayout(media_container)
-        media_layout.setContentsMargins(0, 0, 0, 0)
-        media_layout.setSpacing(0)
+        # === MIDDLE SECTION: Media + Info Panel (Horizontal) ===
+        middle_layout = QHBoxLayout()
+        middle_layout.setContentsMargins(0, 0, 0, 0)
+        middle_layout.setSpacing(0)
 
-        # Image/Video display (centered)
+        # Media display area (left side, expands)
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setStyleSheet("QScrollArea { background: #000000; border: none; }")
+        self.scroll_area.setWidgetResizable(False)  # Don't auto-resize (needed for zoom)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.scroll_area.setAlignment(Qt.AlignCenter)
+
+        # Image/Video display (inside scroll area)
         self.image_label = QLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setStyleSheet("background: transparent;")
         self.image_label.setScaledContents(False)
-        media_layout.addWidget(self.image_label)
+        self.scroll_area.setWidget(self.image_label)
 
-        main_layout.addWidget(media_container, 1)  # Expands to fill space
+        middle_layout.addWidget(self.scroll_area, 1)  # Expands to fill space
+
+        # Info panel (right side, toggleable)
+        self.info_panel = self._create_info_panel()
+        self.info_panel.hide()  # Hidden by default
+        middle_layout.addWidget(self.info_panel)
+
+        # Add middle section to main layout
+        middle_widget = QWidget()
+        middle_widget.setLayout(middle_layout)
+        main_layout.addWidget(middle_widget, 1)
 
         # === BOTTOM TOOLBAR (Overlay with gradient) ===
         self.bottom_toolbar = self._create_bottom_toolbar()
         main_layout.addWidget(self.bottom_toolbar)
-
-        # === INFO PANEL (Positioned absolutely on right side) ===
-        self.info_panel = self._create_info_panel()
-        self.info_panel.setParent(self)
-        self.info_panel.hide()  # Hidden by default
 
         # Track info panel state
         self.info_panel_visible = False
@@ -414,7 +425,7 @@ class MediaLightbox(QDialog):
         return controls
 
     def _create_info_panel(self) -> QWidget:
-        """Create toggleable info panel with metadata (slides from right)."""
+        """Create toggleable info panel with metadata (on right side)."""
         panel = QWidget()
         panel.setFixedWidth(350)
         panel.setStyleSheet("""
@@ -424,11 +435,8 @@ class MediaLightbox(QDialog):
             }
         """)
 
-        # Position on right side
-        panel.setGeometry(self.width() - 350, 0, 350, self.height())
-
         panel_layout = QVBoxLayout(panel)
-        panel_layout.setContentsMargins(20, 60, 20, 20)  # Top margin for toolbar
+        panel_layout.setContentsMargins(20, 20, 20, 20)
         panel_layout.setSpacing(16)
 
         # Panel header
@@ -459,10 +467,6 @@ class MediaLightbox(QDialog):
             self.info_panel.hide()
             self.info_panel_visible = False
         else:
-            # Update position in case window was resized
-            self.info_panel.setGeometry(
-                self.width() - 350, 0, 350, self.height()
-            )
             self.info_panel.show()
             self.info_panel_visible = True
 
@@ -864,15 +868,6 @@ class MediaLightbox(QDialog):
 
         # Set focus to dialog so keyboard shortcuts work
         self.setFocus()
-
-    def resizeEvent(self, event):
-        """Handle window resize to reposition info panel."""
-        super().resizeEvent(event)
-        # Reposition info panel on right side
-        if hasattr(self, 'info_panel') and self.info_panel_visible:
-            self.info_panel.setGeometry(
-                self.width() - 350, 0, 350, self.height()
-            )
 
     def keyPressEvent(self, event: QKeyEvent):
         """Handle enhanced keyboard shortcuts."""

@@ -96,7 +96,8 @@ class EXIFParser:
                     print(f"[EXIFParser]   ✓ Opened: {img.format} {img.size[0]}x{img.size[1]}")
 
                     # Get EXIF data
-                    exif_data = img._getexif()
+                    # Get EXIF data (use modern getexif() instead of deprecated _getexif())
+                    exif_data = img.getexif()
 
                     if not exif_data:
                         print(f"[EXIFParser]   No EXIF data in file")
@@ -258,8 +259,8 @@ class EXIFParser:
                 metadata['width'] = img.width
                 metadata['height'] = img.height
 
-                # Get EXIF data
-                exif_data = img._getexif()
+                # Get EXIF data (use modern getexif() instead of deprecated _getexif())
+                exif_data = img.getexif()
                 if not exif_data:
                     return metadata
 
