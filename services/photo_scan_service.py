@@ -309,10 +309,14 @@ class PhotoScanService:
                     folders_seen.add(folder_path)
 
                     batch_rows.append(row)
+                    print(f"[SCAN] Added to batch: {file_path.name} [batch size: {len(batch_rows)}/{self.batch_size}]")
 
                     # Flush batch if needed
                     if len(batch_rows) >= self.batch_size:
+                        print(f"[SCAN] ⚡ Writing batch to database: {len(batch_rows)} photos")
+                        logger.info(f"Writing batch of {len(batch_rows)} photos to database")
                         self._write_batch(batch_rows, project_id)
+                        print(f"[SCAN] ✓ Batch write complete")
                         batch_rows.clear()
 
                     # Report progress (check cancellation here too for responsiveness)
@@ -339,7 +343,10 @@ class PhotoScanService:
 
                 # Final batch flush
                 if batch_rows and not self._cancelled:
+                    print(f"[SCAN] ⚡ Writing final batch to database: {len(batch_rows)} photos")
+                    logger.info(f"Writing final batch of {len(batch_rows)} photos to database")
                     self._write_batch(batch_rows, project_id)
+                    print(f"[SCAN] ✓ Final batch write complete")
 
             finally:
                 # DEADLOCK FIX v2: Shutdown executor with wait=False to avoid blocking
@@ -695,8 +702,8 @@ class PhotoScanService:
                 future = executor.submit(self.metadata_service.extract_basic_metadata, str(file_path))
                 width, height, date_taken = future.result(timeout=metadata_timeout)
 
-                print(f"[SCAN] ✓ Metadata extracted: {os.path.basename(path_str)}")
-                logger.debug(f"[Scan] Metadata extracted successfully for: {path_str}")
+                print(f"[SCAN] ✓ Metadata extracted: {os.path.basename(path_str)} [w={width}, h={height}, date={date_taken}]")
+                logger.info(f"[Scan] Metadata extracted successfully: {os.path.basename(path_str)} [w={width}, h={height}, date={date_taken}]")
             except FuturesTimeoutError:
                 logger.warning(f"Metadata extraction timeout for {path_str} (5s limit) - continuing without metadata")
                 # Continue without dimensions/EXIF - photo will still be indexed
@@ -737,7 +744,9 @@ class PhotoScanService:
 
         # Step 5: Ensure folder hierarchy exists
         try:
+            print(f"[SCAN] Creating folder hierarchy for: {os.path.basename(path_str)}")
             folder_id = self._ensure_folder_hierarchy(file_path.parent, root_path, project_id)
+            print(f"[SCAN] ✓ Folder hierarchy created: folder_id={folder_id}")
         except Exception as e:
             logger.error(f"Failed to create folder hierarchy for {path_str}: {e}")
             self._stats['photos_failed'] += 1
@@ -745,6 +754,7 @@ class PhotoScanService:
 
         # Success
         self._stats['photos_indexed'] += 1
+        print(f"[SCAN] ✓ File processed successfully: {os.path.basename(path_str)}")
 
         # Return row tuple for batch insert
         # BUG FIX #7: Include created_ts, created_date, created_year for date hierarchy
@@ -824,18 +834,25 @@ class PhotoScanService:
             return
 
         try:
+            print(f"[SCAN] 💾 Starting bulk_upsert for {len(rows)} photos...")
+            logger.info(f"[DB] Starting bulk_upsert for {len(rows)} photos")
             affected = self.photo_repo.bulk_upsert(rows, project_id)
-            logger.debug(f"Wrote batch of {affected} photos to database")
+            print(f"[SCAN] ✓ Bulk_upsert completed: {affected} photos written")
+            logger.info(f"[DB] Bulk_upsert completed: {affected} photos written")
         except Exception as e:
+            print(f"[SCAN] ⚠️ Batch write failed: {e}")
             logger.error(f"Failed to write batch: {e}", exc_info=True)
             # Try individual writes as fallback
-            for row in rows:
+            print(f"[SCAN] Attempting individual writes as fallback...")
+            for idx, row in enumerate(rows, 1):
                 try:
                     # BUG FIX #7: Unpack row with created_* fields
                     path, folder_id, size_kb, modified, width, height, date_taken, tags, created_ts, created_date, created_year = row
+                    print(f"[SCAN] Writing individual photo {idx}/{len(rows)}: {os.path.basename(path)}")
                     self.photo_repo.upsert(path, folder_id, project_id, size_kb, modified, width, height,
                                           date_taken, tags, created_ts, created_date, created_year)
                 except Exception as e2:
+                    print(f"[SCAN] ⚠️ Failed to write photo {idx}/{len(rows)}: {e2}")
                     logger.error(f"Failed to write individual photo {row[0]}: {e2}")
 
     def _ensure_default_project(self, root_folder: str):
