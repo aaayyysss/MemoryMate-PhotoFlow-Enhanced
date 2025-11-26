@@ -898,8 +898,15 @@ class GooglePhotosLayout(BaseLayout):
 
             # Add person/face filter (photos containing this person)
             if filter_person is not None:
+                import sys
+                print(f"[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key={filter_person}")
+                sys.stdout.flush()
+
                 # DEBUG: Check what's actually in face_crops for this branch_key
                 try:
+                    print(f"[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...")
+                    sys.stdout.flush()
+
                     with db._connect() as debug_conn:
                         debug_cur = debug_conn.cursor()
 
@@ -911,6 +918,7 @@ class GooglePhotosLayout(BaseLayout):
                         """, (self.project_id,))
                         total_crops, unique_branches = debug_cur.fetchone()
                         print(f"[GooglePhotosLayout] 🔍 DEBUG: face_crops has {total_crops} total entries, {unique_branches} unique branch_keys for project {self.project_id}")
+                        sys.stdout.flush()
 
                         # Check for this specific branch_key
                         debug_cur.execute("""
@@ -937,6 +945,8 @@ class GooglePhotosLayout(BaseLayout):
 
                 except Exception as debug_error:
                     print(f"[GooglePhotosLayout] ⚠️ DEBUG query failed: {debug_error}")
+                    import traceback
+                    traceback.print_exc()
 
                 query_parts.append("""
                     AND pm.path IN (
