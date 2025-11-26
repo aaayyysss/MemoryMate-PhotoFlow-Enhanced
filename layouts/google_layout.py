@@ -116,6 +116,10 @@ class MediaLightbox(QDialog):
 
         middle_layout.addWidget(self.scroll_area, 1)  # Expands to fill space
 
+        # === OVERLAY NAVIGATION BUTTONS (Google Photos style) ===
+        # Create as direct children of MediaLightbox, positioned on left/right sides
+        self._create_overlay_nav_buttons()
+
         # Info panel (right side, toggleable)
         self.info_panel = self._create_info_panel()
         self.info_panel.hide()  # Hidden by default
@@ -132,6 +136,18 @@ class MediaLightbox(QDialog):
 
         # Track info panel state
         self.info_panel_visible = False
+
+        # === MOUSE PANNING SUPPORT ===
+        # Enable mouse tracking for hand cursor and panning
+        self.setMouseTracking(True)
+        self.scroll_area.setMouseTracking(True)
+        self.image_label.setMouseTracking(True)
+
+        # Panning state
+        self.is_panning = False
+        self.pan_start_pos = None
+        self.scroll_start_x = 0
+        self.scroll_start_y = 0
 
     def _create_top_toolbar(self) -> QWidget:
         """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
@@ -281,61 +297,92 @@ class MediaLightbox(QDialog):
         self.video_controls_widget = self._create_video_controls()
         layout.addWidget(self.video_controls_widget)
 
-        # Navigation controls
-        nav_layout = QHBoxLayout()
-        nav_layout.setSpacing(16)
+        # Navigation controls moved to overlay (see _create_overlay_nav_buttons)
 
-        # Previous button
-        self.prev_btn = QPushButton("◄")
+        return toolbar
+
+    def _create_overlay_nav_buttons(self):
+        """Create Google Photos-style overlay navigation buttons on left/right sides."""
+        from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve
+        from PySide6.QtGui import QCursor
+
+        # Previous button (left side)
+        self.prev_btn = QPushButton("◄", self)
         self.prev_btn.setFocusPolicy(Qt.NoFocus)
-        self.prev_btn.setFixedSize(44, 44)
+        self.prev_btn.setFixedSize(48, 48)
+        self.prev_btn.setCursor(Qt.PointingHandCursor)
         self.prev_btn.setStyleSheet("""
             QPushButton {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(0, 0, 0, 0.5);
                 color: white;
                 border: none;
-                border-radius: 22px;
-                font-size: 16pt;
+                border-radius: 24px;
+                font-size: 18pt;
             }
             QPushButton:hover {
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(0, 0, 0, 0.7);
+            }
+            QPushButton:pressed {
+                background: rgba(0, 0, 0, 0.9);
             }
             QPushButton:disabled {
-                background: rgba(255, 255, 255, 0.05);
+                background: rgba(0, 0, 0, 0.2);
                 color: rgba(255, 255, 255, 0.3);
             }
         """)
         self.prev_btn.clicked.connect(self._previous_media)
-        nav_layout.addWidget(self.prev_btn)
 
-        nav_layout.addStretch()
-
-        # Next button
-        self.next_btn = QPushButton("►")
+        # Next button (right side)
+        self.next_btn = QPushButton("►", self)
         self.next_btn.setFocusPolicy(Qt.NoFocus)
-        self.next_btn.setFixedSize(44, 44)
+        self.next_btn.setFixedSize(48, 48)
+        self.next_btn.setCursor(Qt.PointingHandCursor)
         self.next_btn.setStyleSheet("""
             QPushButton {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(0, 0, 0, 0.5);
                 color: white;
                 border: none;
-                border-radius: 22px;
-                font-size: 16pt;
+                border-radius: 24px;
+                font-size: 18pt;
             }
             QPushButton:hover {
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(0, 0, 0, 0.7);
+            }
+            QPushButton:pressed {
+                background: rgba(0, 0, 0, 0.9);
             }
             QPushButton:disabled {
-                background: rgba(255, 255, 255, 0.05);
+                background: rgba(0, 0, 0, 0.2);
                 color: rgba(255, 255, 255, 0.3);
             }
         """)
         self.next_btn.clicked.connect(self._next_media)
-        nav_layout.addWidget(self.next_btn)
 
-        layout.addLayout(nav_layout)
+        # Raise buttons above other widgets (overlay effect)
+        self.prev_btn.raise_()
+        self.next_btn.raise_()
 
-        return toolbar
+        # Initialize as hidden (auto-hide behavior)
+        self.prev_btn.setWindowOpacity(0.0)
+        self.next_btn.setWindowOpacity(0.0)
+        self.nav_buttons_visible = False
+
+        # Create fade animations for auto-hide/show
+        self.prev_btn_fade = QPropertyAnimation(self.prev_btn, b"windowOpacity")
+        self.prev_btn_fade.setDuration(200)
+        self.prev_btn_fade.setEasingCurve(QEasingCurve.InOutQuad)
+
+        self.next_btn_fade = QPropertyAnimation(self.next_btn, b"windowOpacity")
+        self.next_btn_fade.setDuration(200)
+        self.next_btn_fade.setEasingCurve(QEasingCurve.InOutQuad)
+
+        # Auto-hide timer
+        self.nav_hide_timer = QTimer()
+        self.nav_hide_timer.setSingleShot(True)
+        self.nav_hide_timer.timeout.connect(self._hide_nav_buttons)
+
+        # Position buttons (will be called in resizeEvent)
+        QTimer.singleShot(0, self._position_nav_buttons)
 
     def _create_video_controls(self) -> QWidget:
         """Create video playback controls (play/pause, seek, volume, time)."""
@@ -864,6 +911,156 @@ class MediaLightbox(QDialog):
             value_widget.setWordWrap(True)
         self.metadata_layout.addWidget(value_widget)
 
+    def _position_nav_buttons(self):
+        """Position navigation buttons on left/right sides, vertically centered."""
+        if not hasattr(self, 'prev_btn') or not hasattr(self, 'scroll_area'):
+            return
+
+        # Get scroll area geometry
+        scroll_rect = self.scroll_area.geometry()
+        if scroll_rect.width() == 0 or scroll_rect.height() == 0:
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(50, self._position_nav_buttons)
+            return
+
+        # Button dimensions
+        btn_size = 48
+        margin = 20  # Distance from edges
+
+        # Calculate vertical center position
+        y = scroll_rect.y() + (scroll_rect.height() // 2) - (btn_size // 2)
+
+        # Position left button
+        left_x = scroll_rect.x() + margin
+        self.prev_btn.move(left_x, y)
+
+        # Position right button
+        right_x = scroll_rect.x() + scroll_rect.width() - btn_size - margin
+        self.next_btn.move(right_x, y)
+
+        print(f"[MediaLightbox] Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
+
+    def _show_nav_buttons(self):
+        """Show navigation buttons with fade-in animation."""
+        if self.nav_buttons_visible:
+            return
+
+        self.nav_buttons_visible = True
+        self.nav_hide_timer.stop()
+
+        # Fade in
+        self.prev_btn_fade.setStartValue(self.prev_btn.windowOpacity())
+        self.prev_btn_fade.setEndValue(1.0)
+        self.prev_btn_fade.start()
+
+        self.next_btn_fade.setStartValue(self.next_btn.windowOpacity())
+        self.next_btn_fade.setEndValue(1.0)
+        self.next_btn_fade.start()
+
+    def _hide_nav_buttons(self):
+        """Hide navigation buttons with fade-out animation."""
+        if not self.nav_buttons_visible:
+            return
+
+        self.nav_buttons_visible = False
+
+        # Fade out
+        self.prev_btn_fade.setStartValue(self.prev_btn.windowOpacity())
+        self.prev_btn_fade.setEndValue(0.0)
+        self.prev_btn_fade.start()
+
+        self.next_btn_fade.setStartValue(self.next_btn.windowOpacity())
+        self.next_btn_fade.setEndValue(0.0)
+        self.next_btn_fade.start()
+
+    def enterEvent(self, event):
+        """Show navigation buttons on mouse enter."""
+        self._show_nav_buttons()
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        """Hide navigation buttons after delay on mouse leave."""
+        self.nav_hide_timer.start(500)  # Hide after 500ms
+        super().leaveEvent(event)
+
+    def resizeEvent(self, event):
+        """Reposition navigation buttons on window resize."""
+        super().resizeEvent(event)
+        self._position_nav_buttons()
+
+    def mousePressEvent(self, event):
+        """Handle mouse press for panning."""
+        from PySide6.QtCore import Qt
+
+        # Only pan with left mouse button on photos
+        if event.button() == Qt.LeftButton and not self._is_video(self.media_path):
+            # Check if we're over the scroll area and content is larger than viewport
+            if self._is_content_panneable():
+                self.is_panning = True
+                self.pan_start_pos = event.pos()
+                self.scroll_start_x = self.scroll_area.horizontalScrollBar().value()
+                self.scroll_start_y = self.scroll_area.verticalScrollBar().value()
+                self.scroll_area.setCursor(Qt.ClosedHandCursor)
+                event.accept()
+                return
+
+        super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        """Handle mouse move for panning and cursor updates."""
+        from PySide6.QtCore import Qt
+
+        # Update cursor based on content size
+        if not self._is_video(self.media_path) and self._is_content_panneable():
+            if not self.is_panning:
+                self.scroll_area.setCursor(Qt.OpenHandCursor)
+        else:
+            self.scroll_area.setCursor(Qt.ArrowCursor)
+
+        # Perform panning if active
+        if self.is_panning and self.pan_start_pos:
+            delta = event.pos() - self.pan_start_pos
+
+            # Update scroll bars
+            self.scroll_area.horizontalScrollBar().setValue(self.scroll_start_x - delta.x())
+            self.scroll_area.verticalScrollBar().setValue(self.scroll_start_y - delta.y())
+
+            event.accept()
+            return
+
+        super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """Handle mouse release to stop panning."""
+        from PySide6.QtCore import Qt
+
+        if event.button() == Qt.LeftButton and self.is_panning:
+            self.is_panning = False
+            self.pan_start_pos = None
+
+            # Restore cursor
+            if self._is_content_panneable():
+                self.scroll_area.setCursor(Qt.OpenHandCursor)
+            else:
+                self.scroll_area.setCursor(Qt.ArrowCursor)
+
+            event.accept()
+            return
+
+        super().mouseReleaseEvent(event)
+
+    def _is_content_panneable(self) -> bool:
+        """Check if content is larger than viewport (can be panned)."""
+        if self._is_video(self.media_path):
+            return False
+
+        # Check if image is larger than scroll area viewport
+        viewport = self.scroll_area.viewport()
+        content = self.media_container
+
+        return (content.width() > viewport.width() or
+                content.height() > viewport.height())
+
     def _previous_media(self):
         """Navigate to previous media (photo or video)."""
         if self.current_index > 0:
@@ -1048,6 +1245,13 @@ class MediaLightbox(QDialog):
         self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
         # CRITICAL: Also resize container to fit the image (QScrollArea needs this!)
         self.media_container.resize(scaled_pixmap.size())
+
+        # Update cursor based on new zoom level
+        from PySide6.QtCore import Qt
+        if self._is_content_panneable():
+            self.scroll_area.setCursor(Qt.OpenHandCursor)
+        else:
+            self.scroll_area.setCursor(Qt.ArrowCursor)
 
     def _update_status_label(self):
         """Update status label with zoom level or slideshow status."""
