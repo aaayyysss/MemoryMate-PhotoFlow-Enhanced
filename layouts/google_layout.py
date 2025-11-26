@@ -94,12 +94,25 @@ class MediaLightbox(QDialog):
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scroll_area.setAlignment(Qt.AlignCenter)
 
-        # Image/Video display (inside scroll area)
+        # CRITICAL FIX: Create container widget to hold both image and video
+        # This prevents Qt from deleting widgets when switching with setWidget()
+        self.media_container = QWidget()
+        self.media_container.setStyleSheet("background: #000000;")
+        media_container_layout = QVBoxLayout(self.media_container)
+        media_container_layout.setContentsMargins(0, 0, 0, 0)
+        media_container_layout.setSpacing(0)
+
+        # Image display (for photos)
         self.image_label = QLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setStyleSheet("background: transparent;")
         self.image_label.setScaledContents(False)
-        self.scroll_area.setWidget(self.image_label)
+        media_container_layout.addWidget(self.image_label)
+
+        # Video display will be added to container on first video load
+
+        # Set container as scroll area widget (never replace it!)
+        self.scroll_area.setWidget(self.media_container)
 
         middle_layout.addWidget(self.scroll_area, 1)  # Expands to fill space
 
@@ -536,6 +549,11 @@ class MediaLightbox(QDialog):
                 self.video_widget.setStyleSheet("background: black;")
                 self.video_player.setVideoOutput(self.video_widget)
 
+                # Add video widget to container (alongside image_label)
+                # CRITICAL: Add to container, not replace scroll area widget!
+                container_layout = self.media_container.layout()
+                container_layout.addWidget(self.video_widget)
+
                 # Connect video player signals
                 self.video_player.durationChanged.connect(self._on_duration_changed)
                 self.video_player.positionChanged.connect(self._on_position_changed)
@@ -545,8 +563,8 @@ class MediaLightbox(QDialog):
                 self.position_timer.timeout.connect(self._update_video_position)
                 self.position_timer.setInterval(100)  # Update every 100ms
 
-            # Replace image label with video widget in scroll area
-            self.scroll_area.setWidget(self.video_widget)
+            # Show video, hide image (simple show/hide, no widget replacement!)
+            self.image_label.hide()
             self.video_widget.show()
 
             # Show video controls
@@ -618,7 +636,7 @@ class MediaLightbox(QDialog):
     def _load_photo(self):
         """Load and display the current photo with EXIF orientation correction."""
         try:
-            # Hide video widget and controls if they exist, show image label
+            # Hide video widget and controls if they exist
             if hasattr(self, 'video_widget'):
                 self.video_widget.hide()
                 if hasattr(self, 'video_player'):
@@ -630,8 +648,7 @@ class MediaLightbox(QDialog):
             if hasattr(self, 'video_controls_widget'):
                 self.video_controls_widget.hide()
 
-            # Set image label as scroll area widget (switch from video)
-            self.scroll_area.setWidget(self.image_label)
+            # Show image label (simple show/hide, no widget replacement!)
             self.image_label.show()
             self.image_label.setStyleSheet("")  # Reset any custom styling
 
