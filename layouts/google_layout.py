@@ -871,11 +871,11 @@ class GooglePhotosLayout(BaseLayout):
             # Query photos for the current project (join with project_images)
             # CRITICAL FIX: Filter by project_id using project_images table
             # Build query with optional filters
-            # CRITICAL FIX: Show ALL photos in project, regardless of date_taken
-            # Photos without dates will be grouped in "No Date" section (handled by _group_photos_by_date)
-            # This matches Google Photos behavior: all photos visible, sorted by date when available
+            # CRITICAL FIX: Use created_date instead of date_taken
+            # created_date is ALWAYS populated (uses date_taken if available, otherwise file modified date)
+            # This matches Current Layout behavior and ensures ALL photos appear
             query_parts = ["""
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
                 FROM photo_metadata pm
                 JOIN project_images pi ON pm.path = pi.image_path
                 WHERE pi.project_id = ?
@@ -883,14 +883,14 @@ class GooglePhotosLayout(BaseLayout):
 
             params = [self.project_id]
 
-            # Add year filter
+            # Add year filter (using created_date which is always populated)
             if filter_year is not None:
-                query_parts.append("AND strftime('%Y', pm.date_taken) = ?")
+                query_parts.append("AND strftime('%Y', pm.created_date) = ?")
                 params.append(str(filter_year))
 
             # Add month filter (requires year)
             if filter_month is not None and filter_year is not None:
-                query_parts.append("AND strftime('%m', pm.date_taken) = ?")
+                query_parts.append("AND strftime('%m', pm.created_date) = ?")
                 params.append(f"{filter_month:02d}")
 
             # Add folder filter
@@ -929,32 +929,8 @@ class GooglePhotosLayout(BaseLayout):
                     cur.execute(query, tuple(params))
                     rows = cur.fetchall()
 
-                    # CRITICAL DEBUG: Check if date_taken filter is removing photos
-                    if filter_person is None and filter_year is None and filter_month is None and filter_folder is None:
-                        # In default timeline view, check how many photos are being filtered
-                        cur.execute("""
-                            SELECT COUNT(DISTINCT pm.path)
-                            FROM photo_metadata pm
-                            JOIN project_images pi ON pm.path = pi.image_path
-                            WHERE pi.project_id = ?
-                        """, (self.project_id,))
-                        total_photos = cur.fetchone()[0]
-
-                        cur.execute("""
-                            SELECT COUNT(DISTINCT pm.path)
-                            FROM photo_metadata pm
-                            JOIN project_images pi ON pm.path = pi.image_path
-                            WHERE pi.project_id = ?
-                            AND pm.date_taken IS NOT NULL
-                        """, (self.project_id,))
-                        photos_with_dates = cur.fetchone()[0]
-
-                        photos_without_dates = total_photos - photos_with_dates
-                        print(f"[GooglePhotosLayout] 📊 STATS: Total photos={total_photos}, With dates={photos_with_dates}, Without dates={photos_without_dates}")
-                        print(f"[GooglePhotosLayout] 📊 Query returned {len(rows)} photos")
-
-                        if photos_without_dates > 0:
-                            print(f"[GooglePhotosLayout] ⚠️ WARNING: {photos_without_dates} photos are being HIDDEN because date_taken IS NULL!")
+                    # Debug logging
+                    print(f"[GooglePhotosLayout] 📊 Loaded {len(rows)} photos from database")
 
             except Exception as db_error:
                 print(f"[GooglePhotosLayout] ⚠️ Database query failed: {db_error}")
@@ -1020,8 +996,8 @@ class GooglePhotosLayout(BaseLayout):
         """
         Group photos by date (YYYY-MM-DD).
 
-        CRITICAL FIX: Photos without date_taken (None) are grouped under "No Date"
-        to ensure they still appear when filtering by person.
+        Uses created_date which is ALWAYS populated (never NULL).
+        created_date = date_taken if available, otherwise file modified date.
 
         Returns:
             dict: {date_str: [(path, date_taken, width, height), ...]}
@@ -1031,47 +1007,35 @@ class GooglePhotosLayout(BaseLayout):
         for row in rows:
             path, date_taken, width, height = row
 
-            # CRITICAL FIX: Handle photos without date metadata
-            if date_taken is None or date_taken == '':
-                # Group photos without dates under "No Date" category
-                groups["No Date"].append((path, date_taken, width, height))
-                continue
-
-            # Parse date
-            try:
-                if isinstance(date_taken, str):
-                    # Format: "2024-11-25 14:30:00" or "2024-11-25"
-                    date_obj = datetime.fromisoformat(date_taken.replace(' ', 'T'))
-                else:
-                    # Already datetime object
-                    date_obj = date_taken
-
-                # Group by date only (YYYY-MM-DD)
-                date_str = date_obj.strftime("%Y-%m-%d")
-                groups[date_str].append((path, date_taken, width, height))
-
-            except Exception as e:
-                print(f"[GooglePhotosLayout] Error parsing date '{date_taken}': {e}")
-                # If parsing fails, put in "No Date" rather than skipping
-                groups["No Date"].append((path, date_taken, width, height))
+            # created_date is always in YYYY-MM-DD format, so we can use it directly
+            # No need to parse or handle NULL values
+            if date_taken:  # Should always be true since created_date is never NULL
+                groups[date_taken].append((path, date_taken, width, height))
+            else:
+                # Fallback (should never happen with created_date)
+                print(f"[GooglePhotosLayout] ⚠️ WARNING: Photo has no created_date: {path}")
 
         return dict(groups)
 
     def _build_timeline_tree(self, photos_by_date: Dict[str, List[Tuple]]):
         """
         Build timeline tree in sidebar (Years > Months with counts).
+
+        Uses created_date which is always in YYYY-MM-DD format.
         """
         # Group by year and month
         years_months = defaultdict(lambda: defaultdict(int))
 
         for date_str in photos_by_date.keys():
+            # created_date is always YYYY-MM-DD format, can parse directly
             try:
                 date_obj = datetime.fromisoformat(date_str)
                 year = date_obj.year
                 month = date_obj.month
                 count = len(photos_by_date[date_str])
                 years_months[year][month] += count
-            except:
+            except Exception as e:
+                print(f"[GooglePhotosLayout] ⚠️ Failed to parse date '{date_str}': {e}")
                 continue
 
         # Build tree
