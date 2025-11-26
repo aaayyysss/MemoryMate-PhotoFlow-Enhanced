@@ -4,7 +4,7 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QSplitter, QToolBar, QLineEdit, QTreeWidget,
-    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog, QStackedLayout
+    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
 )
 from PySide6.QtCore import Qt, Signal, QSize, QEvent
 from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
@@ -67,14 +67,19 @@ class MediaLightbox(QDialog):
         self.setWindowState(Qt.WindowMaximized)
         self.setStyleSheet("background: #000000;")  # Pure black background
 
-        # Main stacked layout (for overlaying controls)
-        main_layout = QStackedLayout(self)
-        main_layout.setStackingMode(QStackedLayout.StackAll)
+        # Main layout (vertical with toolbars + media)
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
 
-        # === LAYER 1: Media Display Area (Bottom Layer) ===
-        media_widget = QWidget()
-        media_widget.setStyleSheet("background: #000000;")
-        media_layout = QVBoxLayout(media_widget)
+        # === TOP TOOLBAR (Overlay with gradient) ===
+        self.top_toolbar = self._create_top_toolbar()
+        main_layout.addWidget(self.top_toolbar)
+
+        # === MEDIA DISPLAY AREA (Center, expands) ===
+        media_container = QWidget()
+        media_container.setStyleSheet("background: #000000;")
+        media_layout = QVBoxLayout(media_container)
         media_layout.setContentsMargins(0, 0, 0, 0)
         media_layout.setSpacing(0)
 
@@ -85,32 +90,16 @@ class MediaLightbox(QDialog):
         self.image_label.setScaledContents(False)
         media_layout.addWidget(self.image_label)
 
-        main_layout.addWidget(media_widget)
+        main_layout.addWidget(media_container, 1)  # Expands to fill space
 
-        # === LAYER 2: Overlay Controls (Top Layer) ===
-        overlay_widget = QWidget()
-        overlay_widget.setAttribute(Qt.WA_TransparentForMouseEvents, False)
-        overlay_widget.setStyleSheet("background: transparent;")
-        overlay_layout = QVBoxLayout(overlay_widget)
-        overlay_layout.setContentsMargins(0, 0, 0, 0)
-        overlay_layout.setSpacing(0)
-
-        # Top toolbar (gradient overlay)
-        self.top_toolbar = self._create_top_toolbar()
-        overlay_layout.addWidget(self.top_toolbar)
-
-        overlay_layout.addStretch()
-
-        # Bottom toolbar (gradient overlay)
+        # === BOTTOM TOOLBAR (Overlay with gradient) ===
         self.bottom_toolbar = self._create_bottom_toolbar()
-        overlay_layout.addWidget(self.bottom_toolbar)
+        main_layout.addWidget(self.bottom_toolbar)
 
-        main_layout.addWidget(overlay_widget)
-
-        # === LAYER 3: Info Panel (Toggleable, slides from right) ===
+        # === INFO PANEL (Positioned absolutely on right side) ===
         self.info_panel = self._create_info_panel()
+        self.info_panel.setParent(self)
         self.info_panel.hide()  # Hidden by default
-        main_layout.addWidget(self.info_panel)
 
         # Track info panel state
         self.info_panel_visible = False
@@ -793,37 +782,57 @@ class MediaLightbox(QDialog):
             print(f"[MediaLightbox] showEvent triggered, scheduling media load...")
             QTimer.singleShot(100, self._load_media)  # 100ms delay for proper layout
 
+        # Set focus to dialog so keyboard shortcuts work
+        self.setFocus()
+
+    def resizeEvent(self, event):
+        """Handle window resize to reposition info panel."""
+        super().resizeEvent(event)
+        # Reposition info panel on right side
+        if hasattr(self, 'info_panel') and self.info_panel_visible:
+            self.info_panel.setGeometry(
+                self.width() - 350, 0, 350, self.height()
+            )
+
     def keyPressEvent(self, event: QKeyEvent):
         """Handle enhanced keyboard shortcuts."""
         key = event.key()
         modifiers = event.modifiers()
 
+        print(f"[MediaLightbox] Key pressed: {key} (Qt.Key_Left={Qt.Key_Left}, Qt.Key_Right={Qt.Key_Right})")
+
         # ESC: Close
         if key == Qt.Key_Escape:
+            print("[MediaLightbox] ESC pressed - closing")
             self.close()
             event.accept()  # Prevent event propagation
 
         # Arrow keys: Navigation
         elif key == Qt.Key_Left or key == Qt.Key_Up:
+            print("[MediaLightbox] Left/Up arrow - previous media")
             self._previous_media()
             event.accept()
         elif key == Qt.Key_Right or key == Qt.Key_Down:
+            print("[MediaLightbox] Right/Down arrow - next media")
             self._next_media()
             event.accept()
 
         # Space: Next (slideshow style) - CRITICAL: Must accept event to prevent button trigger
         elif key == Qt.Key_Space:
+            print("[MediaLightbox] Space pressed - next media")
             self._next_media()
             event.accept()  # Prevent Space from triggering focused button!
 
         # Home/End: First/Last
         elif key == Qt.Key_Home:
+            print("[MediaLightbox] Home pressed - first media")
             if self.all_media:
                 self.current_index = 0
                 self.media_path = self.all_media[0]
                 self._load_media()
                 event.accept()
         elif key == Qt.Key_End:
+            print("[MediaLightbox] End pressed - last media")
             if self.all_media:
                 self.current_index = len(self.all_media) - 1
                 self.media_path = self.all_media[-1]
@@ -832,10 +841,12 @@ class MediaLightbox(QDialog):
 
         # I: Toggle info panel
         elif key == Qt.Key_I:
+            print("[MediaLightbox] I pressed - toggle info panel")
             self._toggle_info_panel()
             event.accept()
 
         else:
+            print(f"[MediaLightbox] Unhandled key: {key}")
             super().keyPressEvent(event)
 
 
