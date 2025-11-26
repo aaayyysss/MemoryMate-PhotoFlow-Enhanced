@@ -1,0 +1,93 @@
+I read main_window_qt.py and scanned its structure, threading, and UI patterns. Now I’ll present the audit and a prioritized refactor TODO list for review.Deep audit of main_window_qt.py
+Size and scope
+File length: ~5,280 lines, comment notes “Current LOC: ~2,640” is outdated.
+Monolithic responsibilities: scanning orchestration, face detection/clustering UI flow, thumbnail decoding pipeline(s), multiple panel widgets, and MainWindow bootstrapping.
+Key classes present
+Controllers: ScanController (L185), SidebarController (L739), ProjectController (L789)
+Thumbnail pipeline(s): _ThumbLoaded (L809), _ThumbTask (L812), ThumbnailManager (L855), ThumbnailResult (L1060), ThumbnailTask (L1064)
+UI panels/widgets: DetailsPanel (L1116), BreadcrumbNavigation (L2122), SelectionToolbar (L2370), CompactBackfillIndicator (L2497), BackfillStatusPanel (L2726)
+Main window: MainWindow (L2877)
+Threading and workers
+ScanController uses QThread to host a ScanWorker (services.scan_worker_adapter.ScanWorkerAdapter).
+Face detection/clustering uses QThreadPool.globalInstance().start(...) for FaceDetectionWorker and FaceClusterWorker at multiple points (e.g., L601, L617, L4652, L4658, L4765).
+Thumbnails use multiple pools:
+Instance pool in ThumbnailManager: self._pool = QThreadPool(); self._pool.setMaxThreadCount(4) (L881–L883).
+Module-level pool _thumbnail_thread_pool = QThreadPool() (L1112) used with ThumbnailResult/ThumbnailTask.
+UI dialogs and progress feedback
+Scan progress via QProgressDialog and custom message box flow during cleanup (L205–L214, L404–L417, L419–L426).
+Face detection/clustering has a dedicated non-modal QDialog with QProgressBar and labels (L521–L547) and signal-driven progress/finish hooks (L553–L617).
+Multiple QMessageBox uses for errors, confirmations, and post-scan messaging (several occurrences in the 400–700 range and later in the file).
+Architectural observations
+Duplication in thumbnail pipeline: two sets of emitter/task classes (_ThumbLoaded/_ThumbTask + ThumbnailResult/ThumbnailTask) and two pools, leading to complexity and contention risk.
+ScanController._cleanup_impl mixes DB maintenance, project/grid/side-bar updates, face detection prompting, and layout-specific refresh logic; better split into focused units.
+Inline imports inside methods increase coupling and hinder testability; e.g., imports inside start_scan, cleanup, and face detection branches.
+MainWindow is tightly coupled to controllers and widget setup; responsibilities can be reduced by extracting UI widgets and controller modules.
+Prioritized refactor TODO list (for review before implementation)
+1) Extract controllers into separate modules
+Move ScanController to controllers/scan_controller.py.
+Move SidebarController to controllers/sidebar_controller.py.
+Move ProjectController to controllers/project_controller.py.
+MainWindow wires these controllers but does not host their logic.
+2) Consolidate thumbnail pipeline into a single package
+Create thumbnails/ package with:
+thumbnail_manager.py hosting ThumbnailManager.
+One unified emitter/task pair: remove duplication between _ThumbLoaded/_ThumbTask and ThumbnailResult/ThumbnailTask; keep the clearer naming and API.
+One dedicated thread pool (instance-managed) with configurable maxThreadCount, remove _thumbnail_thread_pool or route all thumbnail tasks through ThumbnailManager to avoid contention.
+Provide a small interface for grids (set_thumbnail / update_item_thumbnail) to decouple Grid implementation from thumbnails.
+3) Factor face processing UI flow out of scan cleanup
+Extract the face detection/clustering progress dialog and orchestration into ui/face_processing_dialog.py (or workers_ui/face_pipeline_controller.py).
+Provide a reusable “signal-driven progress UI” utility that:
+Builds a QDialog with QProgressBar and status labels.
+Accepts worker signals (progress, finished, error) and maps them to UI updates.
+Chains workers (FaceDetectionWorker → FaceClusterWorker) without UI thread blocking.
+Reduce ScanController._cleanup_impl to: close progress, show post-scan summary, trigger optional face flow via a single call to the extracted component.
+4) Extract complex widgets out of main_window_qt.py
+Move DetailsPanel, BreadcrumbNavigation, SelectionToolbar, CompactBackfillIndicator, BackfillStatusPanel into ui/ submodules with their own files.
+Keep only the wiring in MainWindow (signals, slots, and layout composition).
+5) Standardize worker execution utilities
+Introduce a small helper (e.g., utils/worker_runner.py) to:
+Start runnables on QThreadPool.globalInstance() or a provided pool.
+Connect common signals (progress, finished, error) safely.
+Enforce non-blocking patterns and event-loop-friendly closures (using QTimer.singleShot as needed).
+Use it for FaceDetectionWorker, FaceClusterWorker, and any other runnables across the app.
+6) Improve import and service access patterns
+Move inline imports inside methods to module-level where appropriate.
+Ensure service access (e.g., ScanWorkerAdapter, face detection services) is injected via constructors or a service locator to remove hidden dependencies.
+7) Decouple post-scan pipeline steps
+Split responsibilities in ScanController._cleanup_impl:
+DB backfill (photos/videos).
+Sidebar/grid refresh.
+Layout-specific refresh (Google Photos).
+Optional face processing prompt and kickoff.
+Each step becomes a call to a dedicated function/module, invoked sequentially via QTimer.singleShot where UI responsiveness matters.
+8) Simplify progress feedback components
+Create ui/progress.py with helpers to:
+Build consistent QProgressDialog instances.
+Manage non-modal dialogs with status texts and percent updates.
+Close and clean up safely (avoid duplicate or dangling dialogs).
+9) Shrink MainWindow
+Limit MainWindow responsibilities to:
+App bootstrap and high-level wiring.
+Menu/toolbar actions delegating to controllers/services.
+Hosting subpanels and layouts; detailed logic moved to extracted modules.
+Target: reduce MainWindow body below ~1,000–1,200 LOC.
+10) Document threading choices
+Clarify usage of QThread vs QThreadPool for each pipeline:
+Scanning: QThread hosting a long-running worker instance is acceptable.
+Thumbnails, face detection/clustering: QThreadPool runnables with signal-driven UI is preferred.
+Ensure a single dedicated thumbnail pool; face workers should remain on global pool unless contention suggests separate pools.
+11) Remove dead or redundant code paths
+Identify any legacy scan comments/sections not used (e.g., old “Tree View/DB schema” top-of-file notes) and move documentation elsewhere.
+Consolidate duplicate progress flows and error dialogs into reusable utilities.
+Primary extraction targets by lines (to cut LOC quickly)
+ScanController (L185–~L736): move entire class.
+Thumbnail pipeline(s):
+_ThumbLoaded/_ThumbTask/ThumbnailManager (L809–L973): move entire section.
+ThumbnailResult/ThumbnailTask and _thumbnail_thread_pool (L1060–L1112): fold into the single thumbnails package and remove duplication.
+UI panels:
+DetailsPanel (starting L1116), BreadcrumbNavigation (L2122), SelectionToolbar (L2370), CompactBackfillIndicator (L2497), BackfillStatusPanel (L2726): move each to separate files under ui/.
+Face processing UI flow in cleanup (roughly L477–L617 area and references in later sections): extract to dedicated module.
+Open questions to confirm before implementation
+Preferred package structure for controllers and thumbnails (controllers/, thumbnails/, ui/), or alternative naming?
+Keep ScanController on QThread, or standardize to QThreadPool with a long-running runnable? Current pattern seems intentional due to continuous emissions.
+Should face detection/clustering always run on global pool, or do you want a dedicated face pool to prevent any potential contention with other workers?
