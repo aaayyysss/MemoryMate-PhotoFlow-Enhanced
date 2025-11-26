@@ -2385,30 +2385,31 @@ class LightboxDialog(QDialog):
                     
                     if thumb_path.exists():
                         logger.info(f"Loading video thumbnail from cache: {thumb_path.name}")
-                        thumb_img = Image.open(str(thumb_path))
-                        # Convert PIL Image to QPixmap
-                        from PIL.ImageQt import ImageQt as pil_to_qimage
-                        qimg = pil_to_qimage(thumb_img)
-                        thumb_pm = QPixmap.fromImage(qimg)
-                        if not thumb_pm.isNull():
-                            scaled_pm = thumb_pm.scaled(120, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                            thumb_lbl.setPixmap(scaled_pm)
-                            # Add play icon overlay style
-                            thumb_lbl.setStyleSheet(
-                                "background: rgba(0,0,0,0.8); border-radius:4px; "
-                                "border: 2px solid rgba(255,255,255,0.1);"
-                            )
-                            logger.debug("✅ Video thumbnail loaded successfully")
-                        else:
-                            logger.warning("QPixmap is null after loading thumbnail")
-                            # Show placeholder
-                            thumb_lbl.setText("🎬")
-                            thumb_lbl.setStyleSheet(
-                                "background: rgba(50,50,50,0.9); border-radius:4px; "
-                                "border: 2px solid rgba(100,100,100,0.5); "
-                                "color: white; font-size: 48px;"
-                            )
-                            thumb_lbl.setAlignment(Qt.AlignCenter)
+                        # CRITICAL FIX: Use context manager to prevent file handle leaks
+                        with Image.open(str(thumb_path)) as thumb_img:
+                            # Convert PIL Image to QPixmap
+                            from PIL.ImageQt import ImageQt as pil_to_qimage
+                            qimg = pil_to_qimage(thumb_img)
+                            thumb_pm = QPixmap.fromImage(qimg)
+                            if not thumb_pm.isNull():
+                                scaled_pm = thumb_pm.scaled(120, 90, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                                thumb_lbl.setPixmap(scaled_pm)
+                                # Add play icon overlay style
+                                thumb_lbl.setStyleSheet(
+                                    "background: rgba(0,0,0,0.8); border-radius:4px; "
+                                    "border: 2px solid rgba(255,255,255,0.1);"
+                                )
+                                logger.debug("✅ Video thumbnail loaded successfully")
+                            else:
+                                logger.warning("QPixmap is null after loading thumbnail")
+                                # Show placeholder
+                                thumb_lbl.setText("🎬")
+                                thumb_lbl.setStyleSheet(
+                                    "background: rgba(50,50,50,0.9); border-radius:4px; "
+                                    "border: 2px solid rgba(100,100,100,0.5); "
+                                    "color: white; font-size: 48px;"
+                                )
+                                thumb_lbl.setAlignment(Qt.AlignCenter)
                     else:
                         # No thumbnail - show generic video icon
                         logger.info(f"No thumbnail file found - showing placeholder")

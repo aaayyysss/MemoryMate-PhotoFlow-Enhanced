@@ -22,9 +22,9 @@ from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel,
     QPushButton, QLineEdit, QScrollArea, QWidget, QFrame,
     QMessageBox, QInputDialog, QMenu, QSizePolicy, QToolBar,
-    QComboBox, QSpinBox
+    QComboBox, QSpinBox, QProgressDialog
 )
-from PySide6.QtCore import Qt, Signal, QSize, QTimer
+from PySide6.QtCore import Qt, Signal, QSize, QTimer, QThreadPool, Slot
 from PySide6.QtGui import QPixmap, QImage, QAction, QIcon
 
 from reference_db import ReferenceDB
@@ -212,6 +212,10 @@ class PeopleManagerDialog(QDialog):
         self.clusters: List[Dict[str, Any]] = []
         self.filtered_clusters: List[Dict[str, Any]] = []
         self.cards: Dict[str, FaceClusterCard] = {}
+
+        # Face detection worker tracking
+        self.face_detection_worker = None
+        self.face_detection_progress_dialog = None
 
         self.setWindowTitle(f"People - Project {project_id}")
         self.resize(900, 700)
@@ -531,7 +535,12 @@ class PeopleManagerDialog(QDialog):
                 QMessageBox.critical(self, "Error", f"Failed to delete person:\n{str(e)}")
 
     def run_face_detection(self):
-        """Run face detection worker."""
+        """
+        Run face detection worker (non-blocking, threaded).
+
+        CRITICAL FIX: Uses QThreadPool for non-blocking execution with progress dialog.
+        Previously called worker.run() synchronously, freezing UI for 10+ minutes.
+        """
         try:
             from config.face_detection_config import get_face_config
             from workers.face_detection_worker import FaceDetectionWorker
@@ -552,24 +561,105 @@ class PeopleManagerDialog(QDialog):
                 else:
                     return
 
-            # Run worker
-            worker = FaceDetectionWorker(self.project_id)
-            stats = worker.run()
+            # Create worker
+            self.face_detection_worker = FaceDetectionWorker(self.project_id)
 
-            QMessageBox.information(
-                self,
-                "Face Detection Complete",
-                f"Detection completed!\n\n"
-                f"• Images processed: {stats['processed_images']}\n"
-                f"• Faces detected: {stats['total_faces']}\n"
-                f"• Time: {stats['elapsed_time']:.1f}s"
+            # Connect signals for progress tracking
+            self.face_detection_worker.signals.progress.connect(self._on_face_detection_progress)
+            self.face_detection_worker.signals.finished.connect(self._on_face_detection_finished)
+            self.face_detection_worker.signals.error.connect(self._on_face_detection_error)
+
+            # Create progress dialog
+            self.face_detection_progress_dialog = QProgressDialog(
+                "Detecting faces...",
+                "Cancel",
+                0,
+                100,
+                self
             )
+            self.face_detection_progress_dialog.setWindowTitle("Face Detection")
+            self.face_detection_progress_dialog.setWindowModality(Qt.WindowModal)
+            self.face_detection_progress_dialog.setMinimumDuration(0)  # Show immediately
+            self.face_detection_progress_dialog.canceled.connect(self._on_face_detection_canceled)
 
-            # Reload clusters
-            self.load_clusters()
+            # Start worker on thread pool (non-blocking!)
+            QThreadPool.globalInstance().start(self.face_detection_worker)
 
         except Exception as e:
-            QMessageBox.critical(self, "Error", f"Face detection failed:\n{str(e)}")
+            QMessageBox.critical(self, "Error", f"Failed to start face detection:\n{str(e)}")
+
+    @Slot(int, int, str)
+    def _on_face_detection_progress(self, current: int, total: int, message: str):
+        """
+        Handle face detection progress updates.
+
+        Args:
+            current: Current progress value (0-based index)
+            total: Total items to process
+            message: Progress message (e.g., filename being processed)
+        """
+        if self.face_detection_progress_dialog is None:
+            return
+
+        # Update progress dialog
+        if total > 0:
+            percentage = int((current / total) * 100)
+            self.face_detection_progress_dialog.setValue(percentage)
+
+        # Update message with current file and progress
+        progress_text = f"Processing photo {current + 1} of {total}\n\n{message}"
+        self.face_detection_progress_dialog.setLabelText(progress_text)
+
+    @Slot(int, int, int)
+    def _on_face_detection_finished(self, success_count: int, failed_count: int, total_faces: int):
+        """
+        Handle face detection completion.
+
+        Args:
+            success_count: Number of successfully processed images
+            failed_count: Number of failed images
+            total_faces: Total faces detected
+        """
+        # Close progress dialog
+        if self.face_detection_progress_dialog:
+            self.face_detection_progress_dialog.close()
+            self.face_detection_progress_dialog = None
+
+        # Show completion message
+        total_processed = success_count + failed_count
+        message = f"Face detection completed!\n\n"
+        message += f"• Images processed: {success_count}/{total_processed}\n"
+        message += f"• Faces detected: {total_faces}\n"
+
+        if failed_count > 0:
+            message += f"• Failed: {failed_count}\n"
+
+        QMessageBox.information(self, "Face Detection Complete", message)
+
+        # Reload clusters to show new faces
+        self.load_clusters()
+
+        # Clear worker reference
+        self.face_detection_worker = None
+
+    @Slot(str, str)
+    def _on_face_detection_error(self, image_path: str, error_message: str):
+        """
+        Handle face detection errors for individual images.
+
+        Args:
+            image_path: Path to image that failed
+            error_message: Error description
+        """
+        # Log error (don't show dialog for each error, would be too disruptive)
+        print(f"[PeopleManager] Face detection error for {image_path}: {error_message}")
+
+    @Slot()
+    def _on_face_detection_canceled(self):
+        """Handle face detection cancellation by user."""
+        if self.face_detection_worker:
+            print("[PeopleManager] User requested face detection cancellation")
+            self.face_detection_worker.cancel()
 
     def recluster_faces(self):
         """Re-run face clustering."""
