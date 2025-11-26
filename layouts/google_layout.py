@@ -871,13 +871,26 @@ class GooglePhotosLayout(BaseLayout):
             # Query photos for the current project (join with project_images)
             # CRITICAL FIX: Filter by project_id using project_images table
             # Build query with optional filters
-            query_parts = ["""
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
-            """]
+            # CRITICAL FIX: When filtering by person, we need to show ALL photos of that person
+            # even if they don't have date_taken metadata. The date_taken filter should only
+            # apply to timeline view, not person-filtered view.
+            if filter_person is not None:
+                # Person filter: Don't require date_taken (show all photos of this person)
+                query_parts = ["""
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                """]
+            else:
+                # Timeline view: Require date_taken for chronological display
+                query_parts = ["""
+                    SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                    FROM photo_metadata pm
+                    JOIN project_images pi ON pm.path = pi.image_path
+                    WHERE pi.project_id = ?
+                    AND pm.date_taken IS NOT NULL
+                """]
 
             params = [self.project_id]
 
@@ -898,109 +911,7 @@ class GooglePhotosLayout(BaseLayout):
 
             # Add person/face filter (photos containing this person)
             if filter_person is not None:
-                import sys
-                print(f"[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key={filter_person}")
-                sys.stdout.flush()
-
-                # DEBUG: Check what's actually in face_crops for this branch_key
-                try:
-                    print(f"[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...")
-                    sys.stdout.flush()
-
-                    with db._connect() as debug_conn:
-                        debug_cur = debug_conn.cursor()
-
-                        # Count total face_crops for this project
-                        debug_cur.execute("""
-                            SELECT COUNT(*), COUNT(DISTINCT branch_key)
-                            FROM face_crops
-                            WHERE project_id = ?
-                        """, (self.project_id,))
-                        total_crops, unique_branches = debug_cur.fetchone()
-                        print(f"[GooglePhotosLayout] 🔍 DEBUG: face_crops has {total_crops} total entries, {unique_branches} unique branch_keys for project {self.project_id}")
-                        sys.stdout.flush()
-
-                        # Check for this specific branch_key
-                        debug_cur.execute("""
-                            SELECT COUNT(*), COUNT(DISTINCT image_path)
-                            FROM face_crops
-                            WHERE project_id = ? AND branch_key = ?
-                        """, (self.project_id, filter_person))
-                        crops_count, unique_images = debug_cur.fetchone()
-                        print(f"[GooglePhotosLayout] 🔍 DEBUG: branch_key='{filter_person}' has {crops_count} face crops across {unique_images} unique images")
-
-                        # Show sample of branch_keys in face_crops
-                        debug_cur.execute("""
-                            SELECT DISTINCT branch_key, COUNT(*) as cnt
-                            FROM face_crops
-                            WHERE project_id = ?
-                            GROUP BY branch_key
-                            ORDER BY cnt DESC
-                            LIMIT 10
-                        """, (self.project_id,))
-                        branch_samples = debug_cur.fetchall()
-                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:")
-                        for bk, cnt in branch_samples:
-                            print(f"[GooglePhotosLayout]   - {bk}: {cnt} crops")
-
-                        # DEBUG: Show actual image_path values from face_crops for this person
-                        debug_cur.execute("""
-                            SELECT DISTINCT image_path
-                            FROM face_crops
-                            WHERE project_id = ? AND branch_key = ?
-                            LIMIT 5
-                        """, (self.project_id, filter_person))
-                        face_paths = [row[0] for row in debug_cur.fetchall()]
-                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for {filter_person} (first 5):")
-                        for fp in face_paths:
-                            print(f"[GooglePhotosLayout]     '{fp}'")
-
-                        # DEBUG: Show sample photo_metadata paths for comparison
-                        debug_cur.execute("""
-                            SELECT DISTINCT pm.path
-                            FROM photo_metadata pm
-                            JOIN project_images pi ON pm.path = pi.image_path
-                            WHERE pi.project_id = ?
-                            LIMIT 5
-                        """, (self.project_id,))
-                        pm_paths = [row[0] for row in debug_cur.fetchall()]
-                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):")
-                        for pp in pm_paths:
-                            print(f"[GooglePhotosLayout]     '{pp}'")
-
-                        # CRITICAL DEBUG: Check if face_crops paths are in project_images
-                        if face_paths:
-                            sample_path = face_paths[0]
-                            debug_cur.execute("""
-                                SELECT image_path, project_id
-                                FROM project_images
-                                WHERE image_path = ?
-                            """, (sample_path,))
-                            pi_result = debug_cur.fetchall()
-                            print(f"[GooglePhotosLayout] 🔍 DEBUG: Checking if '{sample_path}' is in project_images:")
-                            if pi_result:
-                                for img_path, proj_id in pi_result:
-                                    print(f"[GooglePhotosLayout]     ✅ Found in project_images: project_id={proj_id}")
-                            else:
-                                print(f"[GooglePhotosLayout]     ❌ NOT found in project_images! This is why query returns 0 results!")
-
-                            # Also check how many face_crop paths are actually in project_images for this project
-                            debug_cur.execute("""
-                                SELECT COUNT(DISTINCT fc.image_path)
-                                FROM face_crops fc
-                                JOIN project_images pi ON fc.image_path = pi.image_path
-                                WHERE fc.project_id = ? AND fc.branch_key = ? AND pi.project_id = ?
-                            """, (self.project_id, filter_person, self.project_id))
-                            joined_count = debug_cur.fetchone()[0]
-                            print(f"[GooglePhotosLayout] 🔍 DEBUG: {joined_count} out of {len(face_paths)} face_crop paths are actually in project_images for project {self.project_id}")
-
-                        sys.stdout.flush()
-
-                except Exception as debug_error:
-                    print(f"[GooglePhotosLayout] ⚠️ DEBUG query failed: {debug_error}")
-                    import traceback
-                    traceback.print_exc()
-
+                print(f"[GooglePhotosLayout] Filtering by person: {filter_person}")
                 query_parts.append("""
                     AND pm.path IN (
                         SELECT DISTINCT image_path
