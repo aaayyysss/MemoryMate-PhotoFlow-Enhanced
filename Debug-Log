@@ -1,32 +1,234 @@
-[build_date_branches] Total entries processed: 34
-[build_date_branches] project_images table has 150 rows for project 1
-2025-11-26 16:25:10,365 [INFO] Created 34 photo date branch entries for project 1
-2025-11-26 16:25:10,366 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 3 videos with dates for project 1
-[build_video_date_branches] Inserted 3/3 videos into 'all' branch
-[build_video_date_branches] Found 1 unique video dates
-[build_video_date_branches] Date 2025-05-06: inserted 3/3 (new)
-[build_video_date_branches] Total entries processed: 3
-[build_video_date_branches] project_videos table has 6 rows for project 1
-2025-11-26 16:25:10,380 [INFO] Created 3 video date branch entries for project 1
-2025-11-26 16:25:10,384 [INFO] Backfilling created_date fields for photos...
-2025-11-26 16:25:10,390 [INFO] [VideoMetadataWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\syria-song.mp4
-2025-11-26 16:25:10,394 [INFO] [VideoMetadataWorker] Finished: 3 success, 0 failed
-2025-11-26 16:25:10,416 [INFO] Generated thumbnail for c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4 at .thumb_cache\qouzleh_mitsubtitles-ezgif.com-resize-video_mp4_thumb.jpg
-2025-11-26 16:25:10,418 [INFO] Backfilled 82 photo rows with created_date
-2025-11-26 16:25:10,420 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\suleimaa\.memorymate\face_detection_config.json
-2025-11-26 16:25:10,434 [INFO] Reloading sidebar after date branches built...
-[SidebarQt] reload() blocked - widget not visible (likely being deleted)
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05> python main_qt.py
+[Startup] pillow_heif available — HEIC/HEIF support enabled.
+🔇 Decoder warnings suppressed per settings.
+🔇 Decoder warnings suppressed (Qt, Pillow, ICC).
+✅ Loaded en translations from C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\locales\en.json
+🌍 Language initialized: en
+2025-11-26 22:40:01,110 [INFO] ================================================================================
+2025-11-26 22:40:01,110 [INFO] MemoryMate-PhotoFlow logging initialized (level=INFO)
+2025-11-26 22:40:01,110 [INFO] Log file: C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-05\app_log.txt
+2025-11-26 22:40:01,110 [INFO] ================================================================================
+2025-11-26 22:40:01,141 [INFO] Installed Qt message handler to suppress TIFF warnings
+2025-11-26 22:40:01,141 [INFO] Qt message handler installed to suppress TIFF warnings
+[Main] Starting Qt event loop...
+[Startup] Database schema initialized successfully
+[Cache] {'entries': 2, 'size_mb': 0.01, 'path': 'C:\\Users\\ASUS\\OneDrive\\Documents\\Python\\Zip\\09_36.01.01-Photo-App\\MemoryMate-PhotoFlow-Enhanced-main-05\\thumbnails_cache.db', 'last_updated': '2025-11-26 22:39'}
+[ThumbCacheDB] Purged 2 stale thumbnails (> 30 days).
+2025-11-26 22:40:01,756 [INFO] SearchService initialized
+[Startup] SearchService initialized
+2025-11-26 22:40:01,761 [INFO] LRUCache initialized with capacity=200, max_memory=100.0MB
+2025-11-26 22:40:01,764 [INFO] ThumbnailService initialized (L1 capacity=200, max_memory=100.0MB, timeout=5.0s)
+2025-11-26 22:40:01,764 [INFO] Global ThumbnailService created with Phase 1B memory limits
+[Startup] ThumbnailService initialized
+🌍 Language switched to: en
+[MainWindow] Language loaded from settings: en
+[LayoutManager] Registered layout: Current Layout (id=current)
+[LayoutManager] Registered layout: Google Photos Style (id=google)
+[LayoutManager] Registered layout: Apple Photos Style (id=apple)
+[LayoutManager] Registered layout: Lightroom Style (id=lightroom)
+[MainWindow] Layout manager initialized
+🔇 Qt/Pillow decoder warnings silenced (per user settings).
+2025-11-26 22:40:01,792 [INFO] SearchService initialized
+[Sidebar] Device auto-detection disabled (manual refresh only)
+[22:40:01.802] [Tabs] __init__ started
+[22:40:01.802] [Tabs] _build_tabs → building tab widgets
+[22:40:01.802] [Tabs] _on_tab_changed(idx=0)
+[22:40:01.802] [Tabs] _start_timeout idx=0 type=branches
+[22:40:01.802] [Tabs] _populate_tab(branches, idx=0, force=False)
+[22:40:01.802] [Tabs]   populated=False, loading=False
+[22:40:01.802] [Tabs]   Starting load for branches
+[22:40:01.802] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[22:40:01.802] [Tabs] _clear_tab idx=0
+[22:40:01.802] [Tabs] _on_tab_changed → tab_type=branches
+[22:40:01.802] [Tabs] _build_tabs → added 6 tabs
+[22:40:01.802] [Tabs] __init__ completed
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
+[Sidebar] Loaded 6 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000029E4ECB4A00>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan  =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=2] running for 1 targets...
+[SidebarQt] switch_display_mode(list) - canceling old workers
+[SidebarQt] Hiding tabs controller
+[22:40:01.976] [Tabs] hide_tabs() called - canceling pending workers
+[SidebarQt] Canceled tab workers via hide_tabs()
+[SidebarQt] Clearing tree view selection before rebuild
+[Sidebar][counts worker gen=2] finished scanning targets, scheduling UI update
+[SidebarQt] Showing tree view
+[SidebarQt] Calling _build_tree_model()
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
+[Sidebar] Loaded 6 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000029E4ECB4A00>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Using cached scan results =====
+[DeviceScanner] Cache age: 0.01s (TTL: 5.0s)
+[DeviceScanner] Cached devices: 0
+[DeviceScanner] ===== Scan complete (cached): 0 device(s) =====
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=4] running for 1 targets...
+[SidebarQt] _build_tree_model() completed
+[Sidebar][counts worker gen=4] finished scanning targets, scheduling UI update
+[GRID] P2-26: Created dedicated thumbnail thread pool with 4 workers
+[LayoutManager] Initializing default layout: current
+[LayoutManager] Already using layout: current
+[Startup] Layout system initialized successfully
+[Startup] Database schema initialized successfully
+[22:40:02.102] [Tabs] _on_tab_changed(idx=0)
+[22:40:02.102] [Tabs] _start_timeout idx=0 type=branches
+[22:40:02.102] [Tabs] _populate_tab(branches, idx=0, force=False)
+[22:40:02.102] [Tabs]   populated=False, loading=False
+[22:40:02.102] [Tabs]   Starting load for branches
+[22:40:02.102] [Tabs] _show_loading idx=0 label='Loading Branches…'
+[22:40:02.102] [Tabs] _clear_tab idx=0
+[22:40:02.102] [Tabs] _on_tab_changed → tab_type=branches
+[22:40:02.102] [Tabs] _finish_branches (stale gen=1) — ignoring
+[Sidebar][counts] Ignoring stale worker results (gen=2, current=4)
+[Sidebar][counts applied] updated UI with counts
+[22:40:02.112] [Tabs] _clear_tab idx=0
+[TAG FILTER] Cleared by navigation.
 
 [GRID] ====== reload() CALLED ======
 [GRID] project_id=1, load_mode=None
-2025-11-26 16:25:10,438 [INFO] [VideoThumbnailWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
 [GRID] Step 1: Setting _reloading=True
 [GRID] Fetched tags for 0 paths, got 0 entries
 [GRID] Loaded 0 thumbnails.
 [GRID] Reloaded 0 thumbnails in None-mode (base=0)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 0 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Step 5: ✓ gridReloaded signal emitted
+[GRID] ====== reload() COMPLETED SUCCESSFULLY ======
+
+[GRID] Finally block: Setting _reloading=False
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=None
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 21 photos
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[GRID] Using scroll-based start position: 0 (scroll: 0/34)
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
@@ -49,11 +251,34 @@
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-2025-11-26 16:25:10,466 [INFO] Refreshing Google Photos layout after scan...
-2025-11-26 16:25:10,467 [INFO] ✓ Google Photos layout refresh scheduled
-2025-11-26 16:25:10,488 [INFO] Generated thumbnail for c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles.mp4 at .thumb_cache\qouzleh_mitsubtitles_mp4_thumb.jpg
-2025-11-26 16:25:10,500 [INFO] [VideoThumbnailWorker] ✓ c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles.mp4
-2025-11-26 16:25:10,501 [INFO] [VideoThumbnailWorker] Finished: 3 success, 0 failed
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=None, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added fallback segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 3 new thumbnail workers
+✅ FFmpeg and FFprobe detected (custom path: C:\ffmpeg\bin)
+✅ InsightFace detected with buffalo_l models
+   Location: C:\Users\ASUS\.insightface\models\buffalo_l
+[LayoutManager] Switching layout: current → google
+[LayoutManager] 💾 Took ownership of original central widget: QWidget
+[GooglePhotosLayout] Using default project: 1
+[GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
+[GooglePhotosLayout] Project selector populated with 1 projects
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
@@ -64,139 +289,1488 @@
 
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
-[GooglePhotosLayout] 📊 Loaded 116 photos from database
+[GooglePhotosLayout] 📊 Loaded 21 photos from database
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 0 face clusters
 [GoogleLayout] Loading videos for project_id=1
-[GoogleLayout] Found 3 videos in project 1
-[GoogleLayout] Built videos tree with 3 videos
-[GooglePhotosLayout] Tracking 116 paths for multi-selection
-2025-11-26 16:25:14,380 [WARNING] Cannot open image file c:/users/suleimaa/desktop/eigen/syria/chatgpt image 6. mai 2025, 16_50_55.png: cannot identify image file 'c:/users/suleimaa/desktop/eigen/syria/chatgpt image 6. mai 2025, 16_50_55.png'
-2025-11-26 16:25:14,394 [INFO] Marked as failed (will not retry): c:/users/suleimaa/desktop/eigen/syria/chatgpt image 6. mai 2025, 16_50_55.png
-[GooglePhotosLayout] Loaded 116 photos in 38 date groups
-[GoogleLayout] Showing all videos
-[GoogleLayout] Showing 3 videos in timeline
-2025-11-26 16:25:16,221 [INFO] Using ffmpeg from same directory as ffprobe: C:\ffmpeg\bin\ffmpeg.exe
-2025-11-26 16:25:16,271 [INFO] ffmpeg detected at 'C:\ffmpeg\bin\ffmpeg.exe' - video thumbnail generation enabled
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,271 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,278 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,284 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,284 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,284 [WARNING] Qt: Unknown property cursor
-2025-11-26 16:25:16,879 [WARNING] Qt: Unknown property cursor
-[GoogleLayout] 🎬 Opening video player for: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-[GoogleLayout] Found 3 videos, current index: 0
-Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'c:/users/suleimaa/desktop/eigen/syria/qouzleh_mitsubtitles-ezgif.com-resize-video.mp4':
-  Metadata:
-    major_brand     : isom
-    minor_version   : 512
-    compatible_brands: isomiso2avc1mp41
-    encoder         : Lavf60.16.100
-    comment         : MP4 resized with https://ezgif.com/resize-video
-  Duration: 00:01:15.95, start: 0.000000, bitrate: 1411 kb/s
-  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], 1274 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
-      Metadata:
-        handler_name    : VideoHandler
-        vendor_id       : [0][0][0][0]
-        encoder         : Lavc60.31.102 libx264
-  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
-      Metadata:
-        handler_name    : SoundHandler
-        vendor_id       : [0][0][0][0]
-[VideoPlayer] Loaded: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-[VideoPlayer] Video list set: 3 videos, starting at index 0
-[VideoPlayer] Opened: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4 (1/3)
-[GoogleLayout] ✓ Video player opened successfully
-[GoogleLayout] 🎬 Opening video player for: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-[GoogleLayout] Found 3 videos, current index: 0
-[VideoPlayer] Loaded: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4
-[VideoPlayer] Video list set: 3 videos, starting at index 0
-[VideoPlayer] Opened: c:\users\suleimaa\desktop\eigen\syria\qouzleh_mitsubtitles-ezgif.com-resize-video.mp4 (1/3)
-[GoogleLayout] ✓ Video player opened successfully
-Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'c:/users/suleimaa/desktop/eigen/syria/qouzleh_mitsubtitles-ezgif.com-resize-video.mp4':
-  Metadata:
-    major_brand     : isom
-    minor_version   : 512
-    compatible_brands: isomiso2avc1mp41
-    encoder         : Lavf60.16.100
-    comment         : MP4 resized with https://ezgif.com/resize-video
-  Duration: 00:01:15.95, start: 0.000000, bitrate: 1411 kb/s
-  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], 1274 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
-      Metadata:
-        handler_name    : VideoHandler
-        vendor_id       : [0][0][0][0]
-        encoder         : Lavc60.31.102 libx264
-  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
-      Metadata:
-        handler_name    : SoundHandler
-        vendor_id       : [0][0][0][0]
-[VideoPlayer] Keyframes ready: 22
-[VideoPlayer] Keyframes ready: 25
-[VideoPlayer] Keyframes ready: 26
-[GooglePhotosLayout] Filtering by folder: alya
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/suleimaa/desktop/eigen/alya]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/suleimaa/desktop/eigen/alya%']
-[GooglePhotosLayout] 📊 Loaded 27 photos from database
-[GooglePhotosLayout] Tracking 27 paths for multi-selection
-[GooglePhotosLayout] Loaded 27 photos in 12 date groups
-[GooglePhotosLayout] Photo clicked: c:/users/suleimaa/desktop/eigen/alya/photos/inbox/img_6995.jpeg
-[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/suleimaa/desktop/eigen/alya/photos/inbox/img_6995.jpeg
-[PhotoLightbox] showEvent triggered, scheduling photo load...
-[PhotoLightbox] Loading photo: img_6995.jpeg
-[PhotoLightbox] Window size: 1920x1129
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
-[PhotoLightbox] ✓ PIL image closed
-[PhotoLightbox] Scaling to: max_width=1520, max_height=929
-[PhotoLightbox] ✓ Photo displayed: 1238x929
+[GoogleLayout] Found 0 videos in project 1
+[GooglePhotosLayout] Tracking 21 paths for multi-selection
+[GooglePhotosLayout] Loaded 21 photos in 15 date groups
+[LayoutManager] Setting new central widget: QWidget
+[GooglePhotosLayout] 📍 Layout activated
+[GooglePhotosLayout] ✓ Connected Scan button
+[GooglePhotosLayout] ✓ Connected Faces button
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
+[MediaLightbox] showEvent triggered, scheduling media load...
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
-[PhotoLightbox] Loading photo: img_6995_2_2_2.jpeg
-[PhotoLightbox] Window size: 1920x1129
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
-[PhotoLightbox] ✓ PIL image closed
-[PhotoLightbox] Scaling to: max_width=1520, max_height=929
-[PhotoLightbox] ✓ Photo displayed: 1238x929
+[MediaLightbox] Loading photo: img_8152.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
-[PhotoLightbox] Loading photo: img_6934.jpeg
-[PhotoLightbox] Window size: 1920x1129
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
-[PhotoLightbox] ✓ PIL image closed
-[PhotoLightbox] Scaling to: max_width=1520, max_height=929
-[PhotoLightbox] ✓ Photo displayed: 1238x929
+[MediaLightbox] Loading photo: img_1550.dng
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
-[PhotoLightbox] Loading photo: img_6850.jpeg
-[PhotoLightbox] Window size: 1920x1129
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
-[PhotoLightbox] ✓ PIL image closed
-[PhotoLightbox] Scaling to: max_width=1520, max_height=929
-[PhotoLightbox] ✓ Photo displayed: 1238x929
+[EXIFParser] Error parsing full EXIF: 'TiffImageFile' object has no attribute '_getexif'
+[GooglePhotosLayout] ✓ MediaLightbox closed
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
+[MediaLightbox] showEvent triggered, scheduling media load...
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
-[PhotoLightbox] Loading photo: img_6850_2_2_2.jpeg
-[PhotoLightbox] Window size: 1920x1129
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
-[PhotoLightbox] ✓ PIL image closed
-[PhotoLightbox] Scaling to: max_width=1520, max_height=929
-[PhotoLightbox] ✓ Photo displayed: 1238x929
+[GooglePhotosLayout] ✓ MediaLightbox closed
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
+[MediaLightbox] showEvent triggered, scheduling media load...
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
-[PhotoLightbox] Loading photo: alya6.jpeg
-[PhotoLightbox] Window size: 1920x1129
-
-C:\Users\suleimaa\Downloads\Photo-Sorter\09.38.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-11>
+[MediaLightbox] Loading photo: img_8152.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_1550.dng
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[EXIFParser] Error parsing full EXIF: 'TiffImageFile' object has no attribute '_getexif'
+[MediaLightbox] Loading photo: img_e9574.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_9570.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e9569.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e7413.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_3307.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 1078x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3122.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3093.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3092.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3091.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_1779.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3091.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3092.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_e3091.jpg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_1779.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[GooglePhotosLayout] ✓ MediaLightbox closed
+[Schema] Database schema initialized successfully
+[ScanController] Creating ScanWorker for folder: D:/My Phone/Videos
+[ScanController] ScanWorker imported successfully
+[ScanController] QThread created
+[ScanController] ScanWorker instance created with project_id=1
+[ScanController] Worker moved to thread
+2025-11-26 22:41:41,991 [INFO] DBWriter timer started in worker thread
+[ScanController] Signals connected
+[ScanController] Starting scan thread...
+[ScanController] thread.start() called
+[ScanWorkerAdapter] run() method called!
+[ScanWorkerAdapter] folder=D:/My Phone/Videos, incremental=True
+2025-11-26 22:41:41,991 [INFO] ScanWorkerAdapter starting scan of D:/My Phone/Videos
+[ScanWorkerAdapter] Starting scan...
+2025-11-26 22:41:41,991 [INFO] Starting scan: D:/My Phone/Videos (incremental=True)
+[ScanController] QThread STARTED!
+2025-11-26 22:41:42,007 [INFO] Discovered 97 candidate image files and 97 video files
+2025-11-26 22:41:42,007 [INFO] Loading existing metadata for incremental scan...
+2025-11-26 22:41:42,010 [INFO] ✓ Loaded 21 existing file records
+[SCAN] Created single executor for scan (97 files)
+[SCAN] Starting file 1/97: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+2025-11-26 22:41:42,010 [INFO] [Scan] File 1/97: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+[SCAN] _process_file started for: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,010 [INFO] 📷 Processing: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4 (15824.5 KB)
+[SCAN] Processing: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+[SCAN] ✓ Metadata extracted: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,010 [INFO] [Scan] Metadata extracted successfully: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=43
+[SCAN] ✓ File processed successfully: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4
+[SCAN] Added to batch: _هاكونا ماتاتا_ - الأسد الملك(360P).mp4 [batch size: 1/200]
+[SCAN] Starting file 2/97: محمد اسكندر لفيروز(Source).mp4
+2025-11-26 22:41:42,023 [INFO] [Scan] File 2/97: محمد اسكندر لفيروز(Source).mp4
+[SCAN] _process_file started for: محمد اسكندر لفيروز(Source).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,023 [INFO] 📷 Processing: محمد اسكندر لفيروز(Source).mp4 (4024.3 KB)
+[SCAN] Processing: محمد اسكندر لفيروز(Source).mp4
+[SCAN] ✓ Metadata extracted: محمد اسكندر لفيروز(Source).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,031 [INFO] [Scan] Metadata extracted successfully: محمد اسكندر لفيروز(Source).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: محمد اسكندر لفيروز(Source).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=43
+[SCAN] ✓ File processed successfully: محمد اسكندر لفيروز(Source).mp4
+[SCAN] Added to batch: محمد اسكندر لفيروز(Source).mp4 [batch size: 2/200]
+[SCAN] Starting file 3/97: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+2025-11-26 22:41:42,042 [INFO] [Scan] File 3/97: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+[SCAN] _process_file started for: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,042 [INFO] 📷 Processing: نورا رحال، طاهر مامللي،، حبذا(480p).mp4 (5980.8 KB)
+[SCAN] Processing: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+[SCAN] ✓ Metadata extracted: نورا رحال، طاهر مامللي،، حبذا(480p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,042 [INFO] [Scan] Metadata extracted successfully: نورا رحال، طاهر مامللي،، حبذا(480p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=43
+[SCAN] ✓ File processed successfully: نورا رحال، طاهر مامللي،، حبذا(480p).mp4
+[SCAN] Added to batch: نورا رحال، طاهر مامللي،، حبذا(480p).mp4 [batch size: 3/200]
+[SCAN] Starting file 4/97: 1- Deutsch Dialogue - B2(360P).mp4
+2025-11-26 22:41:42,055 [INFO] [Scan] File 4/97: 1- Deutsch Dialogue - B2(360P).mp4
+[SCAN] _process_file started for: 1- Deutsch Dialogue - B2(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,055 [INFO] 📷 Processing: 1- Deutsch Dialogue - B2(360P).mp4 (31399.5 KB)
+[SCAN] Processing: 1- Deutsch Dialogue - B2(360P).mp4
+[SCAN] ✓ Metadata extracted: 1- Deutsch Dialogue - B2(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,055 [INFO] [Scan] Metadata extracted successfully: 1- Deutsch Dialogue - B2(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: 1- Deutsch Dialogue - B2(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: 1- Deutsch Dialogue - B2(360P).mp4
+[SCAN] Added to batch: 1- Deutsch Dialogue - B2(360P).mp4 [batch size: 4/200]
+[SCAN] Starting file 5/97: 10 wichtige Ausdrücke für B2(360P).mp4
+2025-11-26 22:41:42,073 [INFO] [Scan] File 5/97: 10 wichtige Ausdrücke für B2(360P).mp4
+[SCAN] _process_file started for: 10 wichtige Ausdrücke für B2(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,073 [INFO] 📷 Processing: 10 wichtige Ausdrücke für B2(360P).mp4 (53160.6 KB)
+[SCAN] Processing: 10 wichtige Ausdrücke für B2(360P).mp4
+[SCAN] ✓ Metadata extracted: 10 wichtige Ausdrücke für B2(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,073 [INFO] [Scan] Metadata extracted successfully: 10 wichtige Ausdrücke für B2(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: 10 wichtige Ausdrücke für B2(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: 10 wichtige Ausdrücke für B2(360P).mp4
+[SCAN] Added to batch: 10 wichtige Ausdrücke für B2(360P).mp4 [batch size: 5/200]
+[SCAN] Starting file 6/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+2025-11-26 22:41:42,087 [INFO] [Scan] File 6/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+[SCAN] _process_file started for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,093 [INFO] 📷 Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4 (56157.4 KB)
+[SCAN] Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+[SCAN] ✓ Metadata extracted: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,093 [INFO] [Scan] Metadata extracted successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4
+[SCAN] Added to batch: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4 [batch size: 6/200]
+[SCAN] Starting file 7/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+2025-11-26 22:41:42,103 [INFO] [Scan] File 7/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+[SCAN] _process_file started for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,113 [INFO] 📷 Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4 (55086.9 KB)
+[SCAN] Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+[SCAN] ✓ Metadata extracted: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,113 [INFO] [Scan] Metadata extracted successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4
+[SCAN] Added to batch: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4 [batch size: 7/200]
+[SCAN] Starting file 8/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+2025-11-26 22:41:42,124 [INFO] [Scan] File 8/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+[SCAN] _process_file started for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,124 [INFO] 📷 Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4 (34357.4 KB)
+[SCAN] Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+[SCAN] ✓ Metadata extracted: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,134 [INFO] [Scan] Metadata extracted successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4
+[SCAN] Added to batch: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4 [batch size: 8/200]
+[SCAN] Starting file 9/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+2025-11-26 22:41:42,152 [INFO] [Scan] File 9/97: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+[SCAN] _process_file started for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,154 [INFO] 📷 Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4 (33576.4 KB)
+[SCAN] Processing: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+[SCAN] ✓ Metadata extracted: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,154 [INFO] [Scan] Metadata extracted successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4
+[SCAN] Added to batch: Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4 [batch size: 9/200]
+[SCAN] Starting file 10/97: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+2025-11-26 22:41:42,172 [INFO] [Scan] File 10/97: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+[SCAN] _process_file started for: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,172 [INFO] 📷 Processing: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4 (381584.0 KB)
+[SCAN] Processing: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,175 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4
+[SCAN] Added to batch: Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4 [batch size: 10/200]
+[SCAN] Starting file 11/97: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+2025-11-26 22:41:42,201 [INFO] [Scan] File 11/97: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+[SCAN] _process_file started for: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,206 [INFO] 📷 Processing: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4 (190578.5 KB)
+[SCAN] Processing: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,206 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4
+[SCAN] Added to batch: Deutsch lernen mit Dialogen _ B1 B2 C1 _ Deutsch lernen kostenlos(360P).mp4 [batch size: 11/200]
+[SCAN] Starting file 12/97: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+2025-11-26 22:41:42,227 [INFO] [Scan] File 12/97: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+[SCAN] _process_file started for: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,227 [INFO] 📷 Processing: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4 (82250.9 KB)
+[SCAN] Processing: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,229 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4
+[SCAN] Added to batch: Deutsch lernen mit Geschichten _11 _ A2-B1 _ Learn German With Stories(360P).mp4 [batch size: 12/200]
+[SCAN] Starting file 13/97: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+2025-11-26 22:41:42,237 [INFO] [Scan] File 13/97: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+[SCAN] _process_file started for: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,245 [INFO] 📷 Processing: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4 (104183.8 KB)
+[SCAN] Processing: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,245 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4
+[SCAN] Added to batch: Deutsch lernen mit Geschichten _24 _ A1-A2  _ German For Free(360P).mp4 [batch size: 13/200]
+[SCAN] Starting file 14/97: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+2025-11-26 22:41:42,261 [INFO] [Scan] File 14/97: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+[SCAN] _process_file started for: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,261 [INFO] 📷 Processing: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4 (65383.6 KB)
+[SCAN] Processing: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,261 [INFO] [Scan] Metadata extracted successfully: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4
+[SCAN] Added to batch: Deutsch mit Geschichten _16 _ A1-A2 _ Learn German With Stories(360P).mp4 [batch size: 14/200]
+[SCAN] Starting file 15/97: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+2025-11-26 22:41:42,278 [INFO] [Scan] File 15/97: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+[SCAN] _process_file started for: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,278 [INFO] 📷 Processing: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4 (55554.3 KB)
+[SCAN] Processing: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+[SCAN] ✓ Metadata extracted: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,278 [INFO] [Scan] Metadata extracted successfully: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4
+[SCAN] Added to batch: Naruto_ Die Rettung der Schriftrolle  ناروتو إنقاذ المخطوطة_CKWeiopIFTH(MP4).mp4 [batch size: 15/200]
+[SCAN] Starting file 16/97: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+2025-11-26 22:41:42,292 [INFO] [Scan] File 16/97: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+[SCAN] _process_file started for: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,299 [INFO] 📷 Processing: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4 (103163.2 KB)
+[SCAN] Processing: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+[SCAN] ✓ Metadata extracted: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,299 [INFO] [Scan] Metadata extracted successfully: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4
+[SCAN] Added to batch: Pluspunkt Deutsch A 1 Ganzer Film(480P).mp4 [batch size: 16/200]
+[SCAN] Starting file 17/97: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+2025-11-26 22:41:42,310 [INFO] [Scan] File 17/97: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+[SCAN] _process_file started for: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,310 [INFO] 📷 Processing: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4 (5063.0 KB)
+[SCAN] Processing: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+[SCAN] ✓ Metadata extracted: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,310 [INFO] [Scan] Metadata extracted successfully: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4
+[SCAN] Added to batch: Präsentation – über ein Buch_ mündliche Prüfung B2 telc(360P).mp4 [batch size: 17/200]
+[SCAN] Starting file 18/97: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+2025-11-26 22:41:42,330 [INFO] [Scan] File 18/97: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+[SCAN] _process_file started for: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,330 [INFO] 📷 Processing: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4 (12667.1 KB)
+[SCAN] Processing: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+[SCAN] ✓ Metadata extracted: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,330 [INFO] [Scan] Metadata extracted successfully: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4
+[SCAN] Added to batch: Spongebob Schwammkopf_ bei der ersten Abfahrt سبونج بوب عندالإنطلاقة الأولى_CKmocIVIvgI(MP4).mp4 [batch size: 18/200]
+[SCAN] Starting file 19/97: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+2025-11-26 22:41:42,343 [INFO] [Scan] File 19/97: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+[SCAN] _process_file started for: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,343 [INFO] 📷 Processing: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4 (15645.3 KB)
+[SCAN] Processing: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+[SCAN] ✓ Metadata extracted: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,343 [INFO] [Scan] Metadata extracted successfully: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4
+[SCAN] Added to batch: _Präsentation _Diskussion _Problemlösung B2 Prüfung _Präsentation_ Diskussion_ Problemlösung(360P).mp4 [batch size: 19/200]
+[SCAN] Starting file 20/97: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+2025-11-26 22:41:42,361 [INFO] [Scan] File 20/97: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+[SCAN] _process_file started for: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,361 [INFO] 📷 Processing: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4 (33373.3 KB)
+[SCAN] Processing: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+[SCAN] ✓ Metadata extracted: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,361 [INFO] [Scan] Metadata extracted successfully: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4
+[SCAN] Added to batch: الدرس (29) تعلم اللغة الالمانية_جمل مهمة في قسم المحادثة (B1 Prüfung (Sprechen(360P).mp4 [batch size: 20/200]
+[SCAN] Starting file 21/97: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+2025-11-26 22:41:42,371 [INFO] [Scan] File 21/97: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+[SCAN] _process_file started for: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,382 [INFO] 📷 Processing: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4 (28449.1 KB)
+[SCAN] Processing: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+[SCAN] ✓ Metadata extracted: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,382 [INFO] [Scan] Metadata extracted successfully: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4
+[SCAN] Added to batch: الدرس (79) الامتحان الشفهي -الحديث عن رحلة B2 Prüfung- Präsentation über eine Reise(360P).mp4 [batch size: 21/200]
+[SCAN] Starting file 22/97: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+2025-11-26 22:41:42,398 [INFO] [Scan] File 22/97: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+[SCAN] _process_file started for: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,398 [INFO] 📷 Processing: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4 (20649.6 KB)
+[SCAN] Processing: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+[SCAN] ✓ Metadata extracted: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,402 [INFO] [Scan] Metadata extracted successfully: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4
+[SCAN] Added to batch: تعلم الالمانيه مع زيدون (266) اهم الجمل لموضوع المناقشة B2 - Thema Diskussion 2018(360P).mp4 [batch size: 22/200]
+[SCAN] Starting file 23/97: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+2025-11-26 22:41:42,412 [INFO] [Scan] File 23/97: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+[SCAN] _process_file started for: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,419 [INFO] 📷 Processing: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4 (498363.4 KB)
+[SCAN] Processing: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+[SCAN] ✓ Metadata extracted: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,419 [INFO] [Scan] Metadata extracted successfully: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4
+[SCAN] Added to batch: تعلم اللغة الألمانية مستوى  B1  _ جمل وحوارات هامة للمتوسطين _ مكرر 3 Prolingoo_German_(360P).mp4 [batch size: 23/200]
+[SCAN] Starting file 24/97: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+2025-11-26 22:41:42,435 [INFO] [Scan] File 24/97: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+[SCAN] _process_file started for: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,435 [INFO] 📷 Processing: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4 (9342.3 KB)
+[SCAN] Processing: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+[SCAN] ✓ Metadata extracted: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,435 [INFO] [Scan] Metadata extracted successfully: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=47
+[SCAN] ✓ File processed successfully: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4
+[SCAN] Added to batch: كلمات صعبة صدقني انت قدها _ ----  B2 - تعلم اللغة الالمانية(360P).mp4 [batch size: 24/200]
+[SCAN] Starting file 25/97: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+2025-11-26 22:41:42,451 [INFO] [Scan] File 25/97: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+[SCAN] _process_file started for: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,451 [INFO] 📷 Processing: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4 (12017.1 KB)
+[SCAN] Processing: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,454 [INFO] [Scan] Metadata extracted successfully: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=90
+[SCAN] ✓ File processed successfully: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4
+[SCAN] Added to batch: Adel Tawil - Ist da jemand - Lyrics- Sadboy(360P)_1.mp4 [batch size: 25/200]
+[SCAN] Starting file 26/97: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+2025-11-26 22:41:42,474 [INFO] [Scan] File 26/97: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+[SCAN] _process_file started for: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,474 [INFO] 📷 Processing: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4 (5084.8 KB)
+[SCAN] Processing: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,474 [INFO] [Scan] Metadata extracted successfully: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=90
+[SCAN] ✓ File processed successfully: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4
+[SCAN] Added to batch: Bist du real أغنية ألمانية مترجمة(360P)_1.mp4 [batch size: 26/200]
+[SCAN] Starting file 27/97: Facebook 1050793465397912(Source).mp4
+2025-11-26 22:41:42,498 [INFO] [Scan] File 27/97: Facebook 1050793465397912(Source).mp4
+[SCAN] _process_file started for: Facebook 1050793465397912(Source).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,498 [INFO] 📷 Processing: Facebook 1050793465397912(Source).mp4 (9518.1 KB)
+[SCAN] Processing: Facebook 1050793465397912(Source).mp4
+[SCAN] ✓ Metadata extracted: Facebook 1050793465397912(Source).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,498 [INFO] [Scan] Metadata extracted successfully: Facebook 1050793465397912(Source).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 1050793465397912(Source).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=90
+[SCAN] ✓ File processed successfully: Facebook 1050793465397912(Source).mp4
+[SCAN] Added to batch: Facebook 1050793465397912(Source).mp4 [batch size: 27/200]
+[SCAN] Starting file 28/97: Lieblingsmensch Namika Lyrics(360P).mp4
+2025-11-26 22:41:42,516 [INFO] [Scan] File 28/97: Lieblingsmensch Namika Lyrics(360P).mp4
+[SCAN] _process_file started for: Lieblingsmensch Namika Lyrics(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,516 [INFO] 📷 Processing: Lieblingsmensch Namika Lyrics(360P).mp4 (7594.2 KB)
+[SCAN] Processing: Lieblingsmensch Namika Lyrics(360P).mp4
+[SCAN] ✓ Metadata extracted: Lieblingsmensch Namika Lyrics(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,516 [INFO] [Scan] Metadata extracted successfully: Lieblingsmensch Namika Lyrics(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Lieblingsmensch Namika Lyrics(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=90
+[SCAN] ✓ File processed successfully: Lieblingsmensch Namika Lyrics(360P).mp4
+[SCAN] Added to batch: Lieblingsmensch Namika Lyrics(360P).mp4 [batch size: 28/200]
+[SCAN] Starting file 29/97: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+2025-11-26 22:41:42,547 [INFO] [Scan] File 29/97: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+[SCAN] _process_file started for: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,547 [INFO] 📷 Processing: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4 (4776.7 KB)
+[SCAN] Processing: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,547 [INFO] [Scan] Metadata extracted successfully: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=90
+[SCAN] ✓ File processed successfully: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4
+[SCAN] Added to batch: Mark Foster- 194 Länder (Lyrics) مترجم(360P)_1.mp4 [batch size: 29/200]
+[SCAN] Starting file 30/97: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+2025-11-26 22:41:42,567 [INFO] [Scan] File 30/97: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+[SCAN] _process_file started for: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,567 [INFO] 📷 Processing: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4 (25465.2 KB)
+[SCAN] Processing: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,567 [INFO] [Scan] Metadata extracted successfully: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4
+[SCAN] Added to batch: B1 - Lesson 30 _ eine Präsentation halten _ Goethe Zertifikat Teil 2 Sprechen(360P)_1.mp4 [batch size: 30/200]
+[SCAN] Starting file 31/97: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+2025-11-26 22:41:42,587 [INFO] [Scan] File 31/97: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+[SCAN] _process_file started for: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,593 [INFO] 📷 Processing: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4 (25766.2 KB)
+[SCAN] Processing: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+[SCAN] ✓ Metadata extracted: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,593 [INFO] [Scan] Metadata extracted successfully: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4
+[SCAN] Added to batch: B1 Prüfung_sich vorstellen_Bild beschreiben_Dialog(360P).mp4 [batch size: 31/200]
+[SCAN] Starting file 32/97: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+2025-11-26 22:41:42,609 [INFO] [Scan] File 32/97: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+[SCAN] _process_file started for: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,609 [INFO] 📷 Processing: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4 (47508.4 KB)
+[SCAN] Processing: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,609 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4
+[SCAN] Added to batch: Deutsch lernen A2_ B1 _ indirekte Fragen _ Wechselpräpositionen _ Nebensätze _weil__ _wenn__ _dass_(360P)_1.mp4 [batch size: 32/200]
+[SCAN] Starting file 33/97: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+2025-11-26 22:41:42,638 [INFO] [Scan] File 33/97: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+[SCAN] _process_file started for: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,638 [INFO] 📷 Processing: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4 (151451.7 KB)
+[SCAN] Processing: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+[SCAN] ✓ Metadata extracted: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,640 [INFO] [Scan] Metadata extracted successfully: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4
+[SCAN] Added to batch: Deutsch lernen mit Geschichten _34 _ B1-B2 - Deutsch lernen kostenlos(360P).mp4 [batch size: 33/200]
+[SCAN] Starting file 34/97: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+2025-11-26 22:41:42,659 [INFO] [Scan] File 34/97: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+[SCAN] _process_file started for: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,659 [INFO] 📷 Processing: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4 (26730.9 KB)
+[SCAN] Processing: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,659 [INFO] [Scan] Metadata extracted successfully: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4
+[SCAN] Added to batch: Dialog - Kann ich ihnen helfen - Deutsch _B1 _ B2_(360P)_1.mp4 [batch size: 34/200]
+[SCAN] Starting file 35/97: Facebook 1210473858975381(360p)_1.mp4
+2025-11-26 22:41:42,680 [INFO] [Scan] File 35/97: Facebook 1210473858975381(360p)_1.mp4
+[SCAN] _process_file started for: Facebook 1210473858975381(360p)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,680 [INFO] 📷 Processing: Facebook 1210473858975381(360p)_1.mp4 (2717.2 KB)
+[SCAN] Processing: Facebook 1210473858975381(360p)_1.mp4
+[SCAN] ✓ Metadata extracted: Facebook 1210473858975381(360p)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,680 [INFO] [Scan] Metadata extracted successfully: Facebook 1210473858975381(360p)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 1210473858975381(360p)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Facebook 1210473858975381(360p)_1.mp4
+[SCAN] Added to batch: Facebook 1210473858975381(360p)_1.mp4 [batch size: 35/200]
+[SCAN] Starting file 36/97: Facebook 2746247528975745(144p)_1.mp4
+2025-11-26 22:41:42,704 [INFO] [Scan] File 36/97: Facebook 2746247528975745(144p)_1.mp4
+[SCAN] _process_file started for: Facebook 2746247528975745(144p)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,704 [INFO] 📷 Processing: Facebook 2746247528975745(144p)_1.mp4 (28533.0 KB)
+[SCAN] Processing: Facebook 2746247528975745(144p)_1.mp4
+[SCAN] ✓ Metadata extracted: Facebook 2746247528975745(144p)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,704 [INFO] [Scan] Metadata extracted successfully: Facebook 2746247528975745(144p)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 2746247528975745(144p)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Facebook 2746247528975745(144p)_1.mp4
+[SCAN] Added to batch: Facebook 2746247528975745(144p)_1.mp4 [batch size: 36/200]
+[SCAN] Starting file 37/97: Facebook 2746522382281593(240p)_1.mp4
+2025-11-26 22:41:42,730 [INFO] [Scan] File 37/97: Facebook 2746522382281593(240p)_1.mp4
+[SCAN] _process_file started for: Facebook 2746522382281593(240p)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,732 [INFO] 📷 Processing: Facebook 2746522382281593(240p)_1.mp4 (22406.3 KB)
+[SCAN] Processing: Facebook 2746522382281593(240p)_1.mp4
+[SCAN] ✓ Metadata extracted: Facebook 2746522382281593(240p)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,732 [INFO] [Scan] Metadata extracted successfully: Facebook 2746522382281593(240p)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 2746522382281593(240p)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Facebook 2746522382281593(240p)_1.mp4
+[SCAN] Added to batch: Facebook 2746522382281593(240p)_1.mp4 [batch size: 37/200]
+[SCAN] Starting file 38/97: Facebook 2823061954627635(144p).mp4
+2025-11-26 22:41:42,752 [INFO] [Scan] File 38/97: Facebook 2823061954627635(144p).mp4
+[SCAN] _process_file started for: Facebook 2823061954627635(144p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,752 [INFO] 📷 Processing: Facebook 2823061954627635(144p).mp4 (12564.4 KB)
+[SCAN] Processing: Facebook 2823061954627635(144p).mp4
+[SCAN] ✓ Metadata extracted: Facebook 2823061954627635(144p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,752 [INFO] [Scan] Metadata extracted successfully: Facebook 2823061954627635(144p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 2823061954627635(144p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Facebook 2823061954627635(144p).mp4
+[SCAN] Added to batch: Facebook 2823061954627635(144p).mp4 [batch size: 38/200]
+[SCAN] Starting file 39/97: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+2025-11-26 22:41:42,773 [INFO] [Scan] File 39/97: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+[SCAN] _process_file started for: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,773 [INFO] 📷 Processing: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4 (69304.6 KB)
+[SCAN] Processing: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,773 [INFO] [Scan] Metadata extracted successfully: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4
+[SCAN] Added to batch: Geschichte für Niveau B1_  Deutsch Lernen(360P)_1.mp4 [batch size: 39/200]
+[SCAN] Starting file 40/97: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+2025-11-26 22:41:42,793 [INFO] [Scan] File 40/97: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+[SCAN] _process_file started for: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,799 [INFO] 📷 Processing: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4 (31421.6 KB)
+[SCAN] Processing: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,799 [INFO] [Scan] Metadata extracted successfully: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4
+[SCAN] Added to batch: Menschen B1 lektion 1.. Part 1_ مع فراو هبة جلال(360P)_1.mp4 [batch size: 40/200]
+[SCAN] Starting file 41/97: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+2025-11-26 22:41:42,816 [INFO] [Scan] File 41/97: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+[SCAN] _process_file started for: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,816 [INFO] 📷 Processing: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4 (9547.7 KB)
+[SCAN] Processing: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,816 [INFO] [Scan] Metadata extracted successfully: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4
+[SCAN] Added to batch: Präsentation über eine Reise - mündliche telc B2 Prüfung(360P)_1.mp4 [batch size: 41/200]
+[SCAN] Starting file 42/97: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,840 [INFO] [Scan] File 42/97: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,845 [INFO] 📷 Processing: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (6486.3 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,846 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (2) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 42/200]
+[SCAN] Starting file 43/97: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,865 [INFO] [Scan] File 43/97: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,865 [INFO] 📷 Processing: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (9753.6 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,865 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (3) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 43/200]
+[SCAN] Starting file 44/97: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,893 [INFO] [Scan] File 44/97: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,893 [INFO] 📷 Processing: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (9243.9 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,893 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (4) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 44/200]
+[SCAN] Starting file 45/97: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,916 [INFO] [Scan] File 45/97: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,917 [INFO] 📷 Processing: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (9573.9 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,917 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (5) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 45/200]
+[SCAN] Starting file 46/97: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,937 [INFO] [Scan] File 46/97: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,937 [INFO] 📷 Processing: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (9931.5 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,941 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (6) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 46/200]
+[SCAN] Starting file 47/97: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,958 [INFO] [Scan] File 47/97: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,966 [INFO] 📷 Processing: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (8833.8 KB)
+[SCAN] Processing: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,968 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الألماني (9) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 47/200]
+[SCAN] Starting file 48/97: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:42,989 [INFO] [Scan] File 48/97: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:42,989 [INFO] 📷 Processing: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4 (21177.2 KB)
+[SCAN] Processing: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:42,989 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الالماني (1)- السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 48/200]
+[SCAN] Starting file 49/97: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:43,010 [INFO] [Scan] File 49/97: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,010 [INFO] 📷 Processing: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (2617.6 KB)
+[SCAN] Processing: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,010 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الالماني (10) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 49/200]
+[SCAN] Starting file 50/97: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:43,036 [INFO] [Scan] File 50/97: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,036 [INFO] 📷 Processing: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (9818.5 KB)
+[SCAN] Processing: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,041 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الالماني (7) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 50/200]
+[SCAN] Starting file 51/97: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+2025-11-26 22:41:43,062 [INFO] [Scan] File 51/97: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] _process_file started for: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,062 [INFO] 📷 Processing: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4 (10205.9 KB)
+[SCAN] Processing: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Metadata extracted: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,062 [INFO] [Scan] Metadata extracted successfully: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4
+[SCAN] Added to batch: السهل الممتنع في الالماني (8) السلسلة الذهبية لتعلم المحادثة(360P).mp4 [batch size: 51/200]
+[SCAN] Starting file 52/97: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+2025-11-26 22:41:43,083 [INFO] [Scan] File 52/97: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+[SCAN] _process_file started for: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,083 [INFO] 📷 Processing: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4 (59150.0 KB)
+[SCAN] Processing: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,083 [INFO] [Scan] Metadata extracted successfully: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4
+[SCAN] Added to batch: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_1.mp4 [batch size: 52/200]
+[SCAN] Starting file 53/97: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+2025-11-26 22:41:43,104 [INFO] [Scan] File 53/97: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+[SCAN] _process_file started for: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,104 [INFO] 📷 Processing: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4 (59150.0 KB)
+[SCAN] Processing: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+[SCAN] ✓ Metadata extracted: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,104 [INFO] [Scan] Metadata extracted successfully: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=105
+[SCAN] ✓ File processed successfully: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4
+[SCAN] Added to batch: دقائق ألمانية مع ضياء (107) -2-Infinitiv mit zu(360P)_2.mp4 [batch size: 53/200]
+[SCAN] Starting file 54/97: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+2025-11-26 22:41:43,130 [INFO] [Scan] File 54/97: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+[SCAN] _process_file started for: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,130 [INFO] 📷 Processing: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4 (15028.9 KB)
+[SCAN] Processing: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+[SCAN] ✓ Metadata extracted: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,130 [INFO] [Scan] Metadata extracted successfully: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=176
+[SCAN] ✓ File processed successfully: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4
+[SCAN] Added to batch: EAGLES - HOTEL CALIFORNIA (LYRICS)(360P).mp4 [batch size: 54/200]
+[SCAN] Starting file 55/97: Facebook 327834854911830(480p).mp4
+2025-11-26 22:41:43,147 [INFO] [Scan] File 55/97: Facebook 327834854911830(480p).mp4
+[SCAN] _process_file started for: Facebook 327834854911830(480p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,147 [INFO] 📷 Processing: Facebook 327834854911830(480p).mp4 (1635.9 KB)
+[SCAN] Processing: Facebook 327834854911830(480p).mp4
+[SCAN] ✓ Metadata extracted: Facebook 327834854911830(480p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,147 [INFO] [Scan] Metadata extracted successfully: Facebook 327834854911830(480p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 327834854911830(480p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=176
+[SCAN] ✓ File processed successfully: Facebook 327834854911830(480p).mp4
+[SCAN] Added to batch: Facebook 327834854911830(480p).mp4 [batch size: 55/200]
+[SCAN] Starting file 56/97: تمرّد على السفينة باونتي(Source)_1.mp4
+2025-11-26 22:41:43,162 [INFO] [Scan] File 56/97: تمرّد على السفينة باونتي(Source)_1.mp4
+[SCAN] _process_file started for: تمرّد على السفينة باونتي(Source)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,162 [INFO] 📷 Processing: تمرّد على السفينة باونتي(Source)_1.mp4 (16206.3 KB)
+[SCAN] Processing: تمرّد على السفينة باونتي(Source)_1.mp4
+[SCAN] ✓ Metadata extracted: تمرّد على السفينة باونتي(Source)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,165 [INFO] [Scan] Metadata extracted successfully: تمرّد على السفينة باونتي(Source)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: تمرّد على السفينة باونتي(Source)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=176
+[SCAN] ✓ File processed successfully: تمرّد على السفينة باونتي(Source)_1.mp4
+[SCAN] Added to batch: تمرّد على السفينة باونتي(Source)_1.mp4 [batch size: 56/200]
+[SCAN] Starting file 57/97: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+2025-11-26 22:41:43,178 [INFO] [Scan] File 57/97: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+[SCAN] _process_file started for: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,178 [INFO] 📷 Processing: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4 (1974.3 KB)
+[SCAN] Processing: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,178 [INFO] [Scan] Metadata extracted successfully: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4
+[SCAN] Added to batch: Grégoire - Le cartable rêveur - Carl Norac [Poésies de mon enfance](360P)_1.mp4 [batch size: 57/200]
+[SCAN] Starting file 58/97: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+2025-11-26 22:41:43,194 [INFO] [Scan] File 58/97: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+[SCAN] _process_file started for: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,196 [INFO] 📷 Processing: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4 (4276.5 KB)
+[SCAN] Processing: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,196 [INFO] [Scan] Metadata extracted successfully: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4
+[SCAN] Added to batch: IGLESIAS Julio Vous les femmes Paroles(360P)_1.mp4 [batch size: 58/200]
+[SCAN] Starting file 59/97: Kendji Girac - Habibi [Parole](360P)_1.mp4
+2025-11-26 22:41:43,209 [INFO] [Scan] File 59/97: Kendji Girac - Habibi [Parole](360P)_1.mp4
+[SCAN] _process_file started for: Kendji Girac - Habibi [Parole](360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,209 [INFO] 📷 Processing: Kendji Girac - Habibi [Parole](360P)_1.mp4 (7338.5 KB)
+[SCAN] Processing: Kendji Girac - Habibi [Parole](360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Kendji Girac - Habibi [Parole](360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,209 [INFO] [Scan] Metadata extracted successfully: Kendji Girac - Habibi [Parole](360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Kendji Girac - Habibi [Parole](360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: Kendji Girac - Habibi [Parole](360P)_1.mp4
+[SCAN] Added to batch: Kendji Girac - Habibi [Parole](360P)_1.mp4 [batch size: 59/200]
+[SCAN] Starting file 60/97: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+2025-11-26 22:41:43,226 [INFO] [Scan] File 60/97: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+[SCAN] _process_file started for: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,226 [INFO] 📷 Processing: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4 (5718.4 KB)
+[SCAN] Processing: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,226 [INFO] [Scan] Metadata extracted successfully: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4
+[SCAN] Added to batch: Kendji Girac ft Gims - Dernier métro (parole_lyrics)(360P)_1.mp4 [batch size: 60/200]
+[SCAN] Starting file 61/97: Willy William - ego full song (lyrics)(360P)_1.mp4
+2025-11-26 22:41:43,241 [INFO] [Scan] File 61/97: Willy William - ego full song (lyrics)(360P)_1.mp4
+[SCAN] _process_file started for: Willy William - ego full song (lyrics)(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,241 [INFO] 📷 Processing: Willy William - ego full song (lyrics)(360P)_1.mp4 (12997.7 KB)
+[SCAN] Processing: Willy William - ego full song (lyrics)(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: Willy William - ego full song (lyrics)(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,247 [INFO] [Scan] Metadata extracted successfully: Willy William - ego full song (lyrics)(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Willy William - ego full song (lyrics)(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: Willy William - ego full song (lyrics)(360P)_1.mp4
+[SCAN] Added to batch: Willy William - ego full song (lyrics)(360P)_1.mp4 [batch size: 61/200]
+[SCAN] Starting file 62/97: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+2025-11-26 22:41:43,258 [INFO] [Scan] File 62/97: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+[SCAN] _process_file started for: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,258 [INFO] 📷 Processing: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4 (14813.6 KB)
+[SCAN] Processing: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,258 [INFO] [Scan] Metadata extracted successfully: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4
+[SCAN] Added to batch: إليك  . ديو  رائع . جو داسان  . هيلين سيجارا .Atoi . Joe Dassin . Hélène Ségar(360P)_1.mp4 [batch size: 62/200]
+[SCAN] Starting file 63/97: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+2025-11-26 22:41:43,273 [INFO] [Scan] File 63/97: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+[SCAN] _process_file started for: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,273 [INFO] 📷 Processing: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4 (9983.4 KB)
+[SCAN] Processing: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,278 [INFO] [Scan] Metadata extracted successfully: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4
+[SCAN] Added to batch: اغنية Papaoutai Papa اوتي بابا اوتي(360P)_1.mp4 [batch size: 63/200]
+[SCAN] Starting file 64/97: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+2025-11-26 22:41:43,291 [INFO] [Scan] File 64/97: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+[SCAN] _process_file started for: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,291 [INFO] 📷 Processing: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4 (10385.6 KB)
+[SCAN] Processing: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,291 [INFO] [Scan] Metadata extracted successfully: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=182
+[SCAN] ✓ File processed successfully: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4
+[SCAN] Added to batch: ترجمة اغنية يا حبيبي محمد رمضان(360P)_1.mp4 [batch size: 64/200]
+[SCAN] Starting file 65/97: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+2025-11-26 22:41:43,309 [INFO] [Scan] File 65/97: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+[SCAN] _process_file started for: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,309 [INFO] 📷 Processing: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4 (10778.1 KB)
+[SCAN] Processing: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+[SCAN] ✓ Metadata extracted: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,309 [INFO] [Scan] Metadata extracted successfully: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=198
+[SCAN] ✓ File processed successfully: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4
+[SCAN] Added to batch: AlNaz ilk öpücük_ - Mucize Doktor 29. Bölüm(360P).mp4 [batch size: 65/200]
+[SCAN] Starting file 66/97: Facebook 1817002158464272(480p).mp4
+2025-11-26 22:41:43,320 [INFO] [Scan] File 66/97: Facebook 1817002158464272(480p).mp4
+[SCAN] _process_file started for: Facebook 1817002158464272(480p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,320 [INFO] 📷 Processing: Facebook 1817002158464272(480p).mp4 (12195.8 KB)
+[SCAN] Processing: Facebook 1817002158464272(480p).mp4
+[SCAN] ✓ Metadata extracted: Facebook 1817002158464272(480p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,320 [INFO] [Scan] Metadata extracted successfully: Facebook 1817002158464272(480p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 1817002158464272(480p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=198
+[SCAN] ✓ File processed successfully: Facebook 1817002158464272(480p).mp4
+[SCAN] Added to batch: Facebook 1817002158464272(480p).mp4 [batch size: 66/200]
+[SCAN] Starting file 67/97: Facebook 227821215371756(Source)_1.mp4
+2025-11-26 22:41:43,340 [INFO] [Scan] File 67/97: Facebook 227821215371756(Source)_1.mp4
+[SCAN] _process_file started for: Facebook 227821215371756(Source)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,340 [INFO] 📷 Processing: Facebook 227821215371756(Source)_1.mp4 (243689.1 KB)
+[SCAN] Processing: Facebook 227821215371756(Source)_1.mp4
+[SCAN] ✓ Metadata extracted: Facebook 227821215371756(Source)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,340 [INFO] [Scan] Metadata extracted successfully: Facebook 227821215371756(Source)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Facebook 227821215371756(Source)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=198
+[SCAN] ✓ File processed successfully: Facebook 227821215371756(Source)_1.mp4
+[SCAN] Added to batch: Facebook 227821215371756(Source)_1.mp4 [batch size: 67/200]
+[SCAN] Starting file 68/97: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+2025-11-26 22:41:43,352 [INFO] [Scan] File 68/97: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+[SCAN] _process_file started for: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,352 [INFO] 📷 Processing: الطبيب المعجزة الحلقة (٥٠)(480p).mp4 (322170.9 KB)
+[SCAN] Processing: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+[SCAN] ✓ Metadata extracted: الطبيب المعجزة الحلقة (٥٠)(480p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,352 [INFO] [Scan] Metadata extracted successfully: الطبيب المعجزة الحلقة (٥٠)(480p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=198
+[SCAN] ✓ File processed successfully: الطبيب المعجزة الحلقة (٥٠)(480p).mp4
+[SCAN] Added to batch: الطبيب المعجزة الحلقة (٥٠)(480p).mp4 [batch size: 68/200]
+[SCAN] Starting file 69/97: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+2025-11-26 22:41:43,368 [INFO] [Scan] File 69/97: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+[SCAN] _process_file started for: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,371 [INFO] 📷 Processing: الطبيب المعجزة الحلقة ٤٩(480p).mp4 (378969.1 KB)
+[SCAN] Processing: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+[SCAN] ✓ Metadata extracted: الطبيب المعجزة الحلقة ٤٩(480p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,371 [INFO] [Scan] Metadata extracted successfully: الطبيب المعجزة الحلقة ٤٩(480p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=198
+[SCAN] ✓ File processed successfully: الطبيب المعجزة الحلقة ٤٩(480p).mp4
+[SCAN] Added to batch: الطبيب المعجزة الحلقة ٤٩(480p).mp4 [batch size: 69/200]
+[SCAN] Starting file 70/97: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+2025-11-26 22:41:43,384 [INFO] [Scan] File 70/97: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+[SCAN] _process_file started for: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,384 [INFO] 📷 Processing: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4 (29817.0 KB)
+[SCAN] Processing: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+[SCAN] ✓ Metadata extracted: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,384 [INFO] [Scan] Metadata extracted successfully: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=209
+[SCAN] ✓ File processed successfully: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4
+[SCAN] Added to batch: Fatmagül ve Kerim_in Mini Balayı - Fatmagül_ün Suçu Ne_ 78. Bölüm(360P).mp4 [batch size: 70/200]
+[SCAN] Starting file 71/97: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+2025-11-26 22:41:43,402 [INFO] [Scan] File 71/97: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+[SCAN] _process_file started for: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,402 [INFO] 📷 Processing: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4 (35054.1 KB)
+[SCAN] Processing: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+[SCAN] ✓ Metadata extracted: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,402 [INFO] [Scan] Metadata extracted successfully: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=209
+[SCAN] ✓ File processed successfully: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4
+[SCAN] Added to batch: Fatmagül_ Cristine_e Nispet Yapıyor_ - Fatmagül_ün Suçu Ne_ 78.Bölüm(360P).mp4 [batch size: 71/200]
+[SCAN] Starting file 72/97: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+2025-11-26 22:41:43,431 [INFO] [Scan] File 72/97: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] _process_file started for: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,431 [INFO] 📷 Processing: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4 (14819.1 KB)
+[SCAN] Processing: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,433 [INFO] [Scan] Metadata extracted successfully: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Added to batch: أصالة - أنا بتخان _ Assala - Ana Batkhan [فيديو كلمات - Lyrics Video](360P).mp4 [batch size: 72/200]
+[SCAN] Starting file 73/97: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+2025-11-26 22:41:43,447 [INFO] [Scan] File 73/97: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+[SCAN] _process_file started for: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,447 [INFO] 📷 Processing: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4 (26492.9 KB)
+[SCAN] Processing: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,447 [INFO] [Scan] Metadata extracted successfully: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4
+[SCAN] Added to batch: أصالة - جابوا سيرته [Assala - Gabo Serto  [LYRICS VIDEO(360P).mp4 [batch size: 73/200]
+[SCAN] Starting file 74/97: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+2025-11-26 22:41:43,464 [INFO] [Scan] File 74/97: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] _process_file started for: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,464 [INFO] 📷 Processing: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4 (7617.9 KB)
+[SCAN] Processing: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,464 [INFO] [Scan] Metadata extracted successfully: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Added to batch: أصالة - صندوق صغير _ Assala - Sandook Segheer [فيديو كلمات - Lyrics Video](360P).mp4 [batch size: 74/200]
+[SCAN] Starting file 75/97: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+2025-11-26 22:41:43,479 [INFO] [Scan] File 75/97: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+[SCAN] _process_file started for: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,479 [INFO] 📷 Processing: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4 (11357.7 KB)
+[SCAN] Processing: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,484 [INFO] [Scan] Metadata extracted successfully: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4
+[SCAN] Added to batch: أصالة - مبقاش  سر _ [Assala - Maba_ash Ser [LYRICS VIDEO(360P).mp4 [batch size: 75/200]
+[SCAN] Starting file 76/97: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+2025-11-26 22:41:43,494 [INFO] [Scan] File 76/97: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+[SCAN] _process_file started for: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,494 [INFO] 📷 Processing: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4 (15584.0 KB)
+[SCAN] Processing: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,494 [INFO] [Scan] Metadata extracted successfully: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4
+[SCAN] Added to batch: أصالة - نكتة بايخة _ [Assala - Nokta Baykha [LYRICS VIDEO(360P).mp4 [batch size: 76/200]
+[SCAN] Starting file 77/97: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+2025-11-26 22:41:43,515 [INFO] [Scan] File 77/97: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] _process_file started for: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,515 [INFO] 📷 Processing: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4 (13926.8 KB)
+[SCAN] Processing: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,515 [INFO] [Scan] Metadata extracted successfully: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Added to batch: أصالة - هيقولك _ Assala - Hay_oliek [فيديو كلمات - Lyrics Video](360P).mp4 [batch size: 77/200]
+[SCAN] Starting file 78/97: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+2025-11-26 22:41:43,526 [INFO] [Scan] File 78/97: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] _process_file started for: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,535 [INFO] 📷 Processing: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4 (8980.0 KB)
+[SCAN] Processing: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Metadata extracted: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,535 [INFO] [Scan] Metadata extracted successfully: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4
+[SCAN] Added to batch: أصالة والشرنوبي - مين فينا _ Assala _ Al Sharnouby - Meen Feena [فيديو كلمات - Lyrics Video](360P).mp4 [batch size: 78/200]
+[SCAN] Starting file 79/97: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+2025-11-26 22:41:43,546 [INFO] [Scan] File 79/97: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+[SCAN] _process_file started for: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,546 [INFO] 📷 Processing: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4 (7512.2 KB)
+[SCAN] Processing: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+[SCAN] ✓ Metadata extracted: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,546 [INFO] [Scan] Metadata extracted successfully: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=214
+[SCAN] ✓ File processed successfully: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4
+[SCAN] Added to batch: الحب والسلام مع الكلمات -اصالة 2020 _assala - love and peace(360P).mp4 [batch size: 79/200]
+[SCAN] Starting file 80/97: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+2025-11-26 22:41:43,566 [INFO] [Scan] File 80/97: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+[SCAN] _process_file started for: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,566 [INFO] 📷 Processing: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4 (31038.2 KB)
+[SCAN] Processing: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+[SCAN] ✓ Metadata extracted: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,566 [INFO] [Scan] Metadata extracted successfully: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4
+[SCAN] Added to batch: بابار_كونان_ريمي_ماوكلي_هزيم الرعد  طارق العربي طرقان و أبناؤه l برنامج صاحبة السعادة(360P)_1.mp4 [batch size: 80/200]
+[SCAN] Starting file 81/97: سنان(360p).mp4
+2025-11-26 22:41:43,576 [INFO] [Scan] File 81/97: سنان(360p).mp4
+[SCAN] _process_file started for: سنان(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,576 [INFO] 📷 Processing: سنان(360p).mp4 (3625.9 KB)
+[SCAN] Processing: سنان(360p).mp4
+[SCAN] ✓ Metadata extracted: سنان(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,576 [INFO] [Scan] Metadata extracted successfully: سنان(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: سنان(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: سنان(360p).mp4
+[SCAN] Added to batch: سنان(360p).mp4 [batch size: 81/200]
+[SCAN] Starting file 82/97: عدنان ولينا(360p).mp4
+2025-11-26 22:41:43,597 [INFO] [Scan] File 82/97: عدنان ولينا(360p).mp4
+[SCAN] _process_file started for: عدنان ولينا(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,597 [INFO] 📷 Processing: عدنان ولينا(360p).mp4 (5436.6 KB)
+[SCAN] Processing: عدنان ولينا(360p).mp4
+[SCAN] ✓ Metadata extracted: عدنان ولينا(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,597 [INFO] [Scan] Metadata extracted successfully: عدنان ولينا(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: عدنان ولينا(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: عدنان ولينا(360p).mp4
+[SCAN] Added to batch: عدنان ولينا(360p).mp4 [batch size: 82/200]
+[SCAN] Starting file 83/97: غريندايزر(360p).mp4
+2025-11-26 22:41:43,607 [INFO] [Scan] File 83/97: غريندايزر(360p).mp4
+[SCAN] _process_file started for: غريندايزر(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,616 [INFO] 📷 Processing: غريندايزر(360p).mp4 (4873.4 KB)
+[SCAN] Processing: غريندايزر(360p).mp4
+[SCAN] ✓ Metadata extracted: غريندايزر(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,618 [INFO] [Scan] Metadata extracted successfully: غريندايزر(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: غريندايزر(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: غريندايزر(360p).mp4
+[SCAN] Added to batch: غريندايزر(360p).mp4 [batch size: 83/200]
+[SCAN] Starting file 84/97: فلونة(360p).mp4
+2025-11-26 22:41:43,628 [INFO] [Scan] File 84/97: فلونة(360p).mp4
+[SCAN] _process_file started for: فلونة(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,628 [INFO] 📷 Processing: فلونة(360p).mp4 (4239.6 KB)
+[SCAN] Processing: فلونة(360p).mp4
+[SCAN] ✓ Metadata extracted: فلونة(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,628 [INFO] [Scan] Metadata extracted successfully: فلونة(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: فلونة(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: فلونة(360p).mp4
+[SCAN] Added to batch: فلونة(360p).mp4 [batch size: 84/200]
+[SCAN] Starting file 85/97: في قصص الشعوب(360p).mp4
+2025-11-26 22:41:43,641 [INFO] [Scan] File 85/97: في قصص الشعوب(360p).mp4
+[SCAN] _process_file started for: في قصص الشعوب(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,648 [INFO] 📷 Processing: في قصص الشعوب(360p).mp4 (5634.5 KB)
+[SCAN] Processing: في قصص الشعوب(360p).mp4
+[SCAN] ✓ Metadata extracted: في قصص الشعوب(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,648 [INFO] [Scan] Metadata extracted successfully: في قصص الشعوب(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: في قصص الشعوب(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: في قصص الشعوب(360p).mp4
+[SCAN] Added to batch: في قصص الشعوب(360p).mp4 [batch size: 85/200]
+[SCAN] Starting file 86/97: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+2025-11-26 22:41:43,659 [INFO] [Scan] File 86/97: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+[SCAN] _process_file started for: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,659 [INFO] 📷 Processing: وداعاً إلى اللقاء- ساندي بل(360p).mp4 (3465.5 KB)
+[SCAN] Processing: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+[SCAN] ✓ Metadata extracted: وداعاً إلى اللقاء- ساندي بل(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,659 [INFO] [Scan] Metadata extracted successfully: وداعاً إلى اللقاء- ساندي بل(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=230
+[SCAN] ✓ File processed successfully: وداعاً إلى اللقاء- ساندي بل(360p).mp4
+[SCAN] Added to batch: وداعاً إلى اللقاء- ساندي بل(360p).mp4 [batch size: 86/200]
+[SCAN] Starting file 87/97: افتح يا سمسم(360p).mp4
+2025-11-26 22:41:43,669 [INFO] [Scan] File 87/97: افتح يا سمسم(360p).mp4
+[SCAN] _process_file started for: افتح يا سمسم(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,669 [INFO] 📷 Processing: افتح يا سمسم(360p).mp4 (2283.8 KB)
+[SCAN] Processing: افتح يا سمسم(360p).mp4
+[SCAN] ✓ Metadata extracted: افتح يا سمسم(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,680 [INFO] [Scan] Metadata extracted successfully: افتح يا سمسم(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: افتح يا سمسم(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: افتح يا سمسم(360p).mp4
+[SCAN] Added to batch: افتح يا سمسم(360p).mp4 [batch size: 87/200]
+[SCAN] Starting file 88/97: بيل وسيباستيان(360p).mp4
+2025-11-26 22:41:43,700 [INFO] [Scan] File 88/97: بيل وسيباستيان(360p).mp4
+[SCAN] _process_file started for: بيل وسيباستيان(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,701 [INFO] 📷 Processing: بيل وسيباستيان(360p).mp4 (2952.7 KB)
+[SCAN] Processing: بيل وسيباستيان(360p).mp4
+[SCAN] ✓ Metadata extracted: بيل وسيباستيان(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,701 [INFO] [Scan] Metadata extracted successfully: بيل وسيباستيان(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: بيل وسيباستيان(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: بيل وسيباستيان(360p).mp4
+[SCAN] Added to batch: بيل وسيباستيان(360p).mp4 [batch size: 88/200]
+[SCAN] Starting file 89/97: توم سوير(360p).mp4
+2025-11-26 22:41:43,721 [INFO] [Scan] File 89/97: توم سوير(360p).mp4
+[SCAN] _process_file started for: توم سوير(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,721 [INFO] 📷 Processing: توم سوير(360p).mp4 (6029.2 KB)
+[SCAN] Processing: توم سوير(360p).mp4
+[SCAN] ✓ Metadata extracted: توم سوير(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,721 [INFO] [Scan] Metadata extracted successfully: توم سوير(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: توم سوير(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: توم سوير(360p).mp4
+[SCAN] Added to batch: توم سوير(360p).mp4 [batch size: 89/200]
+[SCAN] Starting file 90/97: جزيرة الكنز(360p).mp4
+2025-11-26 22:41:43,742 [INFO] [Scan] File 90/97: جزيرة الكنز(360p).mp4
+[SCAN] _process_file started for: جزيرة الكنز(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,742 [INFO] 📷 Processing: جزيرة الكنز(360p).mp4 (7763.3 KB)
+[SCAN] Processing: جزيرة الكنز(360p).mp4
+[SCAN] ✓ Metadata extracted: جزيرة الكنز(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,749 [INFO] [Scan] Metadata extracted successfully: جزيرة الكنز(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: جزيرة الكنز(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: جزيرة الكنز(360p).mp4
+[SCAN] Added to batch: جزيرة الكنز(360p).mp4 [batch size: 90/200]
+[SCAN] Starting file 91/97: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+2025-11-26 22:41:43,764 [INFO] [Scan] File 91/97: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+[SCAN] _process_file started for: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,764 [INFO] 📷 Processing: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4 (18556.6 KB)
+[SCAN] Processing: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+[SCAN] ✓ Metadata extracted: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,764 [INFO] [Scan] Metadata extracted successfully: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4
+[SCAN] Added to batch: جزيرة الكنز- كورال غاردينيا- حفل شارات مسلسلات الكرتون 2016(480P).mp4 [batch size: 91/200]
+[SCAN] Starting file 92/97: ريمي الصبي(360p).mp4
+2025-11-26 22:41:43,782 [INFO] [Scan] File 92/97: ريمي الصبي(360p).mp4
+[SCAN] _process_file started for: ريمي الصبي(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,793 [INFO] 📷 Processing: ريمي الصبي(360p).mp4 (4534.6 KB)
+[SCAN] Processing: ريمي الصبي(360p).mp4
+[SCAN] ✓ Metadata extracted: ريمي الصبي(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,793 [INFO] [Scan] Metadata extracted successfully: ريمي الصبي(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: ريمي الصبي(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: ريمي الصبي(360p).mp4
+[SCAN] Added to batch: ريمي الصبي(360p).mp4 [batch size: 92/200]
+[SCAN] Starting file 93/97: ساندي بل(360p).mp4
+2025-11-26 22:41:43,812 [INFO] [Scan] File 93/97: ساندي بل(360p).mp4
+[SCAN] _process_file started for: ساندي بل(360p).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,814 [INFO] 📷 Processing: ساندي بل(360p).mp4 (4852.3 KB)
+[SCAN] Processing: ساندي بل(360p).mp4
+[SCAN] ✓ Metadata extracted: ساندي بل(360p).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,814 [INFO] [Scan] Metadata extracted successfully: ساندي بل(360p).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: ساندي بل(360p).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=245
+[SCAN] ✓ File processed successfully: ساندي بل(360p).mp4
+[SCAN] Added to batch: ساندي بل(360p).mp4 [batch size: 93/200]
+[SCAN] Starting file 94/97: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+2025-11-26 22:41:43,834 [INFO] [Scan] File 94/97: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+[SCAN] _process_file started for: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,834 [INFO] 📷 Processing: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4 (7983.8 KB)
+[SCAN] Processing: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+[SCAN] ✓ Metadata extracted: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,838 [INFO] [Scan] Metadata extracted successfully: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=265
+[SCAN] ✓ File processed successfully: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4
+[SCAN] Added to batch: Amr Diab - Bayen Habeit (Audio عمرو دياب - باين حبيت (كلمات(360P).mp4 [batch size: 94/200]
+[SCAN] Starting file 95/97: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+2025-11-26 22:41:43,844 [INFO] [Scan] File 95/97: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+[SCAN] _process_file started for: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,844 [INFO] 📷 Processing: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4 (18965.6 KB)
+[SCAN] Processing: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+[SCAN] ✓ Metadata extracted: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,844 [INFO] [Scan] Metadata extracted successfully: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=267
+[SCAN] ✓ File processed successfully: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4
+[SCAN] Added to batch: محمد محسن _ يا مسافر وحدك Mohamed Mohsen _ Ya Msafer Wahdak [Official Cover] Live(360P).mp4 [batch size: 95/200]
+[SCAN] Starting file 96/97: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+2025-11-26 22:41:43,865 [INFO] [Scan] File 96/97: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+[SCAN] _process_file started for: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,865 [INFO] 📷 Processing: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4 (6355.7 KB)
+[SCAN] Processing: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+[SCAN] ✓ Metadata extracted: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,865 [INFO] [Scan] Metadata extracted successfully: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=269
+[SCAN] ✓ File processed successfully: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4
+[SCAN] Added to batch: Mohamad Mounir - Haret El Saqayeen  ☆ محمد منير - حارة السقايين(360P).mp4 [batch size: 96/200]
+[SCAN] Starting file 97/97: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+2025-11-26 22:41:43,877 [INFO] [Scan] File 97/97: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+[SCAN] _process_file started for: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-26 22:41:43,886 [INFO] 📷 Processing: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4 (4137.4 KB)
+[SCAN] Processing: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+[SCAN] ✓ Metadata extracted: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4 [w=None, h=None, date=None]
+2025-11-26 22:41:43,886 [INFO] [Scan] Metadata extracted successfully: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4 [w=None, h=None, date=None]
+[SCAN] Creating folder hierarchy for: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+[SCAN] ✓ Folder hierarchy created: folder_id=269
+[SCAN] ✓ File processed successfully: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4
+[SCAN] Added to batch: محمد منير - عايش _ النسخة الاصلية  [ كلمات Mohamed Mounir - Ayeish [LYRICS(360P).mp4 [batch size: 97/200]
+[SCAN] ⚡ Writing final batch to database: 97 photos
+2025-11-26 22:41:43,896 [INFO] Writing final batch of 97 photos to database
+[SCAN] 💾 Starting bulk_upsert for 97 photos...
+2025-11-26 22:41:43,896 [INFO] [DB] Starting bulk_upsert for 97 photos
+2025-11-26 22:41:43,925 [INFO] Bulk upserted 97 photos for project 1
+[SCAN] ✓ Bulk_upsert completed: 97 photos written
+2025-11-26 22:41:43,925 [INFO] [DB] Bulk_upsert completed: 97 photos written
+[SCAN] ✓ Final batch write complete
+[SCAN] Shutting down executor
+2025-11-26 22:41:43,927 [INFO] Executor shutdown complete
+2025-11-26 22:41:43,927 [INFO] Processing 97 videos...
+2025-11-26 22:41:43,939 [INFO] Indexed video D:\My Phone\Videos\_هاكونا ماتاتا_ - الأسد الملك(360P).mp4 (id=1, status=pending)
+2025-11-26 22:41:43,957 [INFO] Indexed video D:\My Phone\Videos\محمد اسكندر لفيروز(Source).mp4 (id=2, status=pending)
+2025-11-26 22:41:43,971 [INFO] Indexed video D:\My Phone\Videos\نورا رحال، طاهر مامللي،، حبذا(480p).mp4 (id=3, status=pending)
+2025-11-26 22:41:43,988 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\1- Deutsch Dialogue - B2(360P).mp4 (id=4, status=pending)
+2025-11-26 22:41:44,009 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\10 wichtige Ausdrücke für B2(360P).mp4 (id=5, status=pending)
+2025-11-26 22:41:44,035 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 1(360P).mp4 (id=6, status=pending)
+2025-11-26 22:41:44,052 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 2(360P).mp4 (id=7, status=pending)
+2025-11-26 22:41:44,070 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 4(360P).mp4 (id=8, status=pending)
+2025-11-26 22:41:44,091 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\Alltag und Beruf - B2 - Deutsch lernen mit Dialogen 6(360P).mp4 (id=9, status=pending)
+2025-11-26 22:41:44,107 [INFO] Indexed video D:\My Phone\Videos\Deutsch Lernen\Deutsch lernen (B1)_ Ganzer Film auf Deutsch - _Nicos Weg_ _ Deutsch lernen mit Videos _ Untertitel(480P).mp4 (id=10, status=pending)
