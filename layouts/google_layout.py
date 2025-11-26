@@ -774,6 +774,52 @@ class GooglePhotosLayout(BaseLayout):
         self.people_tree.itemClicked.connect(self._on_people_item_clicked)
         layout.addWidget(self.people_tree)
 
+        # Videos section header (clickable to show all videos)
+        videos_header = QPushButton("🎬 Videos")
+        videos_header.setFlat(True)
+        videos_header.setCursor(Qt.PointingHandCursor)
+        videos_header.setStyleSheet("""
+            QPushButton {
+                text-align: left;
+                font-size: 12pt;
+                font-weight: bold;
+                color: #202124;
+                border: none;
+                padding: 4px 0px;
+                margin-top: 12px;
+            }
+            QPushButton:hover {
+                color: #1a73e8;
+                background: transparent;
+            }
+        """)
+        videos_header.clicked.connect(self._on_videos_header_clicked)
+        layout.addWidget(videos_header)
+
+        # Videos tree
+        self.videos_tree = QTreeWidget()
+        self.videos_tree.setHeaderHidden(True)
+        self.videos_tree.setStyleSheet("""
+            QTreeWidget {
+                border: none;
+                background: transparent;
+                font-size: 10pt;
+            }
+            QTreeWidget::item {
+                padding: 4px;
+            }
+            QTreeWidget::item:hover {
+                background: #f1f3f4;
+            }
+            QTreeWidget::item:selected {
+                background: #e8f0fe;
+                color: #1a73e8;
+            }
+        """)
+        # Connect click signal to filter handler
+        self.videos_tree.itemClicked.connect(self._on_videos_item_clicked)
+        layout.addWidget(self.videos_tree)
+
         # Spacer at bottom
         layout.addStretch()
 
@@ -859,6 +905,7 @@ class GooglePhotosLayout(BaseLayout):
                 self.timeline_tree.clear()
                 self.folders_tree.clear()
                 self.people_tree.clear()
+                self.videos_tree.clear()
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error clearing timeline: {e}")
             # Continue anyway
@@ -963,12 +1010,13 @@ class GooglePhotosLayout(BaseLayout):
             # Group photos by date
             photos_by_date = self._group_photos_by_date(rows)
 
-            # Build timeline, folders, and people trees (only if not filtering)
-            # This shows ALL years/months/folders/people, not just filtered ones
+            # Build timeline, folders, people, and videos trees (only if not filtering)
+            # This shows ALL years/months/folders/people/videos, not just filtered ones
             if filter_year is None and filter_month is None and filter_folder is None and filter_person is None:
                 self._build_timeline_tree(photos_by_date)
                 self._build_folders_tree(rows)
                 self._build_people_tree()
+                self._build_videos_tree()
 
             # Create date group widgets
             for date_str, photos in photos_by_date.items():
@@ -1314,6 +1362,385 @@ class GooglePhotosLayout(BaseLayout):
         # Also clear search box
         if self.search_box.text():
             self.search_box.clear()
+
+    def _build_videos_tree(self):
+        """
+        Build videos tree in sidebar with filters (copied from Current Layout).
+
+        Features:
+        - All Videos
+        - By Duration (Short/Medium/Long)
+        - By Resolution (SD/HD/FHD/4K)
+        - By Date (Year/Month hierarchy)
+        """
+        try:
+            from services.video_service import VideoService
+            video_service = VideoService()
+
+            print(f"[GoogleLayout] Loading videos for project_id={self.project_id}")
+            videos = video_service.get_videos_by_project(self.project_id) if self.project_id else []
+            total_videos = len(videos)
+            print(f"[GoogleLayout] Found {total_videos} videos in project {self.project_id}")
+
+            if not videos:
+                # No videos - show message
+                no_videos_item = QTreeWidgetItem(["  (No videos yet)"])
+                no_videos_item.setForeground(0, QColor("#888888"))
+                self.videos_tree.addTopLevelItem(no_videos_item)
+                return
+
+            # All Videos
+            all_item = QTreeWidgetItem([f"All Videos ({total_videos})"])
+            all_item.setData(0, Qt.UserRole, {"type": "all_videos"})
+            self.videos_tree.addTopLevelItem(all_item)
+
+            # By Duration
+            short_videos = [v for v in videos if v.get('duration_seconds') and v['duration_seconds'] < 30]
+            medium_videos = [v for v in videos if v.get('duration_seconds') and 30 <= v['duration_seconds'] < 300]
+            long_videos = [v for v in videos if v.get('duration_seconds') and v['duration_seconds'] >= 300]
+
+            if short_videos or medium_videos or long_videos:
+                duration_parent = QTreeWidgetItem([f"⏱️ By Duration"])
+                self.videos_tree.addTopLevelItem(duration_parent)
+
+                if short_videos:
+                    short_item = QTreeWidgetItem([f"  Short < 30s ({len(short_videos)})"])
+                    short_item.setData(0, Qt.UserRole, {"type": "duration", "key": "short", "videos": short_videos})
+                    duration_parent.addChild(short_item)
+
+                if medium_videos:
+                    medium_item = QTreeWidgetItem([f"  Medium 30s-5m ({len(medium_videos)})"])
+                    medium_item.setData(0, Qt.UserRole, {"type": "duration", "key": "medium", "videos": medium_videos})
+                    duration_parent.addChild(medium_item)
+
+                if long_videos:
+                    long_item = QTreeWidgetItem([f"  Long > 5m ({len(long_videos)})"])
+                    long_item.setData(0, Qt.UserRole, {"type": "duration", "key": "long", "videos": long_videos})
+                    duration_parent.addChild(long_item)
+
+            # By Resolution
+            sd_videos = [v for v in videos if v.get('width') and v.get('height') and v['height'] < 720]
+            hd_videos = [v for v in videos if v.get('width') and v.get('height') and 720 <= v['height'] < 1080]
+            fhd_videos = [v for v in videos if v.get('width') and v.get('height') and 1080 <= v['height'] < 2160]
+            uhd_videos = [v for v in videos if v.get('width') and v.get('height') and v['height'] >= 2160]
+
+            if sd_videos or hd_videos or fhd_videos or uhd_videos:
+                res_parent = QTreeWidgetItem([f"📺 By Resolution"])
+                self.videos_tree.addTopLevelItem(res_parent)
+
+                if sd_videos:
+                    sd_item = QTreeWidgetItem([f"  SD < 720p ({len(sd_videos)})"])
+                    sd_item.setData(0, Qt.UserRole, {"type": "resolution", "key": "sd", "videos": sd_videos})
+                    res_parent.addChild(sd_item)
+
+                if hd_videos:
+                    hd_item = QTreeWidgetItem([f"  HD 720p ({len(hd_videos)})"])
+                    hd_item.setData(0, Qt.UserRole, {"type": "resolution", "key": "hd", "videos": hd_videos})
+                    res_parent.addChild(hd_item)
+
+                if fhd_videos:
+                    fhd_item = QTreeWidgetItem([f"  Full HD 1080p ({len(fhd_videos)})"])
+                    fhd_item.setData(0, Qt.UserRole, {"type": "resolution", "key": "fhd", "videos": fhd_videos})
+                    res_parent.addChild(fhd_item)
+
+                if uhd_videos:
+                    uhd_item = QTreeWidgetItem([f"  4K 2160p+ ({len(uhd_videos)})"])
+                    uhd_item.setData(0, Qt.UserRole, {"type": "resolution", "key": "4k", "videos": uhd_videos})
+                    res_parent.addChild(uhd_item)
+
+            # By Date (Year/Month hierarchy)
+            try:
+                from reference_db import ReferenceDB
+                db = ReferenceDB()
+                video_hier = db.get_video_date_hierarchy(self.project_id) or {}
+
+                if video_hier:
+                    date_parent = QTreeWidgetItem([f"📅 By Date"])
+                    self.videos_tree.addTopLevelItem(date_parent)
+
+                    for year in sorted(video_hier.keys(), key=lambda y: int(str(y)), reverse=True):
+                        year_count = db.count_videos_for_year(year, self.project_id)
+                        year_item = QTreeWidgetItem([f"  {year} ({year_count})"])
+                        year_item.setData(0, Qt.UserRole, {"type": "video_year", "year": year})
+                        date_parent.addChild(year_item)
+
+                        # Month nodes under year
+                        months = video_hier[year]
+                        for month in sorted(months.keys(), key=lambda m: int(str(m))):
+                            month_label = f"{int(month):02d}"
+                            month_count = db.count_videos_for_month(year, month, self.project_id)
+                            month_item = QTreeWidgetItem([f"    {month_label} ({month_count})"])
+                            month_item.setData(0, Qt.UserRole, {"type": "video_month", "year": year, "month": month_label})
+                            year_item.addChild(month_item)
+            except Exception as e:
+                print(f"[GoogleLayout] Failed to build video date hierarchy: {e}")
+
+            print(f"[GoogleLayout] Built videos tree with {total_videos} videos")
+
+        except Exception as e:
+            print(f"[GoogleLayout] ⚠️ Error building videos tree: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def _on_videos_header_clicked(self):
+        """
+        Handle videos header click - show all videos in timeline.
+        """
+        print("[GoogleLayout] Videos header clicked - loading all videos")
+
+        try:
+            from services.video_service import VideoService
+            video_service = VideoService()
+
+            videos = video_service.get_videos_by_project(self.project_id) if self.project_id else []
+            print(f"[GoogleLayout] Loading {len(videos)} videos")
+
+            if not videos:
+                print("[GoogleLayout] No videos found")
+                return
+
+            # Show videos in timeline (will need to implement video display)
+            self._show_videos_in_timeline(videos)
+
+        except Exception as e:
+            print(f"[GoogleLayout] ⚠️ Error loading videos: {e}")
+            import traceback
+            traceback.print_exc()
+
+    def _on_videos_item_clicked(self, item: QTreeWidgetItem, column: int):
+        """
+        Handle videos tree item click - filter/show videos.
+
+        Args:
+            item: Clicked tree item
+            column: Column index (always 0)
+        """
+        data = item.data(0, Qt.UserRole)
+        if not data:
+            return
+
+        item_type = data.get("type")
+
+        if item_type == "all_videos":
+            print("[GoogleLayout] Showing all videos")
+            try:
+                from services.video_service import VideoService
+                video_service = VideoService()
+                videos = video_service.get_videos_by_project(self.project_id) if self.project_id else []
+                self._show_videos_in_timeline(videos)
+            except Exception as e:
+                print(f"[GoogleLayout] Error loading all videos: {e}")
+
+        elif item_type in ["duration", "resolution"]:
+            videos = data.get("videos", [])
+            print(f"[GoogleLayout] Showing {len(videos)} videos filtered by {item_type}")
+            self._show_videos_in_timeline(videos)
+
+        elif item_type == "video_year":
+            year = data.get("year")
+            print(f"[GoogleLayout] Showing videos from year {year}")
+            try:
+                from reference_db import ReferenceDB
+                from services.video_service import VideoService
+                db = ReferenceDB()
+                video_service = VideoService()
+
+                # Get all videos for this year
+                all_videos = video_service.get_videos_by_project(self.project_id)
+                year_videos = [v for v in all_videos if v.get('created_date', '').startswith(str(year))]
+                self._show_videos_in_timeline(year_videos)
+            except Exception as e:
+                print(f"[GoogleLayout] Error loading videos for year {year}: {e}")
+
+        elif item_type == "video_month":
+            year = data.get("year")
+            month = data.get("month")
+            print(f"[GoogleLayout] Showing videos from {year}-{month}")
+            try:
+                from services.video_service import VideoService
+                video_service = VideoService()
+
+                all_videos = video_service.get_videos_by_project(self.project_id)
+                month_videos = [v for v in all_videos if v.get('created_date', '').startswith(f"{year}-{month}")]
+                self._show_videos_in_timeline(month_videos)
+            except Exception as e:
+                print(f"[GoogleLayout] Error loading videos for {year}-{month}: {e}")
+
+    def _show_videos_in_timeline(self, videos: list):
+        """
+        Display videos in the timeline (similar to photos).
+
+        Args:
+            videos: List of video dictionaries from VideoService
+        """
+        print(f"[GoogleLayout] Showing {len(videos)} videos in timeline")
+
+        # Clear existing timeline
+        try:
+            while self.timeline_layout.count():
+                child = self.timeline_layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
+        except Exception as e:
+            print(f"[GoogleLayout] Error clearing timeline: {e}")
+
+        if not videos:
+            # Show empty state
+            empty_label = QLabel("🎬 No videos found")
+            empty_label.setAlignment(Qt.AlignCenter)
+            empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
+            self.timeline_layout.addWidget(empty_label)
+            return
+
+        # Group videos by date
+        videos_by_date = defaultdict(list)
+        for video in videos:
+            date = video.get('created_date', 'No Date')
+            if date and date != 'No Date':
+                # Extract just the date part (YYYY-MM-DD)
+                date = date.split(' ')[0] if ' ' in date else date
+            videos_by_date[date].append(video)
+
+        # Create date groups for videos
+        for date_str in sorted(videos_by_date.keys(), reverse=True):
+            date_videos = videos_by_date[date_str]
+            date_group = self._create_video_date_group(date_str, date_videos)
+            self.timeline_layout.addWidget(date_group)
+
+        # Add spacer at bottom
+        self.timeline_layout.addStretch()
+
+    def _create_video_date_group(self, date_str: str, videos: list) -> QWidget:
+        """
+        Create a date group widget for videos (header + video grid).
+
+        Args:
+            date_str: Date string "YYYY-MM-DD"
+            videos: List of video dictionaries
+        """
+        group = QFrame()
+        group.setStyleSheet("""
+            QFrame {
+                background: white;
+                border: 1px solid #e8eaed;
+                border-radius: 8px;
+            }
+        """)
+
+        layout = QVBoxLayout(group)
+        layout.setContentsMargins(16, 12, 16, 16)
+        layout.setSpacing(12)
+
+        # Header
+        try:
+            date_obj = datetime.fromisoformat(date_str)
+            formatted_date = date_obj.strftime("%B %d, %Y (%A)")
+        except:
+            formatted_date = date_str
+
+        header = QWidget()
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(0, 0, 0, 0)
+
+        date_label = QLabel(f"📅 {formatted_date}")
+        date_label.setStyleSheet("font-size: 14pt; font-weight: bold; color: #202124;")
+        header_layout.addWidget(date_label)
+
+        count_label = QLabel(f"({len(videos)} video{'s' if len(videos) != 1 else ''})")
+        count_label.setStyleSheet("font-size: 10pt; color: #5f6368; margin-left: 8px;")
+        header_layout.addWidget(count_label)
+
+        header_layout.addStretch()
+        layout.addWidget(header)
+
+        # Video grid
+        grid_container = QWidget()
+        grid = QGridLayout(grid_container)
+        grid.setSpacing(8)
+        grid.setContentsMargins(0, 0, 0, 0)
+
+        columns = 5  # Match photo grid default
+
+        for i, video in enumerate(videos):
+            row = i // columns
+            col = i % columns
+
+            # Create video thumbnail widget
+            video_thumb = self._create_video_thumbnail(video)
+            grid.addWidget(video_thumb, row, col)
+
+        layout.addWidget(grid_container)
+
+        return group
+
+    def _create_video_thumbnail(self, video: dict) -> QWidget:
+        """
+        Create a video thumbnail widget with play icon overlay.
+
+        Args:
+            video: Video dictionary with path, duration, etc.
+        """
+        thumb_widget = QLabel()
+        thumb_widget.setFixedSize(200, 200)
+        thumb_widget.setAlignment(Qt.AlignCenter)
+        thumb_widget.setStyleSheet("""
+            QLabel {
+                background: #f8f9fa;
+                border: 1px solid #e8eaed;
+                border-radius: 4px;
+            }
+            QLabel:hover {
+                border: 2px solid #1a73e8;
+                cursor: pointer;
+            }
+        """)
+
+        # Load video thumbnail
+        video_path = video.get('path', '')
+
+        try:
+            # Try to load video thumbnail from video thumbnail service
+            from services.video_thumbnail_service import get_video_thumbnail_service
+            thumb_service = get_video_thumbnail_service()
+            thumb_path = thumb_service.get_thumbnail_path(video_path)
+
+            if thumb_path and os.path.exists(thumb_path):
+                pixmap = QPixmap(str(thumb_path))
+                if not pixmap.isNull():
+                    scaled = pixmap.scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    thumb_widget.setPixmap(scaled)
+                else:
+                    thumb_widget.setText("🎬\nVideo")
+            else:
+                thumb_widget.setText("🎬\nVideo")
+        except Exception as e:
+            print(f"[GoogleLayout] Error loading video thumbnail for {video_path}: {e}")
+            thumb_widget.setText("🎬\nVideo")
+
+        # Add click handler for video playback
+        thumb_widget.mousePressEvent = lambda event: self._open_video_player(video_path)
+
+        return thumb_widget
+
+    def _open_video_player(self, video_path: str):
+        """
+        Open video player for the given video path.
+
+        Args:
+            video_path: Path to video file
+        """
+        print(f"[GoogleLayout] Opening video player for: {video_path}")
+
+        try:
+            # Use main window's video player
+            if hasattr(self.main_window, '_open_video_player'):
+                self.main_window._open_video_player(video_path)
+            else:
+                print("[GoogleLayout] ⚠️ Main window doesn't have _open_video_player method")
+        except Exception as e:
+            print(f"[GoogleLayout] Error opening video player: {e}")
+            import traceback
+            traceback.print_exc()
 
     def _create_date_group(self, date_str: str, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
@@ -1867,6 +2294,7 @@ class GooglePhotosLayout(BaseLayout):
         self.timeline_tree.clear()
         self.folders_tree.clear()  # Clear folders too for consistency
         self.people_tree.clear()  # Clear people too for consistency
+        self.videos_tree.clear()  # Clear videos too for consistency
 
         if not rows:
             # No results
