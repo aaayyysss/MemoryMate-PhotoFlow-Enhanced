@@ -1,0 +1,117 @@
+Low-confidence toggle missing in settings UI
+Where:
+ui/face_settings_dialog.py currently exposes “Show detection confidence” but not the “Show low-confidence detections” toggle used by service filtering.
+Why:
+services/face_detection_service.py reads show_low_confidence via get_face_config(), but users cannot control it in the UI. This is a direct gap against your preference.
+What to fix:
+Add a checkbox bound to the show_low_confidence setting in the “Advanced” tab:
+In FaceSettingsDialog.create_advanced_tab() add:
+a QCheckBox instance like self.show_low_conf_toggle = QCheckBox("Show low-confidence detections")
+set its state from config in load_settings() using self.config.get("show_low_confidence", False)
+persist it in save_settings() using self.config.set("show_low_confidence", self.show_low_conf_toggle.isChecked())
+Face detection worker defaults and progress UX
+Where:
+workers/face_detection_worker.py constructor uses model default "hog" and docstring references HOG/128D. It actually uses InsightFace 512-D embeddings internally via get_face_detection_service.
+ui/people_manager_dialog.py uses FaceDetectionWorker but calls worker.run() synchronously, blocking UI and losing progress signals.
+ui/people_manager_dialog.py imports and calls cluster_faces(...) from face cluster worker, but no such function exists in face_cluster_worker.py.
+Why:
+Inconsistent defaults confuse logs and users; synchronous run eliminates rich progress feedback and can freeze UI; the missing function call will fail clustering action.
+What to fix:
+In workers/face_detection_worker.py:
+Change the __init__ signature default model from "hog" to "buffalo_l" and update docstrings to InsightFace/512-D embeddings.
+The code already uses InsightFace pipeline; this change aligns config/UX and avoids misleading logs.
+In ui/people_manager_dialog.py:
+In run_face_detection(), start the worker through QThreadPool.globalInstance().start(worker) and connect to FaceDetectionWorker.signals.progress, error, and finished to show a simple modal progress dialog (current photo, processed/failed counts).
+Replace the nonexistent cluster_faces(...) call. Use FaceClusterWorker: create the worker and start it via QThreadPool.globalInstance(); wire FaceClusterSignals.progress and finished to update the grid and show completion messaging.
+This satisfies your rich progress preference while maintaining UI responsiveness.
+Video thumbnail in metadata panel: ensure context-managed image open
+Where:
+preview_panel_qt.py metadata panel thumbnail path at lines ~2386–2392.
+Why:
+PIL image opened via Image.open without a context manager can leak a file handle if exceptions occur.
+What to fix:
+Wrap thumbnail open with a context manager:
+Replace:
+thumb_img = Image.open(str(thumb_path))
+With:
+with Image.open(str(thumb_path)) as thumb_img:
+Then convert within the with block. This keeps consistency with other fixes already present elsewhere.
+Validation of critical items from your crash log
+Preview panel crashes
+Log showed:
+TypeError on placeholderText using tr('search.placeholder_description')
+UnboundLocalError: make_btn referenced before assignment
+Current code fixes:
+preview_panel_qt.py defines make_btn before use in _build_edit_page at L1900, and uses QLineEdit("Add a description") directly, so both errors are resolved in the current version.
+No action needed on these items in the current tree.
+PIL resource leaks in critical paths
+Confirmed fixes:
+main_window_qt.py _ThumbTask.run uses with Image.open(self.path) as im: → leak fixed.
+services/face_detection_service.py save_face_crop uses with Image.open(image_path) as img: → leak fixed.
+ui/people_list_view.py and ui/people_manager_dialog.py use with Image.open(rep_path) as pil_image: → leak fixed.
+Action needed:
+Minor consistency correction in preview_panel_qt.py video case (see point above).
+Bare exceptions in MTP worker
+Confirmed fix:
+workers/mtp_copy_worker.py now uses specific exception handlers and logs (e.g., except (OSError, PermissionError) as e:) and emits error signals appropriately.
+High-priority items to tighten next
+Transaction handling consistency
+Where:
+Multiple .commit() sites with fewer .rollback() sites.
+Current snapshot:
+There are proper rollback() calls in db_writer.py, migrate_*, reference_db.py, and repository/base_repository.py. The ratio is improved compared to the report. Continue auditing write paths to ensure all error branches rollback within the same transactional scope.
+Global thread pool contention for thumbnails
+Where:
+main_window_qt.py ThumbnailManager uses QThreadPool.globalInstance().
+Why:
+On large workloads, shared pools can starve other UI tasks.
+What to fix:
+Consider a dedicated QThreadPool for thumbnails with a capped maxThreadCount and backpressure; or set a reasonable queue policy.
+Quality improvements and UI preference alignment
+Rich progress feedback
+Where:
+Face detection actions from People Manager currently don’t display live progress.
+What to implement:
+Modal progress dialog for face detection:
+Shows current file name, current/total count, percent, failures so far.
+Driven by FaceDetectionSignals.progress, error, and finished.
+You already have a good pattern in ui/mtp_import_dialog.py with rich progress text; replicate that for face detection.
+Low-confidence toggle in service and filtering path
+Confirmed:
+services/face_detection_service.py already uses show_low_confidence to bypass conf_th filtering.
+Ensure the UI control binds through config.face_detection_config so users can change it at runtime.
+Precise code edit snippets for the above fixes
+Add low-confidence toggle in ui/face_settings_dialog.py
+In create_advanced_tab() add:
+After existing UI settings:
+Python:
+self.show_low_conf_toggle = QCheckBox("Show low-confidence detections")
+ui_layout.addRow("", self.show_low_conf_toggle)
+In load_settings() add:
+self.show_low_conf_toggle.setChecked(self.config.get("show_low_confidence", False))
+In save_settings() add:
+self.config.set("show_low_confidence", self.show_low_conf_toggle.isChecked())
+Change default model in workers/face_detection_worker.py
+Edit the constructor signature:
+From:
+def init(self, project_id: int, model: str = "hog", …
+To:
+def init(self, project_id: int, model: str = "buffalo_l", …
+Update docstring to reflect InsightFace/512-D embeddings and remove HOG/128-D references (the pipeline is InsightFace).
+Fix clustering action in ui/people_manager_dialog.py
+Replace nonexistent cluster_faces(...) with FaceClusterWorker usage:
+Create the worker:
+worker = FaceClusterWorker(project_id=self.project_id)
+Connect signals:
+worker.signals.progress.connect(lambda cur, tot, msg: self.status_label.setText(f"{msg} {cur}/{tot}"))
+worker.signals.finished.connect(lambda clusters, total_faces: (self.load_clusters(), QMessageBox.information(self, "Reclustering Complete", f"Updated {clusters} clusters")))
+Start via QThreadPool.globalInstance().start(worker)
+Wrap video thumbnail open in preview_panel_qt.py
+Replace plain Image.open(str(thumb_path)) with:
+with Image.open(str(thumb_path)) as thumb_img:
+qimg = pil_to_qimage(thumb_img)
+…
+Notes on tests/TODOs
+There are a few TODOs left (7 found by scan in layouts/ and services/photo_scan_service.py), but none are critical. Focus the sprint on the items above first.
+Status update
+I found the crash log issues already fixed in current code and identified remaining gaps: low-confidence toggle UI, face detection default model and progress UX, and minor PIL context usage in one video thumbnail path. Now I’ll prepare the UI toggle and worker start fixes next.
