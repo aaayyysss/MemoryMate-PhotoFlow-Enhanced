@@ -744,6 +744,8 @@ class MediaLightbox(QDialog):
 
             self.image_label.setPixmap(scaled_pixmap)
             self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
+            # CRITICAL: Also resize container to fit the image (QScrollArea needs this!)
+            self.media_container.resize(scaled_pixmap.size())
             print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}, zoom={self.zoom_level}")
 
             # Update counter
@@ -1034,6 +1036,8 @@ class MediaLightbox(QDialog):
 
         self.image_label.setPixmap(scaled_pixmap)
         self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
+        # CRITICAL: Also resize container to fit the image (QScrollArea needs this!)
+        self.media_container.resize(scaled_pixmap.size())
 
     def _update_status_label(self):
         """Update status label with zoom level or slideshow status."""
