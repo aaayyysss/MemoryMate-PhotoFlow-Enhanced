@@ -1,36 +1,36 @@
-2025-11-26 02:46:33,210 [INFO] [FaceDetectionWorker] Complete in 13.2s: 21 processed (21 with faces), 0 skipped, 33 faces detected, 0 failed
+2025-11-26 02:52:28,123 [INFO] [FaceDetectionWorker] Complete in 14.0s: 21 processed (21 with faces), 0 skipped, 33 faces detected, 0 failed
 [FaceDetection] Complete: 21 photos, 33 faces detected
-2025-11-26 02:46:33,210 [INFO] [FaceClusterWorker] Starting face clustering for project 1
+2025-11-26 02:52:28,123 [INFO] [FaceClusterWorker] Starting face clustering for project 1
 [FaceCluster] Loading face embeddings...
-2025-11-26 02:46:33,210 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
+2025-11-26 02:52:28,134 [INFO] [FaceClusterWorker] Loaded 33 face embeddings
 [FaceCluster] Clustering 33 faces...
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Found 12 clusters
+2025-11-26 02:52:28,139 [INFO] [FaceClusterWorker] Found 12 clusters
 [FaceCluster] Found 12 person groups...
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
+2025-11-26 02:52:28,139 [INFO] [FaceClusterWorker] Cluster 0 → 8 faces
 [FaceCluster] Saving cluster 1/12: Person 1 (8 faces)
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
+2025-11-26 02:52:28,139 [INFO] [FaceClusterWorker] Cluster 1 → 2 faces
 [FaceCluster] Saving cluster 2/12: Person 2 (2 faces)
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 2 → 3 faces
 [FaceCluster] Saving cluster 3/12: Person 3 (3 faces)
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 3 → 1 faces
 [FaceCluster] Saving cluster 4/12: Person 4 (1 faces)
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 4 → 3 faces
 [FaceCluster] Saving cluster 5/12: Person 5 (3 faces)
-2025-11-26 02:46:33,220 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 5 → 1 faces
 [FaceCluster] Saving cluster 6/12: Person 6 (1 faces)
-2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 6 → 7 faces
 [FaceCluster] Saving cluster 7/12: Person 7 (7 faces)
-2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 7 → 1 faces
 [FaceCluster] Saving cluster 8/12: Person 8 (1 faces)
-2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 8 → 1 faces
 [FaceCluster] Saving cluster 9/12: Person 9 (1 faces)
-2025-11-26 02:46:33,231 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 9 → 2 faces
 [FaceCluster] Saving cluster 10/12: Person 10 (2 faces)
-2025-11-26 02:46:33,236 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 10 → 1 faces
 [FaceCluster] Saving cluster 11/12: Person 11 (1 faces)
-2025-11-26 02:46:33,236 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
+2025-11-26 02:52:28,144 [INFO] [FaceClusterWorker] Cluster 11 → 3 faces
 [FaceCluster] Saving cluster 12/12: Person 12 (3 faces)
-2025-11-26 02:46:33,241 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
+2025-11-26 02:52:28,155 [INFO] [FaceClusterWorker] Complete in 0.0s: 12 person clusters + 0 unidentified faces
 [FaceCluster] Clustering complete: 12 branches created
 [FaceCluster] Complete: 12 person groups created
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
@@ -48,7 +48,7 @@
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001FC9FC7ABF0>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x0000015CAD1BABF0>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -169,6 +169,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 8 out of 5 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -217,6 +225,11 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 7 out of 5 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -263,6 +276,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 3 out of 3 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -281,52 +302,6 @@ ORDER BY pm.date_taken DESC
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_002']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_002
-[GooglePhotosLayout] Loaded 1 photos in 1 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_004)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_004]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_004
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_004' has 3 face crops across 3 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_000: 8 crops
-[GooglePhotosLayout]   - face_006: 7 crops
-[GooglePhotosLayout]   - face_002: 3 crops
-[GooglePhotosLayout]   - face_004: 3 crops
-[GooglePhotosLayout]   - face_011: 3 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_009: 2 crops
-[GooglePhotosLayout]   - face_003: 1 crops
-[GooglePhotosLayout]   - face_005: 1 crops
-[GooglePhotosLayout]   - face_007: 1 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_004 (first 5):
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_004']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_004
 [GooglePhotosLayout] Loaded 1 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_011)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_011]...
@@ -355,6 +330,11 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/5/img_e3091.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 3 out of 3 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -374,6 +354,60 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_011']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_011
 [GooglePhotosLayout] Loaded 3 photos in 1 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_004)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_004]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_004
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
+[GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
+[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_004' has 3 face crops across 3 unique images
+[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
+[GooglePhotosLayout]   - face_000: 8 crops
+[GooglePhotosLayout]   - face_006: 7 crops
+[GooglePhotosLayout]   - face_002: 3 crops
+[GooglePhotosLayout]   - face_004: 3 crops
+[GooglePhotosLayout]   - face_011: 3 crops
+[GooglePhotosLayout]   - face_001: 2 crops
+[GooglePhotosLayout]   - face_009: 2 crops
+[GooglePhotosLayout]   - face_003: 1 crops
+[GooglePhotosLayout]   - face_005: 1 crops
+[GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_004 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 3 out of 3 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND pm.date_taken IS NOT NULL
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_004']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_004
+[GooglePhotosLayout] Loaded 1 photos in 1 date groups
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_001)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_001]...
 [GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_001
@@ -400,6 +434,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 2 out of 2 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -445,6 +487,11 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 2 out of 2 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -464,50 +511,6 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_009']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_009
 [GooglePhotosLayout] Loaded 2 photos in 1 date groups
-[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_003)
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_003]...
-[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_003
-[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
-[GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
-[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_003' has 1 face crops across 1 unique images
-[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
-[GooglePhotosLayout]   - face_000: 8 crops
-[GooglePhotosLayout]   - face_006: 7 crops
-[GooglePhotosLayout]   - face_002: 3 crops
-[GooglePhotosLayout]   - face_004: 3 crops
-[GooglePhotosLayout]   - face_011: 3 crops
-[GooglePhotosLayout]   - face_001: 2 crops
-[GooglePhotosLayout]   - face_009: 2 crops
-[GooglePhotosLayout]   - face_003: 1 crops
-[GooglePhotosLayout]   - face_005: 1 crops
-[GooglePhotosLayout]   - face_007: 1 crops
-[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_003 (first 5):
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
-[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-                AND pm.date_taken IS NOT NULL
-
-
-                    AND pm.path IN (
-                        SELECT DISTINCT image_path
-                        FROM face_crops
-                        WHERE project_id = ? AND branch_key = ?
-                    )
-
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_003']
-[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_003
-[GooglePhotosLayout] No photos found in project 1
 [GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_005)
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_005]...
 [GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_005
@@ -533,6 +536,14 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 1 out of 1 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -577,6 +588,13 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
 [GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 1 out of 1 face_crop paths are actually in project_images for project 1
 [GooglePhotosLayout] 🔍 SQL Query:
 
                 SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
@@ -596,10 +614,60 @@ ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_007']
 [GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_007
 [GooglePhotosLayout] Loaded 1 photos in 1 date groups
+[GooglePhotosLayout] Filtering by person: Unnamed Person (branch_key=face_009)
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [person=face_009]...
+[GooglePhotosLayout] 🔍 DEBUG: Entering person filter block for branch_key=face_009
+[GooglePhotosLayout] 🔍 DEBUG: About to query face_crops table...
+[GooglePhotosLayout] 🔍 DEBUG: face_crops has 33 total entries, 12 unique branch_keys for project 1
+[GooglePhotosLayout] 🔍 DEBUG: branch_key='face_009' has 2 face crops across 2 unique images
+[GooglePhotosLayout] 🔍 DEBUG: Available branch_keys in face_crops:
+[GooglePhotosLayout]   - face_000: 8 crops
+[GooglePhotosLayout]   - face_006: 7 crops
+[GooglePhotosLayout]   - face_002: 3 crops
+[GooglePhotosLayout]   - face_004: 3 crops
+[GooglePhotosLayout]   - face_011: 3 crops
+[GooglePhotosLayout]   - face_001: 2 crops
+[GooglePhotosLayout]   - face_009: 2 crops
+[GooglePhotosLayout]   - face_003: 1 crops
+[GooglePhotosLayout]   - face_005: 1 crops
+[GooglePhotosLayout]   - face_007: 1 crops
+[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for face_009 (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg'
+[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg'
+[GooglePhotosLayout]     'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg'
+[GooglePhotosLayout] 🔍 DEBUG: Checking if 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg' is in project_images:
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout]     ✅ Found in project_images: project_id=1
+[GooglePhotosLayout] 🔍 DEBUG: 2 out of 2 face_crop paths are actually in project_images for project 1
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND pm.date_taken IS NOT NULL
+
+
+                    AND pm.path IN (
+                        SELECT DISTINCT image_path
+                        FROM face_crops
+                        WHERE project_id = ? AND branch_key = ?
+                    )
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 1, 'face_009']
+[GooglePhotosLayout] 🔍 Person filter: project_id=1, branch_key=face_009
+[GooglePhotosLayout] Loaded 2 photos in 1 date groups
 [Shutdown] Grid threads shut down.
 [ThumbnailManager] Thread pool shut down.
 [Shutdown] ThumbnailManager threads shut down.
 [Shutdown] Thumbnail cache cleared.
 [Main] Qt event loop exited with code: 0
 [ThumbCacheDB] Closing cache gracefully...
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-14>
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_35.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-15>
