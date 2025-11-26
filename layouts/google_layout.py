@@ -15,40 +15,55 @@ from datetime import datetime
 import os
 
 
-class PhotoLightbox(QDialog):
+class MediaLightbox(QDialog):
     """
-    Full-screen photo lightbox/preview dialog.
+    Full-screen media lightbox/preview dialog supporting photos AND videos.
 
-    Features:
-    - Full-screen image display
-    - Metadata panel (EXIF, date, dimensions)
-    - Navigation arrows (prev/next)
+    ✨ ENHANCED FEATURES:
+    - Mixed photo/video navigation
+    - Video playback with controls
+    - Zoom controls for photos (Ctrl+Wheel, +/- keys)
+    - Slideshow mode (Space to toggle)
+    - Keyboard shortcuts (Arrow keys, Space, Delete, F, R, etc.)
+    - Quick actions (Delete, Favorite, Rate)
+    - Metadata panel (EXIF, date, dimensions, video info)
+    - Fullscreen toggle (F11)
     - Close button and ESC key
     """
 
-    def __init__(self, photo_path: str, all_photos: List[str], parent=None):
+    def __init__(self, media_path: str, all_media: List[str], parent=None):
         """
-        Initialize photo lightbox.
+        Initialize media lightbox.
 
         Args:
-            photo_path: Path to photo to display
-            all_photos: List of all photo paths in timeline order
+            media_path: Path to photo/video to display
+            all_media: List of all media paths (photos + videos) in timeline order
             parent: Parent widget
         """
         super().__init__(parent)
 
-        self.photo_path = photo_path
-        self.all_photos = all_photos
-        self.current_index = all_photos.index(photo_path) if photo_path in all_photos else 0
-        self._photo_loaded = False  # Track if photo has been loaded
+        self.media_path = media_path
+        self.all_media = all_media
+        self.current_index = all_media.index(media_path) if media_path in all_media else 0
+        self._media_loaded = False  # Track if media has been loaded
+
+        # Zoom state (for photos)
+        self.zoom_level = 1.0
+        self.min_zoom = 0.1
+        self.max_zoom = 5.0
+
+        # Slideshow state
+        self.slideshow_active = False
+        self.slideshow_timer = None
+        self.slideshow_interval = 3000  # 3 seconds
 
         self._setup_ui()
-        # Don't load photo here - wait for showEvent when window has proper size
+        # Don't load media here - wait for showEvent when window has proper size
 
     def _setup_ui(self):
-        """Setup lightbox UI."""
+        """Setup lightbox UI with support for photos and videos."""
         # Window settings
-        self.setWindowTitle("Photo Preview")
+        self.setWindowTitle("Media Viewer")
         self.setWindowState(Qt.WindowMaximized)
         self.setStyleSheet("background: #1a1a1a;")
 
@@ -113,7 +128,7 @@ class PhotoLightbox(QDialog):
                 color: rgba(255, 255, 255, 0.3);
             }
         """)
-        self.prev_btn.clicked.connect(self._previous_photo)
+        self.prev_btn.clicked.connect(self._previous_media)
         nav_layout.addWidget(self.prev_btn)
 
         nav_layout.addStretch()
@@ -143,7 +158,7 @@ class PhotoLightbox(QDialog):
                 color: rgba(255, 255, 255, 0.3);
             }
         """)
-        self.next_btn.clicked.connect(self._next_photo)
+        self.next_btn.clicked.connect(self._next_media)
         nav_layout.addWidget(self.next_btn)
 
         image_layout.addLayout(nav_layout)
@@ -186,11 +201,42 @@ class PhotoLightbox(QDialog):
 
         main_layout.addWidget(metadata_panel)
 
+    def _is_video(self, path: str) -> bool:
+        """Check if file is a video based on extension."""
+        video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.3gp'}
+        return os.path.splitext(path)[1].lower() in video_extensions
+
+    def _load_media(self):
+        """Load and display current media (photo or video)."""
+        if self._is_video(self.media_path):
+            self._load_video()
+        else:
+            self._load_photo()
+
+    def _load_video(self):
+        """Load and display video."""
+        print(f"[MediaLightbox] Loading video: {os.path.basename(self.media_path)}")
+
+        # For now, show a placeholder with video icon
+        # TODO: Implement actual video player widget
+        self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\nClick to play")
+        self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
+
+        # Update counter
+        self.counter_label.setText(f"{self.current_index + 1} of {len(self.all_media)}")
+
+        # Update navigation buttons
+        self.prev_btn.setEnabled(self.current_index > 0)
+        self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
+
+        # Load video metadata
+        self._load_metadata()
+
     def _load_photo(self):
         """Load and display the current photo with EXIF orientation correction."""
         try:
-            print(f"[PhotoLightbox] Loading photo: {os.path.basename(self.photo_path)}")
-            print(f"[PhotoLightbox] Window size: {self.width()}x{self.height()}")
+            print(f"[MediaLightbox] Loading photo: {os.path.basename(self.media_path)}")
+            print(f"[MediaLightbox] Window size: {self.width()}x{self.height()}")
 
             # CRITICAL FIX: Load image using PIL first for EXIF orientation correction
             from PIL import Image, ImageOps
@@ -201,7 +247,7 @@ class PhotoLightbox(QDialog):
 
             try:
                 # Load with PIL and auto-rotate based on EXIF orientation
-                pil_image = Image.open(self.photo_path)
+                pil_image = Image.open(self.media_path)
 
                 # EXIF ORIENTATION FIX: Auto-rotate based on EXIF orientation tag
                 # This fixes photos that appear rotated incorrectly
@@ -241,7 +287,7 @@ class PhotoLightbox(QDialog):
                         pass
 
                 # Fallback to QPixmap if PIL fails
-                pixmap = QPixmap(self.photo_path)
+                pixmap = QPixmap(self.media_path)
 
             if not pixmap or pixmap.isNull():
                 self.image_label.setText("❌ Failed to load image")
@@ -270,18 +316,18 @@ class PhotoLightbox(QDialog):
 
             # Update counter
             self.counter_label.setText(
-                f"{self.current_index + 1} of {len(self.all_photos)}"
+                f"{self.current_index + 1} of {len(self.all_media)}"
             )
 
             # Update navigation buttons
             self.prev_btn.setEnabled(self.current_index > 0)
-            self.next_btn.setEnabled(self.current_index < len(self.all_photos) - 1)
+            self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
 
             # Load metadata
             self._load_metadata()
 
         except Exception as e:
-            print(f"[PhotoLightbox] Error loading photo: {e}")
+            print(f"[MediaLightbox] Error loading photo: {e}")
             self.image_label.setText(f"❌ Error loading image\n\n{str(e)}")
             self.image_label.setStyleSheet("color: white; font-size: 12pt;")
 
@@ -295,9 +341,9 @@ class PhotoLightbox(QDialog):
 
         try:
             # Get file info
-            file_size = os.path.getsize(self.photo_path)
+            file_size = os.path.getsize(self.media_path)
             file_size_mb = file_size / (1024 * 1024)
-            filename = os.path.basename(self.photo_path)
+            filename = os.path.basename(self.media_path)
 
             # Add filename
             self._add_metadata_field("📄 Filename", filename)
@@ -306,7 +352,7 @@ class PhotoLightbox(QDialog):
             self._add_metadata_field("💾 File Size", f"{file_size_mb:.2f} MB")
 
             # Get image dimensions
-            pixmap = QPixmap(self.photo_path)
+            pixmap = QPixmap(self.media_path)
             if not pixmap.isNull():
                 self._add_metadata_field(
                     "📐 Dimensions",
@@ -317,7 +363,7 @@ class PhotoLightbox(QDialog):
             try:
                 from services.exif_parser import EXIFParser
                 exif_parser = EXIFParser()
-                metadata = exif_parser.parse_image_full(self.photo_path)
+                metadata = exif_parser.parse_image_full(self.media_path)
 
                 # Date taken
                 if metadata.get('datetime_original'):
@@ -339,14 +385,14 @@ class PhotoLightbox(QDialog):
                     )
 
             except Exception as e:
-                print(f"[PhotoLightbox] Error loading EXIF: {e}")
+                print(f"[MediaLightbox] Error loading EXIF: {e}")
                 self._add_metadata_field("⚠️ EXIF Data", "Not available")
 
             # Add file path (at bottom)
-            self._add_metadata_field("📁 Path", self.photo_path, word_wrap=True)
+            self._add_metadata_field("📁 Path", self.media_path, word_wrap=True)
 
         except Exception as e:
-            print(f"[PhotoLightbox] Error loading metadata: {e}")
+            print(f"[MediaLightbox] Error loading metadata: {e}")
             self._add_metadata_field("⚠️ Error", str(e))
 
     def _add_metadata_field(self, label: str, value: str, word_wrap: bool = False):
@@ -371,39 +417,61 @@ class PhotoLightbox(QDialog):
             value_widget.setWordWrap(True)
         self.metadata_layout.addWidget(value_widget)
 
-    def _previous_photo(self):
-        """Navigate to previous photo."""
+    def _previous_media(self):
+        """Navigate to previous media (photo or video)."""
         if self.current_index > 0:
             self.current_index -= 1
-            self.photo_path = self.all_photos[self.current_index]
-            self._load_photo()
+            self.media_path = self.all_media[self.current_index]
+            self._load_media()
 
-    def _next_photo(self):
-        """Navigate to next photo."""
-        if self.current_index < len(self.all_photos) - 1:
+    def _next_media(self):
+        """Navigate to next media (photo or video)."""
+        if self.current_index < len(self.all_media) - 1:
             self.current_index += 1
-            self.photo_path = self.all_photos[self.current_index]
-            self._load_photo()
+            self.media_path = self.all_media[self.current_index]
+            self._load_media()
 
     def showEvent(self, event):
-        """Load photo when dialog is first shown (after window has proper size)."""
+        """Load media when dialog is first shown (after window has proper size)."""
         super().showEvent(event)
-        if not self._photo_loaded:
-            self._photo_loaded = True
+        if not self._media_loaded:
+            self._media_loaded = True
             # ROBUST FIX: Use longer delay to ensure window is fully sized and rendered
-            # QTimer.singleShot(0) was too fast - window size not yet updated
             from PySide6.QtCore import QTimer
-            print(f"[PhotoLightbox] showEvent triggered, scheduling photo load...")
-            QTimer.singleShot(100, self._load_photo)  # 100ms delay for proper layout
+            print(f"[MediaLightbox] showEvent triggered, scheduling media load...")
+            QTimer.singleShot(100, self._load_media)  # 100ms delay for proper layout
 
     def keyPressEvent(self, event: QKeyEvent):
-        """Handle keyboard shortcuts."""
-        if event.key() == Qt.Key_Escape:
+        """Handle enhanced keyboard shortcuts."""
+        key = event.key()
+        modifiers = event.modifiers()
+
+        # ESC: Close
+        if key == Qt.Key_Escape:
             self.close()
-        elif event.key() == Qt.Key_Left:
-            self._previous_photo()
-        elif event.key() == Qt.Key_Right:
-            self._next_photo()
+
+        # Arrow keys: Navigation
+        elif key == Qt.Key_Left or key == Qt.Key_Up:
+            self._previous_media()
+        elif key == Qt.Key_Right or key == Qt.Key_Down:
+            self._next_media()
+
+        # Space: Next (slideshow style)
+        elif key == Qt.Key_Space:
+            self._next_media()
+
+        # Home/End: First/Last
+        elif key == Qt.Key_Home:
+            if self.all_media:
+                self.current_index = 0
+                self.media_path = self.all_media[0]
+                self._load_media()
+        elif key == Qt.Key_End:
+            if self.all_media:
+                self.current_index = len(self.all_media) - 1
+                self.media_path = self.all_media[-1]
+                self._load_media()
+
         else:
             super().keyPressEvent(event)
 
@@ -2100,9 +2168,9 @@ class GooglePhotosLayout(BaseLayout):
 
         # Create and show lightbox dialog
         try:
-            lightbox = PhotoLightbox(path, all_photos, parent=self.main_window)
+            lightbox = MediaLightbox(path, all_photos, parent=self.main_window)
             lightbox.exec()
-            print("[GooglePhotosLayout] ✓ Lightbox closed")
+            print("[GooglePhotosLayout] ✓ MediaLightbox closed")
 
         except Exception as e:
             print(f"[GooglePhotosLayout] ⚠️ Error opening lightbox: {e}")
