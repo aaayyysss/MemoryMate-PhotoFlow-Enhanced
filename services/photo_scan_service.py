@@ -328,8 +328,16 @@ class PhotoScanService:
 
                         # Enhanced progress message with file details
                         file_name = file_path.name
-                        file_size_kb = round(file_path.stat().st_size / 1024, 1) if file_path.exists() else 0
-                        
+
+                        # CRITICAL FIX: Get file size safely without blocking
+                        # BUG: file_path.stat() can HANG on slow/network drives or permission issues
+                        # This caused freeze at file 10, 20, 30 (every progress_callback % 10 == 0)
+                        # SOLUTION: Use size from already-processed row, or skip size if unavailable
+                        file_size_kb = 0
+                        if row is not None and len(row) > 2:
+                            # Row format: (path, folder_id, size_kb, ...)
+                            file_size_kb = round(row[2], 1) if row[2] else 0
+
                         progress_msg = f"📷 {file_name} ({file_size_kb} KB)\nIndexed: {self._stats['photos_indexed']}/{total_files} photos"
                         
                         progress = ScanProgress(
