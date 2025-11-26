@@ -943,6 +943,33 @@ class GooglePhotosLayout(BaseLayout):
                         for bk, cnt in branch_samples:
                             print(f"[GooglePhotosLayout]   - {bk}: {cnt} crops")
 
+                        # DEBUG: Show actual image_path values from face_crops for this person
+                        debug_cur.execute("""
+                            SELECT DISTINCT image_path
+                            FROM face_crops
+                            WHERE project_id = ? AND branch_key = ?
+                            LIMIT 5
+                        """, (self.project_id, filter_person))
+                        face_paths = [row[0] for row in debug_cur.fetchall()]
+                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Sample image_path from face_crops for {filter_person} (first 5):")
+                        for fp in face_paths:
+                            print(f"[GooglePhotosLayout]     '{fp}'")
+
+                        # DEBUG: Show sample photo_metadata paths for comparison
+                        debug_cur.execute("""
+                            SELECT DISTINCT pm.path
+                            FROM photo_metadata pm
+                            JOIN project_images pi ON pm.path = pi.image_path
+                            WHERE pi.project_id = ?
+                            LIMIT 5
+                        """, (self.project_id,))
+                        pm_paths = [row[0] for row in debug_cur.fetchall()]
+                        print(f"[GooglePhotosLayout] 🔍 DEBUG: Sample pm.path from photo_metadata (first 5):")
+                        for pp in pm_paths:
+                            print(f"[GooglePhotosLayout]     '{pp}'")
+
+                        sys.stdout.flush()
+
                 except Exception as debug_error:
                     print(f"[GooglePhotosLayout] ⚠️ DEBUG query failed: {debug_error}")
                     import traceback
