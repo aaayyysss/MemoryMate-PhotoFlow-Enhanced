@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
 )
 from PySide6.QtCore import Qt, Signal, QSize, QEvent
-from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage
+from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
 from .base_layout import BaseLayout
 from typing import Dict, List, Tuple
 from collections import defaultdict
@@ -195,6 +195,7 @@ class PhotoLightbox(QDialog):
             # CRITICAL FIX: Load image using PIL first for EXIF orientation correction
             from PIL import Image, ImageOps
 
+            pil_image = None  # Track for cleanup
             try:
                 # Load with PIL and auto-rotate based on EXIF orientation
                 pil_image = Image.open(self.photo_path)
@@ -213,8 +214,18 @@ class PhotoLightbox(QDialog):
 
                 print(f"[PhotoLightbox] ✓ Image loaded with EXIF orientation: {pil_image.width}x{pil_image.height}")
 
+                # MEMORY LEAK FIX: Close PIL image to free memory
+                pil_image.close()
+                print(f"[PhotoLightbox] ✓ PIL image closed")
+
             except Exception as pil_error:
                 print(f"[PhotoLightbox] PIL loading failed, falling back to QPixmap: {pil_error}")
+                # Clean up PIL image if it was opened
+                if pil_image:
+                    try:
+                        pil_image.close()
+                    except:
+                        pass
                 # Fallback to QPixmap if PIL fails
                 pixmap = QPixmap(self.photo_path)
 
@@ -1765,23 +1776,61 @@ class GooglePhotosLayout(BaseLayout):
 
     def _open_video_player(self, video_path: str):
         """
-        Open video player for the given video path.
+        Open video player for the given video path with navigation support.
 
         Args:
             video_path: Path to video file
         """
-        print(f"[GoogleLayout] Opening video player for: {video_path}")
+        print(f"[GoogleLayout] 🎬 Opening video player for: {video_path}")
 
         try:
-            # Use main window's video player
-            if hasattr(self.main_window, '_open_video_player'):
-                self.main_window._open_video_player(video_path)
-            else:
-                print("[GoogleLayout] ⚠️ Main window doesn't have _open_video_player method")
+            # Get all videos for navigation
+            from services.video_service import VideoService
+            video_service = VideoService()
+
+            all_videos = video_service.get_videos_by_project(self.project_id) if self.project_id else []
+            video_paths = [v['path'] for v in all_videos]
+
+            # Find current video index
+            start_index = 0
+            try:
+                start_index = video_paths.index(video_path)
+            except ValueError:
+                print(f"[GoogleLayout] ⚠️ Video not found in list, using index 0")
+
+            print(f"[GoogleLayout] Found {len(video_paths)} videos, current index: {start_index}")
+
+            # Check if main_window is accessible
+            if not hasattr(self, 'main_window') or self.main_window is None:
+                print("[GoogleLayout] ⚠️ ERROR: main_window not accessible")
+                from PySide6.QtWidgets import QMessageBox
+                QMessageBox.warning(None, "Video Player Error",
+                    "Cannot open video player: Main window not accessible.\n\n"
+                    "Try switching to Current Layout to play videos.")
+                return
+
+            # Check if _open_video_player method exists
+            if not hasattr(self.main_window, '_open_video_player'):
+                print("[GoogleLayout] ⚠️ ERROR: main_window doesn't have _open_video_player method")
+                from PySide6.QtWidgets import QMessageBox
+                QMessageBox.warning(None, "Video Player Error",
+                    "Video player not available in this layout.\n\n"
+                    "Try switching to Current Layout to play videos.")
+                return
+
+            # Open video player with navigation support
+            self.main_window._open_video_player(video_path, video_paths, start_index)
+            print(f"[GoogleLayout] ✓ Video player opened successfully")
+
         except Exception as e:
-            print(f"[GoogleLayout] Error opening video player: {e}")
+            print(f"[GoogleLayout] ⚠️ ERROR opening video player: {e}")
             import traceback
             traceback.print_exc()
+
+            from PySide6.QtWidgets import QMessageBox
+            QMessageBox.critical(None, "Video Player Error",
+                f"Failed to open video player:\n\n{str(e)}\n\n"
+                "Check console for details.")
 
     def _create_date_group(self, date_str: str, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
