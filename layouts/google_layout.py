@@ -194,8 +194,11 @@ class PhotoLightbox(QDialog):
 
             # CRITICAL FIX: Load image using PIL first for EXIF orientation correction
             from PIL import Image, ImageOps
+            import io
 
             pil_image = None  # Track for cleanup
+            pixmap = None
+
             try:
                 # Load with PIL and auto-rotate based on EXIF orientation
                 pil_image = Image.open(self.photo_path)
@@ -204,32 +207,43 @@ class PhotoLightbox(QDialog):
                 # This fixes photos that appear rotated incorrectly
                 pil_image = ImageOps.exif_transpose(pil_image)
 
-                # Convert PIL image to QPixmap
+                # MEMORY CORRUPTION FIX: Save to bytes buffer instead of direct tobytes
+                # This prevents QImage from referencing freed PIL memory
                 if pil_image.mode != 'RGB':
                     pil_image = pil_image.convert('RGB')
 
-                data = pil_image.tobytes('raw', 'RGB')
-                qimg = QImage(data, pil_image.width, pil_image.height, QImage.Format_RGB888)
-                pixmap = QPixmap.fromImage(qimg)
+                # Save to bytes buffer (keeps data alive independently of PIL image)
+                buffer = io.BytesIO()
+                pil_image.save(buffer, format='PNG')
+                buffer.seek(0)
+
+                # Load QPixmap from buffer
+                pixmap = QPixmap()
+                pixmap.loadFromData(buffer.read())
 
                 print(f"[PhotoLightbox] ✓ Image loaded with EXIF orientation: {pil_image.width}x{pil_image.height}")
 
                 # MEMORY LEAK FIX: Close PIL image to free memory
                 pil_image.close()
-                print(f"[PhotoLightbox] ✓ PIL image closed")
+                buffer.close()
+                print(f"[PhotoLightbox] ✓ PIL image and buffer closed")
 
             except Exception as pil_error:
                 print(f"[PhotoLightbox] PIL loading failed, falling back to QPixmap: {pil_error}")
+                import traceback
+                traceback.print_exc()
+
                 # Clean up PIL image if it was opened
                 if pil_image:
                     try:
                         pil_image.close()
                     except:
                         pass
+
                 # Fallback to QPixmap if PIL fails
                 pixmap = QPixmap(self.photo_path)
 
-            if pixmap.isNull():
+            if not pixmap or pixmap.isNull():
                 self.image_label.setText("❌ Failed to load image")
                 self.image_label.setStyleSheet("color: white; font-size: 14pt;")
                 return
@@ -1743,9 +1757,12 @@ class GooglePhotosLayout(BaseLayout):
             }
             QLabel:hover {
                 border: 2px solid #1a73e8;
-                cursor: pointer;
             }
         """)
+
+        # Set mouse cursor programmatically (Qt doesn't support cursor in stylesheets)
+        from PySide6.QtCore import Qt as QtCore
+        thumb_widget.setCursor(QtCore.PointingHandCursor)
 
         # Load video thumbnail
         video_path = video.get('path', '')
