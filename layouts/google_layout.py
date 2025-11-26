@@ -449,16 +449,20 @@ class MediaLightbox(QDialog):
         # ESC: Close
         if key == Qt.Key_Escape:
             self.close()
+            event.accept()  # Prevent event propagation
 
         # Arrow keys: Navigation
         elif key == Qt.Key_Left or key == Qt.Key_Up:
             self._previous_media()
+            event.accept()
         elif key == Qt.Key_Right or key == Qt.Key_Down:
             self._next_media()
+            event.accept()
 
-        # Space: Next (slideshow style)
+        # Space: Next (slideshow style) - CRITICAL: Must accept event to prevent button trigger
         elif key == Qt.Key_Space:
             self._next_media()
+            event.accept()  # Prevent Space from triggering focused button!
 
         # Home/End: First/Last
         elif key == Qt.Key_Home:
@@ -466,11 +470,13 @@ class MediaLightbox(QDialog):
                 self.current_index = 0
                 self.media_path = self.all_media[0]
                 self._load_media()
+                event.accept()
         elif key == Qt.Key_End:
             if self.all_media:
                 self.current_index = len(self.all_media) - 1
                 self.media_path = self.all_media[-1]
                 self._load_media()
+                event.accept()
 
         else:
             super().keyPressEvent(event)
@@ -1854,8 +1860,9 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GoogleLayout] Error loading video thumbnail for {video_path}: {e}")
             thumb_widget.setText("🎬\nVideo")
 
-        # Add click handler for video playback
-        thumb_widget.mousePressEvent = lambda event: self._open_video_player(video_path)
+        # FIXED: Open lightbox instead of video player directly
+        # This allows browsing through mixed photos and videos
+        thumb_widget.mousePressEvent = lambda event: self._open_photo_lightbox(video_path)
 
         return thumb_widget
 
@@ -2152,23 +2159,23 @@ class GooglePhotosLayout(BaseLayout):
 
     def _open_photo_lightbox(self, path: str):
         """
-        Open photo lightbox/preview dialog.
+        Open media lightbox/preview dialog (supports both photos AND videos).
 
         Args:
-            path: Path to photo to display
+            path: Path to photo or video to display
         """
         print(f"[GooglePhotosLayout] 👁️ Opening lightbox for: {path}")
 
-        # Collect all photo paths in timeline order
-        all_photos = self._get_all_photo_paths()
+        # Collect all media paths (photos + videos) in timeline order
+        all_media = self._get_all_media_paths()
 
-        if not all_photos:
-            print("[GooglePhotosLayout] ⚠️ No photos to display in lightbox")
+        if not all_media:
+            print("[GooglePhotosLayout] ⚠️ No media to display in lightbox")
             return
 
         # Create and show lightbox dialog
         try:
-            lightbox = MediaLightbox(path, all_photos, parent=self.main_window)
+            lightbox = MediaLightbox(path, all_media, parent=self.main_window)
             lightbox.exec()
             print("[GooglePhotosLayout] ✓ MediaLightbox closed")
 
@@ -2177,12 +2184,12 @@ class GooglePhotosLayout(BaseLayout):
             import traceback
             traceback.print_exc()
 
-    def _get_all_photo_paths(self) -> List[str]:
+    def _get_all_media_paths(self) -> List[str]:
         """
-        Get all photo paths in timeline order (newest to oldest).
+        Get all media paths (photos + videos) in timeline order (newest to oldest).
 
         Returns:
-            List of photo paths
+            List of media paths
         """
         all_paths = []
 
@@ -2191,7 +2198,7 @@ class GooglePhotosLayout(BaseLayout):
             db = ReferenceDB()
 
             # Query all photos for current project, ordered by date
-            query = """
+            photo_query = """
                 SELECT DISTINCT pm.path
                 FROM photo_metadata pm
                 JOIN project_images pi ON pm.path = pi.image_path
@@ -2200,16 +2207,38 @@ class GooglePhotosLayout(BaseLayout):
                 ORDER BY pm.date_taken DESC
             """
 
+            # Query all videos for current project, ordered by date
+            video_query = """
+                SELECT DISTINCT path
+                FROM video_metadata
+                WHERE project_id = ?
+                AND created_date IS NOT NULL
+                ORDER BY created_date DESC
+            """
+
             with db._connect() as conn:
                 conn.execute("PRAGMA busy_timeout = 5000")
                 cur = conn.cursor()
-                cur.execute(query, (self.project_id,))
-                rows = cur.fetchall()
 
-                all_paths = [row[0] for row in rows]
+                # Get photos
+                cur.execute(photo_query, (self.project_id,))
+                photo_rows = cur.fetchall()
+                photo_paths = [row[0] for row in photo_rows]
+
+                # Get videos
+                cur.execute(video_query, (self.project_id,))
+                video_rows = cur.fetchall()
+                video_paths = [row[0] for row in video_rows]
+
+                # Combine and sort by date (already sorted individually, merge them)
+                # For now, just append videos after photos (both are sorted by date desc)
+                # TODO: Could merge-sort by actual date if needed
+                all_paths = photo_paths + video_paths
+
+                print(f"[GooglePhotosLayout] Found {len(photo_paths)} photos + {len(video_paths)} videos = {len(all_paths)} total media")
 
         except Exception as e:
-            print(f"[GooglePhotosLayout] ⚠️ Error fetching photo paths: {e}")
+            print(f"[GooglePhotosLayout] ⚠️ Error fetching media paths: {e}")
 
         return all_paths
 
