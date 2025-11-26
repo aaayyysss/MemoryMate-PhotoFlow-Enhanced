@@ -262,6 +262,10 @@ class FaceSettingsDialog(QDialog):
         self.show_confidence_check = QCheckBox("Show detection confidence")
         ui_layout.addRow("", self.show_confidence_check)
 
+        self.show_low_confidence_check = QCheckBox("Show low-confidence detections")
+        self.show_low_confidence_check.setToolTip("Include faces with confidence below threshold in results")
+        ui_layout.addRow("", self.show_low_confidence_check)
+
         self.thumbnail_size_spin = QSpinBox()
         self.thumbnail_size_spin.setRange(64, 256)
         self.thumbnail_size_spin.setValue(128)
@@ -303,6 +307,7 @@ class FaceSettingsDialog(QDialog):
         self.skip_detected_check.setChecked(self.config.get("skip_detected", True))
         self.show_boxes_check.setChecked(self.config.get("show_face_boxes", True))
         self.show_confidence_check.setChecked(self.config.get("show_confidence", False))
+        self.show_low_confidence_check.setChecked(self.config.get("show_low_confidence", False))
         self.thumbnail_size_spin.setValue(self.config.get("thumbnail_size", 128))
 
         # Update backend status
@@ -335,6 +340,7 @@ class FaceSettingsDialog(QDialog):
         self.config.set("skip_detected", self.skip_detected_check.isChecked())
         self.config.set("show_face_boxes", self.show_boxes_check.isChecked())
         self.config.set("show_confidence", self.show_confidence_check.isChecked())
+        self.config.set("show_low_confidence", self.show_low_confidence_check.isChecked())
         self.config.set("thumbnail_size", self.thumbnail_size_spin.value())
 
         QMessageBox.information(self, "Settings Saved", "Face detection settings have been saved successfully!")

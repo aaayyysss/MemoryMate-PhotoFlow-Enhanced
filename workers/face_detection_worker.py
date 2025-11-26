@@ -49,26 +49,27 @@ class FaceDetectionWorker(QRunnable):
         QThreadPool.globalInstance().start(worker)
 
     Performance:
-        - Uses HOG model (fast, CPU-friendly)
-        - Processes ~1-2 photos/second
+        - Uses InsightFace buffalo_l model (RetinaFace detector + ArcFace embeddings)
+        - Processes ~1-2 photos/second (depends on CPU/GPU)
         - Parallel processing NOT recommended (CPU-intensive)
         - For 1000 photos: ~10-15 minutes
 
     Features:
         - Skips photos already processed
         - Saves face crops to .memorymate/faces/
-        - Generates 128-dim embeddings
+        - Generates 512-dim ArcFace embeddings (vs 128-dim dlib)
         - Error handling and progress reporting
     """
 
-    def __init__(self, project_id: int, model: str = "hog",
+    def __init__(self, project_id: int, model: str = "buffalo_l",
                  skip_processed: bool = True, max_faces_per_photo: int = 10):
         """
         Initialize face detection worker.
 
         Args:
             project_id: Project ID to process photos for
-            model: Detection model ("hog" or "cnn")
+            model: InsightFace model name ("buffalo_l", "buffalo_s", "antelopev2")
+                   Default: "buffalo_l" (high accuracy, 512-D ArcFace embeddings)
             skip_processed: Skip photos already in face_crops table
             max_faces_per_photo: Maximum faces to detect per photo (prevent memory issues)
         """
