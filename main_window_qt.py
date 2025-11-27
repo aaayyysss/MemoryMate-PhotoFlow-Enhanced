@@ -99,7 +99,7 @@ from ui.panels.details_panel import DetailsPanel
 from ui.panels.backfill_status_panel import BackfillStatusPanel
 
 # Phase 1 Refactoring: Extracted controllers
-from controllers import ScanController, SidebarController, ProjectController
+from controllers import ScanController, SidebarController, ProjectController, PhotoOperationsController
 
 # Phase 2 Refactoring: Extracted UI widgets
 from ui.widgets.breadcrumb_navigation import BreadcrumbNavigation
@@ -831,6 +831,7 @@ class MainWindow(QMainWindow):
         self.scan_controller = ScanController(self)
         self.sidebar_controller = SidebarController(self)
         self.project_controller = ProjectController(self)
+        self.photo_ops_controller = PhotoOperationsController(self)  # Phase 3
 
         self.sidebar.on_branch_selected = self.sidebar_controller.on_branch_selected
         self.sidebar.folderSelected.connect(self.sidebar_controller.on_folder_selected)
@@ -1826,101 +1827,30 @@ class MainWindow(QMainWindow):
         if paths:
             self._open_lightbox(paths[-1])
 
+    # === Phase 3, Step 3.1: Photo Operations Extracted =========================
+    # NOTE: Photo operations (favorite, tag, export, move, delete) have been
+    #       extracted to controllers/photo_operations_controller.py.
+    #       Methods below delegate to PhotoOperationsController.
+    #       See: controllers/photo_operations_controller.py
+    #
+    # Reduction: ~143 LOC moved to separate controller
+    # ===========================================================================
+
     def _toggle_favorite_selection(self):
-        """
-        Phase 2.3: Toggle favorite tag for all selected photos.
-        Called from selection toolbar.
-        """
-        paths = self.grid.get_selected_paths()
-        if not paths:
-            return
-
-        # Check if any photo is already favorited
-        db = ReferenceDB()
-        has_favorite = False
-        for path in paths:
-            tags = db.get_tags_for_paths([path], self.grid.project_id).get(path, [])
-            if "favorite" in tags:
-                has_favorite = True
-                break
-
-        # Toggle: if any is favorite, unfavorite all; otherwise favorite all
-        if has_favorite:
-            # Unfavorite all
-            for path in paths:
-                db.remove_tag(path, "favorite", self.grid.project_id)
-            msg = f"Removed favorite from {len(paths)} photo(s)"
-        else:
-            # Favorite all
-            for path in paths:
-                db.add_tag(path, "favorite", self.grid.project_id)
-            msg = f"Added {len(paths)} photo(s) to favorites"
-
-        # Refresh grid to show updated tag icons
-        if hasattr(self.grid, "_refresh_tags_for_paths"):
-            self.grid._refresh_tags_for_paths(paths)
-        if hasattr(self.grid, 'tagsChanged'):
-            self.grid.tagsChanged.emit()
-
-        self.statusBar().showMessage(msg, 3000)
-        print(f"[Favorite] {msg}")
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.toggle_favorite_selection()
 
     def _add_tag_to_selection(self):
-        """Prompt for a tag name and assign to selected photos."""
-        paths = self.grid.get_selected_paths()
-        if not paths:
-            return
-        from PySide6.QtWidgets import QInputDialog
-        name, ok = QInputDialog.getText(self, "Add Tag", "Tag name:")
-        if ok and name.strip():
-            try:
-                from services.tag_service import get_tag_service
-                svc = get_tag_service()
-                svc.assign_tags_bulk(paths, name.strip(), self.grid.project_id)
-                # Update grid tags overlay without full reload
-                if hasattr(self.grid, '_refresh_tags_for_paths'):
-                    self.grid._refresh_tags_for_paths(paths)
-                if hasattr(self.grid, 'tagsChanged'):
-                    self.grid.tagsChanged.emit()
-                self.statusBar().showMessage(f"Tagged {len(paths)} photo(s) with '{name.strip()}'", 3000)
-            except Exception as e:
-                QMessageBox.critical(self, "Tag Failed", str(e))
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.add_tag_to_selection()
 
     def _export_selection_to_folder(self):
-        """Export selected photos to a chosen folder (copies)."""
-        paths = self.grid.get_selected_paths()
-        if not paths:
-            return
-        folder = QFileDialog.getExistingDirectory(self, "Export to Folder")
-        if not folder:
-            return
-        import shutil, os
-        ok, fail = 0, 0
-        for p in paths:
-            try:
-                shutil.copy2(p, os.path.join(folder, os.path.basename(p)))
-                ok += 1
-            except Exception:
-                fail += 1
-        self.statusBar().showMessage(f"Exported {ok}, failed {fail}", 5000)
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.export_selection_to_folder()
 
     def _move_selection_to_folder(self):
-        """Assign selected photos to a folder (by folder_id)."""
-        paths = self.grid.get_selected_paths()
-        if not paths:
-            return
-        from PySide6.QtWidgets import QInputDialog
-        folder_id, ok = QInputDialog.getInt(self, "Move to Folder", "Folder ID:", 0, 0)
-        if not ok:
-            return
-        try:
-            db = ReferenceDB()
-            for p in paths:
-                db.set_folder_for_image(p, folder_id)
-            self.grid.reload()
-            self.statusBar().showMessage(f"Moved {len(paths)} photo(s) to folder {folder_id}", 3000)
-        except Exception as e:
-            QMessageBox.critical(self, "Move Failed", str(e))
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.move_selection_to_folder()
 
     # ============================================================
     # Phase 8: Face Grouping Handlers (moved from People tab)
@@ -2200,76 +2130,12 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Re-Cluster Failed", str(e))
 
     def _request_delete_from_selection(self):
-        paths = []
-        try:
-            if hasattr(self, 'grid') and hasattr(self.grid, 'get_selected_paths'):
-                paths = self.grid.get_selected_paths() or []
-        except Exception:
-            paths = []
-        if not paths:
-            return
-        self._confirm_delete(paths)
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.request_delete_from_selection()
 
     def _confirm_delete(self, paths: list[str]):
-        """Delete photos from database (and optionally from disk)."""
-        if not paths:
-            return
-
-        # Ask user about deletion scope
-        msg = QMessageBox(self)
-        msg.setIcon(QMessageBox.Question)
-        msg.setWindowTitle("Delete Photos")
-        msg.setText(f"Delete {len(paths)} photo(s)?")
-        msg.setInformativeText("Choose deletion scope:")
-
-        # Add custom buttons
-        db_only_btn = msg.addButton("Database Only", QMessageBox.ActionRole)
-        db_and_files_btn = msg.addButton("Database && Files", QMessageBox.DestructiveRole)
-        cancel_btn = msg.addButton(QMessageBox.Cancel)
-
-        msg.setDefaultButton(db_only_btn)
-        msg.exec()
-
-        clicked = msg.clickedButton()
-
-        if clicked == cancel_btn or clicked is None:
-            return
-
-        delete_files = (clicked == db_and_files_btn)
-
-        # Import and use deletion service
-        from services import PhotoDeletionService
-        deletion_service = PhotoDeletionService()
-
-        try:
-            result = deletion_service.delete_photos(
-                paths=paths,
-                delete_files=delete_files,
-                invalidate_cache=True
-            )
-
-            # Show result summary
-            summary = f"Deleted {result.photos_deleted_from_db} photos from database"
-            if delete_files:
-                summary += f"\nDeleted {result.files_deleted_from_disk} files from disk"
-                if result.files_not_found > 0:
-                    summary += f"\n{result.files_not_found} files not found"
-
-            if result.errors:
-                summary += f"\n\nErrors:\n" + "\n".join(result.errors[:5])
-                QMessageBox.warning(self, "Deletion Completed with Errors", summary)
-            else:
-                QMessageBox.information(self, "Deletion Successful", summary)
-
-            # Reload grid to reflect changes
-            self.grid.reload()
-
-        except Exception as e:
-            QMessageBox.critical(
-                self,
-                "Deletion Failed",
-                f"Failed to delete photos: {e}"
-            )
+        """Delegate to PhotoOperationsController."""
+        self.photo_ops_controller.confirm_delete(paths)
 
     def _open_lightbox(self, path: str):
         """
