@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (
     QProgressDialog, QMessageBox, QDialog, QVBoxLayout,
     QLabel, QProgressBar, QApplication
 )
+#from translations import tr
 from translation_manager import tr
 
 
@@ -247,7 +248,8 @@ class ScanController:
 
         # CRITICAL FIX: Create and show message box explicitly, then close it properly
         # Using QMessageBox.information() can cause issues with multiple scans
-        from translations import tr
+        #from translations import tr
+        from translation_manager import tr
         msgbox = QMessageBox(self.main)
         msgbox.setWindowTitle(tr("messages.scan_complete_title"))
         msgbox.setText(msg)
@@ -561,3 +563,5 @@ class ScanController:
 
         # Note: Video metadata worker callback is now connected at worker creation time
         # in start_scan() to avoid race conditions with worker finishing before cleanup runs
+
+

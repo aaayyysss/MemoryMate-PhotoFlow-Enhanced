@@ -165,3 +165,4 @@ class BackfillStatusPanel(QWidget):
             self.txt.setText("\n".join(filtered[-6:]))
         except Exception as e:
             self.txt.setText(str(e))
+

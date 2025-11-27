@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QRect
 from PySide6.QtGui import QPixmap, QColor, QPainter, QFont, QImageReader
 
+#from i18n import tr
 from translation_manager import tr
 
 
@@ -1021,3 +1022,4 @@ class DetailsPanel(QWidget):
             # Silent fail - don't block metadata display
             print(f"[GPS] Reverse geocoding failed: {e}")
             return None
+
