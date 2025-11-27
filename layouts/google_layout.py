@@ -75,13 +75,13 @@ class MediaLightbox(QDialog):
         self.current_index = all_media.index(media_path) if media_path in all_media else 0
         self._media_loaded = False  # Track if media has been loaded
 
-        # Zoom state (for photos) - PROFESSIONAL STEPPED ZOOM
-        # Lightroom-style zoom steps: 25% → 33% → 50% → 67% → 100% → 150% → 200% → 300% → 400% → 600% → 800%
-        self.ZOOM_STEPS = [0.25, 0.33, 0.50, 0.67, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0]
-        self.zoom_level = 1.0
-        self.zoom_step_index = 4  # Start at 100% (index of 1.0 in ZOOM_STEPS)
+        # Zoom state (for photos) - SMOOTH CONTINUOUS ZOOM
+        # Like Current Layout's LightboxDialog - smooth zoom with mouse wheel
+        self.zoom_level = 1.0  # Current zoom scale
+        self.fit_zoom_level = 1.0  # Zoom level for "fit to window" mode
         self.zoom_mode = "fit"  # "fit", "fill", "actual", or "custom"
         self.original_pixmap = None  # Store original for zoom
+        self.zoom_factor = 1.15  # Zoom increment per wheel step (smooth like Current Layout)
 
         # Slideshow state
         self.slideshow_active = False
@@ -427,19 +427,17 @@ class MediaLightbox(QDialog):
         self.prev_btn.raise_()
         self.next_btn.raise_()
 
-        # Initialize as hidden (auto-hide behavior)
-        self.prev_btn.setWindowOpacity(0.0)
-        self.next_btn.setWindowOpacity(0.0)
-        self.nav_buttons_visible = False
+        # CRITICAL FIX: Use QGraphicsOpacityEffect instead of setWindowOpacity
+        # (windowOpacity only works on top-level windows, not child widgets)
+        self.prev_btn_opacity = QGraphicsOpacityEffect()
+        self.prev_btn.setGraphicsEffect(self.prev_btn_opacity)
+        self.prev_btn_opacity.setOpacity(1.0)  # Start visible
 
-        # Create fade animations for auto-hide/show
-        self.prev_btn_fade = QPropertyAnimation(self.prev_btn, b"windowOpacity")
-        self.prev_btn_fade.setDuration(200)
-        self.prev_btn_fade.setEasingCurve(QEasingCurve.InOutQuad)
+        self.next_btn_opacity = QGraphicsOpacityEffect()
+        self.next_btn.setGraphicsEffect(self.next_btn_opacity)
+        self.next_btn_opacity.setOpacity(1.0)  # Start visible
 
-        self.next_btn_fade = QPropertyAnimation(self.next_btn, b"windowOpacity")
-        self.next_btn_fade.setDuration(200)
-        self.next_btn_fade.setEasingCurve(QEasingCurve.InOutQuad)
+        self.nav_buttons_visible = True  # Start visible
 
         # Auto-hide timer
         self.nav_hide_timer = QTimer()
@@ -1050,37 +1048,20 @@ class MediaLightbox(QDialog):
         print(f"[MediaLightbox] Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
 
     def _show_nav_buttons(self):
-        """Show navigation buttons with fade-in animation."""
-        if self.nav_buttons_visible:
-            return
+        """Show navigation buttons with instant visibility (always visible for usability)."""
+        if not self.nav_buttons_visible:
+            self.nav_buttons_visible = True
+            self.prev_btn_opacity.setOpacity(1.0)
+            self.next_btn_opacity.setOpacity(1.0)
 
-        self.nav_buttons_visible = True
+        # Cancel any pending hide
         self.nav_hide_timer.stop()
 
-        # Fade in
-        self.prev_btn_fade.setStartValue(self.prev_btn.windowOpacity())
-        self.prev_btn_fade.setEndValue(1.0)
-        self.prev_btn_fade.start()
-
-        self.next_btn_fade.setStartValue(self.next_btn.windowOpacity())
-        self.next_btn_fade.setEndValue(1.0)
-        self.next_btn_fade.start()
-
     def _hide_nav_buttons(self):
-        """Hide navigation buttons with fade-out animation."""
-        if not self.nav_buttons_visible:
-            return
-
-        self.nav_buttons_visible = False
-
-        # Fade out
-        self.prev_btn_fade.setStartValue(self.prev_btn.windowOpacity())
-        self.prev_btn_fade.setEndValue(0.0)
-        self.prev_btn_fade.start()
-
-        self.next_btn_fade.setStartValue(self.next_btn.windowOpacity())
-        self.next_btn_fade.setEndValue(0.0)
-        self.next_btn_fade.start()
+        """Hide navigation buttons (auto-hide disabled for better UX)."""
+        # PROFESSIONAL UX: Keep navigation buttons always visible
+        # Users need immediate access to navigation, especially in photo galleries
+        pass
 
     def enterEvent(self, event):
         """Show navigation buttons on mouse enter."""
@@ -1319,58 +1300,58 @@ class MediaLightbox(QDialog):
             super().keyPressEvent(event)
 
     def wheelEvent(self, event):
-        """Handle mouse wheel for Ctrl+Wheel zoom."""
-        if event.modifiers() & Qt.ControlModifier:
-            # Ctrl+Wheel for zoom
-            if event.angleDelta().y() > 0:
-                self._zoom_in()
-            else:
-                self._zoom_out()
-            event.accept()
-        else:
+        """Handle mouse wheel for smooth continuous zoom (like Current Layout)."""
+        if self._is_video(self.media_path):
             super().wheelEvent(event)
+            return
+
+        # PROFESSIONAL UX: Smooth zoom without Ctrl modifier (like Current Layout)
+        steps = event.angleDelta().y() / 120.0
+        if steps == 0:
+            super().wheelEvent(event)
+            return
+
+        # Calculate zoom factor (1.15 per step - smooth and natural)
+        factor = self.zoom_factor ** steps
+
+        # Apply smooth zoom
+        self._smooth_zoom(factor)
+        event.accept()
+
+    def _smooth_zoom(self, factor):
+        """Apply smooth continuous zoom (like Current Layout)."""
+        if self._is_video(self.media_path) or not self.original_pixmap:
+            return
+
+        # Calculate new zoom level
+        new_zoom = self.zoom_level * factor
+
+        # Enforce minimum: don't zoom below fit level
+        min_zoom = max(0.1, self.fit_zoom_level * 0.25)  # Allow 25% of fit as minimum
+        max_zoom = 10.0  # Maximum 1000% zoom
+
+        new_zoom = max(min_zoom, min(new_zoom, max_zoom))
+
+        # Update zoom state
+        self.zoom_level = new_zoom
+
+        # Switch to custom zoom mode if zooming from fit/fill
+        if new_zoom > self.fit_zoom_level * 1.01:  # Small tolerance for floating point
+            self.zoom_mode = "custom"
+        elif abs(new_zoom - self.fit_zoom_level) < 0.01:
+            self.zoom_mode = "fit"
+
+        # Apply the zoom
+        self._apply_zoom()
+        self._update_zoom_status()
 
     def _zoom_in(self):
-        """Zoom to next stepped level (Lightroom-style)."""
-        if self._is_video(self.media_path):
-            return  # Zoom only works for photos
-
-        if self.zoom_mode in ["fit", "fill"]:
-            # First zoom in switches to 100%
-            self.zoom_mode = "actual"
-            self.zoom_level = 1.0
-            self.zoom_step_index = 4  # 100%
-        elif self.zoom_step_index < len(self.ZOOM_STEPS) - 1:
-            # Step to next zoom level
-            self.zoom_step_index += 1
-            self.zoom_level = self.ZOOM_STEPS[self.zoom_step_index]
-            self.zoom_mode = "custom"
-
-        self._apply_zoom()
-        self._update_zoom_status()
+        """Zoom in by one step (keyboard shortcut: +)."""
+        self._smooth_zoom(self.zoom_factor)
 
     def _zoom_out(self):
-        """Zoom to previous stepped level (Lightroom-style)."""
-        if self._is_video(self.media_path):
-            return  # Zoom only works for photos
-
-        if self.zoom_mode in ["fit", "fill"]:
-            return  # Already at minimum
-
-        if self.zoom_step_index > 0:
-            # Step to previous zoom level
-            self.zoom_step_index -= 1
-            self.zoom_level = self.ZOOM_STEPS[self.zoom_step_index]
-
-            # If stepping below 100%, switch to fit mode
-            if self.zoom_level < 1.0:
-                self.zoom_mode = "fit"
-                self._fit_to_window()
-            else:
-                self.zoom_mode = "custom"
-
-        self._apply_zoom()
-        self._update_zoom_status()
+        """Zoom out by one step (keyboard shortcut: -)."""
+        self._smooth_zoom(1.0 / self.zoom_factor)
 
     def _apply_zoom(self):
         """Apply current zoom level to displayed photo."""
@@ -1417,7 +1398,6 @@ class MediaLightbox(QDialog):
 
         self.zoom_mode = "actual"
         self.zoom_level = 1.0
-        self.zoom_step_index = 4  # Index of 1.0
         self._apply_zoom()
         self._update_zoom_status()
 
@@ -1453,6 +1433,7 @@ class MediaLightbox(QDialog):
 
         # Calculate actual zoom level for display
         self.zoom_level = scaled_pixmap.width() / self.original_pixmap.width()
+        self.fit_zoom_level = self.zoom_level  # Store for smooth zoom minimum
 
     def _fill_window(self):
         """Fill window completely (may crop edges to avoid letterboxing)."""
