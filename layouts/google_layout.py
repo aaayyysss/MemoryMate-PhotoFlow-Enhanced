@@ -372,6 +372,8 @@ class MediaLightbox(QDialog):
         from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve
         from PySide6.QtGui import QCursor
 
+        print("[MediaLightbox] Creating overlay navigation buttons...")
+
         # Previous button (left side)
         self.prev_btn = QPushButton("◄", self)
         self.prev_btn.setFocusPolicy(Qt.NoFocus)
@@ -424,6 +426,10 @@ class MediaLightbox(QDialog):
         """)
         self.next_btn.clicked.connect(self._next_media)
 
+        # CRITICAL: Show buttons explicitly
+        self.prev_btn.show()
+        self.next_btn.show()
+
         # Raise buttons above other widgets (overlay effect)
         self.prev_btn.raise_()
         self.next_btn.raise_()
@@ -447,6 +453,8 @@ class MediaLightbox(QDialog):
 
         # Position buttons (will be called in resizeEvent)
         QTimer.singleShot(0, self._position_nav_buttons)
+
+        print(f"[MediaLightbox] ✓ Nav buttons created and shown")
 
     # === PROFESSIONAL AUTO-HIDE TOOLBAR SYSTEM ===
 
@@ -1016,6 +1024,7 @@ class MediaLightbox(QDialog):
     def _position_nav_buttons(self):
         """Position navigation buttons on left/right sides, vertically centered."""
         if not hasattr(self, 'prev_btn') or not hasattr(self, 'scroll_area'):
+            print(f"[MediaLightbox] _position_nav_buttons: Missing attributes (prev_btn={hasattr(self, 'prev_btn')}, scroll_area={hasattr(self, 'scroll_area')})")
             return
 
         # Get scroll area geometry
@@ -1024,8 +1033,11 @@ class MediaLightbox(QDialog):
             # Safety limit: stop retrying after 20 attempts (1 second total)
             if self._position_retry_count < 20:
                 self._position_retry_count += 1
+                print(f"[MediaLightbox] Scroll area not ready (retry {self._position_retry_count}/20), waiting 50ms...")
                 from PySide6.QtCore import QTimer
                 QTimer.singleShot(50, self._position_nav_buttons)
+            else:
+                print(f"[MediaLightbox] ⚠️ Scroll area still not ready after 20 retries!")
             return
 
         # Reset retry counter on success
@@ -1046,7 +1058,13 @@ class MediaLightbox(QDialog):
         right_x = scroll_rect.x() + scroll_rect.width() - btn_size - margin
         self.next_btn.move(right_x, y)
 
-        print(f"[MediaLightbox] Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
+        # CRITICAL: Ensure buttons are visible and on top
+        self.prev_btn.show()
+        self.next_btn.show()
+        self.prev_btn.raise_()
+        self.next_btn.raise_()
+
+        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}, size={btn_size}x{btn_size}")
 
     def _show_nav_buttons(self):
         """Show navigation buttons with instant visibility (always visible for usability)."""
