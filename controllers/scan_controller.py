@@ -15,11 +15,12 @@ Version: 09.20.00.00
 """
 
 import logging
-from PySide6.QtCore import QThread, Qt, QTimer, QApplication
+from PySide6.QtCore import QThread, Qt, QTimer
 from PySide6.QtWidgets import (
     QProgressDialog, QMessageBox, QDialog, QVBoxLayout,
-    QLabel, QProgressBar
+    QLabel, QProgressBar, QApplication
 )
+from translations import tr
 
 
 class ScanController:
