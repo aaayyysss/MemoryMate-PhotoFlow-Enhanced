@@ -1022,14 +1022,13 @@ class MediaLightbox(QDialog):
         self.metadata_layout.addWidget(value_widget)
 
     def _position_nav_buttons(self):
-        """Position navigation buttons on left/right sides, vertically centered."""
+        """Position navigation buttons on left/right sides, vertically centered (like Current Layout)."""
         if not hasattr(self, 'prev_btn') or not hasattr(self, 'scroll_area'):
             print(f"[MediaLightbox] _position_nav_buttons: Missing attributes (prev_btn={hasattr(self, 'prev_btn')}, scroll_area={hasattr(self, 'scroll_area')})")
             return
 
-        # Get scroll area geometry
-        scroll_rect = self.scroll_area.geometry()
-        if scroll_rect.width() == 0 or scroll_rect.height() == 0:
+        # Check if scroll area has valid size
+        if self.scroll_area.width() == 0 or self.scroll_area.height() == 0:
             # Safety limit: stop retrying after 20 attempts (1 second total)
             if self._position_retry_count < 20:
                 self._position_retry_count += 1
@@ -1043,20 +1042,34 @@ class MediaLightbox(QDialog):
         # Reset retry counter on success
         self._position_retry_count = 0
 
+        # CRITICAL FIX: Use mapTo() to get scroll area position relative to dialog window
+        # (like Current Layout's LightboxDialog does with canvas.mapTo())
+        try:
+            from PySide6.QtCore import QPoint
+            scroll_tl = self.scroll_area.mapTo(self, QPoint(0, 0))
+        except Exception as e:
+            print(f"[MediaLightbox] ⚠️ mapTo() failed: {e}, using fallback")
+            from PySide6.QtCore import QPoint
+            scroll_tl = QPoint(0, 0)
+
+        scroll_w = self.scroll_area.width()
+        scroll_h = self.scroll_area.height()
+
         # Button dimensions
-        btn_size = 48
-        margin = 20  # Distance from edges
+        btn_w = self.prev_btn.width() or 48
+        btn_h = self.prev_btn.height() or 48
+        margin = 12  # Distance from edges (reduced from 20 to match Current Layout)
 
-        # Calculate vertical center position
-        y = scroll_rect.y() + (scroll_rect.height() // 2) - (btn_size // 2)
+        # Calculate vertical center position (relative to dialog, not scroll area)
+        y = scroll_tl.y() + (scroll_h // 2) - (btn_h // 2)
 
-        # Position left button
-        left_x = scroll_rect.x() + margin
-        self.prev_btn.move(left_x, y)
+        # Position left button (relative to dialog)
+        left_x = scroll_tl.x() + margin
+        self.prev_btn.move(left_x, max(8, y))
 
-        # Position right button
-        right_x = scroll_rect.x() + scroll_rect.width() - btn_size - margin
-        self.next_btn.move(right_x, y)
+        # Position right button (relative to dialog)
+        right_x = scroll_tl.x() + scroll_w - btn_w - margin
+        self.next_btn.move(right_x, max(8, y))
 
         # CRITICAL: Ensure buttons are visible and on top
         self.prev_btn.show()
@@ -1064,7 +1077,7 @@ class MediaLightbox(QDialog):
         self.prev_btn.raise_()
         self.next_btn.raise_()
 
-        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}, size={btn_size}x{btn_size}")
+        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}, scroll_pos=({scroll_tl.x()},{scroll_tl.y()})")
 
     def _show_nav_buttons(self):
         """Show navigation buttons with instant visibility (always visible for usability)."""
