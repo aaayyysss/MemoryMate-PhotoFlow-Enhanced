@@ -17,18 +17,18 @@ import os
 
 # === ASYNC THUMBNAIL LOADING ===
 class ThumbnailSignals(QObject):
-    """Signals for async thumbnail loading."""
-    loaded = Signal(str, QPixmap)  # (path, pixmap)
+    """Signals for async thumbnail loading (shared by all workers)."""
+    loaded = Signal(str, QPixmap, int)  # (path, pixmap, size)
 
 
 class ThumbnailLoader(QRunnable):
-    """Async thumbnail loader using QThreadPool."""
+    """Async thumbnail loader using QThreadPool (copied from Current Layout pattern)."""
 
-    def __init__(self, path: str, size: int):
+    def __init__(self, path: str, size: int, signals: ThumbnailSignals):
         super().__init__()
         self.path = path
         self.size = size
-        self.signals = ThumbnailSignals()
+        self.signals = signals  # Use shared signal object
 
     def run(self):
         """Load thumbnail in background thread."""
@@ -37,8 +37,8 @@ class ThumbnailLoader(QRunnable):
             pixmap = get_thumbnail(self.path, self.size)
 
             if pixmap and not pixmap.isNull():
-                # Emit loaded signal with pixmap
-                self.signals.loaded.emit(self.path, pixmap)
+                # Emit to shared signal (connected in GooglePhotosLayout)
+                self.signals.loaded.emit(self.path, pixmap, self.size)
         except Exception as e:
             print(f"[ThumbnailLoader] Error loading {self.path}: {e}")
 
@@ -1455,12 +1455,18 @@ class GooglePhotosLayout(BaseLayout):
         self.last_selected_path = None  # For Shift range selection
         self.all_displayed_paths = []  # Track all photos in current view for range selection
 
-        # Async thumbnail loading
+        # Async thumbnail loading (copied from Current Layout's proven pattern)
         self.thumbnail_thread_pool = QThreadPool()
         self.thumbnail_thread_pool.setMaxThreadCount(4)  # REDUCED: Limit concurrent loads
         self.thumbnail_buttons = {}  # Map path -> button widget for async updates
         self.thumbnail_load_count = 0  # Track how many thumbnails we've queued
         self.thumbnail_load_limit = 30  # CRITICAL: Only auto-load first 30 (viewport), lazy-load rest
+
+        # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
+        # Problem: Each worker was creating its own signal → signals got garbage collected
+        # Solution: Share one signal object, connect it once
+        self.thumbnail_signals = ThumbnailSignals()
+        self.thumbnail_signals.loaded.connect(self._on_thumbnail_loaded)
 
         # Initialize filter state
         self.current_thumb_size = 200
@@ -3025,9 +3031,8 @@ class GooglePhotosLayout(BaseLayout):
         # Copied strategy from Current Layout's proven approach
         if self.thumbnail_load_count < self.thumbnail_load_limit:
             self.thumbnail_load_count += 1
-            # Queue async thumbnail loading
-            loader = ThumbnailLoader(path, size)
-            loader.signals.loaded.connect(lambda p, pixmap: self._on_thumbnail_loaded(p, pixmap, size))
+            # Queue async thumbnail loading with SHARED signal object
+            loader = ThumbnailLoader(path, size, self.thumbnail_signals)
             self.thumbnail_thread_pool.start(loader)
         # else: Keep placeholder, will load on scroll (future enhancement)
 
