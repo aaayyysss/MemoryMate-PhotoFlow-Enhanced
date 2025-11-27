@@ -1,9 +1,61 @@
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 21 photos
+[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
+[GRID] Fetched tags for 21 paths, got 21 entries
+[Sidebar][counts applied] updated UI with counts
+[GRID] Using scroll-based start position: 0 (scroll: 0/0)
+[GRID] Loading viewport range: 0-20 of 21
+[GRID] Queued 21 new thumbnail workers
+[GRID] Loaded 21 thumbnails.
+[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
 [GRID] Step 5: ✓ gridReloaded signal emitted
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-120 of 298
-[GRID] Queued 1 new thumbnail workers
+[GRID] Loading viewport range: 0-20 of 21
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] Using default project: 1
@@ -19,161 +71,272 @@
 
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
-[GooglePhotosLayout] 📊 Loaded 298 photos from database
+[GooglePhotosLayout] 📊 Loaded 21 photos from database
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 0 face clusters
 [GoogleLayout] Loading videos for project_id=1
 [GoogleLayout] Found 0 videos in project 1
-[GooglePhotosLayout] Tracking 298 paths for multi-selection
-[GooglePhotosLayout] Loaded 298 photos in 25 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Tracking 21 paths for multi-selection
+[GooglePhotosLayout] Loaded 21 photos in 15 date groups
+[GooglePhotosLayout] Queued 21 thumbnails for loading (limit: 30)
 [LayoutManager] Setting new central widget: QWidget
 [GooglePhotosLayout] 📍 Layout activated
 [GooglePhotosLayout] ✓ Connected Scan button
 [GooglePhotosLayout] ✓ Connected Faces button
 [LayoutManager] ✓ Switched to: Google Photos Style
 [MainWindow] ✓ Switched to layout: google
-[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
-[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
-[GooglePhotosLayout] Found 256 photos + 0 videos = 256 total media
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
+[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
 [MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
-[MediaLightbox] showEvent triggered, scheduling media load...
-[MediaLightbox] Nav buttons positioned: left=20, right=291, y=3
-[MediaLightbox] Nav buttons positioned: left=20, right=1852, y=410
-[MediaLightbox] Loading photo: img_4790.jpeg
-[MediaLightbox] Window size: 1920x1009
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_8152.jpeg
+[MediaLightbox] Window size: 1728x972
 [PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
 [PhotoLightbox] ✓ PIL image and buffer closed
-[PhotoLightbox] Scaling to: max_width=1820, max_height=809
-[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_1550.dng
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_e9574.jpg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Space pressed - next media
+[MediaLightbox] Loading photo: img_9570.jpg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 16777248 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Unhandled key: 16777248
+[MediaLightbox] Nav buttons positioned: left=20, right=1658, y=381
+[MediaLightbox] Nav buttons positioned: left=20, right=1645, y=377
+[MediaLightbox] Nav buttons positioned: left=20, right=1623, y=367
+[MediaLightbox] Nav buttons positioned: left=20, right=1565, y=340
+[MediaLightbox] Nav buttons positioned: left=20, right=1482, y=299
+[MediaLightbox] Nav buttons positioned: left=20, right=1424, y=270
+[MediaLightbox] Nav buttons positioned: left=20, right=1374, y=247
+[MediaLightbox] Nav buttons positioned: left=20, right=1353, y=240
+[MediaLightbox] Nav buttons positioned: left=20, right=1326, y=231
+[MediaLightbox] Nav buttons positioned: left=20, right=1308, y=226
+[MediaLightbox] Nav buttons positioned: left=20, right=1300, y=223
+[MediaLightbox] Nav buttons positioned: left=20, right=1292, y=221
+[MediaLightbox] Nav buttons positioned: left=20, right=1286, y=219
+[MediaLightbox] Nav buttons positioned: left=20, right=1280, y=217
+[MediaLightbox] Nav buttons positioned: left=20, right=1276, y=215
+[MediaLightbox] Nav buttons positioned: left=20, right=1271, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1268, y=212
+[MediaLightbox] Nav buttons positioned: left=20, right=1266, y=212
+[MediaLightbox] Nav buttons positioned: left=20, right=1260, y=209
+[MediaLightbox] Nav buttons positioned: left=20, right=1226, y=198
+[MediaLightbox] Nav buttons positioned: left=20, right=1177, y=182
+[MediaLightbox] Nav buttons positioned: left=20, right=1121, y=164
+[MediaLightbox] Nav buttons positioned: left=20, right=1071, y=151
+[MediaLightbox] Nav buttons positioned: left=20, right=1028, y=141
+[MediaLightbox] Nav buttons positioned: left=20, right=996, y=135
+[MediaLightbox] Nav buttons positioned: left=20, right=974, y=131
+[MediaLightbox] Nav buttons positioned: left=20, right=958, y=128
+[MediaLightbox] Nav buttons positioned: left=20, right=952, y=126
+[MediaLightbox] Nav buttons positioned: left=20, right=948, y=125
+[MediaLightbox] Nav buttons positioned: left=20, right=947, y=125
+[MediaLightbox] Key pressed: 16777249 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Unhandled key: 16777249
+Error calling Python override of QDialog::wheelEvent(): ================================================================================
+UNHANDLED EXCEPTION CAUGHT:
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+2025-11-27 23:33:42,390 [ERROR] Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+[MediaLightbox] Loading photo: img_e9569.jpg
+[MediaLightbox] Window size: 1015x458
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=915, max_height=400
+[PhotoLightbox] ✓ Photo displayed: 2316x3088, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+Error calling Python override of QDialog::wheelEvent(): ================================================================================
+UNHANDLED EXCEPTION CAUGHT:
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+2025-11-27 23:33:43,402 [ERROR] Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1309, in wheelEvent
+    self._zoom_in()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1332, in _zoom_in
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+[MediaLightbox] Loading photo: img_e7413.jpg
+[MediaLightbox] Window size: 1015x458
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=915, max_height=400
+[PhotoLightbox] ✓ Photo displayed: 3474x4632, zoom=1.5
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+================================================================================
+UNHANDLED EXCEPTION CAUGHT:
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+2025-11-27 23:33:46,446 [ERROR] Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+================================================================================
+UNHANDLED EXCEPTION CAUGHT:
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+2025-11-27 23:33:47,059 [ERROR] Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1355, in _zoom_out
+    self._apply_zoom()
+  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06\layouts\google_layout.py", line 1370, in _apply_zoom
+    Qt.KeepAspectRatio,
+UnboundLocalError: local variable 'Qt' referenced before assignment
+[MediaLightbox] Loading photo: img_3307.jpg
+[MediaLightbox] Window size: 1015x458
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 4032x3024
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=915, max_height=400
+[PhotoLightbox] ✓ Photo displayed: 533x400, zoom=0.0924006908462867
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3122.jpg
+[MediaLightbox] Window size: 1015x458
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=915, max_height=400
+[PhotoLightbox] ✓ Photo displayed: 300x400, zoom=0.0924006908462867
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Loading photo: img_e3093.jpg
+[MediaLightbox] Window size: 1015x458
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 3024x4032
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=915, max_height=400
+[PhotoLightbox] ✓ Photo displayed: 300x400, zoom=0.0924006908462867
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] Key pressed: 16777249 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Unhandled key: 16777249
+[MediaLightbox] Key pressed: 16777249 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
+[MediaLightbox] Unhandled key: 16777249
+[MediaLightbox] Nav buttons positioned: left=20, right=946, y=125
+[MediaLightbox] Nav buttons positioned: left=20, right=946, y=126
+[MediaLightbox] Nav buttons positioned: left=20, right=948, y=129
+[MediaLightbox] Nav buttons positioned: left=20, right=952, y=134
+[MediaLightbox] Nav buttons positioned: left=20, right=957, y=139
+[MediaLightbox] Nav buttons positioned: left=20, right=964, y=146
+[MediaLightbox] Nav buttons positioned: left=20, right=971, y=153
+[MediaLightbox] Nav buttons positioned: left=20, right=978, y=161
+[MediaLightbox] Nav buttons positioned: left=20, right=985, y=168
+[MediaLightbox] Nav buttons positioned: left=20, right=993, y=175
+[MediaLightbox] Nav buttons positioned: left=20, right=998, y=180
+[MediaLightbox] Nav buttons positioned: left=20, right=1004, y=184
+[MediaLightbox] Nav buttons positioned: left=20, right=1007, y=186
+[MediaLightbox] Nav buttons positioned: left=20, right=1009, y=188
+[MediaLightbox] Nav buttons positioned: left=20, right=1010, y=189
+[MediaLightbox] Nav buttons positioned: left=20, right=1011, y=190
+[MediaLightbox] Nav buttons positioned: left=20, right=1012, y=191
+[MediaLightbox] Nav buttons positioned: left=20, right=1014, y=191
+[MediaLightbox] Nav buttons positioned: left=20, right=1014, y=193
+[MediaLightbox] Nav buttons positioned: left=20, right=1015, y=194
+[MediaLightbox] Nav buttons positioned: left=20, right=1017, y=196
+[MediaLightbox] Nav buttons positioned: left=20, right=1021, y=199
+[MediaLightbox] Nav buttons positioned: left=20, right=1024, y=202
+[MediaLightbox] Nav buttons positioned: left=20, right=1030, y=206
+[MediaLightbox] Nav buttons positioned: left=20, right=1033, y=209
+[MediaLightbox] Nav buttons positioned: left=20, right=1037, y=213
+[MediaLightbox] Nav buttons positioned: left=20, right=1039, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1038, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1036, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1034, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1033, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1032, y=214
+[MediaLightbox] Nav buttons positioned: left=20, right=1030, y=214
 [GooglePhotosLayout] ✓ MediaLightbox closed
-[GooglePhotosLayout] Filtering by year: 2025
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2025]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2025']
-[GooglePhotosLayout] 📊 Loaded 38 photos from database
-[GooglePhotosLayout] Tracking 38 paths for multi-selection
-[GooglePhotosLayout] Loaded 38 photos in 10 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2024
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2024]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2024']
-[GooglePhotosLayout] 📊 Loaded 13 photos from database
-[GooglePhotosLayout] Tracking 13 paths for multi-selection
-[GooglePhotosLayout] Loaded 13 photos in 5 date groups
-[GooglePhotosLayout] Queued 13 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2023
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2023]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2023']
-[GooglePhotosLayout] 📊 Loaded 10 photos from database
-[GooglePhotosLayout] Tracking 10 paths for multi-selection
-[GooglePhotosLayout] Loaded 10 photos in 4 date groups
-[GooglePhotosLayout] Queued 10 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2022
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2022]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2022']
-[GooglePhotosLayout] 📊 Loaded 236 photos from database
-[GooglePhotosLayout] Tracking 236 paths for multi-selection
-[GooglePhotosLayout] Loaded 236 photos in 5 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2021
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2021]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2021']
-[GooglePhotosLayout] 📊 Loaded 1 photos from database
-[GooglePhotosLayout] Tracking 1 paths for multi-selection
-[GooglePhotosLayout] Loaded 1 photos in 1 date groups
-[GooglePhotosLayout] Queued 1 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: inbox
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/inbox]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/inbox%']
-[GooglePhotosLayout] 📊 Loaded 92 photos from database
-[GooglePhotosLayout] Tracking 92 paths for multi-selection
-[GooglePhotosLayout] Loaded 92 photos in 8 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: inbox
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox%']
-[GooglePhotosLayout] 📊 Loaded 84 photos from database
-[GooglePhotosLayout] Tracking 84 paths for multi-selection
-[GooglePhotosLayout] Loaded 84 photos in 7 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: 2
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2%']
-[GooglePhotosLayout] 📊 Loaded 14 photos from database
-[GooglePhotosLayout] Tracking 14 paths for multi-selection
-[GooglePhotosLayout] Loaded 14 photos in 11 date groups
-[GooglePhotosLayout] Queued 14 thumbnails for loading (limit: 30)
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-15>
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
+[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-06>
