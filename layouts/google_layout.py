@@ -1357,6 +1357,8 @@ class MediaLightbox(QDialog):
 
     def _apply_zoom(self):
         """Apply current zoom level to displayed photo."""
+        from PySide6.QtCore import Qt  # Import at top to avoid UnboundLocalError
+
         if not self.original_pixmap or self.original_pixmap.isNull():
             return
 
@@ -1377,7 +1379,6 @@ class MediaLightbox(QDialog):
         self.media_container.resize(scaled_pixmap.size())
 
         # Update cursor based on new zoom level
-        from PySide6.QtCore import Qt
         if self._is_content_panneable():
             self.scroll_area.setCursor(Qt.OpenHandCursor)
         else:
@@ -1414,6 +1415,8 @@ class MediaLightbox(QDialog):
 
     def _fit_to_window(self):
         """Fit entire image to window (letterboxing if needed)."""
+        from PySide6.QtCore import Qt  # Import at top to avoid UnboundLocalError
+
         if not self.original_pixmap or self.original_pixmap.isNull():
             return
 
@@ -1436,6 +1439,8 @@ class MediaLightbox(QDialog):
 
     def _fill_window(self):
         """Fill window completely (may crop edges to avoid letterboxing)."""
+        from PySide6.QtCore import Qt  # Import at top to avoid UnboundLocalError
+
         if not self.original_pixmap or self.original_pixmap.isNull():
             return
 
