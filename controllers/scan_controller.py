@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (
     QProgressDialog, QMessageBox, QDialog, QVBoxLayout,
     QLabel, QProgressBar, QApplication
 )
-from translations import tr
+from translation_manager import tr
 
 
 class ScanController:
