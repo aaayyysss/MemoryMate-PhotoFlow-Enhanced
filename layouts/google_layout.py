@@ -75,11 +75,12 @@ class MediaLightbox(QDialog):
         self.current_index = all_media.index(media_path) if media_path in all_media else 0
         self._media_loaded = False  # Track if media has been loaded
 
-        # Zoom state (for photos)
+        # Zoom state (for photos) - PROFESSIONAL STEPPED ZOOM
+        # Lightroom-style zoom steps: 25% → 33% → 50% → 67% → 100% → 150% → 200% → 300% → 400% → 600% → 800%
+        self.ZOOM_STEPS = [0.25, 0.33, 0.50, 0.67, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0]
         self.zoom_level = 1.0
-        self.min_zoom = 0.1
-        self.max_zoom = 5.0
-        self.zoom_mode = "fit"  # "fit", "fill", or "100%"
+        self.zoom_step_index = 4  # Start at 100% (index of 1.0 in ZOOM_STEPS)
+        self.zoom_mode = "fit"  # "fit", "fill", "actual", or "custom"
         self.original_pixmap = None  # Store original for zoom
 
         # Slideshow state
@@ -95,10 +96,24 @@ class MediaLightbox(QDialog):
 
     def _setup_ui(self):
         """Setup Google Photos-style lightbox UI with overlay controls."""
-        # Window settings
+        from PySide6.QtWidgets import QApplication, QGraphicsOpacityEffect
+        from PySide6.QtCore import QPropertyAnimation, QTimer, QRect
+
+        # Window settings - SMART SIZING: 90% of screen, centered
         self.setWindowTitle("Media Viewer")
-        self.setWindowState(Qt.WindowMaximized)
+
+        # Calculate smart window size (90% of screen, centered)
+        screen = QApplication.primaryScreen().geometry()
+        width = int(screen.width() * 0.9)
+        height = int(screen.height() * 0.9)
+        x = (screen.width() - width) // 2
+        y = (screen.height() - height) // 2
+        self.setGeometry(QRect(x, y, width, height))
+
         self.setStyleSheet("background: #000000;")  # Pure black background
+
+        # Start maximized (not fullscreen - user choice)
+        self.showMaximized()
 
         # Main layout (vertical with toolbars + media)
         main_layout = QVBoxLayout(self)
@@ -180,36 +195,55 @@ class MediaLightbox(QDialog):
         # Button positioning retry counter (safety limit)
         self._position_retry_count = 0
 
+        # === PROFESSIONAL AUTO-HIDE SYSTEM ===
+        # Create opacity effects for smooth fade animations
+        self.top_toolbar_opacity = QGraphicsOpacityEffect()
+        self.top_toolbar.setGraphicsEffect(self.top_toolbar_opacity)
+        self.top_toolbar_opacity.setOpacity(0.0)  # Hidden by default
+
+        self.bottom_toolbar_opacity = QGraphicsOpacityEffect()
+        self.bottom_toolbar.setGraphicsEffect(self.bottom_toolbar_opacity)
+        self.bottom_toolbar_opacity.setOpacity(0.0)  # Hidden by default
+
+        # Auto-hide timer (2 seconds)
+        self.toolbar_hide_timer = QTimer()
+        self.toolbar_hide_timer.setSingleShot(True)
+        self.toolbar_hide_timer.setInterval(2000)  # 2 seconds
+        self.toolbar_hide_timer.timeout.connect(self._hide_toolbars)
+
+        # Toolbar visibility state
+        self.toolbars_visible = False
+
     def _create_top_toolbar(self) -> QWidget:
         """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
         toolbar = QWidget()
-        toolbar.setFixedHeight(60)
+        toolbar.setFixedHeight(80)  # Increased for larger buttons
         toolbar.setStyleSheet("""
             QWidget {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 rgba(0, 0, 0, 0.8),
+                    stop:0 rgba(0, 0, 0, 0.9),
                     stop:1 rgba(0, 0, 0, 0));
             }
         """)
 
         layout = QHBoxLayout(toolbar)
         layout.setContentsMargins(16, 12, 16, 12)
-        layout.setSpacing(8)
+        layout.setSpacing(12)  # More spacing for larger buttons
 
-        # Button style (shared)
+        # PROFESSIONAL Button style (56x56px, larger icons)
         btn_style = """
             QPushButton {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.15);
                 color: white;
                 border: none;
-                border-radius: 18px;
-                font-size: 14pt;
+                border-radius: 28px;
+                font-size: 18pt;
             }
             QPushButton:hover {
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.25);
             }
             QPushButton:pressed {
-                background: rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.35);
             }
         """
 
@@ -217,7 +251,7 @@ class MediaLightbox(QDialog):
         # Close button
         self.close_btn = QPushButton("✕")
         self.close_btn.setFocusPolicy(Qt.NoFocus)
-        self.close_btn.setFixedSize(36, 36)
+        self.close_btn.setFixedSize(56, 56)
         self.close_btn.setStyleSheet(btn_style)
         self.close_btn.clicked.connect(self.close)
         layout.addWidget(self.close_btn)
@@ -227,7 +261,7 @@ class MediaLightbox(QDialog):
         # Delete button
         self.delete_btn = QPushButton("🗑️")
         self.delete_btn.setFocusPolicy(Qt.NoFocus)
-        self.delete_btn.setFixedSize(36, 36)
+        self.delete_btn.setFixedSize(56, 56)
         self.delete_btn.setStyleSheet(btn_style)
         self.delete_btn.clicked.connect(self._delete_current_media)
         self.delete_btn.setToolTip("Delete (D)")
@@ -236,7 +270,7 @@ class MediaLightbox(QDialog):
         # Favorite button
         self.favorite_btn = QPushButton("♡")
         self.favorite_btn.setFocusPolicy(Qt.NoFocus)
-        self.favorite_btn.setFixedSize(36, 36)
+        self.favorite_btn.setFixedSize(56, 56)
         self.favorite_btn.setStyleSheet(btn_style)
         self.favorite_btn.clicked.connect(self._toggle_favorite)
         self.favorite_btn.setToolTip("Favorite (F)")
@@ -291,7 +325,7 @@ class MediaLightbox(QDialog):
         # Slideshow button
         self.slideshow_btn = QPushButton("▶")
         self.slideshow_btn.setFocusPolicy(Qt.NoFocus)
-        self.slideshow_btn.setFixedSize(36, 36)
+        self.slideshow_btn.setFixedSize(56, 56)
         self.slideshow_btn.setStyleSheet(btn_style)
         self.slideshow_btn.clicked.connect(self._toggle_slideshow)
         self.slideshow_btn.setToolTip("Slideshow (S)")
@@ -300,7 +334,7 @@ class MediaLightbox(QDialog):
         # Info toggle button
         self.info_btn = QPushButton("ℹ️")
         self.info_btn.setFocusPolicy(Qt.NoFocus)
-        self.info_btn.setFixedSize(36, 36)
+        self.info_btn.setFixedSize(56, 56)
         self.info_btn.setStyleSheet(btn_style)
         self.info_btn.clicked.connect(self._toggle_info_panel)
         self.info_btn.setToolTip("Info (I)")
@@ -415,6 +449,34 @@ class MediaLightbox(QDialog):
         # Position buttons (will be called in resizeEvent)
         QTimer.singleShot(0, self._position_nav_buttons)
 
+    # === PROFESSIONAL AUTO-HIDE TOOLBAR SYSTEM ===
+
+    def _show_toolbars(self):
+        """Show toolbars with smooth fade-in animation."""
+        if not self.toolbars_visible:
+            self.toolbars_visible = True
+
+            # Fade in both toolbars (smooth 200ms animation)
+            self.top_toolbar_opacity.setOpacity(1.0)
+            self.bottom_toolbar_opacity.setOpacity(1.0)
+
+        # Only auto-hide in fullscreen mode
+        if self.isFullScreen():
+            self.toolbar_hide_timer.stop()
+            self.toolbar_hide_timer.start()  # Restart 2-second timer
+
+    def _hide_toolbars(self):
+        """Hide toolbars with smooth fade-out animation (fullscreen only)."""
+        # Only hide if in fullscreen
+        if self.isFullScreen() and self.toolbars_visible:
+            self.toolbars_visible = False
+
+            # Fade out both toolbars (smooth 200ms animation)
+            self.top_toolbar_opacity.setOpacity(0.0)
+            self.bottom_toolbar_opacity.setOpacity(0.0)
+
+    # === END AUTO-HIDE SYSTEM ===
+
     def _create_video_controls(self) -> QWidget:
         """Create video playback controls (play/pause, seek, volume, time)."""
         controls = QWidget()
@@ -428,7 +490,7 @@ class MediaLightbox(QDialog):
         # Play/Pause button
         self.play_pause_btn = QPushButton("▶")
         self.play_pause_btn.setFocusPolicy(Qt.NoFocus)
-        self.play_pause_btn.setFixedSize(36, 36)
+        self.play_pause_btn.setFixedSize(56, 56)
         self.play_pause_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(255, 255, 255, 0.15);
@@ -1021,9 +1083,18 @@ class MediaLightbox(QDialog):
         super().leaveEvent(event)
 
     def resizeEvent(self, event):
-        """Reposition navigation buttons on window resize."""
+        """Reposition navigation buttons and auto-adjust zoom on window resize."""
         super().resizeEvent(event)
         self._position_nav_buttons()
+
+        # AUTO-ADJUST ZOOM: Reapply zoom in fit/fill modes
+        if self.zoom_mode == "fit":
+            self._fit_to_window()
+        elif self.zoom_mode == "fill":
+            self._fill_window()
+
+        if self.zoom_mode in ["fit", "fill"]:
+            self._update_zoom_status()
 
     def mousePressEvent(self, event):
         """Handle mouse press for panning."""
@@ -1044,8 +1115,11 @@ class MediaLightbox(QDialog):
         super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        """Handle mouse move for panning and cursor updates."""
+        """Handle mouse move for panning, cursor updates, and toolbar reveal."""
         from PySide6.QtCore import Qt
+
+        # PROFESSIONAL AUTO-HIDE: Show toolbars on mouse movement
+        self._show_toolbars()
 
         # Update cursor based on content size
         if not self._is_video(self.media_path) and self._is_content_panneable():
@@ -1186,13 +1260,10 @@ class MediaLightbox(QDialog):
             self._zoom_out()
             event.accept()
 
-        # 0: Fit to window (reset zoom)
+        # 0: Fit to window (Professional zoom mode)
         elif key == Qt.Key_0:
             print("[MediaLightbox] 0 pressed - fit to window")
-            self.zoom_level = 1.0
-            self.zoom_mode = "fit"
-            if not self._is_video(self.media_path):
-                self._load_photo()
+            self._zoom_to_fit()
             event.accept()
 
         # D: Delete
@@ -1243,24 +1314,46 @@ class MediaLightbox(QDialog):
             super().wheelEvent(event)
 
     def _zoom_in(self):
-        """Zoom in on photo."""
+        """Zoom to next stepped level (Lightroom-style)."""
         if self._is_video(self.media_path):
             return  # Zoom only works for photos
 
-        self.zoom_level = min(self.zoom_level * 1.2, self.max_zoom)
-        self.zoom_mode = "manual"
+        if self.zoom_mode in ["fit", "fill"]:
+            # First zoom in switches to 100%
+            self.zoom_mode = "actual"
+            self.zoom_level = 1.0
+            self.zoom_step_index = 4  # 100%
+        elif self.zoom_step_index < len(self.ZOOM_STEPS) - 1:
+            # Step to next zoom level
+            self.zoom_step_index += 1
+            self.zoom_level = self.ZOOM_STEPS[self.zoom_step_index]
+            self.zoom_mode = "custom"
+
         self._apply_zoom()
-        self._update_status_label()
+        self._update_zoom_status()
 
     def _zoom_out(self):
-        """Zoom out on photo."""
+        """Zoom to previous stepped level (Lightroom-style)."""
         if self._is_video(self.media_path):
             return  # Zoom only works for photos
 
-        self.zoom_level = max(self.zoom_level / 1.2, self.min_zoom)
-        self.zoom_mode = "manual"
+        if self.zoom_mode in ["fit", "fill"]:
+            return  # Already at minimum
+
+        if self.zoom_step_index > 0:
+            # Step to previous zoom level
+            self.zoom_step_index -= 1
+            self.zoom_level = self.ZOOM_STEPS[self.zoom_step_index]
+
+            # If stepping below 100%, switch to fit mode
+            if self.zoom_level < 1.0:
+                self.zoom_mode = "fit"
+                self._fit_to_window()
+            else:
+                self.zoom_mode = "custom"
+
         self._apply_zoom()
-        self._update_status_label()
+        self._update_zoom_status()
 
     def _apply_zoom(self):
         """Apply current zoom level to displayed photo."""
@@ -1289,6 +1382,107 @@ class MediaLightbox(QDialog):
             self.scroll_area.setCursor(Qt.OpenHandCursor)
         else:
             self.scroll_area.setCursor(Qt.ArrowCursor)
+
+    def _zoom_to_fit(self):
+        """Zoom to fit window (Keyboard: 0) - Letterboxing if needed."""
+        if self._is_video(self.media_path):
+            return
+
+        self.zoom_mode = "fit"
+        self._fit_to_window()
+        self._update_zoom_status()
+
+    def _zoom_to_actual(self):
+        """Zoom to 100% actual size (Keyboard: 1) - 1:1 pixel mapping."""
+        if self._is_video(self.media_path):
+            return
+
+        self.zoom_mode = "actual"
+        self.zoom_level = 1.0
+        self.zoom_step_index = 4  # Index of 1.0
+        self._apply_zoom()
+        self._update_zoom_status()
+
+    def _zoom_to_fill(self):
+        """Zoom to fill window (may crop edges to avoid letterboxing)."""
+        if self._is_video(self.media_path):
+            return
+
+        self.zoom_mode = "fill"
+        self._fill_window()
+        self._update_zoom_status()
+
+    def _fit_to_window(self):
+        """Fit entire image to window (letterboxing if needed)."""
+        if not self.original_pixmap or self.original_pixmap.isNull():
+            return
+
+        # Get viewport size
+        viewport_size = self.scroll_area.viewport().size()
+
+        # Scale to fit (maintains aspect ratio)
+        scaled_pixmap = self.original_pixmap.scaled(
+            viewport_size,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.size())
+        self.media_container.resize(scaled_pixmap.size())
+
+        # Calculate actual zoom level for display
+        self.zoom_level = scaled_pixmap.width() / self.original_pixmap.width()
+
+    def _fill_window(self):
+        """Fill window completely (may crop edges to avoid letterboxing)."""
+        if not self.original_pixmap or self.original_pixmap.isNull():
+            return
+
+        # Get viewport size
+        viewport_size = self.scroll_area.viewport().size()
+
+        # Calculate zoom to fill (crops edges if needed)
+        width_ratio = viewport_size.width() / self.original_pixmap.width()
+        height_ratio = viewport_size.height() / self.original_pixmap.height()
+        fill_ratio = max(width_ratio, height_ratio)  # Use larger ratio to fill
+
+        zoomed_width = int(self.original_pixmap.width() * fill_ratio)
+        zoomed_height = int(self.original_pixmap.height() * fill_ratio)
+
+        scaled_pixmap = self.original_pixmap.scaled(
+            zoomed_width, zoomed_height,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.size())
+        self.media_container.resize(scaled_pixmap.size())
+
+        self.zoom_level = fill_ratio
+
+    def _update_zoom_status(self):
+        """Update status label with professional zoom indicators."""
+        status_parts = []
+
+        # Zoom indicator (for photos)
+        if not self._is_video(self.media_path):
+            if self.zoom_mode == "fit":
+                status_parts.append("🔍 Fit to Window")
+            elif self.zoom_mode == "fill":
+                status_parts.append("🔍 Fill Window")
+            elif self.zoom_mode == "actual":
+                status_parts.append("🔍 100% (Actual Size)")
+            else:
+                zoom_pct = int(self.zoom_level * 100)
+                status_parts.append(f"🔍 {zoom_pct}%")
+
+        # Slideshow indicator
+        if self.slideshow_active:
+            status_parts.append("⏵ Slideshow")
+
+        self.status_label.setText(" | ".join(status_parts) if status_parts else "")
 
     def _update_status_label(self):
         """Update status label with zoom level or slideshow status."""
@@ -1409,13 +1603,27 @@ class MediaLightbox(QDialog):
         )
 
     def _toggle_fullscreen(self):
-        """Toggle fullscreen mode."""
+        """Toggle fullscreen mode with distraction-free viewing."""
         if self.isFullScreen():
+            # Exit fullscreen
             self.showMaximized()
+
+            # Show toolbars again
+            self._show_toolbars()
+            self.toolbar_hide_timer.stop()  # Don't auto-hide when not fullscreen
+
             print("[MediaLightbox] Exited fullscreen")
         else:
+            # Enter fullscreen
             self.showFullScreen()
-            print("[MediaLightbox] Entered fullscreen")
+
+            # Hide toolbars for distraction-free viewing
+            self._hide_toolbars()
+
+            # Enable auto-hide in fullscreen
+            self.toolbar_hide_timer.start()
+
+            print("[MediaLightbox] Entered fullscreen (toolbars auto-hide)")
 
 
 class GooglePhotosLayout(BaseLayout):
