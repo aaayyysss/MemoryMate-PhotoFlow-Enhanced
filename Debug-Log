@@ -1,48 +1,14 @@
-[build_date_branches] Total entries processed: 89
-[build_date_branches] project_images table has 194 rows for project 1
-2025-11-27 00:56:22,786 [INFO] Created 89 photo date branch entries for project 1
-2025-11-27 00:56:22,788 [INFO] Building video date branches for project_id=1
-[build_video_date_branches] Using project_id=1
-[build_video_date_branches] Found 0 videos with dates for project 1
-[build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-27 00:56:22,788 [INFO] Created 0 video date branch entries for project 1
-2025-11-27 00:56:22,788 [INFO] Backfilling created_date fields for photos...
-2025-11-27 00:56:22,804 [INFO] Backfilled 16 photo rows with created_date
-2025-11-27 00:56:22,804 [INFO] Backfilling created_date fields for videos...
-[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-2025-11-27 00:56:22,819 [INFO] Reloading sidebar after date branches built...
-[SidebarQt] reload() blocked - widget not visible (likely being deleted)
-
-[GRID] ====== reload() CALLED ======
-[GRID] project_id=1, load_mode=branch
-[GRID] Step 1: Setting _reloading=True
-[GRID] Fetched tags for 0 paths, got 0 entries
-[GRID] Loaded 0 thumbnails.
-[GRID] Reloaded 0 thumbnails in None-mode (base=0)
-[GRID] Step 5: Emitting gridReloaded signal...
-
-[Breadcrumb] _update_breadcrumb() CALLED
-[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
-[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
-[Breadcrumb] Found CURRENT project name: P01
-[Breadcrumb] Added project segment: P01
-[Breadcrumb] Added branch segment: All Photos
-[Breadcrumb] Calling set_path() with 2 segments
-[BreadcrumbNav] set_path() called with 2 segments
-[BreadcrumbNav] Clearing 3 existing widgets
-[BreadcrumbNav] Cleared all existing widgets
-[BreadcrumbNav] Added segment 0: P01
-[BreadcrumbNav] Added segment 1: All Photos
-[BreadcrumbNav] set_path() completed - 2 segments added
-[Breadcrumb] set_path() completed successfully
-[Breadcrumb] _update_breadcrumb() COMPLETED
-
 [GRID] Step 5: ✓ gridReloaded signal emitted
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-2025-11-27 00:56:22,839 [INFO] Refreshing Google Photos layout after scan...
-2025-11-27 00:56:22,841 [INFO] ✓ Google Photos layout refresh scheduled
+[GRID] Loading viewport range: 0-120 of 298
+[GRID] Queued 1 new thumbnail workers
+[LayoutManager] Switching layout: current → google
+[LayoutManager] 💾 Took ownership of original central widget: QWidget
+[GooglePhotosLayout] Using default project: 1
+[GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
+[GooglePhotosLayout] Project selector populated with 1 projects
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
@@ -53,11 +19,161 @@
 
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
-[GooglePhotosLayout] 📊 Loaded 105 photos from database
+[GooglePhotosLayout] 📊 Loaded 298 photos from database
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 0 face clusters
 [GoogleLayout] Loading videos for project_id=1
 [GoogleLayout] Found 0 videos in project 1
-[GooglePhotosLayout] Tracking 105 paths for multi-selection
-[GooglePhotosLayout] Loaded 105 photos in 22 date groups
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-14>
+[GooglePhotosLayout] Tracking 298 paths for multi-selection
+[GooglePhotosLayout] Loaded 298 photos in 25 date groups
+[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[LayoutManager] Setting new central widget: QWidget
+[GooglePhotosLayout] 📍 Layout activated
+[GooglePhotosLayout] ✓ Connected Scan button
+[GooglePhotosLayout] ✓ Connected Faces button
+[LayoutManager] ✓ Switched to: Google Photos Style
+[MainWindow] ✓ Switched to layout: google
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] Found 256 photos + 0 videos = 256 total media
+[MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
+[MediaLightbox] showEvent triggered, scheduling media load...
+[MediaLightbox] Nav buttons positioned: left=20, right=291, y=3
+[MediaLightbox] Nav buttons positioned: left=20, right=1852, y=410
+[MediaLightbox] Loading photo: img_4790.jpeg
+[MediaLightbox] Window size: 1920x1009
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1820, max_height=809
+[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[GooglePhotosLayout] ✓ MediaLightbox closed
+[GooglePhotosLayout] Filtering by year: 2025
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2025]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND strftime('%Y', pm.created_date) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2025']
+[GooglePhotosLayout] 📊 Loaded 38 photos from database
+[GooglePhotosLayout] Tracking 38 paths for multi-selection
+[GooglePhotosLayout] Loaded 38 photos in 10 date groups
+[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by year: 2024
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2024]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND strftime('%Y', pm.created_date) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2024']
+[GooglePhotosLayout] 📊 Loaded 13 photos from database
+[GooglePhotosLayout] Tracking 13 paths for multi-selection
+[GooglePhotosLayout] Loaded 13 photos in 5 date groups
+[GooglePhotosLayout] Queued 13 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by year: 2023
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2023]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND strftime('%Y', pm.created_date) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2023']
+[GooglePhotosLayout] 📊 Loaded 10 photos from database
+[GooglePhotosLayout] Tracking 10 paths for multi-selection
+[GooglePhotosLayout] Loaded 10 photos in 4 date groups
+[GooglePhotosLayout] Queued 10 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by year: 2022
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2022]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND strftime('%Y', pm.created_date) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2022']
+[GooglePhotosLayout] 📊 Loaded 236 photos from database
+[GooglePhotosLayout] Tracking 236 paths for multi-selection
+[GooglePhotosLayout] Loaded 236 photos in 5 date groups
+[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by year: 2021
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2021]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND strftime('%Y', pm.created_date) = ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, '2021']
+[GooglePhotosLayout] 📊 Loaded 1 photos from database
+[GooglePhotosLayout] Tracking 1 paths for multi-selection
+[GooglePhotosLayout] Loaded 1 photos in 1 date groups
+[GooglePhotosLayout] Queued 1 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by folder: inbox
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/inbox]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND pm.path LIKE ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/inbox%']
+[GooglePhotosLayout] 📊 Loaded 92 photos from database
+[GooglePhotosLayout] Tracking 92 paths for multi-selection
+[GooglePhotosLayout] Loaded 92 photos in 8 date groups
+[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by folder: inbox
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND pm.path LIKE ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox%']
+[GooglePhotosLayout] 📊 Loaded 84 photos from database
+[GooglePhotosLayout] Tracking 84 paths for multi-selection
+[GooglePhotosLayout] Loaded 84 photos in 7 date groups
+[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Filtering by folder: 2
+[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2]...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+AND pm.path LIKE ?
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2%']
+[GooglePhotosLayout] 📊 Loaded 14 photos from database
+[GooglePhotosLayout] Tracking 14 paths for multi-selection
+[GooglePhotosLayout] Loaded 14 photos in 11 date groups
+[GooglePhotosLayout] Queued 14 thumbnails for loading (limit: 30)
+PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-15>
