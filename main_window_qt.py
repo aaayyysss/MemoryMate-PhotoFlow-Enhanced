@@ -1037,60 +1037,18 @@ class UIBuilder:
 # ======================================================
 
 
-# Thumbnail task/emitter used by ThumbnailGridQt
-class ThumbnailResult(QObject):
-    # emitted on GUI thread: (path, QPixmap)
-    ready = Signal(str, QPixmap)
-
-class ThumbnailTask(QRunnable):
-    def __init__(self, path: str, size: int, emitter: ThumbnailResult):
-        super().__init__()
-        self.path = str(path)
-        self.size = int(size)
-        self.emitter = emitter
-        self.setAutoDelete(True)
-
-    def run(self):
-        # Try using QImageReader for efficient scaled decode (works on GUI-thread types but we run in worker thread)
-        try:
-            reader = QImageReader(self.path)
-            reader.setAutoTransform(True)
-            # Ask the reader to give a scaled image matching thumbnail size
-            reader.setScaledSize(QSize(self.size, self.size))
-            img = reader.read()
-            if not img.isNull():
-                pix = QPixmap.fromImage(img)
-                self.emitter.ready.emit(self.path, pix)
-                return
-        except Exception:
-            pass
-
-        # Fallback to Pillow in worker thread
-        try:
-            from PIL import Image, ImageOps, ImageQt
-            # BUG-C1 FIX: Use context manager to prevent resource leak
-            with Image.open(self.path) as im:
-                im.thumbnail((self.size, self.size), Image.LANCZOS)
-                if im.mode != "RGBA":
-                    im = im.convert("RGBA")
-                qim = ImageQt.ImageQt(im)
-                pix = QPixmap.fromImage(qim)
-                self.emitter.ready.emit(self.path, pix)
-                return
-        except Exception:
-            pass
-
-        # Final fallback: empty placeholder
-        try:
-            empty = QPixmap(self.size, self.size)
-            empty.fill(Qt.lightGray)
-            self.emitter.ready.emit(self.path, empty)
-        except Exception:
-            pass
-
-# Shared pool & emitter to reuse across the app
-_thumbnail_result_emitter = ThumbnailResult()
-_thumbnail_thread_pool = QThreadPool.globalInstance()
+# =============================================================================
+# REFACTORING NOTE (Phase 1, Step 1.2 - Thumbnail Consolidation):
+#
+# Pipeline B (ThumbnailTask/ThumbnailResult) REMOVED - Dead code!
+# - Was defined but never used anywhere in the codebase
+# - Removed 54 lines of unused code
+#
+# Thumbnail handling now uses:
+# - Pipeline A (ThumbnailManager below) - for MainWindow integration
+# - Pipeline C (thumbnail_grid_qt.py: ThumbWorker) - for Current Layout grid
+#   ↳ This is the proven, stable pipeline with viewport-based lazy loading
+# =============================================================================
 
 
 class DetailsPanel(QWidget):
