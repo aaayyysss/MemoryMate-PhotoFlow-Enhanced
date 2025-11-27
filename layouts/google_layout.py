@@ -658,8 +658,15 @@ class MediaLightbox(QDialog):
         video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.3gp'}
         return os.path.splitext(path)[1].lower() in video_extensions
 
+    def _load_media_safe(self):
+        """Safe wrapper for _load_media that sets the loaded flag."""
+        if not self._media_loaded:
+            self._media_loaded = True
+            self._load_media()
+
     def _load_media(self):
         """Load and display current media (photo or video)."""
+        print(f"[MediaLightbox] _load_media called for: {os.path.basename(self.media_path)}")
         if self._is_video(self.media_path):
             self._load_video()
         else:
@@ -785,6 +792,9 @@ class MediaLightbox(QDialog):
 
     def _load_photo(self):
         """Load and display the current photo with EXIF orientation correction."""
+        from PySide6.QtCore import Qt  # Import at top to avoid UnboundLocalError
+        from PySide6.QtGui import QPixmap
+
         try:
             # Hide video widget and controls if they exist
             if hasattr(self, 'video_widget'):
@@ -1087,6 +1097,13 @@ class MediaLightbox(QDialog):
         super().resizeEvent(event)
         self._position_nav_buttons()
 
+        # SAFETY: Ensure media is loaded (fallback if showEvent didn't fire)
+        if not self._media_loaded:
+            print(f"[MediaLightbox] resizeEvent: media not loaded yet, triggering load...")
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(150, self._load_media_safe)
+            return
+
         # AUTO-ADJUST ZOOM: Reapply zoom in fit/fill modes
         if self.zoom_mode == "fit":
             self._fit_to_window()
@@ -1189,12 +1206,12 @@ class MediaLightbox(QDialog):
     def showEvent(self, event):
         """Load media when dialog is first shown (after window has proper size)."""
         super().showEvent(event)
+        print(f"[MediaLightbox] showEvent triggered, _media_loaded={self._media_loaded}")
         if not self._media_loaded:
-            self._media_loaded = True
             # ROBUST FIX: Use longer delay to ensure window is fully sized and rendered
             from PySide6.QtCore import QTimer
-            print(f"[MediaLightbox] showEvent triggered, scheduling media load...")
-            QTimer.singleShot(100, self._load_media)  # 100ms delay for proper layout
+            print(f"[MediaLightbox] Scheduling media load in 100ms...")
+            QTimer.singleShot(100, self._load_media_safe)  # 100ms delay for proper layout
 
         # Set focus to dialog so keyboard shortcuts work
         self.setFocus()
