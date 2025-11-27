@@ -105,6 +105,7 @@ from controllers import ScanController, SidebarController, ProjectController
 from ui.widgets.breadcrumb_navigation import BreadcrumbNavigation
 from ui.widgets.backfill_indicator import CompactBackfillIndicator
 from ui.widgets.selection_toolbar import SelectionToolbar
+from ui.ui_builder import UIBuilder
 
 # Phase 2 Refactoring: Extracted services
 from services.thumbnail_manager import ThumbnailManager
@@ -221,78 +222,13 @@ def _get_default_ignore_folders():
 
 
 
-# === Phase 3 UIBuilder =======================================================
-
-class UIBuilder:
-    """
-    Helper for building toolbars, menus, and controls with less boilerplate.
-    Used by MainWindow during __init__ to reduce clutter.
-    """
-    def __init__(self, main):
-        self.main = main
-        self.tb = None
-
-    def make_toolbar(self, name="Tools"):
-        tb = QToolBar(name, self.main)
-        self.main.addToolBar(tb)
-        self.tb = tb
-        return tb
-
-    def action(self, text, icon=None, shortcut=None, tooltip=None, checkable=False, handler=None):
-        act = QAction(text, self.main)
-        if icon:
-            act.setIcon(QIcon.fromTheme(icon))
-        if shortcut:
-            try:
-                act.setShortcut(shortcut)
-            except Exception:
-                pass
-        if tooltip:
-            act.setToolTip(tooltip)
-        act.setCheckable(checkable)
-        if handler:
-            act.triggered.connect(handler)
-        if self.tb:
-            self.tb.addAction(act)
-        return act
-
-    def separator(self):
-        if self.tb:
-            self.tb.addSeparator()
-
-    def menu(self, title, icon=None):
-        m = self.main.menuBar().addMenu(title)
-        return m
-
-    def menu_action(self, menu, text, shortcut=None, tooltip=None, checkable=False, handler=None):
-        act = QAction(text, self.main)
-        if shortcut:
-            try:
-                act.setShortcut(shortcut)
-            except Exception:
-                pass
-        if tooltip:
-            act.setToolTip(tooltip)
-        act.setCheckable(checkable)
-        if handler:
-            act.triggered.connect(handler)
-        menu.addAction(act)
-        return act
-
-    def combo_sort(self, label_text, options, on_change):
-        self.tb.addWidget(QLabel(label_text))
-        combo = QSortComboBox()
-        combo.addItems(options)
-        combo.currentIndexChanged.connect(lambda *_: on_change())
-        self.tb.addWidget(combo)
-        return combo
-
-    def checkbox(self, text, checked=True):
-        chk = QCheckBox(text)
-        chk.setChecked(checked)
-        if self.tb:
-            self.tb.addWidget(chk)
-        return chk
+# === Phase 2, Step 2.5: UIBuilder Extracted =================================
+# NOTE: UIBuilder helper class has been extracted to ui/ui_builder.py
+#       for better modularity.
+#       See: ui/ui_builder.py
+#
+# Reduction: ~73 LOC moved to separate UI helper file
+# =============================================================================
 
 
 # ======================================================
