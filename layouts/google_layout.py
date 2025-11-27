@@ -1457,8 +1457,10 @@ class GooglePhotosLayout(BaseLayout):
 
         # Async thumbnail loading
         self.thumbnail_thread_pool = QThreadPool()
-        self.thumbnail_thread_pool.setMaxThreadCount(8)  # Limit concurrent loads
+        self.thumbnail_thread_pool.setMaxThreadCount(4)  # REDUCED: Limit concurrent loads
         self.thumbnail_buttons = {}  # Map path -> button widget for async updates
+        self.thumbnail_load_count = 0  # Track how many thumbnails we've queued
+        self.thumbnail_load_limit = 30  # CRITICAL: Only auto-load first 30 (viewport), lazy-load rest
 
         # Initialize filter state
         self.current_thumb_size = 200
@@ -1973,8 +1975,9 @@ class GooglePhotosLayout(BaseLayout):
                 if child.widget():
                     child.widget().deleteLater()
 
-            # Clear thumbnail button cache to prevent memory leaks
+            # Clear thumbnail button cache and reset load counter
             self.thumbnail_buttons.clear()
+            self.thumbnail_load_count = 0  # Reset counter for new photo set
 
             # CRITICAL FIX: Only clear trees when NOT filtering
             # When filtering, we want to keep the tree structure visible
@@ -2111,6 +2114,7 @@ class GooglePhotosLayout(BaseLayout):
             self.timeline_layout.addStretch()
 
             print(f"[GooglePhotosLayout] Loaded {len(rows)} photos in {len(photos_by_date)} date groups")
+            print(f"[GooglePhotosLayout] Queued {self.thumbnail_load_count} thumbnails for loading (limit: {self.thumbnail_load_limit})")
 
         except Exception as e:
             # CRITICAL: Catch ALL exceptions to prevent layout crashes
@@ -3010,16 +3014,22 @@ class GooglePhotosLayout(BaseLayout):
             }
         """)
 
-        # Show placeholder while loading
-        thumb.setText("⏳")
+        # Show placeholder
+        thumb.setText("📷")
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
 
-        # Queue async thumbnail loading
-        loader = ThumbnailLoader(path, size)
-        loader.signals.loaded.connect(lambda p, pixmap: self._on_thumbnail_loaded(p, pixmap, size))
-        self.thumbnail_thread_pool.start(loader)
+        # CRITICAL: Only auto-load first N thumbnails (viewport-based lazy loading)
+        # This prevents memory issues and UI freeze with large photo sets (100+ photos)
+        # Copied strategy from Current Layout's proven approach
+        if self.thumbnail_load_count < self.thumbnail_load_limit:
+            self.thumbnail_load_count += 1
+            # Queue async thumbnail loading
+            loader = ThumbnailLoader(path, size)
+            loader.signals.loaded.connect(lambda p, pixmap: self._on_thumbnail_loaded(p, pixmap, size))
+            self.thumbnail_thread_pool.start(loader)
+        # else: Keep placeholder, will load on scroll (future enhancement)
 
         # Phase 2: Selection checkbox (overlay top-left corner)
         checkbox = QCheckBox(container)
