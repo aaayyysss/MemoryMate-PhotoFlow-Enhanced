@@ -4,7 +4,8 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QSplitter, QToolBar, QLineEdit, QTreeWidget,
-    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog
+    QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog,
+    QGraphicsOpacityEffect
 )
 from PySide6.QtCore import Qt, Signal, QSize, QEvent, QRunnable, QThreadPool, QObject
 from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
@@ -96,7 +97,7 @@ class MediaLightbox(QDialog):
 
     def _setup_ui(self):
         """Setup Google Photos-style lightbox UI with overlay controls."""
-        from PySide6.QtWidgets import QApplication, QGraphicsOpacityEffect
+        from PySide6.QtWidgets import QApplication
         from PySide6.QtCore import QPropertyAnimation, QTimer, QRect
 
         # Window settings - SMART SIZING: 90% of screen, centered
