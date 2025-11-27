@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QRect
 from PySide6.QtGui import QPixmap, QColor, QPainter, QFont, QImageReader
 
-from i18n import tr
+from translation_manager import tr
 
 
 class DetailsPanel(QWidget):

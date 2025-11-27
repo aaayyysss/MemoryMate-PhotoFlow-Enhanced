@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
     QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
 )
 
-from i18n import tr
+from translation_manager import tr
 
 
 class BackfillStatusPanel(QWidget):
