@@ -14,7 +14,8 @@ from PySide6.QtWidgets import (
     QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
 )
 
-from i18n import tr
+#from i18n import tr
+from translation_manager import tr
 
 
 class BackfillStatusPanel(QWidget):
@@ -165,3 +166,4 @@ class BackfillStatusPanel(QWidget):
             self.txt.setText("\n".join(filtered[-6:]))
         except Exception as e:
             self.txt.setText(str(e))
+
