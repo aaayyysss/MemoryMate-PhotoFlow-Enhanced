@@ -20,7 +20,8 @@ from PySide6.QtWidgets import (
     QProgressDialog, QMessageBox, QDialog, QVBoxLayout,
     QLabel, QProgressBar, QApplication
 )
-from translations import tr
+#from translations import tr
+from translation_manager import tr
 
 
 class ScanController:
@@ -561,3 +562,4 @@ class ScanController:
 
         # Note: Video metadata worker callback is now connected at worker creation time
         # in start_scan() to avoid race conditions with worker finishing before cleanup runs
+
