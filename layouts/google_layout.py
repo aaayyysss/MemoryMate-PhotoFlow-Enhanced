@@ -2412,7 +2412,7 @@ class GooglePhotosLayout(BaseLayout):
                 print(f"[GooglePhotosLayout] 🚀 Virtual scrolling: {len(photos_by_date)} date groups ({len(self.rendered_date_groups)} rendered, {len(photos_by_date) - len(self.rendered_date_groups)} placeholders)")
             else:
                 print(f"[GooglePhotosLayout] Loaded {len(rows)} photos in {len(photos_by_date)} date groups")
-            print(f"[GooglePhotosLayout] Queued {self.thumbnail_load_count} thumbnails for loading (limit: {self.thumbnail_load_limit})")
+            print(f"[GooglePhotosLayout] Queued {self.thumbnail_load_count} thumbnails for loading (initial limit: {self.initial_load_limit})")
 
         except Exception as e:
             # CRITICAL: Catch ALL exceptions to prevent layout crashes
