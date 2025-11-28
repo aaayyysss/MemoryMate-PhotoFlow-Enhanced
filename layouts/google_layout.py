@@ -1203,18 +1203,70 @@ class MediaLightbox(QDialog):
                 content.height() > viewport.height())
 
     def _previous_media(self):
-        """Navigate to previous media (photo or video)."""
+        """
+        Navigate to previous media (photo or video).
+
+        Phase 3 #5: Added smooth cross-fade transition.
+        """
         if self.current_index > 0:
             self.current_index -= 1
             self.media_path = self.all_media[self.current_index]
-            self._load_media()
+            self._load_media_with_transition()
 
     def _next_media(self):
-        """Navigate to next media (photo or video)."""
+        """
+        Navigate to next media (photo or video).
+
+        Phase 3 #5: Added smooth cross-fade transition.
+        """
         if self.current_index < len(self.all_media) - 1:
             self.current_index += 1
             self.media_path = self.all_media[self.current_index]
+            self._load_media_with_transition()
+
+    def _load_media_with_transition(self):
+        """
+        PHASE 3 #5: Load media with smooth fade transition.
+
+        Cross-fades from current image to new image for professional feel.
+        """
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QTimer
+
+        # Create opacity effect if not present
+        if not self.image_label.graphicsEffect():
+            opacity_effect = QGraphicsOpacityEffect()
+            self.image_label.setGraphicsEffect(opacity_effect)
+            opacity_effect.setOpacity(1.0)
+
+        opacity_effect = self.image_label.graphicsEffect()
+
+        # Fade out current image
+        fade_out = QPropertyAnimation(opacity_effect, b"opacity")
+        fade_out.setDuration(150)  # 150ms fade-out
+        fade_out.setStartValue(1.0)
+        fade_out.setEndValue(0.0)
+        fade_out.setEasingCurve(QEasingCurve.InCubic)
+
+        # Load new media after fade-out completes
+        def load_and_fade_in():
             self._load_media()
+
+            # Fade in new image
+            fade_in = QPropertyAnimation(opacity_effect, b"opacity")
+            fade_in.setDuration(200)  # 200ms fade-in
+            fade_in.setStartValue(0.0)
+            fade_in.setEndValue(1.0)
+            fade_in.setEasingCurve(QEasingCurve.OutCubic)
+            fade_in.start()
+
+            # Store animation to prevent garbage collection
+            self.setProperty("fade_in_animation", fade_in)
+
+        fade_out.finished.connect(load_and_fade_in)
+        fade_out.start()
+
+        # Store animation to prevent garbage collection
+        self.setProperty("fade_out_animation", fade_out)
 
     def showEvent(self, event):
         """Load media when dialog is first shown (after window has proper size)."""
@@ -1351,7 +1403,11 @@ class MediaLightbox(QDialog):
         event.accept()
 
     def _smooth_zoom(self, factor):
-        """Apply smooth continuous zoom (like Current Layout)."""
+        """
+        Apply smooth continuous zoom with animation.
+
+        Phase 3 #5: Enhanced with smooth zoom animation instead of instant zoom.
+        """
         if self._is_video(self.media_path) or not self.original_pixmap:
             return
 
@@ -1364,18 +1420,33 @@ class MediaLightbox(QDialog):
 
         new_zoom = max(min_zoom, min(new_zoom, max_zoom))
 
-        # Update zoom state
-        self.zoom_level = new_zoom
+        # PHASE 3 #5: Animated zoom transition
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QVariantAnimation
 
-        # Switch to custom zoom mode if zooming from fit/fill
-        if new_zoom > self.fit_zoom_level * 1.01:  # Small tolerance for floating point
-            self.zoom_mode = "custom"
-        elif abs(new_zoom - self.fit_zoom_level) < 0.01:
-            self.zoom_mode = "fit"
+        # Stop any existing zoom animation
+        if hasattr(self, '_zoom_animation') and self._zoom_animation:
+            self._zoom_animation.stop()
 
-        # Apply the zoom
-        self._apply_zoom()
-        self._update_zoom_status()
+        # Create animation for zoom level
+        self._zoom_animation = QVariantAnimation()
+        self._zoom_animation.setDuration(200)  # 200ms smooth zoom
+        self._zoom_animation.setStartValue(self.zoom_level)
+        self._zoom_animation.setEndValue(new_zoom)
+        self._zoom_animation.setEasingCurve(QEasingCurve.OutCubic)
+
+        # Update zoom level during animation
+        def update_zoom(value):
+            self.zoom_level = value
+            # Switch to custom zoom mode if zooming from fit/fill
+            if self.zoom_level > self.fit_zoom_level * 1.01:
+                self.zoom_mode = "custom"
+            elif abs(self.zoom_level - self.fit_zoom_level) < 0.01:
+                self.zoom_mode = "fit"
+            self._apply_zoom()
+            self._update_zoom_status()
+
+        self._zoom_animation.valueChanged.connect(update_zoom)
+        self._zoom_animation.start()
 
     def _zoom_in(self):
         """Zoom in by one step (keyboard shortcut: +)."""
@@ -3894,6 +3965,7 @@ class GooglePhotosLayout(BaseLayout):
         Callback when async thumbnail loading completes.
 
         Phase 3 #1: Added smooth fade-in animation for loaded thumbnails.
+        Phase 3 #2: Stops pulsing animation and shows cached thumbnail.
         """
         # Find the button for this path
         button = self.thumbnail_buttons.get(path)
@@ -3903,30 +3975,38 @@ class GooglePhotosLayout(BaseLayout):
         try:
             # Update button with loaded thumbnail
             if pixmap and not pixmap.isNull():
+                # PHASE 3 #2: Stop pulsing skeleton animation
+                pulse_anim = button.property("pulse_animation")
+                if pulse_anim:
+                    pulse_anim.stop()
+                    button.setProperty("pulse_animation", None)
+
                 scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                 button.setIcon(QIcon(scaled))
                 button.setIconSize(QSize(size - 4, size - 4))
                 button.setText("")  # Clear placeholder text
 
                 # PHASE 3 #1: Smooth fade-in animation for thumbnail
+                # PHASE 3 #2: Reuse existing opacity effect from pulsing animation
                 from PySide6.QtCore import QPropertyAnimation, QEasingCurve
 
-                # Create opacity effect if not already present
-                if not button.graphicsEffect():
+                opacity_effect = button.graphicsEffect()
+                if not opacity_effect:
                     opacity_effect = QGraphicsOpacityEffect()
                     button.setGraphicsEffect(opacity_effect)
-                    opacity_effect.setOpacity(0.0)
 
-                    # Animate fade-in from 0 to 1
-                    fade_in = QPropertyAnimation(opacity_effect, b"opacity")
-                    fade_in.setDuration(300)  # 300ms fade-in
-                    fade_in.setStartValue(0.0)
-                    fade_in.setEndValue(1.0)
-                    fade_in.setEasingCurve(QEasingCurve.OutCubic)
-                    fade_in.start()
+                opacity_effect.setOpacity(0.0)
 
-                    # Store animation to prevent garbage collection
-                    button.setProperty("fade_animation", fade_in)
+                # Animate fade-in from 0 to 1
+                fade_in = QPropertyAnimation(opacity_effect, b"opacity")
+                fade_in.setDuration(300)  # 300ms fade-in
+                fade_in.setStartValue(0.0)
+                fade_in.setEndValue(1.0)
+                fade_in.setEasingCurve(QEasingCurve.OutCubic)
+                fade_in.start()
+
+                # Store animation to prevent garbage collection
+                button.setProperty("fade_animation", fade_in)
             else:
                 button.setText("📷")  # No thumbnail - show placeholder
         except Exception as e:
@@ -4201,7 +4281,27 @@ class GooglePhotosLayout(BaseLayout):
             thumb.setToolTip(os.path.basename(path))
 
         # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
+        # PHASE 3 #2: Added pulsing animation to indicate caching/loading
         thumb.setText("⏳")
+
+        # Add pulsing opacity animation to skeleton state
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+        opacity_effect = QGraphicsOpacityEffect()
+        thumb.setGraphicsEffect(opacity_effect)
+
+        # Create infinite pulsing animation (opacity 0.3 -> 1.0 -> 0.3)
+        pulse = QPropertyAnimation(opacity_effect, b"opacity")
+        pulse.setDuration(1500)  # 1.5 second cycle
+        pulse.setStartValue(0.3)
+        pulse.setKeyValueAt(0.5, 1.0)  # Peak at midpoint
+        pulse.setEndValue(0.3)
+        pulse.setEasingCurve(QEasingCurve.InOutSine)
+        pulse.setLoopCount(-1)  # Loop infinitely
+        pulse.start()
+
+        # Store animation to prevent garbage collection
+        thumb.setProperty("pulse_animation", pulse)
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
