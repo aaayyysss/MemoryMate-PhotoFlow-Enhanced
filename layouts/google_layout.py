@@ -1782,6 +1782,10 @@ class GooglePhotosLayout(BaseLayout):
 
         main_layout.addWidget(self.splitter)
 
+        # QUICK WIN #6: Create floating selection toolbar (initially hidden)
+        self.floating_toolbar = self._create_floating_toolbar(main_widget)
+        self.floating_toolbar.hide()
+
         # Load photos from database
         self._load_photos()
 
@@ -1964,6 +1968,110 @@ class GooglePhotosLayout(BaseLayout):
 
         # Store toolbar reference
         self._toolbar = toolbar
+
+        return toolbar
+
+    def _create_floating_toolbar(self, parent: QWidget) -> QWidget:
+        """
+        QUICK WIN #6: Create floating selection toolbar (Google Photos style).
+
+        Appears at bottom of screen when photos are selected.
+        Shows selection count and action buttons.
+
+        Args:
+            parent: Parent widget for positioning
+
+        Returns:
+            QWidget: Floating toolbar (initially hidden)
+        """
+        toolbar = QWidget(parent)
+        toolbar.setStyleSheet("""
+            QWidget {
+                background: #202124;
+                border-radius: 8px;
+                border: 1px solid #5f6368;
+            }
+        """)
+
+        layout = QHBoxLayout(toolbar)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(12)
+
+        # Selection count label
+        self.selection_count_label = QLabel("0 selected")
+        self.selection_count_label.setStyleSheet("""
+            QLabel {
+                color: white;
+                font-size: 11pt;
+                font-weight: bold;
+            }
+        """)
+        layout.addWidget(self.selection_count_label)
+
+        layout.addStretch()
+
+        # Action buttons
+        # Select All button
+        btn_select_all = QPushButton("Select All")
+        btn_select_all.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                color: #8ab4f8;
+                border: none;
+                padding: 6px 12px;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: #3c4043;
+                border-radius: 4px;
+            }
+        """)
+        btn_select_all.setCursor(Qt.PointingHandCursor)
+        btn_select_all.clicked.connect(self._on_select_all)
+        layout.addWidget(btn_select_all)
+
+        # Clear Selection button
+        btn_clear = QPushButton("Clear")
+        btn_clear.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                color: #8ab4f8;
+                border: none;
+                padding: 6px 12px;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: #3c4043;
+                border-radius: 4px;
+            }
+        """)
+        btn_clear.setCursor(Qt.PointingHandCursor)
+        btn_clear.clicked.connect(self._on_clear_selection)
+        layout.addWidget(btn_clear)
+
+        # Delete button
+        btn_delete = QPushButton("🗑️ Delete")
+        btn_delete.setStyleSheet("""
+            QPushButton {
+                background: #d32f2f;
+                color: white;
+                border: none;
+                padding: 6px 16px;
+                border-radius: 4px;
+                font-size: 10pt;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background: #b71c1c;
+            }
+        """)
+        btn_delete.setCursor(Qt.PointingHandCursor)
+        btn_delete.clicked.connect(self._on_delete_selected)
+        layout.addWidget(btn_delete)
+
+        # Position toolbar at bottom center (will be repositioned on resize)
+        toolbar.setFixedHeight(56)
+        toolbar.setFixedWidth(400)
 
         return toolbar
 
@@ -3940,6 +4048,8 @@ class GooglePhotosLayout(BaseLayout):
     def _update_selection_ui(self):
         """
         Update selection counter and show/hide action buttons.
+
+        QUICK WIN #6: Now also controls floating toolbar.
         """
         count = len(self.selected_photos)
 
@@ -3961,6 +4071,13 @@ class GooglePhotosLayout(BaseLayout):
             # Show action buttons
             self.btn_delete.setVisible(True)
             self.btn_favorite.setVisible(True)
+
+            # QUICK WIN #6: Show and update floating toolbar
+            if hasattr(self, 'floating_toolbar') and hasattr(self, 'selection_count_label'):
+                self.selection_count_label.setText(f"{count} selected")
+                self._position_floating_toolbar()
+                self.floating_toolbar.show()
+                self.floating_toolbar.raise_()  # Bring to front
         else:
             self.selection_label.setVisible(False)
 
@@ -3968,7 +4085,60 @@ class GooglePhotosLayout(BaseLayout):
             self.btn_delete.setVisible(False)
             self.btn_favorite.setVisible(False)
 
+            # QUICK WIN #6: Hide floating toolbar when no selection
+            if hasattr(self, 'floating_toolbar'):
+                self.floating_toolbar.hide()
+
         print(f"[GooglePhotosLayout] Selection updated: {count} photos selected")
+
+    def _position_floating_toolbar(self):
+        """
+        QUICK WIN #6: Position floating toolbar at bottom center of viewport.
+        """
+        if not hasattr(self, 'floating_toolbar'):
+            return
+
+        # Get parent widget size
+        parent = self.floating_toolbar.parent()
+        if not parent:
+            return
+
+        parent_width = parent.width()
+        parent_height = parent.height()
+
+        toolbar_width = self.floating_toolbar.width()
+        toolbar_height = self.floating_toolbar.height()
+
+        # Position at bottom center
+        x = (parent_width - toolbar_width) // 2
+        y = parent_height - toolbar_height - 20  # 20px from bottom
+
+        self.floating_toolbar.move(x, y)
+
+    def _on_select_all(self):
+        """
+        QUICK WIN #6: Select all visible photos.
+        """
+        # Select all displayed photos
+        for path in self.all_displayed_paths:
+            if path not in self.selected_photos:
+                self.selected_photos.add(path)
+                self._update_checkbox_state(path, True)
+
+        self._update_selection_ui()
+        print(f"[GooglePhotosLayout] ✓ Selected all {len(self.selected_photos)} photos")
+
+    def _on_clear_selection(self):
+        """
+        QUICK WIN #6: Clear all selected photos.
+        """
+        # Deselect all photos
+        for path in list(self.selected_photos):
+            self._update_checkbox_state(path, False)
+
+        self.selected_photos.clear()
+        self._update_selection_ui()
+        print("[GooglePhotosLayout] ✗ Cleared all selections")
 
     def _toggle_selection_mode(self, checked: bool):
         """
