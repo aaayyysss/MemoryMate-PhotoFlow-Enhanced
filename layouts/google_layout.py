@@ -1703,7 +1703,10 @@ class GooglePhotosLayout(BaseLayout):
         self.thumbnail_thread_pool.setMaxThreadCount(4)  # REDUCED: Limit concurrent loads
         self.thumbnail_buttons = {}  # Map path -> button widget for async updates
         self.thumbnail_load_count = 0  # Track how many thumbnails we've queued
-        self.thumbnail_load_limit = 30  # CRITICAL: Only auto-load first 30 (viewport), lazy-load rest
+
+        # QUICK WIN #1: Track unloaded thumbnails for scroll-triggered loading
+        self.unloaded_thumbnails = {}  # Map path -> (button, size) for lazy loading
+        self.initial_load_limit = 50  # Load first 50 immediately (increased from 30)
 
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
@@ -2158,10 +2161,10 @@ class GooglePhotosLayout(BaseLayout):
         Create timeline scroll area with date groups.
         """
         # Scroll area
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.NoFrame)
-        scroll.setStyleSheet("""
+        self.timeline_scroll = QScrollArea()  # Store reference for scroll events
+        self.timeline_scroll.setWidgetResizable(True)
+        self.timeline_scroll.setFrameShape(QFrame.NoFrame)
+        self.timeline_scroll.setStyleSheet("""
             QScrollArea {
                 background: white;
                 border: none;
@@ -2175,9 +2178,16 @@ class GooglePhotosLayout(BaseLayout):
         self.timeline_layout.setSpacing(30)
         self.timeline_layout.setAlignment(Qt.AlignTop)
 
-        scroll.setWidget(self.timeline_container)
+        self.timeline_scroll.setWidget(self.timeline_container)
 
-        return scroll
+        # QUICK WIN #1: Connect scroll event for lazy thumbnail loading
+        # This enables ALL photos to load as user scrolls (removes 30-photo limit)
+        self.timeline_scroll.verticalScrollBar().valueChanged.connect(
+            self._on_timeline_scrolled
+        )
+        print("[GooglePhotosLayout] ✅ Scroll-triggered lazy loading enabled")
+
+        return self.timeline_scroll
 
     def _load_photos(self, thumb_size: int = 200, filter_year: int = None, filter_month: int = None, filter_folder: str = None, filter_person: str = None):
         """
@@ -3234,6 +3244,47 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GooglePhotosLayout] Error updating thumbnail for {path}: {e}")
             button.setText("❌")
 
+    def _on_timeline_scrolled(self):
+        """
+        QUICK WIN #1: Load thumbnails that are now visible after scrolling.
+        This removes the 30-photo limit and enables ALL photos to load.
+        """
+        if not self.unloaded_thumbnails:
+            return  # All thumbnails already loaded
+
+        # Get viewport rectangle
+        viewport = self.timeline_scroll.viewport()
+        viewport_rect = viewport.rect()
+
+        # Find and load visible thumbnails
+        paths_to_load = []
+        for path, (button, size) in list(self.unloaded_thumbnails.items()):
+            # Check if button is visible in viewport
+            try:
+                # Map button position to viewport coordinates
+                button_pos = button.mapTo(viewport, button.rect().topLeft())
+                button_rect = button.rect()
+                button_rect.moveTo(button_pos)
+
+                # If button intersects viewport, it's visible
+                if viewport_rect.intersects(button_rect):
+                    paths_to_load.append(path)
+
+            except Exception as e:
+                # Button might have been deleted
+                continue
+
+        # Load visible thumbnails
+        if paths_to_load:
+            print(f"[GooglePhotosLayout] 📜 Scroll detected, loading {len(paths_to_load)} visible thumbnails...")
+            for path in paths_to_load:
+                button, size = self.unloaded_thumbnails.pop(path)
+                # Queue async loading
+                loader = ThumbnailLoader(path, size, self.thumbnail_signals)
+                self.thumbnail_thread_pool.start(loader)
+
+            print(f"[GooglePhotosLayout] ✓ Loaded {len(paths_to_load)} thumbnails, {len(self.unloaded_thumbnails)} remaining")
+
     def _create_thumbnail(self, path: str, size: int) -> QWidget:
         """
         Create thumbnail widget for a photo with selection checkbox.
@@ -3269,15 +3320,17 @@ class GooglePhotosLayout(BaseLayout):
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
 
-        # CRITICAL: Only auto-load first N thumbnails (viewport-based lazy loading)
-        # This prevents memory issues and UI freeze with large photo sets (100+ photos)
-        # Copied strategy from Current Layout's proven approach
-        if self.thumbnail_load_count < self.thumbnail_load_limit:
+        # QUICK WIN #1: Load first 50 immediately, rest on scroll
+        # This removes the 30-photo limit while maintaining initial performance
+        if self.thumbnail_load_count < self.initial_load_limit:
             self.thumbnail_load_count += 1
             # Queue async thumbnail loading with SHARED signal object
             loader = ThumbnailLoader(path, size, self.thumbnail_signals)
             self.thumbnail_thread_pool.start(loader)
-        # else: Keep placeholder, will load on scroll (future enhancement)
+        else:
+            # Store for lazy loading on scroll
+            self.unloaded_thumbnails[path] = (thumb, size)
+            print(f"[GooglePhotosLayout] Deferred thumbnail #{self.thumbnail_load_count + 1}: {os.path.basename(path)}")
 
         # Phase 2: Selection checkbox (overlay top-left corner)
         checkbox = QCheckBox(container)
