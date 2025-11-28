@@ -44,6 +44,138 @@ class ThumbnailLoader(QRunnable):
             print(f"[ThumbnailLoader] Error loading {self.path}: {e}")
 
 
+class PreloadImageSignals(QObject):
+    """Signals for async image preloading."""
+    loaded = Signal(str, object)  # (path, pixmap or None)
+
+
+class PreloadImageWorker(QRunnable):
+    """
+    PHASE A #1: Background worker for preloading images.
+
+    Preloads next 2 photos in background for instant navigation.
+    """
+    def __init__(self, path: str, signals: PreloadImageSignals):
+        super().__init__()
+        self.path = path
+        self.signals = signals
+
+    def run(self):
+        """Load image in background thread."""
+        try:
+            from PIL import Image, ImageOps
+            import io
+            from PySide6.QtGui import QPixmap
+
+            # Load with PIL for EXIF orientation
+            pil_image = Image.open(self.path)
+            pil_image = ImageOps.exif_transpose(pil_image)
+
+            # Convert to RGB if needed
+            if pil_image.mode != 'RGB':
+                pil_image = pil_image.convert('RGB')
+
+            # Save to buffer
+            buffer = io.BytesIO()
+            pil_image.save(buffer, format='PNG')
+            buffer.seek(0)
+
+            # Load QPixmap from buffer
+            pixmap = QPixmap()
+            pixmap.loadFromData(buffer.read())
+
+            # Cleanup
+            pil_image.close()
+            buffer.close()
+
+            # Emit loaded signal
+            self.signals.loaded.emit(self.path, pixmap)
+            print(f"[PreloadImageWorker] ✓ Preloaded: {os.path.basename(self.path)}")
+
+        except Exception as e:
+            print(f"[PreloadImageWorker] ⚠️ Error preloading {self.path}: {e}")
+            self.signals.loaded.emit(self.path, None)
+
+
+class ProgressiveImageSignals(QObject):
+    """Signals for progressive image loading."""
+    thumbnail_loaded = Signal(object)  # QPixmap
+    full_loaded = Signal(object)  # QPixmap
+
+
+class ProgressiveImageWorker(QRunnable):
+    """
+    PHASE A #2: Progressive image loader.
+
+    Loads thumbnail-quality first (instant), then full resolution in background.
+    """
+    def __init__(self, path: str, signals: ProgressiveImageSignals, viewport_size):
+        super().__init__()
+        self.path = path
+        self.signals = signals
+        self.viewport_size = viewport_size
+
+    def run(self):
+        """Load image progressively: thumbnail → full quality."""
+        try:
+            from PIL import Image, ImageOps
+            import io
+            from PySide6.QtGui import QPixmap
+            from PySide6.QtCore import Qt
+
+            # Load with PIL for EXIF orientation
+            pil_image = Image.open(self.path)
+            pil_image = ImageOps.exif_transpose(pil_image)
+
+            # Convert to RGB if needed
+            if pil_image.mode != 'RGB':
+                pil_image = pil_image.convert('RGB')
+
+            # STEP 1: Create thumbnail-quality version (fast!)
+            # Calculate thumbnail size (1/4 of viewport)
+            thumb_width = self.viewport_size.width() // 4
+            thumb_height = self.viewport_size.height() // 4
+
+            # Create thumbnail
+            thumb_image = pil_image.copy()
+            thumb_image.thumbnail((thumb_width, thumb_height), Image.Resampling.LANCZOS)
+
+            # Convert to QPixmap
+            buffer = io.BytesIO()
+            thumb_image.save(buffer, format='JPEG', quality=70)
+            buffer.seek(0)
+
+            thumb_pixmap = QPixmap()
+            thumb_pixmap.loadFromData(buffer.read())
+            buffer.close()
+            thumb_image.close()
+
+            # Emit thumbnail (instant display!)
+            self.signals.thumbnail_loaded.emit(thumb_pixmap)
+            print(f"[ProgressiveImageWorker] ✓ Thumbnail loaded: {os.path.basename(self.path)}")
+
+            # STEP 2: Load full resolution (background)
+            buffer = io.BytesIO()
+            pil_image.save(buffer, format='PNG')
+            buffer.seek(0)
+
+            full_pixmap = QPixmap()
+            full_pixmap.loadFromData(buffer.read())
+
+            # Cleanup
+            pil_image.close()
+            buffer.close()
+
+            # Emit full quality
+            self.signals.full_loaded.emit(full_pixmap)
+            print(f"[ProgressiveImageWorker] ✓ Full quality loaded: {os.path.basename(self.path)}")
+
+        except Exception as e:
+            print(f"[ProgressiveImageWorker] ⚠️ Error loading {self.path}: {e}")
+            import traceback
+            traceback.print_exc()
+
+
 class GooglePhotosEventFilter(QObject):
     """
     Event filter for GooglePhotosLayout.
@@ -151,6 +283,36 @@ class MediaLightbox(QDialog):
         self.swipe_start_time = None
         self.is_swiping = False
 
+        # PHASE A #1: Image Preloading & Caching
+        self.preload_cache = {}  # Map path -> {pixmap, timestamp}
+        self.preload_count = 2  # Preload next 2 photos
+        self.cache_limit = 5  # Keep max 5 photos in cache
+        self.preload_thread_pool = QThreadPool()
+        self.preload_thread_pool.setMaxThreadCount(2)  # 2 background threads for preloading
+        self.preload_signals = PreloadImageSignals()
+        self.preload_signals.loaded.connect(self._on_preload_complete)
+
+        # PHASE A #2: Progressive Loading State
+        self.progressive_loading = True  # Enable progressive load (thumbnail → full)
+        self.thumbnail_quality_loaded = False  # Track if thumbnail loaded
+        self.full_quality_loaded = False  # Track if full quality loaded
+        self.progressive_load_worker = None  # Current progressive load worker
+        self.progressive_signals = ProgressiveImageSignals()
+        self.progressive_signals.thumbnail_loaded.connect(self._on_thumbnail_loaded)
+        self.progressive_signals.full_loaded.connect(self._on_full_quality_loaded)
+
+        # PHASE A #3: Zoom to Mouse Cursor
+        self.last_mouse_pos = None  # Track mouse position for zoom centering
+        self.zoom_mouse_tracking = True  # Enable cursor-centered zoom
+
+        # PHASE A #4: Loading Indicators
+        self.is_loading = False  # Track if currently loading
+        self.loading_start_time = None  # Track load start for timeout detection
+
+        # PHASE A #5: Keyboard Shortcut Help Overlay
+        self.help_overlay = None  # Help overlay widget
+        self.help_visible = False  # Track help visibility
+
         self._setup_ui()
         # Don't load media here - wait for showEvent when window has proper size
 
@@ -217,6 +379,22 @@ class MediaLightbox(QDialog):
         self.image_label.setScaledContents(False)
         media_container_layout.addWidget(self.image_label)
 
+        # PHASE A #4: Loading indicator (overlaid on media container)
+        self.loading_indicator = QLabel(self.media_container)
+        self.loading_indicator.setAlignment(Qt.AlignCenter)
+        self.loading_indicator.setStyleSheet("""
+            QLabel {
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                font-size: 14pt;
+                padding: 20px 30px;
+                border-radius: 10px;
+            }
+        """)
+        self.loading_indicator.setText("⏳ Loading...")
+        self.loading_indicator.hide()
+        self.loading_indicator.raise_()  # Ensure it's on top
+
         # Video display will be added to container on first video load
 
         # Set container as scroll area widget (never replace it!)
@@ -278,6 +456,9 @@ class MediaLightbox(QDialog):
 
         # Toolbar visibility state
         self.toolbars_visible = False
+
+        # PHASE A #5: Create keyboard shortcut help overlay
+        self._create_help_overlay()
 
     def _create_top_toolbar(self) -> QWidget:
         """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
@@ -862,8 +1043,16 @@ class MediaLightbox(QDialog):
             self.time_current_label.setText(f"{minutes}:{seconds:02d}")
 
     def _load_photo(self):
-        """Load and display the current photo with EXIF orientation correction."""
-        from PySide6.QtCore import Qt  # Import at top to avoid UnboundLocalError
+        """
+        Load and display the current photo with EXIF orientation correction.
+
+        PHASE A ENHANCEMENTS:
+        - Checks preload cache first (instant load)
+        - Uses progressive loading (thumbnail → full quality)
+        - Shows loading indicators
+        - Triggers background preloading of next photos
+        """
+        from PySide6.QtCore import Qt
         from PySide6.QtGui import QPixmap
 
         try:
@@ -884,100 +1073,59 @@ class MediaLightbox(QDialog):
             self.image_label.setStyleSheet("")  # Reset any custom styling
 
             print(f"[MediaLightbox] Loading photo: {os.path.basename(self.media_path)}")
-            print(f"[MediaLightbox] Window size: {self.width()}x{self.height()}")
 
-            # CRITICAL FIX: Load image using PIL first for EXIF orientation correction
-            from PIL import Image, ImageOps
-            import io
+            # PHASE A #1: Check preload cache first (instant load!)
+            if self.media_path in self.preload_cache:
+                print(f"[MediaLightbox] ✓ Loading from cache (INSTANT!)")
+                cached_data = self.preload_cache[self.media_path]
+                pixmap = cached_data['pixmap']
 
-            pil_image = None  # Track for cleanup
-            pixmap = None
+                # Use cached pixmap directly
+                self.original_pixmap = pixmap
 
-            try:
-                # Load with PIL and auto-rotate based on EXIF orientation
-                pil_image = Image.open(self.media_path)
-
-                # EXIF ORIENTATION FIX: Auto-rotate based on EXIF orientation tag
-                # This fixes photos that appear rotated incorrectly
-                pil_image = ImageOps.exif_transpose(pil_image)
-
-                # MEMORY CORRUPTION FIX: Save to bytes buffer instead of direct tobytes
-                # This prevents QImage from referencing freed PIL memory
-                if pil_image.mode != 'RGB':
-                    pil_image = pil_image.convert('RGB')
-
-                # Save to bytes buffer (keeps data alive independently of PIL image)
-                buffer = io.BytesIO()
-                pil_image.save(buffer, format='PNG')
-                buffer.seek(0)
-
-                # Load QPixmap from buffer
-                pixmap = QPixmap()
-                pixmap.loadFromData(buffer.read())
-
-                print(f"[PhotoLightbox] ✓ Image loaded with EXIF orientation: {pil_image.width}x{pil_image.height}")
-
-                # MEMORY LEAK FIX: Close PIL image to free memory
-                pil_image.close()
-                buffer.close()
-                print(f"[PhotoLightbox] ✓ PIL image and buffer closed")
-
-            except Exception as pil_error:
-                print(f"[PhotoLightbox] PIL loading failed, falling back to QPixmap: {pil_error}")
-                import traceback
-                traceback.print_exc()
-
-                # Clean up PIL image if it was opened
-                if pil_image:
-                    try:
-                        pil_image.close()
-                    except:
-                        pass
-
-                # Fallback to QPixmap if PIL fails
-                pixmap = QPixmap(self.media_path)
-
-            if not pixmap or pixmap.isNull():
-                self.image_label.setText("❌ Failed to load image")
-                self.image_label.setStyleSheet("color: white; font-size: 14pt;")
-                return
-
-            # Store original pixmap for zoom operations
-            self.original_pixmap = pixmap
-
-            # Scale to fit while maintaining aspect ratio
-            # Get available space (accounting for padding and nav buttons)
-            # ROBUST FIX: Ensure we have valid window dimensions
-            window_width = max(self.width(), 800)  # Minimum 800px
-            window_height = max(self.height(), 600)  # Minimum 600px
-
-            max_width = window_width - 100  # Leave space for UI
-            max_height = window_height - 200  # Leave space for top/bottom bars
-
-            print(f"[PhotoLightbox] Scaling to: max_width={max_width}, max_height={max_height}")
-
-            # Apply zoom if set
-            if self.zoom_mode == "fit":
+                # Scale to fit
+                viewport_size = self.scroll_area.viewport().size()
                 scaled_pixmap = pixmap.scaled(
-                    max_width, max_height,
+                    viewport_size,
                     Qt.KeepAspectRatio,
                     Qt.SmoothTransformation
                 )
+
+                self.image_label.setPixmap(scaled_pixmap)
+                self.image_label.resize(scaled_pixmap.size())
+                self.media_container.resize(scaled_pixmap.size())
+
+                # Calculate zoom level
+                self.zoom_level = scaled_pixmap.width() / pixmap.width()
+                self.fit_zoom_level = self.zoom_level
+                self.zoom_mode = "fit"
+
+                print(f"[MediaLightbox] ✓ Loaded from cache instantly!")
+
+            # PHASE A #2: Progressive loading (thumbnail → full quality)
+            elif self.progressive_loading:
+                print(f"[MediaLightbox] Starting progressive load...")
+
+                # Reset progressive load state
+                self.thumbnail_quality_loaded = False
+                self.full_quality_loaded = False
+
+                # PHASE A #4: Show loading indicator
+                self._show_loading_indicator("⏳ Loading...")
+
+                # Start progressive load worker
+                viewport_size = self.scroll_area.viewport().size()
+                worker = ProgressiveImageWorker(
+                    self.media_path,
+                    self.progressive_signals,
+                    viewport_size
+                )
+                self.preload_thread_pool.start(worker)
+
+            # Fallback: Direct load (old method)
             else:
-                # Apply manual zoom level
-                zoomed_width = int(pixmap.width() * self.zoom_level)
-                zoomed_height = int(pixmap.height() * self.zoom_level)
-                scaled_pixmap = pixmap.scaled(
-                    zoomed_width, zoomed_height,
-                    Qt.KeepAspectRatio,
-                    Qt.SmoothTransformation
-                )
-
-            self.image_label.setPixmap(scaled_pixmap)
-            self.image_label.resize(scaled_pixmap.size())  # CRITICAL: Size label to match pixmap for QScrollArea
-            # CRITICAL: Also resize container to fit the image (QScrollArea needs this!)
-            self.media_container.resize(scaled_pixmap.size())
-            print(f"[PhotoLightbox] ✓ Photo displayed: {scaled_pixmap.width()}x{scaled_pixmap.height()}, zoom={self.zoom_level}")
+                print(f"[MediaLightbox] Direct load (progressive loading disabled)")
+                self._load_photo_direct()
 
             # Update counter
             self.counter_label.setText(
@@ -994,10 +1142,79 @@ class MediaLightbox(QDialog):
             # Update status label (zoom indicator)
             self._update_status_label()
 
+            # PHASE A #1: Start preloading next photos in background
+            self._start_preloading()
+
         except Exception as e:
             print(f"[MediaLightbox] Error loading photo: {e}")
             self.image_label.setText(f"❌ Error loading image\n\n{str(e)}")
             self.image_label.setStyleSheet("color: white; font-size: 12pt;")
+
+    def _load_photo_direct(self):
+        """
+        Direct photo loading (fallback when progressive loading disabled).
+
+        Uses the original PIL-based loading method.
+        """
+        from PIL import Image, ImageOps
+        import io
+        from PySide6.QtCore import Qt
+        from PySide6.QtGui import QPixmap
+
+        pil_image = None
+        pixmap = None
+
+        try:
+            # Load with PIL and auto-rotate based on EXIF orientation
+            pil_image = Image.open(self.media_path)
+            pil_image = ImageOps.exif_transpose(pil_image)
+
+            if pil_image.mode != 'RGB':
+                pil_image = pil_image.convert('RGB')
+
+            # Save to bytes buffer
+            buffer = io.BytesIO()
+            pil_image.save(buffer, format='PNG')
+            buffer.seek(0)
+
+            # Load QPixmap from buffer
+            pixmap = QPixmap()
+            pixmap.loadFromData(buffer.read())
+
+            # Cleanup
+            pil_image.close()
+            buffer.close()
+
+        except Exception as e:
+            print(f"[MediaLightbox] PIL loading failed: {e}")
+            if pil_image:
+                try:
+                    pil_image.close()
+                except:
+                    pass
+            # Fallback to QPixmap
+            pixmap = QPixmap(self.media_path)
+
+        if pixmap and not pixmap.isNull():
+            # Store original
+            self.original_pixmap = pixmap
+
+            # Scale to fit
+            viewport_size = self.scroll_area.viewport().size()
+            scaled_pixmap = pixmap.scaled(
+                viewport_size,
+                Qt.KeepAspectRatio,
+                Qt.SmoothTransformation
+            )
+
+            self.image_label.setPixmap(scaled_pixmap)
+            self.image_label.resize(scaled_pixmap.size())
+            self.media_container.resize(scaled_pixmap.size())
+
+            # Calculate zoom level
+            self.zoom_level = scaled_pixmap.width() / pixmap.width()
+            self.fit_zoom_level = self.zoom_level
+            self.zoom_mode = "fit"
 
     def _load_metadata(self):
         """Load and display photo metadata."""
@@ -1211,6 +1428,9 @@ class MediaLightbox(QDialog):
     def mouseMoveEvent(self, event):
         """Handle mouse move for panning, cursor updates, and toolbar reveal."""
         from PySide6.QtCore import Qt
+
+        # PHASE A #3: Track mouse position for cursor-centered zoom
+        self.last_mouse_pos = event.pos()
 
         # PROFESSIONAL AUTO-HIDE: Show toolbars on mouse movement
         self._show_toolbars()
@@ -1439,10 +1659,20 @@ class MediaLightbox(QDialog):
 
         print(f"[MediaLightbox] Key pressed: {key} (Qt.Key_Left={Qt.Key_Left}, Qt.Key_Right={Qt.Key_Right})")
 
-        # ESC: Close
-        if key == Qt.Key_Escape:
-            print("[MediaLightbox] ESC pressed - closing")
-            self.close()
+        # PHASE A #5: ? key - Toggle help overlay
+        if key == Qt.Key_Question or (key == Qt.Key_Slash and modifiers == Qt.ShiftModifier):
+            print("[MediaLightbox] ? pressed - toggle help")
+            self._toggle_help_overlay()
+            event.accept()
+
+        # ESC: Close help overlay if open, otherwise close lightbox
+        elif key == Qt.Key_Escape:
+            if self.help_visible:
+                print("[MediaLightbox] ESC pressed - closing help overlay")
+                self._toggle_help_overlay()
+            else:
+                print("[MediaLightbox] ESC pressed - closing lightbox")
+                self.close()
             event.accept()  # Prevent event propagation
 
         # Arrow keys: Navigation
@@ -1558,9 +1788,13 @@ class MediaLightbox(QDialog):
         Apply smooth continuous zoom with animation.
 
         Phase 3 #5: Enhanced with smooth zoom animation instead of instant zoom.
+        PHASE A #3: Cursor-centered zoom keeps point under mouse fixed.
         """
         if self._is_video(self.media_path) or not self.original_pixmap:
             return
+
+        # PHASE A #3: Store old zoom for cursor-centered calculation
+        old_zoom = self.zoom_level
 
         # Calculate new zoom level
         new_zoom = self.zoom_level * factor
@@ -1597,6 +1831,12 @@ class MediaLightbox(QDialog):
             self._update_zoom_status()
 
         self._zoom_animation.valueChanged.connect(update_zoom)
+
+        # PHASE A #3: Apply cursor-centered scroll adjustment when zoom completes
+        def on_zoom_complete():
+            self._calculate_zoom_scroll_adjustment(old_zoom, new_zoom)
+
+        self._zoom_animation.finished.connect(on_zoom_complete)
         self._zoom_animation.start()
 
     def _zoom_in(self):
@@ -1881,6 +2121,306 @@ class MediaLightbox(QDialog):
             self.toolbar_hide_timer.start()
 
             print("[MediaLightbox] Entered fullscreen (toolbars auto-hide)")
+
+    # ==================== PHASE A IMPROVEMENTS ====================
+
+    def _create_help_overlay(self):
+        """
+        PHASE A #5: Create keyboard shortcut help overlay.
+
+        Press ? to show/hide shortcuts.
+        """
+        from PySide6.QtWidgets import QTextEdit
+
+        self.help_overlay = QWidget(self)
+        self.help_overlay.setStyleSheet("""
+            QWidget {
+                background: rgba(0, 0, 0, 0.9);
+            }
+        """)
+        self.help_overlay.hide()
+
+        overlay_layout = QVBoxLayout(self.help_overlay)
+        overlay_layout.setContentsMargins(50, 50, 50, 50)
+
+        # Title
+        title = QLabel("⌨️ Keyboard Shortcuts")
+        title.setStyleSheet("color: white; font-size: 24pt; font-weight: bold;")
+        title.setAlignment(Qt.AlignCenter)
+        overlay_layout.addWidget(title)
+
+        # Shortcuts content
+        shortcuts_text = """
+<div style='color: white; font-size: 12pt; line-height: 1.8;'>
+<table cellpadding='8' cellspacing='0' width='100%'>
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Navigation</td></tr>
+<tr><td width='40%'><b>← / →</b> or <b>↑ / ↓</b></td><td>Previous / Next photo</td></tr>
+<tr><td><b>Space</b></td><td>Next photo (slideshow style)</td></tr>
+<tr><td><b>Home / End</b></td><td>First / Last photo</td></tr>
+<tr><td><b>Swipe Left/Right</b></td><td>Navigate on touch devices</td></tr>
+
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Zoom & View</td></tr>
+<tr><td><b>Mouse Wheel</b></td><td>Zoom in / out (cursor-centered)</td></tr>
+<tr><td><b>+ / -</b></td><td>Zoom in / out</td></tr>
+<tr><td><b>0</b></td><td>Fit to window</td></tr>
+<tr><td><b>Pinch Gesture</b></td><td>Zoom on touch devices</td></tr>
+<tr><td><b>Click + Drag</b></td><td>Pan when zoomed</td></tr>
+
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Actions</td></tr>
+<tr><td><b>I</b></td><td>Toggle info panel</td></tr>
+<tr><td><b>S</b></td><td>Toggle slideshow</td></tr>
+<tr><td><b>F</b></td><td>Toggle favorite</td></tr>
+<tr><td><b>D</b></td><td>Delete photo</td></tr>
+<tr><td><b>1-5</b></td><td>Rate photo (1-5 stars)</td></tr>
+
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>General</td></tr>
+<tr><td><b>F11</b></td><td>Toggle fullscreen</td></tr>
+<tr><td><b>ESC</b></td><td>Close lightbox</td></tr>
+<tr><td><b>?</b></td><td>Show/hide this help</td></tr>
+</table>
+</div>
+        """
+
+        help_text = QTextEdit()
+        help_text.setReadOnly(True)
+        help_text.setHtml(shortcuts_text)
+        help_text.setStyleSheet("""
+            QTextEdit {
+                background: transparent;
+                border: none;
+                color: white;
+            }
+        """)
+        overlay_layout.addWidget(help_text)
+
+        # Close instruction
+        close_label = QLabel("Press ESC or ? to close")
+        close_label.setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 11pt;")
+        close_label.setAlignment(Qt.AlignCenter)
+        overlay_layout.addWidget(close_label)
+
+    def _toggle_help_overlay(self):
+        """PHASE A #5: Toggle keyboard shortcuts help overlay."""
+        if self.help_visible:
+            self.help_overlay.hide()
+            self.help_visible = False
+        else:
+            # Resize to fill window
+            self.help_overlay.setGeometry(self.rect())
+            self.help_overlay.show()
+            self.help_overlay.raise_()  # Bring to front
+            self.help_visible = True
+
+    def _show_loading_indicator(self, message: str = "⏳ Loading..."):
+        """PHASE A #4: Show loading indicator with message."""
+        self.loading_indicator.setText(message)
+
+        # Position in center of scroll area
+        scroll_center_x = self.scroll_area.width() // 2
+        scroll_center_y = self.scroll_area.height() // 2
+
+        # Calculate position (center the indicator)
+        indicator_width = 200
+        indicator_height = 80
+        x = scroll_center_x - (indicator_width // 2)
+        y = scroll_center_y - (indicator_height // 2)
+
+        self.loading_indicator.setGeometry(x, y, indicator_width, indicator_height)
+        self.loading_indicator.show()
+        self.loading_indicator.raise_()
+        self.is_loading = True
+
+        # Track load start time
+        from PySide6.QtCore import QDateTime
+        self.loading_start_time = QDateTime.currentMSecsSinceEpoch()
+
+    def _hide_loading_indicator(self):
+        """PHASE A #4: Hide loading indicator."""
+        self.loading_indicator.hide()
+        self.is_loading = False
+
+    def _start_preloading(self):
+        """
+        PHASE A #1: Start preloading next photos in background.
+
+        Preloads next 2 photos for instant navigation.
+        """
+        if not self.all_media:
+            return
+
+        # Preload next N photos
+        for i in range(1, self.preload_count + 1):
+            next_index = self.current_index + i
+
+            if next_index >= len(self.all_media):
+                break  # No more photos to preload
+
+            next_path = self.all_media[next_index]
+
+            # Skip if already cached
+            if next_path in self.preload_cache:
+                continue
+
+            # Skip videos (only preload photos)
+            if self._is_video(next_path):
+                continue
+
+            # Start background preload
+            worker = PreloadImageWorker(next_path, self.preload_signals)
+            self.preload_thread_pool.start(worker)
+            print(f"[MediaLightbox] Preloading: {os.path.basename(next_path)}")
+
+    def _on_preload_complete(self, path: str, pixmap):
+        """PHASE A #1: Handle preload completion."""
+        if pixmap and not pixmap.isNull():
+            # Add to cache with timestamp
+            from PySide6.QtCore import QDateTime
+            self.preload_cache[path] = {
+                'pixmap': pixmap,
+                'timestamp': QDateTime.currentMSecsSinceEpoch()
+            }
+            print(f"[MediaLightbox] ✓ Cached: {os.path.basename(path)} (cache size: {len(self.preload_cache)})")
+
+            # Clean cache if too large
+            self._clean_preload_cache()
+
+    def _clean_preload_cache(self):
+        """PHASE A #1: Clean preload cache (keep only 5 most recent)."""
+        if len(self.preload_cache) <= self.cache_limit:
+            return
+
+        # Sort by timestamp (oldest first)
+        sorted_paths = sorted(
+            self.preload_cache.keys(),
+            key=lambda p: self.preload_cache[p]['timestamp']
+        )
+
+        # Remove oldest entries
+        to_remove = len(self.preload_cache) - self.cache_limit
+        for i in range(to_remove):
+            path = sorted_paths[i]
+            del self.preload_cache[path]
+            print(f"[MediaLightbox] Removed from cache: {os.path.basename(path)}")
+
+    def _on_thumbnail_loaded(self, pixmap):
+        """PHASE A #2: Handle progressive loading - thumbnail quality loaded."""
+        if not pixmap or pixmap.isNull():
+            return
+
+        from PySide6.QtCore import Qt
+
+        # Store as original for zoom operations
+        self.original_pixmap = pixmap
+
+        # Scale to fit viewport
+        viewport_size = self.scroll_area.viewport().size()
+        scaled_pixmap = pixmap.scaled(
+            viewport_size,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        # Display thumbnail (instant!)
+        self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.size())
+        self.media_container.resize(scaled_pixmap.size())
+
+        self.thumbnail_quality_loaded = True
+
+        # Update status
+        self._show_loading_indicator("📥 Loading full resolution...")
+
+        print(f"[MediaLightbox] ✓ Thumbnail displayed (progressive load)")
+
+    def _on_full_quality_loaded(self, pixmap):
+        """PHASE A #2: Handle progressive loading - full quality loaded."""
+        if not pixmap or pixmap.isNull():
+            return
+
+        from PySide6.QtCore import Qt
+
+        # Store as original for zoom operations
+        self.original_pixmap = pixmap
+
+        # Scale to fit viewport
+        viewport_size = self.scroll_area.viewport().size()
+        scaled_pixmap = pixmap.scaled(
+            viewport_size,
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        # Swap with subtle fade
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+        # Create fade animation if not exists
+        if not self.image_label.graphicsEffect():
+            opacity_effect = QGraphicsOpacityEffect()
+            self.image_label.setGraphicsEffect(opacity_effect)
+
+        opacity_effect = self.image_label.graphicsEffect()
+
+        # Quick fade out/in
+        fade = QPropertyAnimation(opacity_effect, b"opacity")
+        fade.setDuration(150)
+        fade.setStartValue(0.7)
+        fade.setEndValue(1.0)
+        fade.setEasingCurve(QEasingCurve.OutCubic)
+
+        # Update pixmap
+        self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.size())
+        self.media_container.resize(scaled_pixmap.size())
+
+        fade.start()
+        self.setProperty("quality_fade", fade)  # Prevent GC
+
+        self.full_quality_loaded = True
+
+        # Hide loading indicator
+        self._hide_loading_indicator()
+
+        # Calculate zoom level
+        self.zoom_level = scaled_pixmap.width() / pixmap.width()
+        self.fit_zoom_level = self.zoom_level
+        self.zoom_mode = "fit"
+
+        print(f"[MediaLightbox] ✓ Full quality displayed (progressive load complete)")
+
+    def _calculate_zoom_scroll_adjustment(self, old_zoom: float, new_zoom: float):
+        """
+        PHASE A #3: Calculate scroll position adjustment for cursor-centered zoom.
+
+        Keeps the point under the mouse cursor fixed during zoom.
+        """
+        if not self.last_mouse_pos or not self.zoom_mouse_tracking:
+            return  # No adjustment needed
+
+        # Get scroll area viewport position
+        viewport = self.scroll_area.viewport()
+
+        # Convert mouse position to viewport coordinates
+        mouse_viewport_pos = viewport.mapFromGlobal(self.mapToGlobal(self.last_mouse_pos))
+
+        # Calculate position in image space before zoom
+        scroll_x = self.scroll_area.horizontalScrollBar().value()
+        scroll_y = self.scroll_area.verticalScrollBar().value()
+
+        image_x_before = scroll_x + mouse_viewport_pos.x()
+        image_y_before = scroll_y + mouse_viewport_pos.y()
+
+        # Calculate new scroll position to keep same point under cursor
+        zoom_ratio = new_zoom / old_zoom
+
+        new_scroll_x = int(image_x_before * zoom_ratio - mouse_viewport_pos.x())
+        new_scroll_y = int(image_y_before * zoom_ratio - mouse_viewport_pos.y())
+
+        # Apply after zoom is complete (in next event loop)
+        def apply_scroll():
+            self.scroll_area.horizontalScrollBar().setValue(new_scroll_x)
+            self.scroll_area.verticalScrollBar().setValue(new_scroll_y)
+
+        QTimer.singleShot(10, apply_scroll)
 
 
 class GooglePhotosLayout(BaseLayout):
