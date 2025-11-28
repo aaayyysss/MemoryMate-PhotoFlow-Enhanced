@@ -4140,6 +4140,77 @@ class GooglePhotosLayout(BaseLayout):
         self._update_selection_ui()
         print("[GooglePhotosLayout] ✗ Cleared all selections")
 
+    def keyPressEvent(self, event: QKeyEvent):
+        """
+        QUICK WIN #7: Keyboard navigation in photo grid.
+
+        Shortcuts:
+        - Ctrl+A: Select all photos
+        - Escape: Clear selection
+        - Delete: Delete selected photos
+        - Ctrl+F: Focus search box
+        - Enter: Open first selected photo in lightbox
+
+        Args:
+            event: QKeyEvent
+        """
+        key = event.key()
+        modifiers = event.modifiers()
+
+        # Ctrl+A: Select All
+        if key == Qt.Key_A and modifiers == Qt.ControlModifier:
+            print("[GooglePhotosLayout] ⌨️ Ctrl+A - Select all")
+            self._on_select_all()
+            event.accept()
+
+        # Escape: Clear selection
+        elif key == Qt.Key_Escape:
+            if len(self.selected_photos) > 0:
+                print("[GooglePhotosLayout] ⌨️ ESC - Clear selection")
+                self._on_clear_selection()
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # Delete: Delete selected photos
+        elif key == Qt.Key_Delete:
+            if len(self.selected_photos) > 0:
+                print(f"[GooglePhotosLayout] ⌨️ DELETE - Delete {len(self.selected_photos)} photos")
+                self._on_delete_selected()
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # Ctrl+F: Focus search box
+        elif key == Qt.Key_F and modifiers == Qt.ControlModifier:
+            print("[GooglePhotosLayout] ⌨️ Ctrl+F - Focus search")
+            if hasattr(self, 'search_box'):
+                self.search_box.setFocus()
+                self.search_box.selectAll()
+            event.accept()
+
+        # Enter: Open first selected photo
+        elif key == Qt.Key_Return or key == Qt.Key_Enter:
+            if len(self.selected_photos) > 0:
+                first_photo = list(self.selected_photos)[0]
+                print(f"[GooglePhotosLayout] ⌨️ ENTER - Open {first_photo}")
+                self._on_photo_clicked(first_photo)
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # S: Toggle selection mode
+        elif key == Qt.Key_S and not modifiers:
+            print("[GooglePhotosLayout] ⌨️ S - Toggle selection mode")
+            if hasattr(self, 'btn_select'):
+                self.btn_select.setChecked(not self.btn_select.isChecked())
+                self._toggle_selection_mode(self.btn_select.isChecked())
+            event.accept()
+
+        else:
+            # Pass to parent for other keys
+            super().keyPressEvent(event)
+
     def _toggle_selection_mode(self, checked: bool):
         """
         Toggle selection mode on/off.
