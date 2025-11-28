@@ -3982,26 +3982,18 @@ class GooglePhotosLayout(BaseLayout):
         try:
             # Update button with loaded thumbnail
             if pixmap and not pixmap.isNull():
-                # PHASE 3 #2: Stop pulsing skeleton animation
-                pulse_anim = button.property("pulse_animation")
-                if pulse_anim:
-                    pulse_anim.stop()
-                    button.setProperty("pulse_animation", None)
-
                 scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                 button.setIcon(QIcon(scaled))
                 button.setIconSize(QSize(size - 4, size - 4))
                 button.setText("")  # Clear placeholder text
 
                 # PHASE 3 #1: Smooth fade-in animation for thumbnail
-                # PHASE 3 #2: Reuse existing opacity effect from pulsing animation
+                # PHASE 3 #2 FIX: Always create fresh graphics effect to avoid conflicts
                 from PySide6.QtCore import QPropertyAnimation, QEasingCurve
 
-                opacity_effect = button.graphicsEffect()
-                if not opacity_effect:
-                    opacity_effect = QGraphicsOpacityEffect()
-                    button.setGraphicsEffect(opacity_effect)
-
+                # Create new opacity effect (don't reuse to avoid animation conflicts)
+                opacity_effect = QGraphicsOpacityEffect()
+                button.setGraphicsEffect(opacity_effect)
                 opacity_effect.setOpacity(0.0)
 
                 # Animate fade-in from 0 to 1
@@ -4288,27 +4280,8 @@ class GooglePhotosLayout(BaseLayout):
             thumb.setToolTip(os.path.basename(path))
 
         # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
-        # PHASE 3 #2: Added pulsing animation to indicate caching/loading
+        # PHASE 3 #2: Simple skeleton state without animation (performance fix)
         thumb.setText("⏳")
-
-        # Add pulsing opacity animation to skeleton state
-        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
-
-        opacity_effect = QGraphicsOpacityEffect()
-        thumb.setGraphicsEffect(opacity_effect)
-
-        # Create infinite pulsing animation (opacity 0.3 -> 1.0 -> 0.3)
-        pulse = QPropertyAnimation(opacity_effect, b"opacity")
-        pulse.setDuration(1500)  # 1.5 second cycle
-        pulse.setStartValue(0.3)
-        pulse.setKeyValueAt(0.5, 1.0)  # Peak at midpoint
-        pulse.setEndValue(0.3)
-        pulse.setEasingCurve(QEasingCurve.InOutSine)
-        pulse.setLoopCount(-1)  # Loop infinitely
-        pulse.start()
-
-        # Store animation to prevent garbage collection
-        thumb.setProperty("pulse_animation", pulse)
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
