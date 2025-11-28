@@ -1203,18 +1203,70 @@ class MediaLightbox(QDialog):
                 content.height() > viewport.height())
 
     def _previous_media(self):
-        """Navigate to previous media (photo or video)."""
+        """
+        Navigate to previous media (photo or video).
+
+        Phase 3 #5: Added smooth cross-fade transition.
+        """
         if self.current_index > 0:
             self.current_index -= 1
             self.media_path = self.all_media[self.current_index]
-            self._load_media()
+            self._load_media_with_transition()
 
     def _next_media(self):
-        """Navigate to next media (photo or video)."""
+        """
+        Navigate to next media (photo or video).
+
+        Phase 3 #5: Added smooth cross-fade transition.
+        """
         if self.current_index < len(self.all_media) - 1:
             self.current_index += 1
             self.media_path = self.all_media[self.current_index]
+            self._load_media_with_transition()
+
+    def _load_media_with_transition(self):
+        """
+        PHASE 3 #5: Load media with smooth fade transition.
+
+        Cross-fades from current image to new image for professional feel.
+        """
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QTimer
+
+        # Create opacity effect if not present
+        if not self.image_label.graphicsEffect():
+            opacity_effect = QGraphicsOpacityEffect()
+            self.image_label.setGraphicsEffect(opacity_effect)
+            opacity_effect.setOpacity(1.0)
+
+        opacity_effect = self.image_label.graphicsEffect()
+
+        # Fade out current image
+        fade_out = QPropertyAnimation(opacity_effect, b"opacity")
+        fade_out.setDuration(150)  # 150ms fade-out
+        fade_out.setStartValue(1.0)
+        fade_out.setEndValue(0.0)
+        fade_out.setEasingCurve(QEasingCurve.InCubic)
+
+        # Load new media after fade-out completes
+        def load_and_fade_in():
             self._load_media()
+
+            # Fade in new image
+            fade_in = QPropertyAnimation(opacity_effect, b"opacity")
+            fade_in.setDuration(200)  # 200ms fade-in
+            fade_in.setStartValue(0.0)
+            fade_in.setEndValue(1.0)
+            fade_in.setEasingCurve(QEasingCurve.OutCubic)
+            fade_in.start()
+
+            # Store animation to prevent garbage collection
+            self.setProperty("fade_in_animation", fade_in)
+
+        fade_out.finished.connect(load_and_fade_in)
+        fade_out.start()
+
+        # Store animation to prevent garbage collection
+        self.setProperty("fade_out_animation", fade_out)
 
     def showEvent(self, event):
         """Load media when dialog is first shown (after window has proper size)."""
@@ -1351,7 +1403,11 @@ class MediaLightbox(QDialog):
         event.accept()
 
     def _smooth_zoom(self, factor):
-        """Apply smooth continuous zoom (like Current Layout)."""
+        """
+        Apply smooth continuous zoom with animation.
+
+        Phase 3 #5: Enhanced with smooth zoom animation instead of instant zoom.
+        """
         if self._is_video(self.media_path) or not self.original_pixmap:
             return
 
@@ -1364,18 +1420,33 @@ class MediaLightbox(QDialog):
 
         new_zoom = max(min_zoom, min(new_zoom, max_zoom))
 
-        # Update zoom state
-        self.zoom_level = new_zoom
+        # PHASE 3 #5: Animated zoom transition
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QVariantAnimation
 
-        # Switch to custom zoom mode if zooming from fit/fill
-        if new_zoom > self.fit_zoom_level * 1.01:  # Small tolerance for floating point
-            self.zoom_mode = "custom"
-        elif abs(new_zoom - self.fit_zoom_level) < 0.01:
-            self.zoom_mode = "fit"
+        # Stop any existing zoom animation
+        if hasattr(self, '_zoom_animation') and self._zoom_animation:
+            self._zoom_animation.stop()
 
-        # Apply the zoom
-        self._apply_zoom()
-        self._update_zoom_status()
+        # Create animation for zoom level
+        self._zoom_animation = QVariantAnimation()
+        self._zoom_animation.setDuration(200)  # 200ms smooth zoom
+        self._zoom_animation.setStartValue(self.zoom_level)
+        self._zoom_animation.setEndValue(new_zoom)
+        self._zoom_animation.setEasingCurve(QEasingCurve.OutCubic)
+
+        # Update zoom level during animation
+        def update_zoom(value):
+            self.zoom_level = value
+            # Switch to custom zoom mode if zooming from fit/fill
+            if self.zoom_level > self.fit_zoom_level * 1.01:
+                self.zoom_mode = "custom"
+            elif abs(self.zoom_level - self.fit_zoom_level) < 0.01:
+                self.zoom_mode = "fit"
+            self._apply_zoom()
+            self._update_zoom_status()
+
+        self._zoom_animation.valueChanged.connect(update_zoom)
+        self._zoom_animation.start()
 
     def _zoom_in(self):
         """Zoom in by one step (keyboard shortcut: +)."""
@@ -1725,6 +1796,15 @@ class GooglePhotosLayout(BaseLayout):
         self.scroll_debounce_timer.timeout.connect(self._on_scroll_debounced)
         self.scroll_debounce_delay = 150  # ms - debounce scroll events
 
+        # PHASE 2 #4: Date scroll indicator hide timer
+        self.date_indicator_hide_timer = QTimer()
+        self.date_indicator_hide_timer.setSingleShot(True)
+        self.date_indicator_hide_timer.timeout.connect(self._hide_date_indicator)
+        self.date_indicator_delay = 800  # ms - hide after scrolling stops
+
+        # PHASE 2 #5: Thumbnail aspect ratio mode
+        self.thumbnail_aspect_ratio = "square"  # "square", "original", "16:9"
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -1785,6 +1865,10 @@ class GooglePhotosLayout(BaseLayout):
         # QUICK WIN #6: Create floating selection toolbar (initially hidden)
         self.floating_toolbar = self._create_floating_toolbar(main_widget)
         self.floating_toolbar.hide()
+
+        # PHASE 2 #4: Create floating date scroll indicator (initially hidden)
+        self.date_scroll_indicator = self._create_date_scroll_indicator(main_widget)
+        self.date_scroll_indicator.hide()
 
         # Load photos from database
         self._load_photos()
@@ -1948,6 +2032,77 @@ class GooglePhotosLayout(BaseLayout):
         self.zoom_value_label.setStyleSheet("padding: 0 4px; font-size: 10pt;")
         toolbar.addWidget(self.zoom_value_label)
 
+        toolbar.addSeparator()
+
+        # PHASE 2 #5: Aspect ratio toggle buttons
+        aspect_label = QLabel("📐 Aspect:")
+        aspect_label.setStyleSheet("padding: 0 4px;")
+        toolbar.addWidget(aspect_label)
+
+        self.btn_aspect_square = QPushButton("⬜")
+        self.btn_aspect_square.setToolTip("Square thumbnails (1:1)")
+        self.btn_aspect_square.setCheckable(True)
+        self.btn_aspect_square.setChecked(True)
+        self.btn_aspect_square.setFixedSize(32, 32)
+        self.btn_aspect_square.clicked.connect(lambda: self._set_aspect_ratio("square"))
+        self.btn_aspect_square.setStyleSheet("""
+            QPushButton {
+                background: white;
+                border: 2px solid #dadce0;
+                border-radius: 4px;
+            }
+            QPushButton:checked {
+                background: #e8f0fe;
+                border-color: #1a73e8;
+            }
+            QPushButton:hover {
+                border-color: #1a73e8;
+            }
+        """)
+        toolbar.addWidget(self.btn_aspect_square)
+
+        self.btn_aspect_original = QPushButton("🖼️")
+        self.btn_aspect_original.setToolTip("Original aspect ratio")
+        self.btn_aspect_original.setCheckable(True)
+        self.btn_aspect_original.setFixedSize(32, 32)
+        self.btn_aspect_original.clicked.connect(lambda: self._set_aspect_ratio("original"))
+        self.btn_aspect_original.setStyleSheet("""
+            QPushButton {
+                background: white;
+                border: 2px solid #dadce0;
+                border-radius: 4px;
+            }
+            QPushButton:checked {
+                background: #e8f0fe;
+                border-color: #1a73e8;
+            }
+            QPushButton:hover {
+                border-color: #1a73e8;
+            }
+        """)
+        toolbar.addWidget(self.btn_aspect_original)
+
+        self.btn_aspect_16_9 = QPushButton("▬")
+        self.btn_aspect_16_9.setToolTip("16:9 widescreen")
+        self.btn_aspect_16_9.setCheckable(True)
+        self.btn_aspect_16_9.setFixedSize(32, 32)
+        self.btn_aspect_16_9.clicked.connect(lambda: self._set_aspect_ratio("16:9"))
+        self.btn_aspect_16_9.setStyleSheet("""
+            QPushButton {
+                background: white;
+                border: 2px solid #dadce0;
+                border-radius: 4px;
+            }
+            QPushButton:checked {
+                background: #e8f0fe;
+                border-color: #1a73e8;
+            }
+            QPushButton:hover {
+                border-color: #1a73e8;
+            }
+        """)
+        toolbar.addWidget(self.btn_aspect_16_9)
+
         # Spacer
         spacer = QWidget()
         spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -1965,6 +2120,13 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_favorite.setVisible(False)
         self.btn_favorite.clicked.connect(self._on_favorite_selected)
         toolbar.addWidget(self.btn_favorite)
+
+        # PHASE 3 #7: Share/Export button
+        self.btn_share = QPushButton("📤 Share")
+        self.btn_share.setToolTip("Share or export selected photos")
+        self.btn_share.setVisible(False)
+        self.btn_share.clicked.connect(self._on_share_selected)
+        toolbar.addWidget(self.btn_share)
 
         # Store toolbar reference
         self._toolbar = toolbar
@@ -2074,6 +2236,37 @@ class GooglePhotosLayout(BaseLayout):
         toolbar.setFixedWidth(400)
 
         return toolbar
+
+    def _create_date_scroll_indicator(self, parent: QWidget) -> QWidget:
+        """
+        PHASE 2 #4: Create floating date scroll indicator.
+
+        Shows current date when scrolling through timeline.
+        Appears on right side, fades out after scrolling stops.
+
+        Args:
+            parent: Parent widget for positioning
+
+        Returns:
+            QWidget: Floating date indicator (initially hidden)
+        """
+        indicator = QLabel(parent)
+        indicator.setStyleSheet("""
+            QLabel {
+                background: rgba(32, 33, 36, 0.9);
+                color: white;
+                font-size: 14pt;
+                font-weight: bold;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        """)
+        indicator.setAlignment(Qt.AlignCenter)
+        indicator.setText("Loading...")
+        indicator.adjustSize()
+
+        return indicator
 
     def _create_sidebar(self) -> QWidget:
         """
@@ -3775,7 +3968,12 @@ class GooglePhotosLayout(BaseLayout):
         return cols
 
     def _on_thumbnail_loaded(self, path: str, pixmap: QPixmap, size: int):
-        """Callback when async thumbnail loading completes."""
+        """
+        Callback when async thumbnail loading completes.
+
+        Phase 3 #1: Added smooth fade-in animation for loaded thumbnails.
+        Phase 3 #2: Stops pulsing animation and shows cached thumbnail.
+        """
         # Find the button for this path
         button = self.thumbnail_buttons.get(path)
         if not button:
@@ -3784,10 +3982,38 @@ class GooglePhotosLayout(BaseLayout):
         try:
             # Update button with loaded thumbnail
             if pixmap and not pixmap.isNull():
+                # PHASE 3 #2: Stop pulsing skeleton animation
+                pulse_anim = button.property("pulse_animation")
+                if pulse_anim:
+                    pulse_anim.stop()
+                    button.setProperty("pulse_animation", None)
+
                 scaled = pixmap.scaled(size, size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                 button.setIcon(QIcon(scaled))
                 button.setIconSize(QSize(size - 4, size - 4))
                 button.setText("")  # Clear placeholder text
+
+                # PHASE 3 #1: Smooth fade-in animation for thumbnail
+                # PHASE 3 #2: Reuse existing opacity effect from pulsing animation
+                from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+                opacity_effect = button.graphicsEffect()
+                if not opacity_effect:
+                    opacity_effect = QGraphicsOpacityEffect()
+                    button.setGraphicsEffect(opacity_effect)
+
+                opacity_effect.setOpacity(0.0)
+
+                # Animate fade-in from 0 to 1
+                fade_in = QPropertyAnimation(opacity_effect, b"opacity")
+                fade_in.setDuration(300)  # 300ms fade-in
+                fade_in.setStartValue(0.0)
+                fade_in.setEndValue(1.0)
+                fade_in.setEasingCurve(QEasingCurve.OutCubic)
+                fade_in.start()
+
+                # Store animation to prevent garbage collection
+                button.setProperty("fade_animation", fade_in)
             else:
                 button.setText("📷")  # No thumbnail - show placeholder
         except Exception as e:
@@ -3797,6 +4023,7 @@ class GooglePhotosLayout(BaseLayout):
     def _on_timeline_scrolled(self):
         """
         QUICK WIN #5: Debounced scroll handler for smooth 60 FPS performance.
+        PHASE 2 #4: Also shows date scroll indicator during scrolling.
 
         Instead of processing every scroll event (which can be hundreds per second),
         we restart a timer on each scroll. Only when scrolling stops (or slows down)
@@ -3804,9 +4031,128 @@ class GooglePhotosLayout(BaseLayout):
 
         This prevents lag and dropped frames during fast scrolling.
         """
+        # PHASE 2 #4: Update date scroll indicator (lightweight operation)
+        self._update_date_scroll_indicator()
+
         # Restart debounce timer - will trigger _on_scroll_debounced() after 150ms of no scrolling
         self.scroll_debounce_timer.stop()
         self.scroll_debounce_timer.start(self.scroll_debounce_delay)
+
+        # PHASE 2 #4: Restart hide timer - indicator will hide 800ms after scrolling stops
+        if hasattr(self, 'date_indicator_hide_timer'):
+            self.date_indicator_hide_timer.stop()
+            self.date_indicator_hide_timer.start(self.date_indicator_delay)
+
+    def _update_date_scroll_indicator(self):
+        """
+        PHASE 2 #4: Update floating date indicator with current visible date.
+
+        Finds the topmost visible date group and shows its date in the indicator.
+        Lightweight operation - just checks viewport position.
+        """
+        if not hasattr(self, 'date_scroll_indicator') or not hasattr(self, 'date_groups_metadata'):
+            return
+
+        try:
+            # Get viewport
+            viewport = self.timeline_scroll.viewport()
+            viewport_rect = viewport.rect()
+            viewport_top = viewport_rect.top()
+
+            # Find first visible date group
+            current_date = None
+            for metadata in self.date_groups_metadata:
+                widget = self.date_group_widgets.get(metadata['index'])
+                if not widget:
+                    continue
+
+                # Check if widget is visible
+                try:
+                    widget_pos = widget.mapTo(viewport, widget.rect().topLeft())
+                    # If widget's top is in viewport, this is the current date
+                    if widget_pos.y() >= viewport_top - 100 and widget_pos.y() <= viewport_top + 200:
+                        current_date = metadata['date_str']
+                        break
+                except:
+                    continue
+
+            if current_date:
+                # Format date for indicator
+                try:
+                    date_obj = datetime.fromisoformat(current_date)
+                    label = self._get_smart_date_label(date_obj)
+                except:
+                    label = current_date
+
+                # Update and show indicator
+                self.date_scroll_indicator.setText(label)
+                self.date_scroll_indicator.adjustSize()
+
+                # Position at top-right of viewport
+                parent = self.date_scroll_indicator.parent()
+                if parent:
+                    x = parent.width() - self.date_scroll_indicator.width() - 20
+                    y = 80  # Below toolbar
+                    self.date_scroll_indicator.move(x, y)
+
+                # PHASE 3 #1: Smooth slide-in animation from right if not already visible
+                if not self.date_scroll_indicator.isVisible():
+                    from PySide6.QtCore import QPropertyAnimation, QPoint, QEasingCurve
+
+                    # Start position (off-screen to the right)
+                    start_x = parent.width()
+                    end_x = x
+
+                    # Move to start position
+                    self.date_scroll_indicator.move(start_x, y)
+                    self.date_scroll_indicator.show()
+                    self.date_scroll_indicator.raise_()
+
+                    # Animate slide-in from right
+                    slide_in = QPropertyAnimation(self.date_scroll_indicator, b"pos")
+                    slide_in.setDuration(250)  # 250ms slide
+                    slide_in.setStartValue(QPoint(start_x, y))
+                    slide_in.setEndValue(QPoint(end_x, y))
+                    slide_in.setEasingCurve(QEasingCurve.OutCubic)
+                    slide_in.start()
+
+                    # Store animation to prevent garbage collection
+                    self.date_scroll_indicator.setProperty("slide_animation", slide_in)
+                else:
+                    # Already visible, just update position
+                    self.date_scroll_indicator.show()
+                    self.date_scroll_indicator.raise_()
+
+        except Exception as e:
+            pass  # Silently fail to avoid disrupting scrolling
+
+    def _hide_date_indicator(self):
+        """
+        PHASE 2 #4: Hide date scroll indicator after scrolling stops.
+        Phase 3 #1: Added smooth fade-out animation.
+        """
+        if hasattr(self, 'date_scroll_indicator') and self.date_scroll_indicator.isVisible():
+            from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+            # Create opacity effect if not already present
+            if not self.date_scroll_indicator.graphicsEffect():
+                opacity_effect = QGraphicsOpacityEffect()
+                self.date_scroll_indicator.setGraphicsEffect(opacity_effect)
+                opacity_effect.setOpacity(1.0)
+
+            opacity_effect = self.date_scroll_indicator.graphicsEffect()
+
+            # Animate fade-out
+            fade_out = QPropertyAnimation(opacity_effect, b"opacity")
+            fade_out.setDuration(200)  # 200ms fade-out
+            fade_out.setStartValue(1.0)
+            fade_out.setEndValue(0.0)
+            fade_out.setEasingCurve(QEasingCurve.InCubic)
+            fade_out.finished.connect(self.date_scroll_indicator.hide)
+            fade_out.start()
+
+            # Store animation to prevent garbage collection
+            self.date_scroll_indicator.setProperty("fade_animation", fade_out)
 
     def _on_scroll_debounced(self):
         """
@@ -3870,18 +4216,47 @@ class GooglePhotosLayout(BaseLayout):
         Create thumbnail widget for a photo with selection checkbox.
 
         Phase 2: Enhanced with checkbox overlay for batch selection.
+        Phase 2 #5: Support for different aspect ratios (square, original, 16:9).
         Phase 3: ASYNC thumbnail loading to prevent UI freeze with large photo sets.
         """
         from PySide6.QtWidgets import QCheckBox, QVBoxLayout
 
+        # PHASE 2 #5: Calculate container size based on aspect ratio mode
+        if self.thumbnail_aspect_ratio == "square":
+            # Square thumbnails (default)
+            container_width = size
+            container_height = size
+        elif self.thumbnail_aspect_ratio == "16:9":
+            # Widescreen 16:9 aspect ratio
+            container_width = size
+            container_height = int(size * 9 / 16)  # ~56% of width
+        else:  # "original"
+            # Original aspect ratio - try to get image dimensions
+            try:
+                from PIL import Image
+                with Image.open(path) as img:
+                    img_width, img_height = img.size
+                    # Calculate scaled dimensions maintaining aspect ratio
+                    if img_width > img_height:
+                        container_width = size
+                        container_height = int(size * img_height / img_width)
+                    else:
+                        container_height = size
+                        container_width = int(size * img_width / img_height)
+            except Exception as e:
+                # Fallback to square if we can't read the image
+                print(f"[GooglePhotosLayout] Warning: Could not read image dimensions for {os.path.basename(path)}: {e}")
+                container_width = size
+                container_height = size
+
         # Container widget
         container = QWidget()
-        container.setFixedSize(size, size)
+        container.setFixedSize(container_width, container_height)
         container.setStyleSheet("background: transparent;")
 
         # Thumbnail button with placeholder
         thumb = QPushButton(container)
-        thumb.setGeometry(0, 0, size, size)
+        thumb.setGeometry(0, 0, container_width, container_height)
         # QUICK WIN #8: Modern hover effects with smooth transitions
         # QUICK WIN #9: Skeleton loading state with gradient
         thumb.setStyleSheet("""
@@ -3913,7 +4288,27 @@ class GooglePhotosLayout(BaseLayout):
             thumb.setToolTip(os.path.basename(path))
 
         # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
+        # PHASE 3 #2: Added pulsing animation to indicate caching/loading
         thumb.setText("⏳")
+
+        # Add pulsing opacity animation to skeleton state
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+        opacity_effect = QGraphicsOpacityEffect()
+        thumb.setGraphicsEffect(opacity_effect)
+
+        # Create infinite pulsing animation (opacity 0.3 -> 1.0 -> 0.3)
+        pulse = QPropertyAnimation(opacity_effect, b"opacity")
+        pulse.setDuration(1500)  # 1.5 second cycle
+        pulse.setStartValue(0.3)
+        pulse.setKeyValueAt(0.5, 1.0)  # Peak at midpoint
+        pulse.setEndValue(0.3)
+        pulse.setEasingCurve(QEasingCurve.InOutSine)
+        pulse.setLoopCount(-1)  # Loop infinitely
+        pulse.start()
+
+        # Store animation to prevent garbage collection
+        thumb.setProperty("pulse_animation", pulse)
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
@@ -4227,6 +4622,7 @@ class GooglePhotosLayout(BaseLayout):
             # Show action buttons
             self.btn_delete.setVisible(True)
             self.btn_favorite.setVisible(True)
+            self.btn_share.setVisible(True)  # PHASE 3 #7: Show share button
 
             # QUICK WIN #6: Show and update floating toolbar
             if hasattr(self, 'floating_toolbar') and hasattr(self, 'selection_count_label'):
@@ -4240,6 +4636,7 @@ class GooglePhotosLayout(BaseLayout):
             # Hide action buttons when nothing selected
             self.btn_delete.setVisible(False)
             self.btn_favorite.setVisible(False)
+            self.btn_share.setVisible(False)  # PHASE 3 #7: Hide share button
 
             # QUICK WIN #6: Hide floating toolbar when no selection
             if hasattr(self, 'floating_toolbar'):
@@ -4555,7 +4952,11 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
     def _update_checkboxes_visibility(self):
         """
         Show or hide all checkboxes based on selection mode.
+
+        Phase 3 #1: Added smooth fade animations for checkboxes.
         """
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
         # Iterate through all thumbnails
         for i in range(self.timeline_layout.count()):
             date_group = self.timeline_layout.itemAt(i).widget()
@@ -4579,7 +4980,38 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
                         if container:
                             checkbox = container.property("checkbox")
                             if checkbox:
-                                checkbox.setVisible(self.selection_mode)
+                                # PHASE 3 #1: Smooth fade animation for checkbox visibility
+                                if self.selection_mode:
+                                    # Fade in
+                                    checkbox.setVisible(True)
+                                    if not checkbox.graphicsEffect():
+                                        opacity_effect = QGraphicsOpacityEffect()
+                                        checkbox.setGraphicsEffect(opacity_effect)
+                                        opacity_effect.setOpacity(0.0)
+
+                                        fade_in = QPropertyAnimation(opacity_effect, b"opacity")
+                                        fade_in.setDuration(200)  # 200ms fade-in
+                                        fade_in.setStartValue(0.0)
+                                        fade_in.setEndValue(1.0)
+                                        fade_in.setEasingCurve(QEasingCurve.OutCubic)
+                                        fade_in.start()
+
+                                        # Store animation to prevent garbage collection
+                                        checkbox.setProperty("fade_animation", fade_in)
+                                else:
+                                    # Fade out
+                                    if checkbox.graphicsEffect():
+                                        opacity_effect = checkbox.graphicsEffect()
+                                        fade_out = QPropertyAnimation(opacity_effect, b"opacity")
+                                        fade_out.setDuration(150)  # 150ms fade-out
+                                        fade_out.setStartValue(1.0)
+                                        fade_out.setEndValue(0.0)
+                                        fade_out.setEasingCurve(QEasingCurve.InCubic)
+                                        fade_out.finished.connect(lambda cb=checkbox: cb.setVisible(False))
+                                        fade_out.start()
+                                        checkbox.setProperty("fade_animation", fade_out)
+                                    else:
+                                        checkbox.setVisible(False)
 
     def _clear_selection(self):
         """
@@ -4657,6 +5089,122 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
         )
 
         self._clear_selection()
+
+    def _on_share_selected(self):
+        """
+        PHASE 3 #7: Show share/export dialog for selected photos.
+
+        Allows users to:
+        - Copy file paths to clipboard
+        - Export to a folder
+        - Show in file explorer
+        """
+        from PySide6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFileDialog, QApplication
+        from PySide6.QtGui import QClipboard
+
+        if not self.selected_photos:
+            return
+
+        # Create share dialog
+        dialog = QDialog(self.main_window)
+        dialog.setWindowTitle("Share / Export Photos")
+        dialog.setMinimumWidth(500)
+        dialog.setStyleSheet("""
+            QDialog {
+                background: white;
+            }
+            QLabel {
+                font-size: 11pt;
+            }
+            QPushButton {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 10px 20px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background: #f1f3f4;
+                border-color: #1a73e8;
+            }
+        """)
+
+        layout = QVBoxLayout(dialog)
+        layout.setSpacing(16)
+        layout.setContentsMargins(24, 24, 24, 24)
+
+        # Header
+        count = len(self.selected_photos)
+        header = QLabel(f"📤 Share {count} photo{'s' if count > 1 else ''}")
+        header.setStyleSheet("font-size: 14pt; font-weight: bold;")
+        layout.addWidget(header)
+
+        # Copy paths button
+        copy_btn = QPushButton("📋 Copy File Paths to Clipboard")
+        copy_btn.setToolTip("Copy all selected file paths to clipboard (one per line)")
+        def copy_paths():
+            paths_text = '\n'.join(sorted(self.selected_photos))
+            clipboard = QApplication.clipboard()
+            clipboard.setText(paths_text)
+            copy_btn.setText("✓ Copied!")
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(2000, lambda: copy_btn.setText("📋 Copy File Paths to Clipboard"))
+        copy_btn.clicked.connect(copy_paths)
+        layout.addWidget(copy_btn)
+
+        # Export to folder button
+        export_btn = QPushButton("💾 Export to Folder...")
+        export_btn.setToolTip("Copy selected photos to a new folder")
+        def export_to_folder():
+            import shutil
+            folder = QFileDialog.getExistingDirectory(
+                dialog,
+                "Select Export Destination",
+                "",
+                QFileDialog.ShowDirsOnly
+            )
+            if folder:
+                try:
+                    success_count = 0
+                    for photo_path in self.selected_photos:
+                        filename = os.path.basename(photo_path)
+                        dest_path = os.path.join(folder, filename)
+                        shutil.copy2(photo_path, dest_path)
+                        success_count += 1
+
+                    from PySide6.QtWidgets import QMessageBox
+                    QMessageBox.information(
+                        dialog,
+                        "Export Complete",
+                        f"✓ Exported {success_count} photo{'s' if success_count > 1 else ''} to:\n{folder}"
+                    )
+                    dialog.accept()
+                except Exception as e:
+                    from PySide6.QtWidgets import QMessageBox
+                    QMessageBox.critical(
+                        dialog,
+                        "Export Failed",
+                        f"Error exporting photos:\n{str(e)}"
+                    )
+        export_btn.clicked.connect(export_to_folder)
+        layout.addWidget(export_btn)
+
+        # Show in explorer button (for first selected file)
+        first_photo = sorted(self.selected_photos)[0]
+        explorer_btn = QPushButton(f"📂 Show in Explorer")
+        explorer_btn.setToolTip("Open file explorer at first selected photo")
+        def show_in_explorer():
+            self._show_in_explorer(first_photo)
+            dialog.accept()
+        explorer_btn.clicked.connect(show_in_explorer)
+        layout.addWidget(explorer_btn)
+
+        # Close button
+        close_btn = QPushButton("Cancel")
+        close_btn.clicked.connect(dialog.reject)
+        layout.addWidget(close_btn)
+
+        dialog.exec()
 
     # ============ Phase 2: Search Functionality ============
 
@@ -4787,6 +5335,35 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
 
         # Reload with new size
         self._load_photos(thumb_size=value)
+
+        # Restore scroll position (approximate)
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(100, lambda: self.timeline.verticalScrollBar().setValue(scroll_pos))
+
+    def _set_aspect_ratio(self, mode: str):
+        """
+        PHASE 2 #5: Set thumbnail aspect ratio mode.
+
+        Args:
+            mode: "square", "original", or "16:9"
+        """
+        print(f"[GooglePhotosLayout] 📐 Aspect ratio changed to: {mode}")
+
+        # Update state
+        self.thumbnail_aspect_ratio = mode
+
+        # Update button states
+        self.btn_aspect_square.setChecked(mode == "square")
+        self.btn_aspect_original.setChecked(mode == "original")
+        self.btn_aspect_16_9.setChecked(mode == "16:9")
+
+        # Reload photos with new aspect ratio
+        # Store current scroll position
+        scroll_pos = self.timeline.verticalScrollBar().value()
+
+        # Reload with current thumb size
+        current_size = self.zoom_slider.value()
+        self._load_photos(thumb_size=current_size)
 
         # Restore scroll position (approximate)
         from PySide6.QtCore import QTimer
