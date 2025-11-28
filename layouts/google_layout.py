@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QTreeWidgetItem, QFrame, QGridLayout, QSizePolicy, QDialog,
     QGraphicsOpacityEffect
 )
-from PySide6.QtCore import Qt, Signal, QSize, QEvent, QRunnable, QThreadPool, QObject
+from PySide6.QtCore import Qt, Signal, QSize, QEvent, QRunnable, QThreadPool, QObject, QTimer
 from PySide6.QtGui import QPixmap, QIcon, QKeyEvent, QImage, QColor
 from .base_layout import BaseLayout
 from typing import Dict, List, Tuple
