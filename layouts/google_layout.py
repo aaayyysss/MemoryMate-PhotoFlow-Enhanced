@@ -3758,17 +3758,20 @@ class GooglePhotosLayout(BaseLayout):
         # Thumbnail button with placeholder
         thumb = QPushButton(container)
         thumb.setGeometry(0, 0, size, size)
+        # QUICK WIN #8: Modern hover effects with smooth transitions
         thumb.setStyleSheet("""
             QPushButton {
                 background: #f1f3f4;
-                border: 1px solid #dadce0;
+                border: 2px solid #dadce0;
                 border-radius: 4px;
             }
             QPushButton:hover {
+                background: #ffffff;
                 border-color: #1a73e8;
                 border-width: 2px;
             }
         """)
+        thumb.setCursor(Qt.PointingHandCursor)
 
         # Show placeholder
         thumb.setText("📷")
@@ -3789,6 +3792,7 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GooglePhotosLayout] Deferred thumbnail #{self.thumbnail_load_count + 1}: {os.path.basename(path)}")
 
         # Phase 2: Selection checkbox (overlay top-left corner)
+        # QUICK WIN #8: Enhanced with modern hover effects
         checkbox = QCheckBox(container)
         checkbox.setGeometry(8, 8, 24, 24)
         checkbox.setStyleSheet("""
@@ -3798,15 +3802,24 @@ class GooglePhotosLayout(BaseLayout):
                 border-radius: 4px;
                 padding: 2px;
             }
+            QCheckBox:hover {
+                background: rgba(255, 255, 255, 1.0);
+                border-color: #1a73e8;
+            }
             QCheckBox:checked {
                 background: #1a73e8;
                 border-color: #1a73e8;
+            }
+            QCheckBox:checked:hover {
+                background: #1557b0;
+                border-color: #1557b0;
             }
             QCheckBox::indicator {
                 width: 18px;
                 height: 18px;
             }
         """)
+        checkbox.setCursor(Qt.PointingHandCursor)
         checkbox.setVisible(self.selection_mode)  # Only visible in selection mode
 
         # Store references
