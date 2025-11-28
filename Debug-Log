@@ -1,43 +1,139 @@
-2025-11-28 00:14:36,804 [INFO] Building date branches...
-2025-11-28 00:14:36,804 [INFO] Building date branches for project_id=1
+2025-11-28 02:20:55,877 [INFO] [Scan] Metadata extracted successfully: IMG_E9574.JPG [w=2316, h=3088, date=2024-11-16 11:51:22]
+[SCAN] Creating folder hierarchy for: IMG_E9574.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: IMG_E9574.JPG
+[SCAN] Added to batch: IMG_E9574.JPG [batch size: 93/200]
+[SCAN] Starting file 294/298: JKHC8378.JPG
+2025-11-28 02:20:55,891 [INFO] [Scan] File 294/298: JKHC8378.JPG
+[SCAN] _process_file started for: JKHC8378.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,907 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
+[SCAN] Processing: JKHC8378.JPG
+[SCAN] ✓ Metadata extracted: JKHC8378.JPG [w=1153, h=2048, date=None]
+2025-11-28 02:20:55,907 [INFO] [Scan] Metadata extracted successfully: JKHC8378.JPG [w=1153, h=2048, date=None]
+[SCAN] Creating folder hierarchy for: JKHC8378.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: JKHC8378.JPG
+[SCAN] Added to batch: JKHC8378.JPG [batch size: 94/200]
+[SCAN] Starting file 295/298: NTXK2933.JPG
+2025-11-28 02:20:55,922 [INFO] [Scan] File 295/298: NTXK2933.JPG
+[SCAN] _process_file started for: NTXK2933.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,922 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
+[SCAN] Processing: NTXK2933.JPG
+[SCAN] ✓ Metadata extracted: NTXK2933.JPG [w=1153, h=2048, date=None]
+2025-11-28 02:20:55,922 [INFO] [Scan] Metadata extracted successfully: NTXK2933.JPG [w=1153, h=2048, date=None]
+[SCAN] Creating folder hierarchy for: NTXK2933.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: NTXK2933.JPG
+[SCAN] Added to batch: NTXK2933.JPG [batch size: 95/200]
+[SCAN] Starting file 296/298: IMG_1779.JPEG
+2025-11-28 02:20:55,954 [INFO] [Scan] File 296/298: IMG_1779.JPEG
+[SCAN] _process_file started for: IMG_1779.JPEG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,954 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
+[SCAN] Processing: IMG_1779.JPEG
+[SCAN] ✓ Metadata extracted: IMG_1779.JPEG [w=3024, h=4032, date=2022-01-15 10:14:36]
+2025-11-28 02:20:55,954 [INFO] [Scan] Metadata extracted successfully: IMG_1779.JPEG [w=3024, h=4032, date=2022-01-15 10:14:36]
+[SCAN] Creating folder hierarchy for: IMG_1779.JPEG
+[SCAN] ✓ Folder hierarchy created: folder_id=839
+[SCAN] ✓ File processed successfully: IMG_1779.JPEG
+[SCAN] Added to batch: IMG_1779.JPEG [batch size: 96/200]
+[SCAN] Starting file 297/298: IMG_E3091.JPG
+2025-11-28 02:20:55,970 [INFO] [Scan] File 297/298: IMG_E3091.JPG
+[SCAN] _process_file started for: IMG_E3091.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,970 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
+[SCAN] Processing: IMG_E3091.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3091.JPG [w=3024, h=4032, date=2022-08-18 20:26:59]
+2025-11-28 02:20:55,970 [INFO] [Scan] Metadata extracted successfully: IMG_E3091.JPG [w=3024, h=4032, date=2022-08-18 20:26:59]
+[SCAN] Creating folder hierarchy for: IMG_E3091.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=843
+[SCAN] ✓ File processed successfully: IMG_E3091.JPG
+[SCAN] Added to batch: IMG_E3091.JPG [batch size: 97/200]
+[SCAN] Starting file 298/298: IMG_E3106.JPG
+2025-11-28 02:20:56,002 [INFO] [Scan] File 298/298: IMG_E3106.JPG
+[SCAN] _process_file started for: IMG_E3106.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:56,002 [INFO] 📷 Processing: IMG_E3106.JPG (2052.9 KB)
+[SCAN] Processing: IMG_E3106.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3106.JPG [w=3024, h=4032, date=2022-08-18 20:30:04]
+2025-11-28 02:20:56,002 [INFO] [Scan] Metadata extracted successfully: IMG_E3106.JPG [w=3024, h=4032, date=2022-08-18 20:30:04]
+[SCAN] Creating folder hierarchy for: IMG_E3106.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=843
+[SCAN] ✓ File processed successfully: IMG_E3106.JPG
+[SCAN] Added to batch: IMG_E3106.JPG [batch size: 98/200]
+[SCAN] ⚡ Writing final batch to database: 98 photos
+2025-11-28 02:20:56,028 [INFO] Writing final batch of 98 photos to database
+[SCAN] 💾 Starting bulk_upsert for 98 photos...
+2025-11-28 02:20:56,028 [INFO] [DB] Starting bulk_upsert for 98 photos
+2025-11-28 02:20:56,050 [INFO] Bulk upserted 98 photos for project 1
+[SCAN] ✓ Bulk_upsert completed: 98 photos written
+2025-11-28 02:20:56,050 [INFO] [DB] Bulk_upsert completed: 98 photos written
+[SCAN] ✓ Final batch write complete
+[SCAN] Shutting down executor
+2025-11-28 02:20:56,050 [INFO] Executor shutdown complete
+2025-11-28 02:20:56,058 [INFO] Scan complete: 298 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 6.0s
+2025-11-28 02:20:56,058 [INFO] Scan completed: 298 photos, 0 videos, 12 folders in 6.0s
+[ScanController] scan finished: 12 folders, 298 photos, 0 videos
+[ScanController] cleanup after scan
+2025-11-28 02:20:56,272 [INFO] Building date branches...
+2025-11-28 02:20:56,272 [INFO] Building date branches for project_id=1
 [build_date_branches] Using project_id=1
-[build_date_branches] Populating 'all' branch with 21 photos for project 1
-[build_date_branches] Inserted 21/21 photos into 'all' branch
-[build_date_branches] Found 7 unique dates for project 1
-[build_date_branches] Date 2022-01-15: found 1 photos for project 1
+[build_date_branches] Populating 'all' branch with 298 photos for project 1
+[build_date_branches] Inserted 298/298 photos into 'all' branch
+[build_date_branches] Found 11 unique dates for project 1
+[build_date_branches] Date 2022-01-02: found 16 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_0484.jpg
+[build_date_branches] Date 2022-01-02: inserted 16/16 into project_images (new)
+[build_date_branches] Date 2022-01-15: found 2 photos for project 1
 [build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4/img_1779.jpeg
-[build_date_branches] Date 2022-01-15: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2022-08-18: found 4 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e3122.jpg
-[build_date_branches] Date 2022-08-18: inserted 4/4 into project_images (new)
-[build_date_branches] Date 2023-10-19: found 1 photos for project 1
-[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_3307.jpg
-[build_date_branches] Date 2023-10-19: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-07: found 1 photos for project 1
+[build_date_branches] Date 2022-01-15: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2022-03-01: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_e7069.jpg
+[build_date_branches] Date 2022-03-01: inserted 3/3 into project_images (new)
+[build_date_branches] Date 2022-08-18: found 211 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_e3062.jpg
+[build_date_branches] Date 2022-08-18: inserted 211/211 into project_images (new)
+[build_date_branches] Date 2023-10-19: found 5 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_3307.jpg
+[build_date_branches] Date 2023-10-19: inserted 5/5 into project_images (new)
+[build_date_branches] Date 2023-10-27: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4973.jpg
+[build_date_branches] Date 2023-10-27: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2024-11-07: found 2 photos for project 1
 [build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg
-[build_date_branches] Date 2024-11-07: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2024-11-16: found 3 photos for project 1
+[build_date_branches] Date 2024-11-07: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2024-11-16: found 6 photos for project 1
 [build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg
-[build_date_branches] Date 2024-11-16: inserted 3/3 into project_images (new)
-[build_date_branches] Date 2024-11-26: found 1 photos for project 1
+[build_date_branches] Date 2024-11-16: inserted 6/6 into project_images (new)
+[build_date_branches] Date 2024-11-26: found 2 photos for project 1
 [build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
-[build_date_branches] Date 2024-11-26: inserted 1/1 into project_images (new)
-[build_date_branches] Date 2025-03-13: found 2 photos for project 1
+[build_date_branches] Date 2024-11-26: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2025-03-13: found 4 photos for project 1
 [build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg
-[build_date_branches] Date 2025-03-13: inserted 2/2 into project_images (new)
-[build_date_branches] Total entries processed: 13
-[build_date_branches] project_images table has 34 rows for project 1
-2025-11-28 00:14:36,815 [INFO] Created 13 photo date branch entries for project 1
-2025-11-28 00:14:36,815 [INFO] Building video date branches for project_id=1
+[build_date_branches] Date 2025-03-13: inserted 4/4 into project_images (new)
+[build_date_branches] Date 2025-04-25: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
+[build_date_branches] Date 2025-04-25: inserted 3/3 into project_images (new)
+[build_date_branches] Total entries processed: 256
+[build_date_branches] project_images table has 554 rows for project 1
+2025-11-28 02:20:56,296 [INFO] Created 256 photo date branch entries for project 1
+2025-11-28 02:20:56,296 [INFO] Building video date branches for project_id=1
 [build_video_date_branches] Using project_id=1
 [build_video_date_branches] Found 0 videos with dates for project 1
 [build_video_date_branches] No videos with dates found, skipping branch creation
-2025-11-28 00:14:36,824 [INFO] Created 0 video date branch entries for project 1
-2025-11-28 00:14:36,825 [INFO] Backfilling created_date fields for photos...
-2025-11-28 00:14:36,831 [INFO] Backfilled 8 photo rows with created_date
-2025-11-28 00:14:36,831 [INFO] Backfilling created_date fields for videos...
+2025-11-28 02:20:56,296 [INFO] Created 0 video date branch entries for project 1
+2025-11-28 02:20:56,300 [INFO] Backfilling created_date fields for photos...
+2025-11-28 02:20:56,309 [INFO] Backfilled 42 photo rows with created_date
+2025-11-28 02:20:56,310 [INFO] Backfilling created_date fields for videos...
 [FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
-2025-11-28 00:14:36,836 [INFO] Reloading sidebar after date branches built...
+2025-11-28 02:20:56,312 [INFO] Reloading sidebar after date branches built...
 [SidebarQt] reload() called, display_mode=list, tabs_visible=False
 [SidebarQt] Calling _build_tree_model() instead of tabs refresh
 [SidebarQt] _build_tree_model() called with project_id=1
@@ -46,14 +142,14 @@
 [Sidebar] Creating fresh model (avoiding Qt segfault)
 [Sidebar] Attaching fresh model to tree view
 [SidebarQt] list_branches() returned 1 branches
-[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 21}]
-[Sidebar] Loaded 6 folder counts in batch (performance optimization)
-[Sidebar] Loaded date counts in batch: 5 years, 8 months, 15 days
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 298}]
+[Sidebar] Loaded 17 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 5 years, 14 months, 25 days
 [Sidebar] Loading videos for project_id=1
 [Sidebar] Found 0 videos in project 1
 
 [Sidebar] ===== Initiating mobile device scan from sidebar =====
-[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001B0A515BC10>
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001D502EBBC10>
 [Sidebar] Register devices: True
 
 [DeviceScanner] ===== Starting device scan  =====
@@ -113,15 +209,15 @@
 [GRID] project_id=1, load_mode=branch
 [GRID] Step 1: Setting _reloading=True
 [get_images_by_branch] project_id=1, branch_key='all'
-[get_images_by_branch] Found 21 photos
-[DB_TAGS_DEBUG] Sample normalized paths being queried:
-  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg'
+[get_images_by_branch] Found 298 photos
 [Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
-  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg'
-  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
-      orig='c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng'
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg'
 [DB_TAGS_SQL] Photos query:
                         SELECT pm.path, t.name
                         FROM photo_metadata pm
@@ -130,20 +226,20 @@
                         SELECT vm.path, t.name
                         FROM video_metadata vm
                         JOIN video_tags vt ON vt.video_...
-[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/ihoc0868.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng']
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg']
 [DB_TAGS_SQL] project_id: 1
 [DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
 [DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
 [DB_TAGS_SQL] Sample tagged PHOTOS in DB:
 [DB_TAGS_SQL] Sample tagged VIDEOS in DB:
-[DB_TAGS] Retrieved 0 tags for 0/21 paths (project_id=1)
-[GRID] Fetched tags for 21 paths, got 21 entries
+[DB_TAGS] Retrieved 0 tags for 0/298 paths (project_id=1)
+[GRID] Fetched tags for 298 paths, got 298 entries
 [Sidebar][counts applied] updated UI with counts
-[GRID] Using scroll-based start position: 0 (scroll: 0/0)
-[GRID] Loading viewport range: 0-20 of 21
-[GRID] Queued 21 new thumbnail workers
-[GRID] Loaded 21 thumbnails.
-[GRID] Reloaded 21 thumbnails in branch-mode (base=21)
+[GRID] Using scroll-based start position: 0 (scroll: 0/2834)
+[GRID] Loading viewport range: 0-120 of 298
+[GRID] Queued 121 new thumbnail workers
+[GRID] Loaded 298 thumbnails.
+[GRID] Reloaded 298 thumbnails in branch-mode (base=298)
 [GRID] Step 5: Emitting gridReloaded signal...
 
 [Breadcrumb] _update_breadcrumb() CALLED
@@ -166,13 +262,14 @@
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
-[GRID] Loading viewport range: 0-20 of 21
+[GRID] Loading viewport range: 0-120 of 298
 [GRID] Queued 2 new thumbnail workers
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] Using default project: 1
 [GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
 [GooglePhotosLayout] Project selector populated with 1 projects
+[GooglePhotosLayout] ✅ Scroll-triggered lazy loading enabled
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
@@ -183,771 +280,138 @@
 
 ORDER BY pm.date_taken DESC
 [GooglePhotosLayout] 🔍 Parameters: [1]
-[GooglePhotosLayout] 📊 Loaded 21 photos from database
+[GooglePhotosLayout] 📊 Loaded 298 photos from database
 [GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
 [GooglePhotosLayout] 👥 Found 0 face clusters
 [GoogleLayout] Loading videos for project_id=1
 [GoogleLayout] Found 0 videos in project 1
-[GooglePhotosLayout] Tracking 21 paths for multi-selection
-[GooglePhotosLayout] Loaded 21 photos in 15 date groups
-[GooglePhotosLayout] Queued 21 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] Tracking 298 paths for multi-selection
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 🚀 Virtual scrolling: 25 date groups (5 rendered, 20 placeholders)
+[GooglePhotosLayout] Queued 17 thumbnails for loading (initial limit: 50)
 [LayoutManager] Setting new central widget: QWidget
 [GooglePhotosLayout] 📍 Layout activated
 [GooglePhotosLayout] ✓ Connected Scan button
 [GooglePhotosLayout] ✓ Connected Faces button
 [LayoutManager] ✓ Switched to: Google Photos Style
 [MainWindow] ✓ Switched to layout: google
-[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
-[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8158.jpeg
-[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
+[GooglePhotosLayout] 🔎 Zoom changed to: 123px
+[GooglePhotosLayout] Loading photos from database (thumb size: 123px)...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1]
+[GooglePhotosLayout] 📊 Loaded 298 photos from database
+[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
+[GooglePhotosLayout] 👥 Found 0 face clusters
+[GoogleLayout] Loading videos for project_id=1
+[GoogleLayout] Found 0 videos in project 1
+[GooglePhotosLayout] Tracking 298 paths for multi-selection
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 🚀 Virtual scrolling: 25 date groups (5 rendered, 20 placeholders)
+[GooglePhotosLayout] Queued 17 thumbnails for loading (initial limit: 50)
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] Found 256 photos + 0 videos = 256 total media
+[MediaLightbox] _position_nav_buttons: Missing attributes (prev_btn=False, scroll_area=False)
 [MediaLightbox] resizeEvent: media not loaded yet, triggering load...
 [MediaLightbox] showEvent triggered, _media_loaded=False
 [MediaLightbox] Scheduling media load in 100ms...
-[GooglePhotosLayout] ⚠️ Error opening lightbox: name 'QGraphicsOpacityEffect' is not defined
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 3360, in _open_photo_lightbox
-    lightbox = MediaLightbox(path, all_media, parent=self.main_window)
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 94, in __init__
-    self._setup_ui()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 164, in _setup_ui
-    self._create_overlay_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 432, in _create_overlay_nav_buttons
-    self.prev_btn_opacity = QGraphicsOpacityEffect()
-NameError: name 'QGraphicsOpacityEffect' is not defined
-[MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
-[MediaLightbox] resizeEvent: media not loaded yet, triggering load...
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:14:48,833 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-[MediaLightbox] _load_media called for: img_8158.jpeg
-[MediaLightbox] Loading photo: img_8158.jpeg
-[MediaLightbox] Window size: 1920x1009
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
-[PhotoLightbox] ✓ PIL image and buffer closed
-[PhotoLightbox] Scaling to: max_width=1820, max_height=809
-[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
-[MediaLightbox] Error loading photo: 'MediaLightbox' object has no attribute 'metadata_layout'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:11,040 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-[MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:12,069 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:16,223 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:16,329 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:16,781 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:16,955 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:17,261 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:17,335 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-[MediaLightbox] Key pressed: 32 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
-[MediaLightbox] Space pressed - next media
-[MediaLightbox] _load_media called for: img_8152.jpeg
-[MediaLightbox] Loading photo: img_8152.jpeg
+[MediaLightbox] Creating overlay navigation buttons...
+[MediaLightbox] ✓ Nav buttons created and shown
+[MediaLightbox] showEvent triggered, _media_loaded=False
+[MediaLightbox] Scheduling media load in 100ms...
+[MediaLightbox] ✓ Nav buttons positioned: left=12, right=580, y=216, scroll_pos=(0,0)
+[MediaLightbox] _load_media called for: img_4790.jpeg
+[MediaLightbox] Loading photo: img_4790.jpeg
 [MediaLightbox] Window size: 1728x972
 [PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
 [PhotoLightbox] ✓ PIL image and buffer closed
 [PhotoLightbox] Scaling to: max_width=1628, max_height=772
-[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=0.23307291666666666
-[MediaLightbox] Error loading photo: 'MediaLightbox' object has no attribute 'metadata_layout'
-[MediaLightbox] Key pressed: 16777249 (Qt.Key_Left=16777234, Qt.Key_Right=16777236)
-[MediaLightbox] Unhandled key: 16777249
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:25,348 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:25,514 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:25,661 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:29,421 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:29,435 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:30,952 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:31,345 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:39,389 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:39,457 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:40,765 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:41,036 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:42,538 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:42,806 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:46,415 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:46,775 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:48,748 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:48,779 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:15:48,942 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:15:49,466 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:16:09,481 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:16:10,127 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
-[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
-[GooglePhotosLayout] Found 13 photos + 0 videos = 13 total media
-[MediaLightbox] resizeEvent: media not loaded yet, triggering load...
-[MediaLightbox] showEvent triggered, _media_loaded=False
-[MediaLightbox] Scheduling media load in 100ms...
-[GooglePhotosLayout] ⚠️ Error opening lightbox: name 'QGraphicsOpacityEffect' is not defined
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 3360, in _open_photo_lightbox
-    lightbox = MediaLightbox(path, all_media, parent=self.main_window)
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 94, in __init__
-    self._setup_ui()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 164, in _setup_ui
-    self._create_overlay_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 432, in _create_overlay_nav_buttons
-    self.prev_btn_opacity = QGraphicsOpacityEffect()
-NameError: name 'QGraphicsOpacityEffect' is not defined
-[MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
-[MediaLightbox] resizeEvent: media not loaded yet, triggering load...
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:16:11,910 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-[MediaLightbox] _load_media called for: img_1550.dng
-[MediaLightbox] Loading photo: img_1550.dng
-[MediaLightbox] Window size: 1920x1009
-[PhotoLightbox] ✓ Image loaded with EXIF orientation: 2316x3088
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_4790.jpeg
+[MediaLightbox] Loading photo: img_4790.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
 [PhotoLightbox] ✓ PIL image and buffer closed
-[PhotoLightbox] Scaling to: max_width=1820, max_height=809
-[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
-[MediaLightbox] Error loading photo: 'MediaLightbox' object has no attribute 'metadata_layout'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:16:12,976 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-Error calling Python override of QDialog::enterEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-2025-11-28 00:16:13,289 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1068, in enterEvent
-    self._show_nav_buttons()
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1052, in _show_nav_buttons
-    if not self.nav_buttons_visible:
-AttributeError: 'MediaLightbox' object has no attribute 'nav_buttons_visible'
-Error calling Python override of QDialog::leaveEvent(): ================================================================================
-UNHANDLED EXCEPTION CAUGHT:
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-2025-11-28 00:16:13,377 [ERROR] Unhandled exception
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-================================================================================
-Traceback (most recent call last):
-  File "C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09\layouts\google_layout.py", line 1073, in leaveEvent
-    self.nav_hide_timer.start(500)  # Hide after 500ms
-AttributeError: 'MediaLightbox' object has no attribute 'nav_hide_timer'
-[Shutdown] Grid threads shut down.
-[ThumbnailManager] Thread pool shut down.
-[Shutdown] ThumbnailManager threads shut down.
-[Shutdown] Thumbnail cache cleared.
-[Main] Qt event loop exited with code: 0
-[ThumbCacheDB] Closing cache gracefully...
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_37.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-09>
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_8158.jpeg
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_8158.jpeg
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[GooglePhotosLayout] ✓ MediaLightbox closed
+[GooglePhotosLayout] 🎨 Rendering 2 date groups that entered viewport...
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] ✓ Now 7/25 groups rendered
+[GooglePhotosLayout] 🎨 Rendering 1 date groups that entered viewport...
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] Deferred thumbnail #51: img_e3142.jpg
