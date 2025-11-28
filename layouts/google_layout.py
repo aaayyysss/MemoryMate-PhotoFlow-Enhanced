@@ -3835,6 +3835,10 @@ class GooglePhotosLayout(BaseLayout):
         thumb.clicked.connect(lambda: self._on_photo_clicked(path))
         checkbox.stateChanged.connect(lambda state: self._on_selection_changed(path, state))
 
+        # PHASE 2 #1: Context menu on right-click
+        thumb.setContextMenuPolicy(Qt.CustomContextMenu)
+        thumb.customContextMenuRequested.connect(lambda pos: self._show_photo_context_menu(path, thumb.mapToGlobal(pos)))
+
         return container
 
     def _on_photo_clicked(self, path: str):
@@ -4156,6 +4160,167 @@ class GooglePhotosLayout(BaseLayout):
         self.selected_photos.clear()
         self._update_selection_ui()
         print("[GooglePhotosLayout] ✗ Cleared all selections")
+
+    def _show_photo_context_menu(self, path: str, global_pos):
+        """
+        PHASE 2 #1: Show context menu for photo thumbnail (right-click).
+
+        Actions available:
+        - Open: View in lightbox
+        - Select/Deselect: Toggle selection
+        - Delete: Remove photo
+        - Show in Explorer: Open file location
+        - Copy Path: Copy file path to clipboard
+        - Properties: Show photo details
+
+        Args:
+            path: Photo file path
+            global_pos: Global position for menu
+        """
+        from PySide6.QtWidgets import QMenu
+        from PySide6.QtGui import QAction
+
+        menu = QMenu()
+        menu.setStyleSheet("""
+            QMenu {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 4px;
+            }
+            QMenu::item {
+                padding: 6px 24px 6px 12px;
+                border-radius: 2px;
+            }
+            QMenu::item:selected {
+                background: #f1f3f4;
+            }
+            QMenu::separator {
+                height: 1px;
+                background: #e8eaed;
+                margin: 4px 0;
+            }
+        """)
+
+        # Open action
+        open_action = QAction("📂 Open", menu)
+        open_action.triggered.connect(lambda: self._on_photo_clicked(path))
+        menu.addAction(open_action)
+
+        menu.addSeparator()
+
+        # Select/Deselect toggle
+        is_selected = path in self.selected_photos
+        if is_selected:
+            select_action = QAction("✓ Deselect", menu)
+            select_action.triggered.connect(lambda: self._toggle_photo_selection(path))
+        else:
+            select_action = QAction("☐ Select", menu)
+            select_action.triggered.connect(lambda: self._toggle_photo_selection(path))
+        menu.addAction(select_action)
+
+        menu.addSeparator()
+
+        # Delete action
+        delete_action = QAction("🗑️ Delete", menu)
+        delete_action.triggered.connect(lambda: self._delete_single_photo(path))
+        menu.addAction(delete_action)
+
+        menu.addSeparator()
+
+        # Show in Explorer action
+        explorer_action = QAction("📁 Show in Explorer", menu)
+        explorer_action.triggered.connect(lambda: self._show_in_explorer(path))
+        menu.addAction(explorer_action)
+
+        # Copy path action
+        copy_action = QAction("📋 Copy Path", menu)
+        copy_action.triggered.connect(lambda: self._copy_path_to_clipboard(path))
+        menu.addAction(copy_action)
+
+        menu.addSeparator()
+
+        # Properties action
+        properties_action = QAction("ℹ️ Properties", menu)
+        properties_action.triggered.connect(lambda: self._show_photo_properties(path))
+        menu.addAction(properties_action)
+
+        # Show menu at cursor position
+        menu.exec(global_pos)
+
+    def _delete_single_photo(self, path: str):
+        """Delete a single photo (context menu action)."""
+        # Add to selection temporarily
+        was_selected = path in self.selected_photos
+        if not was_selected:
+            self.selected_photos.add(path)
+
+        # Call existing delete handler
+        self._on_delete_selected()
+
+        # Remove from selection if it wasn't originally selected
+        if not was_selected:
+            self.selected_photos.discard(path)
+            self._update_selection_ui()
+
+    def _show_in_explorer(self, path: str):
+        """Open file location in system file explorer."""
+        import subprocess
+        import platform
+
+        try:
+            system = platform.system()
+            if system == "Windows":
+                subprocess.run(['explorer', '/select,', os.path.normpath(path)])
+            elif system == "Darwin":  # macOS
+                subprocess.run(['open', '-R', path])
+            else:  # Linux
+                subprocess.run(['xdg-open', os.path.dirname(path)])
+
+            print(f"[GooglePhotosLayout] 📁 Opened location: {path}")
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error opening location: {e}")
+
+    def _copy_path_to_clipboard(self, path: str):
+        """Copy file path to clipboard."""
+        from PySide6.QtWidgets import QApplication
+
+        clipboard = QApplication.clipboard()
+        clipboard.setText(path)
+        print(f"[GooglePhotosLayout] 📋 Copied to clipboard: {path}")
+
+    def _show_photo_properties(self, path: str):
+        """Show photo properties dialog with EXIF data."""
+        from PySide6.QtWidgets import QMessageBox
+
+        try:
+            # Get file info
+            stat = os.stat(path)
+            file_size = stat.st_size / (1024 * 1024)  # MB
+
+            # Try to get image dimensions
+            try:
+                img = QImage(path)
+                dimensions = f"{img.width()} × {img.height()}px"
+            except:
+                dimensions = "Unknown"
+
+            # Format info
+            info = f"""
+File: {os.path.basename(path)}
+Path: {path}
+
+Size: {file_size:.2f} MB
+Dimensions: {dimensions}
+
+Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
+            """.strip()
+
+            QMessageBox.information(None, "Photo Properties", info)
+            print(f"[GooglePhotosLayout] ℹ️ Showing properties: {path}")
+        except Exception as e:
+            QMessageBox.warning(None, "Error", f"Could not load properties:\n{e}")
+            print(f"[GooglePhotosLayout] ⚠️ Error showing properties: {e}")
 
     def keyPressEvent(self, event: QKeyEvent):
         """
