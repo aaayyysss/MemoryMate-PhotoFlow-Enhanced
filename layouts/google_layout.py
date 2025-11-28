@@ -2466,11 +2466,14 @@ class GooglePhotosLayout(BaseLayout):
                 return
 
             if not rows:
-                # No photos in project - show empty state
-                empty_label = QLabel("📷 No photos in this project yet\n\nClick 'Scan Repository' to add photos")
-                empty_label.setAlignment(Qt.AlignCenter)
-                empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
-                self.timeline_layout.addWidget(empty_label)
+                # PHASE 2 #7: Enhanced empty state with friendly illustration
+                empty_widget = self._create_empty_state(
+                    icon="📷",
+                    title="No photos yet",
+                    message="Your photo collection is waiting to be filled!\n\nClick 'Scan Repository' to import photos.",
+                    action_text="or drag and drop photos here"
+                )
+                self.timeline_layout.addWidget(empty_widget)
                 print(f"[GooglePhotosLayout] No photos found in project {self.project_id}")
                 return
 
@@ -3366,10 +3369,10 @@ class GooglePhotosLayout(BaseLayout):
         collapse_btn.clicked.connect(lambda: self._toggle_date_group(date_str, collapse_btn))
         header_layout.addWidget(collapse_btn)
 
-        # Format date nicely
+        # PHASE 3 #4: Smart date grouping with friendly labels
         try:
             date_obj = datetime.fromisoformat(date_str)
-            formatted_date = date_obj.strftime("%B %d, %Y (%A)")
+            formatted_date = self._get_smart_date_label(date_obj)
         except:
             formatted_date = date_str
 
@@ -3385,14 +3388,132 @@ class GooglePhotosLayout(BaseLayout):
         date_label.mousePressEvent = lambda e: self._toggle_date_group(date_str, collapse_btn)
         header_layout.addWidget(date_label)
 
-        # Photo count
-        count_label = QLabel(f"({count} photo{'s' if count != 1 else ''})")
-        count_label.setStyleSheet("font-size: 10pt; color: #5f6368; margin-left: 8px;")
-        header_layout.addWidget(count_label)
+        # PHASE 2 #6: Photo count badge (visual pill instead of plain text)
+        count_badge = QLabel(f"{count}")
+        count_badge.setStyleSheet("""
+            QLabel {
+                background: #e8f0fe;
+                color: #1a73e8;
+                font-size: 10pt;
+                font-weight: bold;
+                padding: 4px 10px;
+                border-radius: 12px;
+                margin-left: 8px;
+            }
+        """)
+        count_badge.setToolTip(f"{count} photo{'s' if count != 1 else ''}")
+        header_layout.addWidget(count_badge)
 
         header_layout.addStretch()
 
         return header
+
+    def _get_smart_date_label(self, date_obj: datetime) -> str:
+        """
+        PHASE 3 #4: Generate smart date labels like "Today", "Yesterday", "This Week".
+
+        Args:
+            date_obj: datetime object
+
+        Returns:
+            str: Friendly date label
+        """
+        from datetime import timedelta
+
+        now = datetime.now()
+        today = now.date()
+        photo_date = date_obj.date()
+
+        # Calculate difference in days
+        delta = (today - photo_date).days
+
+        # Today
+        if delta == 0:
+            return f"Today - {date_obj.strftime('%B %d, %Y')}"
+
+        # Yesterday
+        elif delta == 1:
+            return f"Yesterday - {date_obj.strftime('%B %d, %Y')}"
+
+        # This Week (within last 7 days)
+        elif delta < 7:
+            return f"This Week - {date_obj.strftime('%A, %B %d, %Y')}"
+
+        # This Month (same month and year)
+        elif photo_date.month == today.month and photo_date.year == today.year:
+            return f"This Month - {date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # Last Month
+        elif delta < 60:  # Within last 2 months
+            last_month = today.replace(day=1) - timedelta(days=1)
+            if photo_date.month == last_month.month and photo_date.year == last_month.year:
+                return f"Last Month - {date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # This Year
+        if photo_date.year == today.year:
+            return f"{date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # Older (show full date with year)
+        return date_obj.strftime("%B %d, %Y (%A)")
+
+    def _create_empty_state(self, icon: str, title: str, message: str, action_text: str = "") -> QWidget:
+        """
+        PHASE 2 #7: Create friendly empty state with illustration.
+
+        Args:
+            icon: Emoji icon
+            title: Main title
+            message: Descriptive message
+            action_text: Optional action hint
+
+        Returns:
+            QWidget: Styled empty state widget
+        """
+        container = QWidget()
+        layout = QVBoxLayout(container)
+        layout.setContentsMargins(40, 80, 40, 80)
+        layout.setSpacing(16)
+        layout.setAlignment(Qt.AlignCenter)
+
+        # Large icon
+        icon_label = QLabel(icon)
+        icon_label.setStyleSheet("font-size: 72pt;")
+        icon_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(icon_label)
+
+        # Title
+        title_label = QLabel(title)
+        title_label.setStyleSheet("""
+            font-size: 18pt;
+            font-weight: bold;
+            color: #202124;
+        """)
+        title_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title_label)
+
+        # Message
+        message_label = QLabel(message)
+        message_label.setStyleSheet("""
+            font-size: 11pt;
+            color: #5f6368;
+            line-height: 1.6;
+        """)
+        message_label.setAlignment(Qt.AlignCenter)
+        message_label.setWordWrap(True)
+        layout.addWidget(message_label)
+
+        # Action hint
+        if action_text:
+            action_label = QLabel(action_text)
+            action_label.setStyleSheet("""
+                font-size: 10pt;
+                color: #80868b;
+                font-style: italic;
+            """)
+            action_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(action_label)
+
+        return container
 
     def _toggle_date_group(self, date_str: str, collapse_btn: QPushButton):
         """
@@ -3776,6 +3897,25 @@ class GooglePhotosLayout(BaseLayout):
             }
         """)
         thumb.setCursor(Qt.PointingHandCursor)
+
+        # PHASE 2 #8: Photo metadata tooltip (EXIF on hover)
+        try:
+            stat = os.stat(path)
+            file_size = stat.st_size / (1024 * 1024)  # MB
+            filename = os.path.basename(path)
+            tooltip = f"{filename}\nSize: {file_size:.2f} MB"
+
+            # Try to get dimensions
+            try:
+                img = QImage(path)
+                if not img.isNull():
+                    tooltip += f"\nDimensions: {img.width()} × {img.height()}px"
+            except:
+                pass
+
+            thumb.setToolTip(tooltip)
+        except:
+            thumb.setToolTip(os.path.basename(path))
 
         # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
         thumb.setText("⏳")
