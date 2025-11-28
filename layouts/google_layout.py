@@ -1708,6 +1708,13 @@ class GooglePhotosLayout(BaseLayout):
         self.unloaded_thumbnails = {}  # Map path -> (button, size) for lazy loading
         self.initial_load_limit = 50  # Load first 50 immediately (increased from 30)
 
+        # QUICK WIN #3: Virtual scrolling - render only visible date groups
+        self.date_groups_metadata = []  # List of {date_str, photos, thumb_size, index}
+        self.date_group_widgets = {}  # Map index -> widget (rendered or placeholder)
+        self.rendered_date_groups = set()  # Set of indices that are currently rendered
+        self.virtual_scroll_enabled = True  # Enable virtual scrolling
+        self.initial_render_count = 5  # Render first 5 date groups immediately
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -2364,15 +2371,47 @@ class GooglePhotosLayout(BaseLayout):
             self.all_displayed_paths = [photo[0] for photos_list in photos_by_date.values() for photo in photos_list]
             print(f"[GooglePhotosLayout] Tracking {len(self.all_displayed_paths)} paths for multi-selection")
 
-            # Create date group widgets
-            for date_str, photos in photos_by_date.items():
-                date_group = self._create_date_group(date_str, photos, thumb_size)
-                self.timeline_layout.addWidget(date_group)
+            # QUICK WIN #3: Virtual scrolling - create date groups with lazy rendering
+            self.date_groups_metadata.clear()
+            self.date_group_widgets.clear()
+            self.rendered_date_groups.clear()
+
+            # Store metadata for all date groups
+            for index, (date_str, photos) in enumerate(photos_by_date.items()):
+                self.date_groups_metadata.append({
+                    'index': index,
+                    'date_str': date_str,
+                    'photos': photos,
+                    'thumb_size': thumb_size
+                })
+
+            # Create widgets (placeholders or rendered) for each group
+            for metadata in self.date_groups_metadata:
+                index = metadata['index']
+
+                # Render first N groups immediately, placeholders for the rest
+                if self.virtual_scroll_enabled and index >= self.initial_render_count:
+                    # Create placeholder for off-screen groups
+                    widget = self._create_date_group_placeholder(metadata)
+                else:
+                    # Render initial groups
+                    widget = self._create_date_group(
+                        metadata['date_str'],
+                        metadata['photos'],
+                        metadata['thumb_size']
+                    )
+                    self.rendered_date_groups.add(index)
+
+                self.date_group_widgets[index] = widget
+                self.timeline_layout.addWidget(widget)
 
             # Add spacer at bottom
             self.timeline_layout.addStretch()
 
-            print(f"[GooglePhotosLayout] Loaded {len(rows)} photos in {len(photos_by_date)} date groups")
+            if self.virtual_scroll_enabled:
+                print(f"[GooglePhotosLayout] 🚀 Virtual scrolling: {len(photos_by_date)} date groups ({len(self.rendered_date_groups)} rendered, {len(photos_by_date) - len(self.rendered_date_groups)} placeholders)")
+            else:
+                print(f"[GooglePhotosLayout] Loaded {len(rows)} photos in {len(photos_by_date)} date groups")
             print(f"[GooglePhotosLayout] Queued {self.thumbnail_load_count} thumbnails for loading (limit: {self.thumbnail_load_limit})")
 
         except Exception as e:
@@ -3000,13 +3039,14 @@ class GooglePhotosLayout(BaseLayout):
         header_layout.addStretch()
         layout.addWidget(header)
 
-        # Video grid
+        # Video grid (QUICK WIN #2: Also responsive)
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
         grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Minimal spacing
         grid.setContentsMargins(0, 0, 0, 0)
 
-        columns = 5  # Match photo grid default
+        # QUICK WIN #2: Responsive columns for videos too
+        columns = self._calculate_responsive_columns(200)  # Use standard 200px thumb size
 
         for i, video in enumerate(videos):
             row = i // columns
@@ -3191,26 +3231,172 @@ class GooglePhotosLayout(BaseLayout):
 
         return header
 
+    def _create_date_group_placeholder(self, metadata: dict) -> QWidget:
+        """
+        QUICK WIN #3: Create placeholder widget for virtual scrolling.
+
+        Placeholder maintains scroll position by matching estimated group height.
+        Will be replaced with actual rendered group when it enters viewport.
+
+        Args:
+            metadata: Dict with date_str, photos, thumb_size, index
+
+        Returns:
+            QWidget: Placeholder with estimated height
+        """
+        placeholder = QWidget()
+
+        # Estimate height based on photo count
+        estimated_height = self._estimate_date_group_height(
+            len(metadata['photos']),
+            metadata['thumb_size']
+        )
+
+        placeholder.setFixedHeight(estimated_height)
+        placeholder.setStyleSheet("background: #f8f9fa;")  # Light gray placeholder
+
+        # Store metadata on widget for lazy rendering
+        placeholder.setProperty('date_group_metadata', metadata)
+        placeholder.setProperty('is_placeholder', True)
+
+        return placeholder
+
+    def _estimate_date_group_height(self, photo_count: int, thumb_size: int) -> int:
+        """
+        QUICK WIN #3: Estimate date group height for placeholder sizing.
+
+        Height = header + grid + margins
+        - Header: ~60px (date label + spacing)
+        - Grid: rows * (thumb_size + spacing)
+        - Margins: 28px (16 top, 12 bottom from layout.setContentsMargins)
+
+        Args:
+            photo_count: Number of photos in group
+            thumb_size: Thumbnail size in pixels
+
+        Returns:
+            int: Estimated height in pixels
+        """
+        # Calculate responsive columns (same as grid rendering)
+        columns = self._calculate_responsive_columns(thumb_size)
+
+        # Calculate number of rows needed
+        rows = (photo_count + columns - 1) // columns  # Ceiling division
+
+        # Component heights
+        header_height = 60  # Date label + spacing
+        spacing = 2  # GOOGLE PHOTOS STYLE
+        grid_height = rows * (thumb_size + spacing)
+        margins = 28  # 16 + 12 from setContentsMargins
+        border = 2  # 1px border top + bottom
+
+        total_height = header_height + grid_height + margins + border
+
+        return total_height
+
+    def _render_visible_date_groups(self, viewport, viewport_rect):
+        """
+        QUICK WIN #3: Render date groups that are visible in viewport.
+
+        Checks which date groups intersect with the viewport and replaces
+        placeholders with actual rendered groups.
+
+        Args:
+            viewport: Timeline viewport widget
+            viewport_rect: Viewport rectangle
+        """
+        try:
+            groups_to_render = []
+
+            # Check each date group to see if it's visible
+            for metadata in self.date_groups_metadata:
+                index = metadata['index']
+
+                # Skip if already rendered
+                if index in self.rendered_date_groups:
+                    continue
+
+                # Get the widget (placeholder)
+                widget = self.date_group_widgets.get(index)
+                if not widget:
+                    continue
+
+                # Check if widget is visible in viewport
+                try:
+                    # Map widget position to viewport coordinates
+                    widget_pos = widget.mapTo(viewport, widget.rect().topLeft())
+                    widget_rect = widget.rect()
+                    widget_rect.moveTo(widget_pos)
+
+                    # If widget intersects viewport, it's visible
+                    if viewport_rect.intersects(widget_rect):
+                        groups_to_render.append((index, metadata))
+
+                except Exception as e:
+                    continue
+
+            # Render visible groups
+            if groups_to_render:
+                print(f"[GooglePhotosLayout] 🎨 Rendering {len(groups_to_render)} date groups that entered viewport...")
+
+                for index, metadata in groups_to_render:
+                    try:
+                        # Create actual rendered group
+                        rendered_group = self._create_date_group(
+                            metadata['date_str'],
+                            metadata['photos'],
+                            metadata['thumb_size']
+                        )
+
+                        # Replace placeholder with rendered group in layout
+                        old_widget = self.date_group_widgets[index]
+                        layout_index = self.timeline_layout.indexOf(old_widget)
+
+                        if layout_index != -1:
+                            # Remove placeholder
+                            self.timeline_layout.removeWidget(old_widget)
+                            old_widget.deleteLater()
+
+                            # Insert rendered group at same position
+                            self.timeline_layout.insertWidget(layout_index, rendered_group)
+                            self.date_group_widgets[index] = rendered_group
+                            self.rendered_date_groups.add(index)
+
+                    except Exception as e:
+                        print(f"[GooglePhotosLayout] ⚠️ Error rendering date group {index}: {e}")
+                        continue
+
+                print(f"[GooglePhotosLayout] ✓ Now {len(self.rendered_date_groups)}/{len(self.date_groups_metadata)} groups rendered")
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error in virtual scrolling: {e}")
+
     def _create_photo_grid(self, photos: List[Tuple], thumb_size: int = 200) -> QWidget:
         """
         Create photo grid with thumbnails.
 
-        Google Photos Style: Minimal spacing for dense, clean grid
+        QUICK WIN #2: Responsive grid that adapts to viewport width.
+        Google Photos Style: Minimal spacing for dense, clean grid.
         """
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
-        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Reduced from 8px to 2px for minimal padding
+        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Minimal padding
         grid.setContentsMargins(0, 0, 0, 0)
 
-        # Calculate grid layout - responsive columns based on thumbnail size
-        if thumb_size <= 150:
-            columns = 7  # Small thumbs → more columns
-        elif thumb_size <= 200:
-            columns = 5  # Default
-        elif thumb_size <= 300:
-            columns = 4  # Large thumbs
-        else:
-            columns = 3  # Extra large thumbs
+        # QUICK WIN #2: Calculate responsive columns based on viewport width
+        # This makes the grid perfect on 1080p, 4K, mobile, etc.
+        columns = self._calculate_responsive_columns(thumb_size)
+
+        # Store grid reference for resize handling (QUICK WIN #2)
+        if not hasattr(self, '_photo_grids'):
+            self._photo_grids = []
+        self._photo_grids.append({
+            'container': grid_container,
+            'grid': grid,
+            'photos': photos,
+            'thumb_size': thumb_size,
+            'columns': columns
+        })
 
         # Add photo thumbnails
         for i, photo in enumerate(photos):
@@ -3223,6 +3409,48 @@ class GooglePhotosLayout(BaseLayout):
             grid.addWidget(thumb, row, col)
 
         return grid_container
+
+    def _calculate_responsive_columns(self, thumb_size: int) -> int:
+        """
+        QUICK WIN #2: Calculate optimal column count based on viewport width.
+
+        Algorithm (matches Google Photos):
+        - Get available width from timeline viewport
+        - Calculate how many thumbnails fit
+        - Enforce min/max constraints (2-8 columns)
+        - Account for spacing and margins
+
+        Args:
+            thumb_size: Thumbnail width in pixels
+
+        Returns:
+            int: Optimal number of columns (2-8)
+        """
+        # Get viewport width (timeline scroll area)
+        if hasattr(self, 'timeline_scroll'):
+            viewport_width = self.timeline_scroll.viewport().width()
+        else:
+            # Fallback during initialization
+            viewport_width = 1200  # Reasonable default
+
+        # Account for margins (20px left + 20px right from timeline_layout)
+        available_width = viewport_width - 40
+
+        # Account for grid spacing (2px between each thumbnail)
+        spacing = 2
+
+        # Calculate how many thumbnails fit
+        # Formula: (width - margins) / (thumb_size + spacing)
+        cols = int(available_width / (thumb_size + spacing))
+
+        # Enforce constraints
+        # Min: 2 columns (prevents single-column on small screens)
+        # Max: 8 columns (prevents tiny thumbnails on huge screens)
+        cols = max(2, min(8, cols))
+
+        print(f"[GooglePhotosLayout] 📐 Responsive grid: {cols} columns (viewport: {viewport_width}px, thumb: {thumb_size}px)")
+
+        return cols
 
     def _on_thumbnail_loaded(self, path: str, pixmap: QPixmap, size: int):
         """Callback when async thumbnail loading completes."""
@@ -3246,15 +3474,23 @@ class GooglePhotosLayout(BaseLayout):
 
     def _on_timeline_scrolled(self):
         """
-        QUICK WIN #1: Load thumbnails that are now visible after scrolling.
-        This removes the 30-photo limit and enables ALL photos to load.
-        """
-        if not self.unloaded_thumbnails:
-            return  # All thumbnails already loaded
+        QUICK WIN #1 & #3: Handle scroll events for lazy thumbnail loading and virtual scrolling.
 
+        Two functions:
+        1. Load thumbnails that are now visible (Quick Win #1)
+        2. Render date groups that entered viewport (Quick Win #3)
+        """
         # Get viewport rectangle
         viewport = self.timeline_scroll.viewport()
         viewport_rect = viewport.rect()
+
+        # QUICK WIN #3: Virtual scrolling - render date groups that entered viewport
+        if self.virtual_scroll_enabled and self.date_groups_metadata:
+            self._render_visible_date_groups(viewport, viewport_rect)
+
+        # QUICK WIN #1: Lazy thumbnail loading
+        if not self.unloaded_thumbnails:
+            return  # All thumbnails already loaded
 
         # Find and load visible thumbnails
         paths_to_load = []
