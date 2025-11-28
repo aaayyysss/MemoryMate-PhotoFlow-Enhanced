@@ -3759,11 +3759,15 @@ class GooglePhotosLayout(BaseLayout):
         thumb = QPushButton(container)
         thumb.setGeometry(0, 0, size, size)
         # QUICK WIN #8: Modern hover effects with smooth transitions
+        # QUICK WIN #9: Skeleton loading state with gradient
         thumb.setStyleSheet("""
             QPushButton {
-                background: #f1f3f4;
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #e8eaed, stop:0.5 #f1f3f4, stop:1 #e8eaed);
                 border: 2px solid #dadce0;
                 border-radius: 4px;
+                color: #5f6368;
+                font-size: 9pt;
             }
             QPushButton:hover {
                 background: #ffffff;
@@ -3773,8 +3777,8 @@ class GooglePhotosLayout(BaseLayout):
         """)
         thumb.setCursor(Qt.PointingHandCursor)
 
-        # Show placeholder
-        thumb.setText("📷")
+        # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
+        thumb.setText("⏳")
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
