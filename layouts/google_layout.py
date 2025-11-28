@@ -1719,6 +1719,12 @@ class GooglePhotosLayout(BaseLayout):
         self.date_group_collapsed = {}  # Map date_str -> bool (collapsed state)
         self.date_group_grids = {}  # Map date_str -> grid widget for toggle visibility
 
+        # QUICK WIN #5: Smooth scroll performance (60 FPS)
+        self.scroll_debounce_timer = QTimer()
+        self.scroll_debounce_timer.setSingleShot(True)
+        self.scroll_debounce_timer.timeout.connect(self._on_scroll_debounced)
+        self.scroll_debounce_delay = 150  # ms - debounce scroll events
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -3558,7 +3564,23 @@ class GooglePhotosLayout(BaseLayout):
 
     def _on_timeline_scrolled(self):
         """
-        QUICK WIN #1 & #3: Handle scroll events for lazy thumbnail loading and virtual scrolling.
+        QUICK WIN #5: Debounced scroll handler for smooth 60 FPS performance.
+
+        Instead of processing every scroll event (which can be hundreds per second),
+        we restart a timer on each scroll. Only when scrolling stops (or slows down)
+        for 150ms do we actually process the heavy operations.
+
+        This prevents lag and dropped frames during fast scrolling.
+        """
+        # Restart debounce timer - will trigger _on_scroll_debounced() after 150ms of no scrolling
+        self.scroll_debounce_timer.stop()
+        self.scroll_debounce_timer.start(self.scroll_debounce_delay)
+
+    def _on_scroll_debounced(self):
+        """
+        QUICK WIN #1, #3, #5: Process scroll events after debouncing.
+
+        This is called 150ms after scrolling stops/slows down.
 
         Two functions:
         1. Load thumbnails that are now visible (Quick Win #1)
@@ -3576,9 +3598,15 @@ class GooglePhotosLayout(BaseLayout):
         if not self.unloaded_thumbnails:
             return  # All thumbnails already loaded
 
+        # QUICK WIN #5: Limit checks to prevent lag with huge libraries
+        # Only check first 200 unloaded items per scroll event
+        # This balances responsiveness vs performance
+        max_checks = 200
+        items_to_check = list(self.unloaded_thumbnails.items())[:max_checks]
+
         # Find and load visible thumbnails
         paths_to_load = []
-        for path, (button, size) in list(self.unloaded_thumbnails.items()):
+        for path, (button, size) in items_to_check:
             # Check if button is visible in viewport
             try:
                 # Map button position to viewport coordinates
