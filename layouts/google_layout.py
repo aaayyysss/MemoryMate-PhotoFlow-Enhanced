@@ -1715,6 +1715,16 @@ class GooglePhotosLayout(BaseLayout):
         self.virtual_scroll_enabled = True  # Enable virtual scrolling
         self.initial_render_count = 5  # Render first 5 date groups immediately
 
+        # QUICK WIN #4: Collapsible date groups
+        self.date_group_collapsed = {}  # Map date_str -> bool (collapsed state)
+        self.date_group_grids = {}  # Map date_str -> grid widget for toggle visibility
+
+        # QUICK WIN #5: Smooth scroll performance (60 FPS)
+        self.scroll_debounce_timer = QTimer()
+        self.scroll_debounce_timer.setSingleShot(True)
+        self.scroll_debounce_timer.timeout.connect(self._on_scroll_debounced)
+        self.scroll_debounce_delay = 150  # ms - debounce scroll events
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -1771,6 +1781,10 @@ class GooglePhotosLayout(BaseLayout):
         self.splitter.setStretchFactor(1, 1)
 
         main_layout.addWidget(self.splitter)
+
+        # QUICK WIN #6: Create floating selection toolbar (initially hidden)
+        self.floating_toolbar = self._create_floating_toolbar(main_widget)
+        self.floating_toolbar.hide()
 
         # Load photos from database
         self._load_photos()
@@ -1954,6 +1968,110 @@ class GooglePhotosLayout(BaseLayout):
 
         # Store toolbar reference
         self._toolbar = toolbar
+
+        return toolbar
+
+    def _create_floating_toolbar(self, parent: QWidget) -> QWidget:
+        """
+        QUICK WIN #6: Create floating selection toolbar (Google Photos style).
+
+        Appears at bottom of screen when photos are selected.
+        Shows selection count and action buttons.
+
+        Args:
+            parent: Parent widget for positioning
+
+        Returns:
+            QWidget: Floating toolbar (initially hidden)
+        """
+        toolbar = QWidget(parent)
+        toolbar.setStyleSheet("""
+            QWidget {
+                background: #202124;
+                border-radius: 8px;
+                border: 1px solid #5f6368;
+            }
+        """)
+
+        layout = QHBoxLayout(toolbar)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(12)
+
+        # Selection count label
+        self.selection_count_label = QLabel("0 selected")
+        self.selection_count_label.setStyleSheet("""
+            QLabel {
+                color: white;
+                font-size: 11pt;
+                font-weight: bold;
+            }
+        """)
+        layout.addWidget(self.selection_count_label)
+
+        layout.addStretch()
+
+        # Action buttons
+        # Select All button
+        btn_select_all = QPushButton("Select All")
+        btn_select_all.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                color: #8ab4f8;
+                border: none;
+                padding: 6px 12px;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: #3c4043;
+                border-radius: 4px;
+            }
+        """)
+        btn_select_all.setCursor(Qt.PointingHandCursor)
+        btn_select_all.clicked.connect(self._on_select_all)
+        layout.addWidget(btn_select_all)
+
+        # Clear Selection button
+        btn_clear = QPushButton("Clear")
+        btn_clear.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                color: #8ab4f8;
+                border: none;
+                padding: 6px 12px;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: #3c4043;
+                border-radius: 4px;
+            }
+        """)
+        btn_clear.setCursor(Qt.PointingHandCursor)
+        btn_clear.clicked.connect(self._on_clear_selection)
+        layout.addWidget(btn_clear)
+
+        # Delete button
+        btn_delete = QPushButton("🗑️ Delete")
+        btn_delete.setStyleSheet("""
+            QPushButton {
+                background: #d32f2f;
+                color: white;
+                border: none;
+                padding: 6px 16px;
+                border-radius: 4px;
+                font-size: 10pt;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background: #b71c1c;
+            }
+        """)
+        btn_delete.setCursor(Qt.PointingHandCursor)
+        btn_delete.clicked.connect(self._on_delete_selected)
+        layout.addWidget(btn_delete)
+
+        # Position toolbar at bottom center (will be repositioned on resize)
+        toolbar.setFixedHeight(56)
+        toolbar.setFixedWidth(400)
 
         return toolbar
 
@@ -3175,6 +3293,8 @@ class GooglePhotosLayout(BaseLayout):
         """
         Create a date group widget (header + photo grid).
 
+        QUICK WIN #4: Now supports collapse/expand functionality.
+
         Args:
             date_str: Date string "YYYY-MM-DD"
             photos: List of (path, date_taken, width, height)
@@ -3192,7 +3312,11 @@ class GooglePhotosLayout(BaseLayout):
         layout.setContentsMargins(16, 12, 16, 16)
         layout.setSpacing(12)
 
-        # Header
+        # QUICK WIN #4: Initialize collapse state (default: expanded)
+        if date_str not in self.date_group_collapsed:
+            self.date_group_collapsed[date_str] = False  # False = expanded
+
+        # Header (with collapse/expand button)
         header = self._create_date_header(date_str, len(photos))
         layout.addWidget(header)
 
@@ -3200,15 +3324,47 @@ class GooglePhotosLayout(BaseLayout):
         grid = self._create_photo_grid(photos, thumb_size)
         layout.addWidget(grid)
 
+        # QUICK WIN #4: Store grid reference for collapse/expand
+        self.date_group_grids[date_str] = grid
+
+        # Apply initial collapse state
+        if self.date_group_collapsed.get(date_str, False):
+            grid.hide()
+
         return group
 
     def _create_date_header(self, date_str: str, count: int) -> QWidget:
         """
         Create date group header with date and photo count.
+
+        QUICK WIN #4: Now includes collapse/expand button.
         """
         header = QWidget()
         header_layout = QHBoxLayout(header)
         header_layout.setContentsMargins(0, 0, 0, 0)
+
+        # QUICK WIN #4: Collapse/Expand button (▼ = expanded, ► = collapsed)
+        collapse_btn = QPushButton()
+        is_collapsed = self.date_group_collapsed.get(date_str, False)
+        collapse_btn.setText("►" if is_collapsed else "▼")
+        collapse_btn.setFixedSize(24, 24)
+        collapse_btn.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                border: none;
+                font-size: 12pt;
+                color: #5f6368;
+                padding: 0;
+            }
+            QPushButton:hover {
+                color: #202124;
+                background: #f1f3f4;
+                border-radius: 4px;
+            }
+        """)
+        collapse_btn.setCursor(Qt.PointingHandCursor)
+        collapse_btn.clicked.connect(lambda: self._toggle_date_group(date_str, collapse_btn))
+        header_layout.addWidget(collapse_btn)
 
         # Format date nicely
         try:
@@ -3217,9 +3373,16 @@ class GooglePhotosLayout(BaseLayout):
         except:
             formatted_date = date_str
 
-        # Date label
+        # Date label (clickable for collapse/expand)
         date_label = QLabel(f"📅 {formatted_date}")
-        date_label.setStyleSheet("font-size: 14pt; font-weight: bold; color: #202124;")
+        date_label.setStyleSheet("""
+            font-size: 14pt;
+            font-weight: bold;
+            color: #202124;
+            padding: 4px;
+        """)
+        date_label.setCursor(Qt.PointingHandCursor)
+        date_label.mousePressEvent = lambda e: self._toggle_date_group(date_str, collapse_btn)
         header_layout.addWidget(date_label)
 
         # Photo count
@@ -3230,6 +3393,41 @@ class GooglePhotosLayout(BaseLayout):
         header_layout.addStretch()
 
         return header
+
+    def _toggle_date_group(self, date_str: str, collapse_btn: QPushButton):
+        """
+        QUICK WIN #4: Toggle collapse/expand state for a date group.
+
+        Args:
+            date_str: Date string "YYYY-MM-DD"
+            collapse_btn: The collapse/expand button widget
+        """
+        try:
+            # Get current state
+            is_collapsed = self.date_group_collapsed.get(date_str, False)
+            new_state = not is_collapsed
+
+            # Update state
+            self.date_group_collapsed[date_str] = new_state
+
+            # Get grid widget
+            grid = self.date_group_grids.get(date_str)
+            if not grid:
+                print(f"[GooglePhotosLayout] ⚠️ Grid not found for {date_str}")
+                return
+
+            # Toggle visibility
+            if new_state:  # Collapsing
+                grid.hide()
+                collapse_btn.setText("►")
+                print(f"[GooglePhotosLayout] ▲ Collapsed date group: {date_str}")
+            else:  # Expanding
+                grid.show()
+                collapse_btn.setText("▼")
+                print(f"[GooglePhotosLayout] ▼ Expanded date group: {date_str}")
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error toggling date group {date_str}: {e}")
 
     def _create_date_group_placeholder(self, metadata: dict) -> QWidget:
         """
@@ -3474,7 +3672,23 @@ class GooglePhotosLayout(BaseLayout):
 
     def _on_timeline_scrolled(self):
         """
-        QUICK WIN #1 & #3: Handle scroll events for lazy thumbnail loading and virtual scrolling.
+        QUICK WIN #5: Debounced scroll handler for smooth 60 FPS performance.
+
+        Instead of processing every scroll event (which can be hundreds per second),
+        we restart a timer on each scroll. Only when scrolling stops (or slows down)
+        for 150ms do we actually process the heavy operations.
+
+        This prevents lag and dropped frames during fast scrolling.
+        """
+        # Restart debounce timer - will trigger _on_scroll_debounced() after 150ms of no scrolling
+        self.scroll_debounce_timer.stop()
+        self.scroll_debounce_timer.start(self.scroll_debounce_delay)
+
+    def _on_scroll_debounced(self):
+        """
+        QUICK WIN #1, #3, #5: Process scroll events after debouncing.
+
+        This is called 150ms after scrolling stops/slows down.
 
         Two functions:
         1. Load thumbnails that are now visible (Quick Win #1)
@@ -3492,9 +3706,15 @@ class GooglePhotosLayout(BaseLayout):
         if not self.unloaded_thumbnails:
             return  # All thumbnails already loaded
 
+        # QUICK WIN #5: Limit checks to prevent lag with huge libraries
+        # Only check first 200 unloaded items per scroll event
+        # This balances responsiveness vs performance
+        max_checks = 200
+        items_to_check = list(self.unloaded_thumbnails.items())[:max_checks]
+
         # Find and load visible thumbnails
         paths_to_load = []
-        for path, (button, size) in list(self.unloaded_thumbnails.items()):
+        for path, (button, size) in items_to_check:
             # Check if button is visible in viewport
             try:
                 # Map button position to viewport coordinates
@@ -3538,20 +3758,27 @@ class GooglePhotosLayout(BaseLayout):
         # Thumbnail button with placeholder
         thumb = QPushButton(container)
         thumb.setGeometry(0, 0, size, size)
+        # QUICK WIN #8: Modern hover effects with smooth transitions
+        # QUICK WIN #9: Skeleton loading state with gradient
         thumb.setStyleSheet("""
             QPushButton {
-                background: #f1f3f4;
-                border: 1px solid #dadce0;
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #e8eaed, stop:0.5 #f1f3f4, stop:1 #e8eaed);
+                border: 2px solid #dadce0;
                 border-radius: 4px;
+                color: #5f6368;
+                font-size: 9pt;
             }
             QPushButton:hover {
+                background: #ffffff;
                 border-color: #1a73e8;
                 border-width: 2px;
             }
         """)
+        thumb.setCursor(Qt.PointingHandCursor)
 
-        # Show placeholder
-        thumb.setText("📷")
+        # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
+        thumb.setText("⏳")
 
         # Store button for async update
         self.thumbnail_buttons[path] = thumb
@@ -3569,6 +3796,7 @@ class GooglePhotosLayout(BaseLayout):
             print(f"[GooglePhotosLayout] Deferred thumbnail #{self.thumbnail_load_count + 1}: {os.path.basename(path)}")
 
         # Phase 2: Selection checkbox (overlay top-left corner)
+        # QUICK WIN #8: Enhanced with modern hover effects
         checkbox = QCheckBox(container)
         checkbox.setGeometry(8, 8, 24, 24)
         checkbox.setStyleSheet("""
@@ -3578,15 +3806,24 @@ class GooglePhotosLayout(BaseLayout):
                 border-radius: 4px;
                 padding: 2px;
             }
+            QCheckBox:hover {
+                background: rgba(255, 255, 255, 1.0);
+                border-color: #1a73e8;
+            }
             QCheckBox:checked {
                 background: #1a73e8;
                 border-color: #1a73e8;
+            }
+            QCheckBox:checked:hover {
+                background: #1557b0;
+                border-color: #1557b0;
             }
             QCheckBox::indicator {
                 width: 18px;
                 height: 18px;
             }
         """)
+        checkbox.setCursor(Qt.PointingHandCursor)
         checkbox.setVisible(self.selection_mode)  # Only visible in selection mode
 
         # Store references
@@ -3828,6 +4065,8 @@ class GooglePhotosLayout(BaseLayout):
     def _update_selection_ui(self):
         """
         Update selection counter and show/hide action buttons.
+
+        QUICK WIN #6: Now also controls floating toolbar.
         """
         count = len(self.selected_photos)
 
@@ -3849,6 +4088,13 @@ class GooglePhotosLayout(BaseLayout):
             # Show action buttons
             self.btn_delete.setVisible(True)
             self.btn_favorite.setVisible(True)
+
+            # QUICK WIN #6: Show and update floating toolbar
+            if hasattr(self, 'floating_toolbar') and hasattr(self, 'selection_count_label'):
+                self.selection_count_label.setText(f"{count} selected")
+                self._position_floating_toolbar()
+                self.floating_toolbar.show()
+                self.floating_toolbar.raise_()  # Bring to front
         else:
             self.selection_label.setVisible(False)
 
@@ -3856,7 +4102,131 @@ class GooglePhotosLayout(BaseLayout):
             self.btn_delete.setVisible(False)
             self.btn_favorite.setVisible(False)
 
+            # QUICK WIN #6: Hide floating toolbar when no selection
+            if hasattr(self, 'floating_toolbar'):
+                self.floating_toolbar.hide()
+
         print(f"[GooglePhotosLayout] Selection updated: {count} photos selected")
+
+    def _position_floating_toolbar(self):
+        """
+        QUICK WIN #6: Position floating toolbar at bottom center of viewport.
+        """
+        if not hasattr(self, 'floating_toolbar'):
+            return
+
+        # Get parent widget size
+        parent = self.floating_toolbar.parent()
+        if not parent:
+            return
+
+        parent_width = parent.width()
+        parent_height = parent.height()
+
+        toolbar_width = self.floating_toolbar.width()
+        toolbar_height = self.floating_toolbar.height()
+
+        # Position at bottom center
+        x = (parent_width - toolbar_width) // 2
+        y = parent_height - toolbar_height - 20  # 20px from bottom
+
+        self.floating_toolbar.move(x, y)
+
+    def _on_select_all(self):
+        """
+        QUICK WIN #6: Select all visible photos.
+        """
+        # Select all displayed photos
+        for path in self.all_displayed_paths:
+            if path not in self.selected_photos:
+                self.selected_photos.add(path)
+                self._update_checkbox_state(path, True)
+
+        self._update_selection_ui()
+        print(f"[GooglePhotosLayout] ✓ Selected all {len(self.selected_photos)} photos")
+
+    def _on_clear_selection(self):
+        """
+        QUICK WIN #6: Clear all selected photos.
+        """
+        # Deselect all photos
+        for path in list(self.selected_photos):
+            self._update_checkbox_state(path, False)
+
+        self.selected_photos.clear()
+        self._update_selection_ui()
+        print("[GooglePhotosLayout] ✗ Cleared all selections")
+
+    def keyPressEvent(self, event: QKeyEvent):
+        """
+        QUICK WIN #7: Keyboard navigation in photo grid.
+
+        Shortcuts:
+        - Ctrl+A: Select all photos
+        - Escape: Clear selection
+        - Delete: Delete selected photos
+        - Ctrl+F: Focus search box
+        - Enter: Open first selected photo in lightbox
+
+        Args:
+            event: QKeyEvent
+        """
+        key = event.key()
+        modifiers = event.modifiers()
+
+        # Ctrl+A: Select All
+        if key == Qt.Key_A and modifiers == Qt.ControlModifier:
+            print("[GooglePhotosLayout] ⌨️ Ctrl+A - Select all")
+            self._on_select_all()
+            event.accept()
+
+        # Escape: Clear selection
+        elif key == Qt.Key_Escape:
+            if len(self.selected_photos) > 0:
+                print("[GooglePhotosLayout] ⌨️ ESC - Clear selection")
+                self._on_clear_selection()
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # Delete: Delete selected photos
+        elif key == Qt.Key_Delete:
+            if len(self.selected_photos) > 0:
+                print(f"[GooglePhotosLayout] ⌨️ DELETE - Delete {len(self.selected_photos)} photos")
+                self._on_delete_selected()
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # Ctrl+F: Focus search box
+        elif key == Qt.Key_F and modifiers == Qt.ControlModifier:
+            print("[GooglePhotosLayout] ⌨️ Ctrl+F - Focus search")
+            if hasattr(self, 'search_box'):
+                self.search_box.setFocus()
+                self.search_box.selectAll()
+            event.accept()
+
+        # Enter: Open first selected photo
+        elif key == Qt.Key_Return or key == Qt.Key_Enter:
+            if len(self.selected_photos) > 0:
+                first_photo = list(self.selected_photos)[0]
+                print(f"[GooglePhotosLayout] ⌨️ ENTER - Open {first_photo}")
+                self._on_photo_clicked(first_photo)
+                event.accept()
+            else:
+                super().keyPressEvent(event)
+
+        # S: Toggle selection mode
+        elif key == Qt.Key_S and not modifiers:
+            print("[GooglePhotosLayout] ⌨️ S - Toggle selection mode")
+            if hasattr(self, 'btn_select'):
+                self.btn_select.setChecked(not self.btn_select.isChecked())
+                self._toggle_selection_mode(self.btn_select.isChecked())
+            event.accept()
+
+        else:
+            # Pass to parent for other keys
+            super().keyPressEvent(event)
 
     def _toggle_selection_mode(self, checked: bool):
         """
