@@ -1725,6 +1725,12 @@ class GooglePhotosLayout(BaseLayout):
         self.scroll_debounce_timer.timeout.connect(self._on_scroll_debounced)
         self.scroll_debounce_delay = 150  # ms - debounce scroll events
 
+        # PHASE 2 #4: Date scroll indicator hide timer
+        self.date_indicator_hide_timer = QTimer()
+        self.date_indicator_hide_timer.setSingleShot(True)
+        self.date_indicator_hide_timer.timeout.connect(self._hide_date_indicator)
+        self.date_indicator_delay = 800  # ms - hide after scrolling stops
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -1785,6 +1791,10 @@ class GooglePhotosLayout(BaseLayout):
         # QUICK WIN #6: Create floating selection toolbar (initially hidden)
         self.floating_toolbar = self._create_floating_toolbar(main_widget)
         self.floating_toolbar.hide()
+
+        # PHASE 2 #4: Create floating date scroll indicator (initially hidden)
+        self.date_scroll_indicator = self._create_date_scroll_indicator(main_widget)
+        self.date_scroll_indicator.hide()
 
         # Load photos from database
         self._load_photos()
@@ -2074,6 +2084,37 @@ class GooglePhotosLayout(BaseLayout):
         toolbar.setFixedWidth(400)
 
         return toolbar
+
+    def _create_date_scroll_indicator(self, parent: QWidget) -> QWidget:
+        """
+        PHASE 2 #4: Create floating date scroll indicator.
+
+        Shows current date when scrolling through timeline.
+        Appears on right side, fades out after scrolling stops.
+
+        Args:
+            parent: Parent widget for positioning
+
+        Returns:
+            QWidget: Floating date indicator (initially hidden)
+        """
+        indicator = QLabel(parent)
+        indicator.setStyleSheet("""
+            QLabel {
+                background: rgba(32, 33, 36, 0.9);
+                color: white;
+                font-size: 14pt;
+                font-weight: bold;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        """)
+        indicator.setAlignment(Qt.AlignCenter)
+        indicator.setText("Loading...")
+        indicator.adjustSize()
+
+        return indicator
 
     def _create_sidebar(self) -> QWidget:
         """
@@ -3797,6 +3838,7 @@ class GooglePhotosLayout(BaseLayout):
     def _on_timeline_scrolled(self):
         """
         QUICK WIN #5: Debounced scroll handler for smooth 60 FPS performance.
+        PHASE 2 #4: Also shows date scroll indicator during scrolling.
 
         Instead of processing every scroll event (which can be hundreds per second),
         we restart a timer on each scroll. Only when scrolling stops (or slows down)
@@ -3804,9 +3846,80 @@ class GooglePhotosLayout(BaseLayout):
 
         This prevents lag and dropped frames during fast scrolling.
         """
+        # PHASE 2 #4: Update date scroll indicator (lightweight operation)
+        self._update_date_scroll_indicator()
+
         # Restart debounce timer - will trigger _on_scroll_debounced() after 150ms of no scrolling
         self.scroll_debounce_timer.stop()
         self.scroll_debounce_timer.start(self.scroll_debounce_delay)
+
+        # PHASE 2 #4: Restart hide timer - indicator will hide 800ms after scrolling stops
+        if hasattr(self, 'date_indicator_hide_timer'):
+            self.date_indicator_hide_timer.stop()
+            self.date_indicator_hide_timer.start(self.date_indicator_delay)
+
+    def _update_date_scroll_indicator(self):
+        """
+        PHASE 2 #4: Update floating date indicator with current visible date.
+
+        Finds the topmost visible date group and shows its date in the indicator.
+        Lightweight operation - just checks viewport position.
+        """
+        if not hasattr(self, 'date_scroll_indicator') or not hasattr(self, 'date_groups_metadata'):
+            return
+
+        try:
+            # Get viewport
+            viewport = self.timeline_scroll.viewport()
+            viewport_rect = viewport.rect()
+            viewport_top = viewport_rect.top()
+
+            # Find first visible date group
+            current_date = None
+            for metadata in self.date_groups_metadata:
+                widget = self.date_group_widgets.get(metadata['index'])
+                if not widget:
+                    continue
+
+                # Check if widget is visible
+                try:
+                    widget_pos = widget.mapTo(viewport, widget.rect().topLeft())
+                    # If widget's top is in viewport, this is the current date
+                    if widget_pos.y() >= viewport_top - 100 and widget_pos.y() <= viewport_top + 200:
+                        current_date = metadata['date_str']
+                        break
+                except:
+                    continue
+
+            if current_date:
+                # Format date for indicator
+                try:
+                    date_obj = datetime.fromisoformat(current_date)
+                    label = self._get_smart_date_label(date_obj)
+                except:
+                    label = current_date
+
+                # Update and show indicator
+                self.date_scroll_indicator.setText(label)
+                self.date_scroll_indicator.adjustSize()
+
+                # Position at top-right of viewport
+                parent = self.date_scroll_indicator.parent()
+                if parent:
+                    x = parent.width() - self.date_scroll_indicator.width() - 20
+                    y = 80  # Below toolbar
+                    self.date_scroll_indicator.move(x, y)
+
+                self.date_scroll_indicator.show()
+                self.date_scroll_indicator.raise_()
+
+        except Exception as e:
+            pass  # Silently fail to avoid disrupting scrolling
+
+    def _hide_date_indicator(self):
+        """PHASE 2 #4: Hide date scroll indicator after scrolling stops."""
+        if hasattr(self, 'date_scroll_indicator'):
+            self.date_scroll_indicator.hide()
 
     def _on_scroll_debounced(self):
         """
