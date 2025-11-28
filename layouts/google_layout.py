@@ -44,6 +44,60 @@ class ThumbnailLoader(QRunnable):
             print(f"[ThumbnailLoader] Error loading {self.path}: {e}")
 
 
+class GooglePhotosEventFilter(QObject):
+    """
+    Event filter for GooglePhotosLayout.
+
+    Handles keyboard navigation in search suggestions and mouse events for drag-select.
+    """
+    def __init__(self, layout):
+        super().__init__()
+        self.layout = layout
+
+    def eventFilter(self, obj, event):
+        """Handle events for search box and timeline viewport."""
+        # Search box keyboard navigation
+        if obj == self.layout.search_box and event.type() == QEvent.KeyPress:
+            if hasattr(self.layout, 'search_suggestions') and self.layout.search_suggestions.isVisible():
+                key = event.key()
+
+                # Arrow keys navigate suggestions
+                if key == Qt.Key_Down:
+                    current = self.layout.search_suggestions.currentRow()
+                    if current < self.layout.search_suggestions.count() - 1:
+                        self.layout.search_suggestions.setCurrentRow(current + 1)
+                    return True
+                elif key == Qt.Key_Up:
+                    current = self.layout.search_suggestions.currentRow()
+                    if current > 0:
+                        self.layout.search_suggestions.setCurrentRow(current - 1)
+                    return True
+                elif key == Qt.Key_Return or key == Qt.Key_Enter:
+                    # Enter key selects highlighted suggestion
+                    current_item = self.layout.search_suggestions.currentItem()
+                    if current_item:
+                        self.layout._on_suggestion_clicked(current_item)
+                        return True
+                elif key == Qt.Key_Escape:
+                    self.layout.search_suggestions.hide()
+                    return True
+
+        # Timeline viewport drag-select
+        if hasattr(self.layout, 'timeline_scroll') and obj == self.layout.timeline_scroll.viewport():
+            if event.type() == QEvent.MouseButtonPress:
+                if self.layout._handle_drag_select_press(event.pos()):
+                    return True
+            elif event.type() == QEvent.MouseMove:
+                self.layout._handle_drag_select_move(event.pos())
+                return self.layout.is_dragging  # Consume event if dragging
+            elif event.type() == QEvent.MouseButtonRelease:
+                if self.layout.is_dragging:
+                    self.layout._handle_drag_select_release(event.pos())
+                    return True
+
+        return False
+
+
 class MediaLightbox(QDialog):
     """
     Full-screen media lightbox/preview dialog supporting photos AND videos.
@@ -5105,8 +5159,12 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
         self.is_dragging = False
         self.drag_start_pos = None
 
+        # PHASE 2 #2: Create and install event filter (must be QObject)
+        if not hasattr(self, 'event_filter'):
+            self.event_filter = GooglePhotosEventFilter(self)
+
         # Install event filter on viewport to capture mouse events
-        self.timeline_scroll.viewport().installEventFilter(self)
+        self.timeline_scroll.viewport().installEventFilter(self.event_filter)
 
     def _handle_drag_select_press(self, pos):
         """PHASE 2 #2: Start drag selection."""
@@ -5449,8 +5507,12 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
         # Connect click event
         self.search_suggestions.itemClicked.connect(self._on_suggestion_clicked)
 
+        # PHASE 2 #3: Create and install event filter (must be QObject)
+        if not hasattr(self, 'event_filter'):
+            self.event_filter = GooglePhotosEventFilter(self)
+
         # Install event filter on search box to handle arrow keys
-        self.search_box.installEventFilter(self)
+        self.search_box.installEventFilter(self.event_filter)
 
     def _show_search_suggestions(self, text: str):
         """
@@ -5529,52 +5591,6 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
         self.search_box.setText(suggestion_text)
         self._perform_search(suggestion_text)
         self.search_suggestions.hide()
-
-    def eventFilter(self, obj, event):
-        """
-        PHASE 2 #2: Handle drag-select mouse events on timeline viewport.
-        PHASE 2 #3: Handle keyboard navigation in search suggestions.
-        """
-        # PHASE 2 #3: Search box keyboard navigation
-        if obj == self.search_box and event.type() == QEvent.KeyPress:
-            if self.search_suggestions.isVisible():
-                key = event.key()
-
-                # Arrow keys navigate suggestions
-                if key == Qt.Key_Down:
-                    current = self.search_suggestions.currentRow()
-                    if current < self.search_suggestions.count() - 1:
-                        self.search_suggestions.setCurrentRow(current + 1)
-                    return True
-                elif key == Qt.Key_Up:
-                    current = self.search_suggestions.currentRow()
-                    if current > 0:
-                        self.search_suggestions.setCurrentRow(current - 1)
-                    return True
-                elif key == Qt.Key_Return or key == Qt.Key_Enter:
-                    # Enter key selects highlighted suggestion
-                    current_item = self.search_suggestions.currentItem()
-                    if current_item:
-                        self._on_suggestion_clicked(current_item)
-                        return True
-                elif key == Qt.Key_Escape:
-                    self.search_suggestions.hide()
-                    return True
-
-        # PHASE 2 #2: Timeline viewport drag-select
-        if obj == self.timeline_scroll.viewport():
-            if event.type() == QEvent.MouseButtonPress:
-                if self._handle_drag_select_press(event.pos()):
-                    return True
-            elif event.type() == QEvent.MouseMove:
-                self._handle_drag_select_move(event.pos())
-                return self.is_dragging  # Consume event if dragging
-            elif event.type() == QEvent.MouseButtonRelease:
-                if self.is_dragging:
-                    self._handle_drag_select_release(event.pos())
-                    return True
-
-        return super().eventFilter(obj, event)
 
     def _on_search_text_changed(self, text: str):
         """
