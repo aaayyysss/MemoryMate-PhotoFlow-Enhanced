@@ -3000,13 +3000,14 @@ class GooglePhotosLayout(BaseLayout):
         header_layout.addStretch()
         layout.addWidget(header)
 
-        # Video grid
+        # Video grid (QUICK WIN #2: Also responsive)
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
         grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Minimal spacing
         grid.setContentsMargins(0, 0, 0, 0)
 
-        columns = 5  # Match photo grid default
+        # QUICK WIN #2: Responsive columns for videos too
+        columns = self._calculate_responsive_columns(200)  # Use standard 200px thumb size
 
         for i, video in enumerate(videos):
             row = i // columns
@@ -3195,22 +3196,28 @@ class GooglePhotosLayout(BaseLayout):
         """
         Create photo grid with thumbnails.
 
-        Google Photos Style: Minimal spacing for dense, clean grid
+        QUICK WIN #2: Responsive grid that adapts to viewport width.
+        Google Photos Style: Minimal spacing for dense, clean grid.
         """
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
-        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Reduced from 8px to 2px for minimal padding
+        grid.setSpacing(2)  # GOOGLE PHOTOS STYLE: Minimal padding
         grid.setContentsMargins(0, 0, 0, 0)
 
-        # Calculate grid layout - responsive columns based on thumbnail size
-        if thumb_size <= 150:
-            columns = 7  # Small thumbs → more columns
-        elif thumb_size <= 200:
-            columns = 5  # Default
-        elif thumb_size <= 300:
-            columns = 4  # Large thumbs
-        else:
-            columns = 3  # Extra large thumbs
+        # QUICK WIN #2: Calculate responsive columns based on viewport width
+        # This makes the grid perfect on 1080p, 4K, mobile, etc.
+        columns = self._calculate_responsive_columns(thumb_size)
+
+        # Store grid reference for resize handling (QUICK WIN #2)
+        if not hasattr(self, '_photo_grids'):
+            self._photo_grids = []
+        self._photo_grids.append({
+            'container': grid_container,
+            'grid': grid,
+            'photos': photos,
+            'thumb_size': thumb_size,
+            'columns': columns
+        })
 
         # Add photo thumbnails
         for i, photo in enumerate(photos):
@@ -3223,6 +3230,48 @@ class GooglePhotosLayout(BaseLayout):
             grid.addWidget(thumb, row, col)
 
         return grid_container
+
+    def _calculate_responsive_columns(self, thumb_size: int) -> int:
+        """
+        QUICK WIN #2: Calculate optimal column count based on viewport width.
+
+        Algorithm (matches Google Photos):
+        - Get available width from timeline viewport
+        - Calculate how many thumbnails fit
+        - Enforce min/max constraints (2-8 columns)
+        - Account for spacing and margins
+
+        Args:
+            thumb_size: Thumbnail width in pixels
+
+        Returns:
+            int: Optimal number of columns (2-8)
+        """
+        # Get viewport width (timeline scroll area)
+        if hasattr(self, 'timeline_scroll'):
+            viewport_width = self.timeline_scroll.viewport().width()
+        else:
+            # Fallback during initialization
+            viewport_width = 1200  # Reasonable default
+
+        # Account for margins (20px left + 20px right from timeline_layout)
+        available_width = viewport_width - 40
+
+        # Account for grid spacing (2px between each thumbnail)
+        spacing = 2
+
+        # Calculate how many thumbnails fit
+        # Formula: (width - margins) / (thumb_size + spacing)
+        cols = int(available_width / (thumb_size + spacing))
+
+        # Enforce constraints
+        # Min: 2 columns (prevents single-column on small screens)
+        # Max: 8 columns (prevents tiny thumbnails on huge screens)
+        cols = max(2, min(8, cols))
+
+        print(f"[GooglePhotosLayout] 📐 Responsive grid: {cols} columns (viewport: {viewport_width}px, thumb: {thumb_size}px)")
+
+        return cols
 
     def _on_thumbnail_loaded(self, path: str, pixmap: QPixmap, size: int):
         """Callback when async thumbnail loading completes."""
