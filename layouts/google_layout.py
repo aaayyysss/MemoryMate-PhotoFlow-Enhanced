@@ -3767,7 +3767,10 @@ class GooglePhotosLayout(BaseLayout):
         # Max: 8 columns (prevents tiny thumbnails on huge screens)
         cols = max(2, min(8, cols))
 
-        print(f"[GooglePhotosLayout] 📐 Responsive grid: {cols} columns (viewport: {viewport_width}px, thumb: {thumb_size}px)")
+        # DEBUG: Only print if columns changed (reduce log spam)
+        if not hasattr(self, '_last_column_count') or self._last_column_count != cols:
+            print(f"[GooglePhotosLayout] 📐 Responsive grid: {cols} columns (viewport: {viewport_width}px, thumb: {thumb_size}px)")
+            self._last_column_count = cols
 
         return cols
 
@@ -3898,21 +3901,13 @@ class GooglePhotosLayout(BaseLayout):
         """)
         thumb.setCursor(Qt.PointingHandCursor)
 
-        # PHASE 2 #8: Photo metadata tooltip (EXIF on hover)
+        # PHASE 2 #8: Photo metadata tooltip (lightweight - no image loading)
+        # PERFORMANCE FIX: Don't load QImage here - it's too expensive during initialization!
         try:
+            filename = os.path.basename(path)
             stat = os.stat(path)
             file_size = stat.st_size / (1024 * 1024)  # MB
-            filename = os.path.basename(path)
             tooltip = f"{filename}\nSize: {file_size:.2f} MB"
-
-            # Try to get dimensions
-            try:
-                img = QImage(path)
-                if not img.isNull():
-                    tooltip += f"\nDimensions: {img.width()} × {img.height()}px"
-            except:
-                pass
-
             thumb.setToolTip(tooltip)
         except:
             thumb.setToolTip(os.path.basename(path))
