@@ -2466,11 +2466,14 @@ class GooglePhotosLayout(BaseLayout):
                 return
 
             if not rows:
-                # No photos in project - show empty state
-                empty_label = QLabel("📷 No photos in this project yet\n\nClick 'Scan Repository' to add photos")
-                empty_label.setAlignment(Qt.AlignCenter)
-                empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
-                self.timeline_layout.addWidget(empty_label)
+                # PHASE 2 #7: Enhanced empty state with friendly illustration
+                empty_widget = self._create_empty_state(
+                    icon="📷",
+                    title="No photos yet",
+                    message="Your photo collection is waiting to be filled!\n\nClick 'Scan Repository' to import photos.",
+                    action_text="or drag and drop photos here"
+                )
+                self.timeline_layout.addWidget(empty_widget)
                 print(f"[GooglePhotosLayout] No photos found in project {self.project_id}")
                 return
 
@@ -3366,10 +3369,10 @@ class GooglePhotosLayout(BaseLayout):
         collapse_btn.clicked.connect(lambda: self._toggle_date_group(date_str, collapse_btn))
         header_layout.addWidget(collapse_btn)
 
-        # Format date nicely
+        # PHASE 3 #4: Smart date grouping with friendly labels
         try:
             date_obj = datetime.fromisoformat(date_str)
-            formatted_date = date_obj.strftime("%B %d, %Y (%A)")
+            formatted_date = self._get_smart_date_label(date_obj)
         except:
             formatted_date = date_str
 
@@ -3385,14 +3388,132 @@ class GooglePhotosLayout(BaseLayout):
         date_label.mousePressEvent = lambda e: self._toggle_date_group(date_str, collapse_btn)
         header_layout.addWidget(date_label)
 
-        # Photo count
-        count_label = QLabel(f"({count} photo{'s' if count != 1 else ''})")
-        count_label.setStyleSheet("font-size: 10pt; color: #5f6368; margin-left: 8px;")
-        header_layout.addWidget(count_label)
+        # PHASE 2 #6: Photo count badge (visual pill instead of plain text)
+        count_badge = QLabel(f"{count}")
+        count_badge.setStyleSheet("""
+            QLabel {
+                background: #e8f0fe;
+                color: #1a73e8;
+                font-size: 10pt;
+                font-weight: bold;
+                padding: 4px 10px;
+                border-radius: 12px;
+                margin-left: 8px;
+            }
+        """)
+        count_badge.setToolTip(f"{count} photo{'s' if count != 1 else ''}")
+        header_layout.addWidget(count_badge)
 
         header_layout.addStretch()
 
         return header
+
+    def _get_smart_date_label(self, date_obj: datetime) -> str:
+        """
+        PHASE 3 #4: Generate smart date labels like "Today", "Yesterday", "This Week".
+
+        Args:
+            date_obj: datetime object
+
+        Returns:
+            str: Friendly date label
+        """
+        from datetime import timedelta
+
+        now = datetime.now()
+        today = now.date()
+        photo_date = date_obj.date()
+
+        # Calculate difference in days
+        delta = (today - photo_date).days
+
+        # Today
+        if delta == 0:
+            return f"Today - {date_obj.strftime('%B %d, %Y')}"
+
+        # Yesterday
+        elif delta == 1:
+            return f"Yesterday - {date_obj.strftime('%B %d, %Y')}"
+
+        # This Week (within last 7 days)
+        elif delta < 7:
+            return f"This Week - {date_obj.strftime('%A, %B %d, %Y')}"
+
+        # This Month (same month and year)
+        elif photo_date.month == today.month and photo_date.year == today.year:
+            return f"This Month - {date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # Last Month
+        elif delta < 60:  # Within last 2 months
+            last_month = today.replace(day=1) - timedelta(days=1)
+            if photo_date.month == last_month.month and photo_date.year == last_month.year:
+                return f"Last Month - {date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # This Year
+        if photo_date.year == today.year:
+            return f"{date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # Older (show full date with year)
+        return date_obj.strftime("%B %d, %Y (%A)")
+
+    def _create_empty_state(self, icon: str, title: str, message: str, action_text: str = "") -> QWidget:
+        """
+        PHASE 2 #7: Create friendly empty state with illustration.
+
+        Args:
+            icon: Emoji icon
+            title: Main title
+            message: Descriptive message
+            action_text: Optional action hint
+
+        Returns:
+            QWidget: Styled empty state widget
+        """
+        container = QWidget()
+        layout = QVBoxLayout(container)
+        layout.setContentsMargins(40, 80, 40, 80)
+        layout.setSpacing(16)
+        layout.setAlignment(Qt.AlignCenter)
+
+        # Large icon
+        icon_label = QLabel(icon)
+        icon_label.setStyleSheet("font-size: 72pt;")
+        icon_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(icon_label)
+
+        # Title
+        title_label = QLabel(title)
+        title_label.setStyleSheet("""
+            font-size: 18pt;
+            font-weight: bold;
+            color: #202124;
+        """)
+        title_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title_label)
+
+        # Message
+        message_label = QLabel(message)
+        message_label.setStyleSheet("""
+            font-size: 11pt;
+            color: #5f6368;
+            line-height: 1.6;
+        """)
+        message_label.setAlignment(Qt.AlignCenter)
+        message_label.setWordWrap(True)
+        layout.addWidget(message_label)
+
+        # Action hint
+        if action_text:
+            action_label = QLabel(action_text)
+            action_label.setStyleSheet("""
+                font-size: 10pt;
+                color: #80868b;
+                font-style: italic;
+            """)
+            action_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(action_label)
+
+        return container
 
     def _toggle_date_group(self, date_str: str, collapse_btn: QPushButton):
         """
@@ -3777,6 +3898,25 @@ class GooglePhotosLayout(BaseLayout):
         """)
         thumb.setCursor(Qt.PointingHandCursor)
 
+        # PHASE 2 #8: Photo metadata tooltip (EXIF on hover)
+        try:
+            stat = os.stat(path)
+            file_size = stat.st_size / (1024 * 1024)  # MB
+            filename = os.path.basename(path)
+            tooltip = f"{filename}\nSize: {file_size:.2f} MB"
+
+            # Try to get dimensions
+            try:
+                img = QImage(path)
+                if not img.isNull():
+                    tooltip += f"\nDimensions: {img.width()} × {img.height()}px"
+            except:
+                pass
+
+            thumb.setToolTip(tooltip)
+        except:
+            thumb.setToolTip(os.path.basename(path))
+
         # QUICK WIN #9: Skeleton loading indicator (subtle, professional)
         thumb.setText("⏳")
 
@@ -3834,6 +3974,10 @@ class GooglePhotosLayout(BaseLayout):
         # Connect signals
         thumb.clicked.connect(lambda: self._on_photo_clicked(path))
         checkbox.stateChanged.connect(lambda state: self._on_selection_changed(path, state))
+
+        # PHASE 2 #1: Context menu on right-click
+        thumb.setContextMenuPolicy(Qt.CustomContextMenu)
+        thumb.customContextMenuRequested.connect(lambda pos: self._show_photo_context_menu(path, thumb.mapToGlobal(pos)))
 
         return container
 
@@ -4156,6 +4300,167 @@ class GooglePhotosLayout(BaseLayout):
         self.selected_photos.clear()
         self._update_selection_ui()
         print("[GooglePhotosLayout] ✗ Cleared all selections")
+
+    def _show_photo_context_menu(self, path: str, global_pos):
+        """
+        PHASE 2 #1: Show context menu for photo thumbnail (right-click).
+
+        Actions available:
+        - Open: View in lightbox
+        - Select/Deselect: Toggle selection
+        - Delete: Remove photo
+        - Show in Explorer: Open file location
+        - Copy Path: Copy file path to clipboard
+        - Properties: Show photo details
+
+        Args:
+            path: Photo file path
+            global_pos: Global position for menu
+        """
+        from PySide6.QtWidgets import QMenu
+        from PySide6.QtGui import QAction
+
+        menu = QMenu()
+        menu.setStyleSheet("""
+            QMenu {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 4px;
+            }
+            QMenu::item {
+                padding: 6px 24px 6px 12px;
+                border-radius: 2px;
+            }
+            QMenu::item:selected {
+                background: #f1f3f4;
+            }
+            QMenu::separator {
+                height: 1px;
+                background: #e8eaed;
+                margin: 4px 0;
+            }
+        """)
+
+        # Open action
+        open_action = QAction("📂 Open", menu)
+        open_action.triggered.connect(lambda: self._on_photo_clicked(path))
+        menu.addAction(open_action)
+
+        menu.addSeparator()
+
+        # Select/Deselect toggle
+        is_selected = path in self.selected_photos
+        if is_selected:
+            select_action = QAction("✓ Deselect", menu)
+            select_action.triggered.connect(lambda: self._toggle_photo_selection(path))
+        else:
+            select_action = QAction("☐ Select", menu)
+            select_action.triggered.connect(lambda: self._toggle_photo_selection(path))
+        menu.addAction(select_action)
+
+        menu.addSeparator()
+
+        # Delete action
+        delete_action = QAction("🗑️ Delete", menu)
+        delete_action.triggered.connect(lambda: self._delete_single_photo(path))
+        menu.addAction(delete_action)
+
+        menu.addSeparator()
+
+        # Show in Explorer action
+        explorer_action = QAction("📁 Show in Explorer", menu)
+        explorer_action.triggered.connect(lambda: self._show_in_explorer(path))
+        menu.addAction(explorer_action)
+
+        # Copy path action
+        copy_action = QAction("📋 Copy Path", menu)
+        copy_action.triggered.connect(lambda: self._copy_path_to_clipboard(path))
+        menu.addAction(copy_action)
+
+        menu.addSeparator()
+
+        # Properties action
+        properties_action = QAction("ℹ️ Properties", menu)
+        properties_action.triggered.connect(lambda: self._show_photo_properties(path))
+        menu.addAction(properties_action)
+
+        # Show menu at cursor position
+        menu.exec(global_pos)
+
+    def _delete_single_photo(self, path: str):
+        """Delete a single photo (context menu action)."""
+        # Add to selection temporarily
+        was_selected = path in self.selected_photos
+        if not was_selected:
+            self.selected_photos.add(path)
+
+        # Call existing delete handler
+        self._on_delete_selected()
+
+        # Remove from selection if it wasn't originally selected
+        if not was_selected:
+            self.selected_photos.discard(path)
+            self._update_selection_ui()
+
+    def _show_in_explorer(self, path: str):
+        """Open file location in system file explorer."""
+        import subprocess
+        import platform
+
+        try:
+            system = platform.system()
+            if system == "Windows":
+                subprocess.run(['explorer', '/select,', os.path.normpath(path)])
+            elif system == "Darwin":  # macOS
+                subprocess.run(['open', '-R', path])
+            else:  # Linux
+                subprocess.run(['xdg-open', os.path.dirname(path)])
+
+            print(f"[GooglePhotosLayout] 📁 Opened location: {path}")
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error opening location: {e}")
+
+    def _copy_path_to_clipboard(self, path: str):
+        """Copy file path to clipboard."""
+        from PySide6.QtWidgets import QApplication
+
+        clipboard = QApplication.clipboard()
+        clipboard.setText(path)
+        print(f"[GooglePhotosLayout] 📋 Copied to clipboard: {path}")
+
+    def _show_photo_properties(self, path: str):
+        """Show photo properties dialog with EXIF data."""
+        from PySide6.QtWidgets import QMessageBox
+
+        try:
+            # Get file info
+            stat = os.stat(path)
+            file_size = stat.st_size / (1024 * 1024)  # MB
+
+            # Try to get image dimensions
+            try:
+                img = QImage(path)
+                dimensions = f"{img.width()} × {img.height()}px"
+            except:
+                dimensions = "Unknown"
+
+            # Format info
+            info = f"""
+File: {os.path.basename(path)}
+Path: {path}
+
+Size: {file_size:.2f} MB
+Dimensions: {dimensions}
+
+Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
+            """.strip()
+
+            QMessageBox.information(None, "Photo Properties", info)
+            print(f"[GooglePhotosLayout] ℹ️ Showing properties: {path}")
+        except Exception as e:
+            QMessageBox.warning(None, "Error", f"Could not load properties:\n{e}")
+            print(f"[GooglePhotosLayout] ⚠️ Error showing properties: {e}")
 
     def keyPressEvent(self, event: QKeyEvent):
         """
