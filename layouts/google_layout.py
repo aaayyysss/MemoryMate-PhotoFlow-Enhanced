@@ -92,8 +92,18 @@ class MediaLightbox(QDialog):
         # Rating state
         self.current_rating = 0  # 0-5 stars
 
+        # PHASE 2 #10: Swipe gesture state
+        self.swipe_start_pos = None
+        self.swipe_start_time = None
+        self.is_swiping = False
+
         self._setup_ui()
         # Don't load media here - wait for showEvent when window has proper size
+
+        # PHASE 2 #10: Enable touch/gesture events
+        self.setAttribute(Qt.WA_AcceptTouchEvents, True)
+        self.grabGesture(Qt.SwipeGesture)
+        self.grabGesture(Qt.PinchGesture)
 
     def _setup_ui(self):
         """Setup Google Photos-style lightbox UI with overlay controls."""
@@ -1224,6 +1234,93 @@ class MediaLightbox(QDialog):
             self.media_path = self.all_media[self.current_index]
             self._load_media_with_transition()
 
+    def event(self, event):
+        """
+        PHASE 2 #10: Handle gesture events (swipe, pinch).
+        """
+        if event.type() == QEvent.Gesture:
+            return self._handle_gesture(event)
+        return super().event(event)
+
+    def _handle_gesture(self, event):
+        """PHASE 2 #10: Handle swipe and pinch gestures."""
+        from PySide6.QtWidgets import QGestureEvent
+        from PySide6.QtCore import Qt
+
+        swipe = event.gesture(Qt.SwipeGesture)
+        pinch = event.gesture(Qt.PinchGesture)
+
+        if swipe:
+            from PySide6.QtWidgets import QGesture
+            if swipe.state() == Qt.GestureFinished:
+                # Horizontal swipe for navigation
+                if swipe.horizontalDirection() == QSwipeGesture.Left:
+                    print("[MediaLightbox] Swipe left - next photo")
+                    self._next_media()
+                    return True
+                elif swipe.horizontalDirection() == QSwipeGesture.Right:
+                    print("[MediaLightbox] Swipe right - previous photo")
+                    self._previous_media()
+                    return True
+
+        if pinch:
+            if pinch.state() == Qt.GestureUpdated:
+                # Pinch to zoom
+                scale_factor = pinch.scaleFactor()
+                if scale_factor > 1.0:
+                    self._zoom_in()
+                elif scale_factor < 1.0:
+                    self._zoom_out()
+                return True
+
+        return False
+
+    def mousePressEvent(self, event):
+        """PHASE 2 #10: Track mouse press for swipe detection."""
+        from PySide6.QtCore import QDateTime
+
+        if event.button() == Qt.LeftButton and not self._is_content_zoomed():
+            # Start tracking for potential swipe
+            self.swipe_start_pos = event.pos()
+            self.swipe_start_time = QDateTime.currentMSecsSinceEpoch()
+            self.is_swiping = False
+
+        super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        """PHASE 2 #10: Track mouse move for swipe detection."""
+        if self.swipe_start_pos and not self._is_content_zoomed():
+            # Check if moved enough to be a swipe
+            delta = event.pos() - self.swipe_start_pos
+            if abs(delta.x()) > 50:  # 50px threshold
+                self.is_swiping = True
+
+        super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """PHASE 2 #10: Detect swipe on mouse release."""
+        from PySide6.QtCore import QDateTime
+
+        if self.is_swiping and self.swipe_start_pos and self.swipe_start_time:
+            delta = event.pos() - self.swipe_start_pos
+            time_elapsed = QDateTime.currentMSecsSinceEpoch() - self.swipe_start_time
+
+            # Swipe detected if: moved >100px horizontally in <500ms
+            if abs(delta.x()) > 100 and time_elapsed < 500:
+                if delta.x() < 0:  # Swipe left
+                    print("[MediaLightbox] Mouse swipe left - next photo")
+                    self._next_media()
+                else:  # Swipe right
+                    print("[MediaLightbox] Mouse swipe right - previous photo")
+                    self._previous_media()
+
+        # Reset swipe state
+        self.swipe_start_pos = None
+        self.swipe_start_time = None
+        self.is_swiping = False
+
+        super().mouseReleaseEvent(event)
+
     def _load_media_with_transition(self):
         """
         PHASE 3 #5: Load media with smooth fade transition.
@@ -1975,6 +2072,9 @@ class GooglePhotosLayout(BaseLayout):
         self.search_box.returnPressed.connect(self._perform_search)
         toolbar.addWidget(self.search_box)
 
+        # PHASE 2 #3: Create search suggestions dropdown
+        self._create_search_suggestions()
+
         toolbar.addSeparator()
 
         # Refresh button
@@ -2504,6 +2604,9 @@ class GooglePhotosLayout(BaseLayout):
             self._on_timeline_scrolled
         )
         print("[GooglePhotosLayout] ✅ Scroll-triggered lazy loading enabled")
+
+        # PHASE 2 #2: Setup drag-to-select rubber band
+        self._setup_drag_select()
 
         return self.timeline_scroll
 
@@ -4986,6 +5089,133 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
                                     else:
                                         checkbox.setVisible(False)
 
+    def _setup_drag_select(self):
+        """
+        PHASE 2 #2: Setup drag-to-select (rubber band) functionality.
+
+        File Explorer-style rectangle selection.
+        """
+        from PySide6.QtWidgets import QRubberBand
+
+        # Create rubber band for visual feedback
+        self.rubber_band = QRubberBand(QRubberBand.Rectangle, self.timeline_scroll.viewport())
+        self.rubber_band.hide()
+
+        # Drag state
+        self.is_dragging = False
+        self.drag_start_pos = None
+
+        # Install event filter on viewport to capture mouse events
+        self.timeline_scroll.viewport().installEventFilter(self)
+
+    def _handle_drag_select_press(self, pos):
+        """PHASE 2 #2: Start drag selection."""
+        from PySide6.QtCore import QPoint
+
+        # Only start drag if selection mode is active and not clicking on a thumbnail
+        if not self.selection_mode:
+            return False
+
+        # Check if clicked on empty space (not on a thumbnail button)
+        widget = self.timeline_scroll.viewport().childAt(pos)
+        if widget and isinstance(widget, QPushButton):
+            return False  # Clicked on thumbnail, don't start drag
+
+        self.is_dragging = True
+        self.drag_start_pos = pos
+        self.rubber_band.setGeometry(pos.x(), pos.y(), 0, 0)
+        self.rubber_band.show()
+        return True
+
+    def _handle_drag_select_move(self, pos):
+        """PHASE 2 #2: Update rubber band during drag."""
+        from PySide6.QtCore import QRect
+
+        if not self.is_dragging or not self.drag_start_pos:
+            return
+
+        # Calculate rubber band rectangle
+        x = min(self.drag_start_pos.x(), pos.x())
+        y = min(self.drag_start_pos.y(), pos.y())
+        width = abs(pos.x() - self.drag_start_pos.x())
+        height = abs(pos.y() - self.drag_start_pos.y())
+
+        self.rubber_band.setGeometry(x, y, width, height)
+
+    def _handle_drag_select_release(self, pos):
+        """PHASE 2 #2: Finish drag selection and select thumbnails in rectangle."""
+        from PySide6.QtCore import QRect
+
+        if not self.is_dragging or not self.drag_start_pos:
+            return
+
+        self.is_dragging = False
+        self.rubber_band.hide()
+
+        # Calculate selection rectangle in viewport coordinates
+        x = min(self.drag_start_pos.x(), pos.x())
+        y = min(self.drag_start_pos.y(), pos.y())
+        width = abs(pos.x() - self.drag_start_pos.x())
+        height = abs(pos.y() - self.drag_start_pos.y())
+
+        selection_rect = QRect(x, y, width, height)
+
+        # Find all thumbnails that intersect with selection rectangle
+        viewport = self.timeline_scroll.viewport()
+        selected_count = 0
+
+        for i in range(self.timeline_layout.count()):
+            date_group = self.timeline_layout.itemAt(i).widget()
+            if not date_group:
+                continue
+
+            group_layout = date_group.layout()
+            if not group_layout:
+                continue
+
+            for j in range(group_layout.count()):
+                item = group_layout.itemAt(j)
+                if not item or not item.widget():
+                    continue
+
+                widget = item.widget()
+                if hasattr(widget, 'layout') and widget.layout():
+                    grid = widget.layout()
+                    for k in range(grid.count()):
+                        container = grid.itemAt(k).widget()
+                        if not container:
+                            continue
+
+                        # Get thumbnail button position relative to viewport
+                        thumb_button = container.property("thumbnail_button")
+                        if not thumb_button:
+                            continue
+
+                        try:
+                            # Map thumbnail position to viewport coordinates
+                            thumb_global = thumb_button.mapTo(viewport, thumb_button.rect().topLeft())
+                            thumb_rect = QRect(thumb_global, thumb_button.size())
+
+                            # Check if thumbnail intersects with selection rectangle
+                            if selection_rect.intersects(thumb_rect):
+                                # Select this thumbnail
+                                photo_path = container.property("photo_path")
+                                checkbox = container.property("checkbox")
+
+                                if photo_path and checkbox:
+                                    if photo_path not in self.selected_photos:
+                                        self.selected_photos.add(photo_path)
+                                        checkbox.setChecked(True)
+                                        selected_count += 1
+                        except:
+                            pass  # Skip thumbnails that can't be mapped
+
+        if selected_count > 0:
+            print(f"[GooglePhotosLayout] Drag-selected {selected_count} photos")
+            self._update_selection_ui()
+
+        self.drag_start_pos = None
+
     def _clear_selection(self):
         """
         Clear all selected photos and uncheck checkboxes.
@@ -5181,10 +5411,180 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
 
     # ============ Phase 2: Search Functionality ============
 
+    def _create_search_suggestions(self):
+        """
+        PHASE 2 #3: Create search suggestions dropdown widget.
+
+        Google Search-style autocomplete that appears below search box.
+        """
+        from PySide6.QtWidgets import QListWidget, QListWidgetItem
+
+        # Create suggestions popup (initially hidden)
+        self.search_suggestions = QListWidget()
+        self.search_suggestions.setWindowFlags(Qt.Popup | Qt.FramelessWindowHint)
+        self.search_suggestions.setStyleSheet("""
+            QListWidget {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 4px;
+                font-size: 11pt;
+            }
+            QListWidget::item {
+                padding: 8px 12px;
+                border-radius: 2px;
+            }
+            QListWidget::item:hover {
+                background: #f1f3f4;
+            }
+            QListWidget::item:selected {
+                background: #e8f0fe;
+                color: #1a73e8;
+            }
+        """)
+        self.search_suggestions.setMaximumHeight(300)
+        self.search_suggestions.setMinimumWidth(300)
+        self.search_suggestions.hide()
+
+        # Connect click event
+        self.search_suggestions.itemClicked.connect(self._on_suggestion_clicked)
+
+        # Install event filter on search box to handle arrow keys
+        self.search_box.installEventFilter(self)
+
+    def _show_search_suggestions(self, text: str):
+        """
+        PHASE 2 #3: Show search suggestions based on input text.
+
+        Queries database for matching filenames, dates, and folders.
+        """
+        if not text or len(text) < 2:
+            self.search_suggestions.hide()
+            return
+
+        try:
+            from reference_db import ReferenceDB
+            db = ReferenceDB()
+
+            suggestions = set()
+
+            # Get unique filename patterns
+            query = """
+                SELECT DISTINCT pm.path
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+                AND LOWER(pm.path) LIKE ?
+                LIMIT 10
+            """
+
+            pattern = f"%{text.lower()}%"
+
+            with db._connect() as conn:
+                cur = conn.cursor()
+                cur.execute(query, (self.project_id, pattern))
+                rows = cur.fetchall()
+
+                for row in rows:
+                    path = row[0]
+                    filename = os.path.basename(path)
+                    folder = os.path.basename(os.path.dirname(path))
+
+                    # Add filename if it matches
+                    if text.lower() in filename.lower():
+                        suggestions.add(f"📷 {filename}")
+
+                    # Add folder if it matches
+                    if text.lower() in folder.lower() and folder:
+                        suggestions.add(f"📁 {folder}")
+
+            # Populate suggestions list
+            self.search_suggestions.clear()
+
+            if suggestions:
+                for suggestion in sorted(suggestions)[:8]:
+                    self.search_suggestions.addItem(suggestion)
+
+                # Position below search box
+                search_box_global = self.search_box.mapToGlobal(self.search_box.rect().bottomLeft())
+                self.search_suggestions.move(search_box_global)
+                self.search_suggestions.show()
+                self.search_suggestions.raise_()
+            else:
+                self.search_suggestions.hide()
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] Error generating suggestions: {e}")
+            self.search_suggestions.hide()
+
+    def _on_suggestion_clicked(self, item):
+        """PHASE 2 #3: Handle clicking on a suggestion."""
+        suggestion_text = item.text()
+
+        # Remove emoji prefix
+        if " " in suggestion_text:
+            suggestion_text = suggestion_text.split(" ", 1)[1]
+
+        # Set search box text and perform search
+        self.search_box.setText(suggestion_text)
+        self._perform_search(suggestion_text)
+        self.search_suggestions.hide()
+
+    def eventFilter(self, obj, event):
+        """
+        PHASE 2 #2: Handle drag-select mouse events on timeline viewport.
+        PHASE 2 #3: Handle keyboard navigation in search suggestions.
+        """
+        # PHASE 2 #3: Search box keyboard navigation
+        if obj == self.search_box and event.type() == QEvent.KeyPress:
+            if self.search_suggestions.isVisible():
+                key = event.key()
+
+                # Arrow keys navigate suggestions
+                if key == Qt.Key_Down:
+                    current = self.search_suggestions.currentRow()
+                    if current < self.search_suggestions.count() - 1:
+                        self.search_suggestions.setCurrentRow(current + 1)
+                    return True
+                elif key == Qt.Key_Up:
+                    current = self.search_suggestions.currentRow()
+                    if current > 0:
+                        self.search_suggestions.setCurrentRow(current - 1)
+                    return True
+                elif key == Qt.Key_Return or key == Qt.Key_Enter:
+                    # Enter key selects highlighted suggestion
+                    current_item = self.search_suggestions.currentItem()
+                    if current_item:
+                        self._on_suggestion_clicked(current_item)
+                        return True
+                elif key == Qt.Key_Escape:
+                    self.search_suggestions.hide()
+                    return True
+
+        # PHASE 2 #2: Timeline viewport drag-select
+        if obj == self.timeline_scroll.viewport():
+            if event.type() == QEvent.MouseButtonPress:
+                if self._handle_drag_select_press(event.pos()):
+                    return True
+            elif event.type() == QEvent.MouseMove:
+                self._handle_drag_select_move(event.pos())
+                return self.is_dragging  # Consume event if dragging
+            elif event.type() == QEvent.MouseButtonRelease:
+                if self.is_dragging:
+                    self._handle_drag_select_release(event.pos())
+                    return True
+
+        return super().eventFilter(obj, event)
+
     def _on_search_text_changed(self, text: str):
         """
         Handle search text change (real-time filtering).
+
+        Phase 2 #3: Now also shows search suggestions dropdown.
         """
+        # PHASE 2 #3: Show suggestions immediately (no debounce for suggestions)
+        self._show_search_suggestions(text)
+
         # Debounce: only search after user stops typing for 300ms
         if hasattr(self, '_search_timer'):
             self._search_timer.stop()
