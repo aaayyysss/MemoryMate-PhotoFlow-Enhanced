@@ -2121,6 +2121,13 @@ class GooglePhotosLayout(BaseLayout):
         self.btn_favorite.clicked.connect(self._on_favorite_selected)
         toolbar.addWidget(self.btn_favorite)
 
+        # PHASE 3 #7: Share/Export button
+        self.btn_share = QPushButton("📤 Share")
+        self.btn_share.setToolTip("Share or export selected photos")
+        self.btn_share.setVisible(False)
+        self.btn_share.clicked.connect(self._on_share_selected)
+        toolbar.addWidget(self.btn_share)
+
         # Store toolbar reference
         self._toolbar = toolbar
 
@@ -4615,6 +4622,7 @@ class GooglePhotosLayout(BaseLayout):
             # Show action buttons
             self.btn_delete.setVisible(True)
             self.btn_favorite.setVisible(True)
+            self.btn_share.setVisible(True)  # PHASE 3 #7: Show share button
 
             # QUICK WIN #6: Show and update floating toolbar
             if hasattr(self, 'floating_toolbar') and hasattr(self, 'selection_count_label'):
@@ -4628,6 +4636,7 @@ class GooglePhotosLayout(BaseLayout):
             # Hide action buttons when nothing selected
             self.btn_delete.setVisible(False)
             self.btn_favorite.setVisible(False)
+            self.btn_share.setVisible(False)  # PHASE 3 #7: Hide share button
 
             # QUICK WIN #6: Hide floating toolbar when no selection
             if hasattr(self, 'floating_toolbar'):
@@ -5080,6 +5089,122 @@ Modified: {datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')}
         )
 
         self._clear_selection()
+
+    def _on_share_selected(self):
+        """
+        PHASE 3 #7: Show share/export dialog for selected photos.
+
+        Allows users to:
+        - Copy file paths to clipboard
+        - Export to a folder
+        - Show in file explorer
+        """
+        from PySide6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFileDialog, QApplication
+        from PySide6.QtGui import QClipboard
+
+        if not self.selected_photos:
+            return
+
+        # Create share dialog
+        dialog = QDialog(self.main_window)
+        dialog.setWindowTitle("Share / Export Photos")
+        dialog.setMinimumWidth(500)
+        dialog.setStyleSheet("""
+            QDialog {
+                background: white;
+            }
+            QLabel {
+                font-size: 11pt;
+            }
+            QPushButton {
+                background: white;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                padding: 10px 20px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background: #f1f3f4;
+                border-color: #1a73e8;
+            }
+        """)
+
+        layout = QVBoxLayout(dialog)
+        layout.setSpacing(16)
+        layout.setContentsMargins(24, 24, 24, 24)
+
+        # Header
+        count = len(self.selected_photos)
+        header = QLabel(f"📤 Share {count} photo{'s' if count > 1 else ''}")
+        header.setStyleSheet("font-size: 14pt; font-weight: bold;")
+        layout.addWidget(header)
+
+        # Copy paths button
+        copy_btn = QPushButton("📋 Copy File Paths to Clipboard")
+        copy_btn.setToolTip("Copy all selected file paths to clipboard (one per line)")
+        def copy_paths():
+            paths_text = '\n'.join(sorted(self.selected_photos))
+            clipboard = QApplication.clipboard()
+            clipboard.setText(paths_text)
+            copy_btn.setText("✓ Copied!")
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(2000, lambda: copy_btn.setText("📋 Copy File Paths to Clipboard"))
+        copy_btn.clicked.connect(copy_paths)
+        layout.addWidget(copy_btn)
+
+        # Export to folder button
+        export_btn = QPushButton("💾 Export to Folder...")
+        export_btn.setToolTip("Copy selected photos to a new folder")
+        def export_to_folder():
+            import shutil
+            folder = QFileDialog.getExistingDirectory(
+                dialog,
+                "Select Export Destination",
+                "",
+                QFileDialog.ShowDirsOnly
+            )
+            if folder:
+                try:
+                    success_count = 0
+                    for photo_path in self.selected_photos:
+                        filename = os.path.basename(photo_path)
+                        dest_path = os.path.join(folder, filename)
+                        shutil.copy2(photo_path, dest_path)
+                        success_count += 1
+
+                    from PySide6.QtWidgets import QMessageBox
+                    QMessageBox.information(
+                        dialog,
+                        "Export Complete",
+                        f"✓ Exported {success_count} photo{'s' if success_count > 1 else ''} to:\n{folder}"
+                    )
+                    dialog.accept()
+                except Exception as e:
+                    from PySide6.QtWidgets import QMessageBox
+                    QMessageBox.critical(
+                        dialog,
+                        "Export Failed",
+                        f"Error exporting photos:\n{str(e)}"
+                    )
+        export_btn.clicked.connect(export_to_folder)
+        layout.addWidget(export_btn)
+
+        # Show in explorer button (for first selected file)
+        first_photo = sorted(self.selected_photos)[0]
+        explorer_btn = QPushButton(f"📂 Show in Explorer")
+        explorer_btn.setToolTip("Open file explorer at first selected photo")
+        def show_in_explorer():
+            self._show_in_explorer(first_photo)
+            dialog.accept()
+        explorer_btn.clicked.connect(show_in_explorer)
+        layout.addWidget(explorer_btn)
+
+        # Close button
+        close_btn = QPushButton("Cancel")
+        close_btn.clicked.connect(dialog.reject)
+        layout.addWidget(close_btn)
+
+        dialog.exec()
 
     # ============ Phase 2: Search Functionality ============
 
