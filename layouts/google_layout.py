@@ -1715,6 +1715,10 @@ class GooglePhotosLayout(BaseLayout):
         self.virtual_scroll_enabled = True  # Enable virtual scrolling
         self.initial_render_count = 5  # Render first 5 date groups immediately
 
+        # QUICK WIN #4: Collapsible date groups
+        self.date_group_collapsed = {}  # Map date_str -> bool (collapsed state)
+        self.date_group_grids = {}  # Map date_str -> grid widget for toggle visibility
+
         # CRITICAL FIX: Create ONE shared signal object for ALL workers (like Current Layout)
         # Problem: Each worker was creating its own signal → signals got garbage collected
         # Solution: Share one signal object, connect it once
@@ -3175,6 +3179,8 @@ class GooglePhotosLayout(BaseLayout):
         """
         Create a date group widget (header + photo grid).
 
+        QUICK WIN #4: Now supports collapse/expand functionality.
+
         Args:
             date_str: Date string "YYYY-MM-DD"
             photos: List of (path, date_taken, width, height)
@@ -3192,7 +3198,11 @@ class GooglePhotosLayout(BaseLayout):
         layout.setContentsMargins(16, 12, 16, 16)
         layout.setSpacing(12)
 
-        # Header
+        # QUICK WIN #4: Initialize collapse state (default: expanded)
+        if date_str not in self.date_group_collapsed:
+            self.date_group_collapsed[date_str] = False  # False = expanded
+
+        # Header (with collapse/expand button)
         header = self._create_date_header(date_str, len(photos))
         layout.addWidget(header)
 
@@ -3200,15 +3210,47 @@ class GooglePhotosLayout(BaseLayout):
         grid = self._create_photo_grid(photos, thumb_size)
         layout.addWidget(grid)
 
+        # QUICK WIN #4: Store grid reference for collapse/expand
+        self.date_group_grids[date_str] = grid
+
+        # Apply initial collapse state
+        if self.date_group_collapsed.get(date_str, False):
+            grid.hide()
+
         return group
 
     def _create_date_header(self, date_str: str, count: int) -> QWidget:
         """
         Create date group header with date and photo count.
+
+        QUICK WIN #4: Now includes collapse/expand button.
         """
         header = QWidget()
         header_layout = QHBoxLayout(header)
         header_layout.setContentsMargins(0, 0, 0, 0)
+
+        # QUICK WIN #4: Collapse/Expand button (▼ = expanded, ► = collapsed)
+        collapse_btn = QPushButton()
+        is_collapsed = self.date_group_collapsed.get(date_str, False)
+        collapse_btn.setText("►" if is_collapsed else "▼")
+        collapse_btn.setFixedSize(24, 24)
+        collapse_btn.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                border: none;
+                font-size: 12pt;
+                color: #5f6368;
+                padding: 0;
+            }
+            QPushButton:hover {
+                color: #202124;
+                background: #f1f3f4;
+                border-radius: 4px;
+            }
+        """)
+        collapse_btn.setCursor(Qt.PointingHandCursor)
+        collapse_btn.clicked.connect(lambda: self._toggle_date_group(date_str, collapse_btn))
+        header_layout.addWidget(collapse_btn)
 
         # Format date nicely
         try:
@@ -3217,9 +3259,16 @@ class GooglePhotosLayout(BaseLayout):
         except:
             formatted_date = date_str
 
-        # Date label
+        # Date label (clickable for collapse/expand)
         date_label = QLabel(f"📅 {formatted_date}")
-        date_label.setStyleSheet("font-size: 14pt; font-weight: bold; color: #202124;")
+        date_label.setStyleSheet("""
+            font-size: 14pt;
+            font-weight: bold;
+            color: #202124;
+            padding: 4px;
+        """)
+        date_label.setCursor(Qt.PointingHandCursor)
+        date_label.mousePressEvent = lambda e: self._toggle_date_group(date_str, collapse_btn)
         header_layout.addWidget(date_label)
 
         # Photo count
@@ -3230,6 +3279,41 @@ class GooglePhotosLayout(BaseLayout):
         header_layout.addStretch()
 
         return header
+
+    def _toggle_date_group(self, date_str: str, collapse_btn: QPushButton):
+        """
+        QUICK WIN #4: Toggle collapse/expand state for a date group.
+
+        Args:
+            date_str: Date string "YYYY-MM-DD"
+            collapse_btn: The collapse/expand button widget
+        """
+        try:
+            # Get current state
+            is_collapsed = self.date_group_collapsed.get(date_str, False)
+            new_state = not is_collapsed
+
+            # Update state
+            self.date_group_collapsed[date_str] = new_state
+
+            # Get grid widget
+            grid = self.date_group_grids.get(date_str)
+            if not grid:
+                print(f"[GooglePhotosLayout] ⚠️ Grid not found for {date_str}")
+                return
+
+            # Toggle visibility
+            if new_state:  # Collapsing
+                grid.hide()
+                collapse_btn.setText("►")
+                print(f"[GooglePhotosLayout] ▲ Collapsed date group: {date_str}")
+            else:  # Expanding
+                grid.show()
+                collapse_btn.setText("▼")
+                print(f"[GooglePhotosLayout] ▼ Expanded date group: {date_str}")
+
+        except Exception as e:
+            print(f"[GooglePhotosLayout] ⚠️ Error toggling date group {date_str}: {e}")
 
     def _create_date_group_placeholder(self, metadata: dict) -> QWidget:
         """
