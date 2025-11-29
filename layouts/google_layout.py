@@ -800,6 +800,7 @@ class MediaLightbox(QDialog):
         from PySide6.QtWidgets import QSlider
         self.seek_slider = QSlider(Qt.Horizontal)
         self.seek_slider.setFocusPolicy(Qt.NoFocus)
+        self.seek_slider.setMouseTracking(True)  # PHASE B #3: Enable hover detection
         self.seek_slider.setStyleSheet("""
             QSlider::groove:horizontal {
                 background: rgba(255, 255, 255, 0.2);
@@ -820,6 +821,10 @@ class MediaLightbox(QDialog):
         """)
         self.seek_slider.sliderPressed.connect(self._on_seek_pressed)
         self.seek_slider.sliderReleased.connect(self._on_seek_released)
+
+        # PHASE B #3: Install event filter for hover preview
+        self.seek_slider.installEventFilter(self)
+
         layout.addWidget(self.seek_slider, 1)
 
         # Time label (total)
@@ -1681,14 +1686,25 @@ class MediaLightbox(QDialog):
                 self.close()
             event.accept()  # Prevent event propagation
 
-        # Arrow keys: Navigation
+        # Arrow keys: Navigation OR Video Skip (with Shift)
         elif key == Qt.Key_Left or key == Qt.Key_Up:
-            print("[MediaLightbox] Left/Up arrow - previous media")
-            self._previous_media()
+            # PHASE B #3: Shift+Left = Skip video backward -10s
+            if modifiers == Qt.ShiftModifier and self._is_video(self.media_path):
+                print("[MediaLightbox] Shift+Left arrow - skip video -10s")
+                self._skip_video_backward()
+            else:
+                print("[MediaLightbox] Left/Up arrow - previous media")
+                self._previous_media()
             event.accept()
+
         elif key == Qt.Key_Right or key == Qt.Key_Down:
-            print("[MediaLightbox] Right/Down arrow - next media")
-            self._next_media()
+            # PHASE B #3: Shift+Right = Skip video forward +10s
+            if modifiers == Qt.ShiftModifier and self._is_video(self.media_path):
+                print("[MediaLightbox] Shift+Right arrow - skip video +10s")
+                self._skip_video_forward()
+            else:
+                print("[MediaLightbox] Right/Down arrow - next media")
+                self._next_media()
             event.accept()
 
         # Space: Next (slideshow style) - CRITICAL: Must accept event to prevent button trigger
@@ -2178,6 +2194,12 @@ class MediaLightbox(QDialog):
 <tr><td><b>F</b></td><td>Toggle favorite</td></tr>
 <tr><td><b>D</b></td><td>Delete photo</td></tr>
 <tr><td><b>1-5</b></td><td>Rate photo (1-5 stars)</td></tr>
+
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Video Controls</td></tr>
+<tr><td><b>Space / K</b></td><td>Play / Pause video</td></tr>
+<tr><td><b>Shift + →</b></td><td>Skip forward +10 seconds</td></tr>
+<tr><td><b>Shift + ←</b></td><td>Skip backward -10 seconds</td></tr>
+<tr><td><b>Hover seek bar</b></td><td>Preview timestamp</td></tr>
 
 <tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>General</td></tr>
 <tr><td><b>F11</b></td><td>Toggle fullscreen</td></tr>
@@ -2693,6 +2715,61 @@ class MediaLightbox(QDialog):
         self.last_tap_pos = pos
 
         return False
+
+    def eventFilter(self, obj, event):
+        """
+        PHASE B #3: Event filter for video seek slider hover preview.
+
+        Shows timestamp tooltip when hovering over seek bar.
+        """
+        # Only handle seek slider events
+        if obj == self.seek_slider and hasattr(self, 'video_player'):
+            if event.type() == QEvent.MouseMove:
+                # Calculate timestamp at mouse position
+                mouse_x = event.pos().x()
+                slider_width = self.seek_slider.width()
+
+                if slider_width > 0:
+                    # Calculate position percentage
+                    position_pct = mouse_x / slider_width
+                    position_pct = max(0.0, min(1.0, position_pct))
+
+                    # Calculate timestamp
+                    duration = self.seek_slider.maximum()
+                    timestamp_ms = int(duration * position_pct)
+
+                    # Format as mm:ss
+                    minutes = timestamp_ms // 60000
+                    seconds = (timestamp_ms % 60000) // 1000
+                    timestamp_str = f"{minutes}:{seconds:02d}"
+
+                    # Show tooltip
+                    self.seek_slider.setToolTip(timestamp_str)
+
+                return False  # Allow event to propagate
+
+            elif event.type() == QEvent.Leave:
+                # Clear tooltip when leaving slider
+                self.seek_slider.setToolTip("")
+                return False
+
+        return super().eventFilter(obj, event)
+
+    def _skip_video_forward(self):
+        """PHASE B #3: Skip video forward by 10 seconds."""
+        if hasattr(self, 'video_player') and self._is_video(self.media_path):
+            current_pos = self.video_player.position()
+            new_pos = min(current_pos + 10000, self.seek_slider.maximum())  # +10s (10000ms)
+            self.video_player.setPosition(new_pos)
+            print(f"[MediaLightbox] Video skip +10s: {new_pos // 1000}s")
+
+    def _skip_video_backward(self):
+        """PHASE B #3: Skip video backward by 10 seconds."""
+        if hasattr(self, 'video_player') and self._is_video(self.media_path):
+            current_pos = self.video_player.position()
+            new_pos = max(current_pos - 10000, 0)  # -10s (10000ms)
+            self.video_player.setPosition(new_pos)
+            print(f"[MediaLightbox] Video skip -10s: {new_pos // 1000}s")
 
 
 class GooglePhotosLayout(BaseLayout):
