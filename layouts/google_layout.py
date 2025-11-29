@@ -445,6 +445,22 @@ class MediaLightbox(QDialog):
         self.loading_indicator.hide()
         self.loading_indicator.raise_()  # Ensure it's on top
 
+        # PHASE C #5: Motion photo indicator (top-right corner)
+        self.motion_indicator = QLabel(self)
+        self.motion_indicator.setText("🎬")  # Motion icon
+        self.motion_indicator.setFixedSize(48, 48)
+        self.motion_indicator.setAlignment(Qt.AlignCenter)
+        self.motion_indicator.setStyleSheet("""
+            QLabel {
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                font-size: 20pt;
+                border-radius: 24px;
+            }
+        """)
+        self.motion_indicator.setToolTip("Motion Photo - Long-press to play")
+        self.motion_indicator.hide()
+
         # Video display will be added to container on first video load
 
         # Set container as scroll area widget (never replace it!)
@@ -1002,6 +1018,49 @@ class MediaLightbox(QDialog):
         }
         return os.path.splitext(path)[1].lower() in raw_extensions
 
+    def _detect_motion_photo(self, photo_path: str) -> str:
+        """
+        PHASE C #5: Detect if photo has paired video (Motion Photo / Live Photo).
+
+        Returns path to paired video, or None if not found.
+
+        Common patterns:
+        - IMG_1234.JPG + IMG_1234.MP4
+        - IMG_1234.JPG + IMG_1234_MOTION.MP4
+        - IMG_1234.JPG + MVIMG_1234.MP4 (Google Motion)
+        """
+        if not self.motion_photo_enabled:
+            return None
+
+        if self._is_video(photo_path):
+            return None  # Only check for photos, not videos
+
+        # Get base name and directory
+        photo_dir = os.path.dirname(photo_path)
+        photo_name = os.path.basename(photo_path)
+        photo_base, photo_ext = os.path.splitext(photo_name)
+
+        # Patterns to check
+        video_patterns = [
+            f"{photo_base}.mp4",           # IMG_1234.MP4
+            f"{photo_base}.MP4",
+            f"{photo_base}_MOTION.mp4",    # IMG_1234_MOTION.MP4
+            f"{photo_base}_MOTION.MP4",
+            f"MVIMG_{photo_base}.mp4",     # MVIMG_IMG_1234.mp4 (Google)
+            f"MVIMG_{photo_base}.MP4",
+            f"{photo_base}.mov",           # IMG_1234.MOV (iPhone Live Photo)
+            f"{photo_base}.MOV",
+        ]
+
+        # Check each pattern
+        for pattern in video_patterns:
+            video_path = os.path.join(photo_dir, pattern)
+            if os.path.exists(video_path):
+                print(f"[MediaLightbox] ✓ Motion photo detected: {photo_name} + {pattern}")
+                return video_path
+
+        return None
+
     def _load_media_safe(self):
         """Safe wrapper for _load_media that sets the loaded flag."""
         if not self._media_loaded:
@@ -1242,6 +1301,16 @@ class MediaLightbox(QDialog):
             self._update_contextual_toolbars()  # B #4: Show/hide contextual buttons
             self._restore_zoom_state()  # B #5: Restore saved zoom if enabled
 
+            # PHASE C #5: Detect motion photo
+            self.motion_video_path = self._detect_motion_photo(self.media_path)
+            self.is_motion_photo = (self.motion_video_path is not None)
+
+            # Update motion photo indicator
+            if self.is_motion_photo:
+                self._show_motion_indicator()
+            else:
+                self._hide_motion_indicator()
+
         except Exception as e:
             print(f"[MediaLightbox] Error loading photo: {e}")
             self.image_label.setText(f"❌ Error loading image\n\n{str(e)}")
@@ -1420,6 +1489,10 @@ class MediaLightbox(QDialog):
             # PHASE C #1: Add exposure slider for RAW files
             if self._is_raw(self.media_path) and self.raw_support_enabled:
                 self._add_exposure_slider()
+
+            # PHASE C #5: Add motion photo info
+            if self.is_motion_photo:
+                self._add_metadata_field("🎬 Motion Photo", "Video paired (long-press to play)")
 
         except Exception as e:
             print(f"[MediaLightbox] Error loading metadata: {e}")
@@ -1993,6 +2066,12 @@ class MediaLightbox(QDialog):
             self._show_share_dialog()
             event.accept()
 
+        # PHASE C #4: M key - Toggle compare mode (for burst photos/edits)
+        elif key == Qt.Key_M:
+            print("[MediaLightbox] M pressed - toggle compare mode")
+            self._toggle_compare_mode()
+            event.accept()
+
         else:
             print(f"[MediaLightbox] Unhandled key: {key}")
             super().keyPressEvent(event)
@@ -2410,6 +2489,7 @@ class MediaLightbox(QDialog):
 <tr><td><b>R</b></td><td>Rotate image clockwise (90°)</td></tr>
 <tr><td><b>E</b></td><td>Auto-enhance (brightness + contrast)</td></tr>
 <tr><td><b>C</b></td><td>Toggle crop mode</td></tr>
+<tr><td><b>M</b></td><td>Compare mode (side-by-side)</td></tr>
 <tr><td><b>Ctrl+Shift+S</b></td><td>Share / Export dialog</td></tr>
 
 <tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Video Controls</td></tr>
@@ -3202,6 +3282,31 @@ class MediaLightbox(QDialog):
         else:
             print("[MediaLightbox] Compare mode DISABLED")
             self.compare_media_path = None
+
+    def _show_motion_indicator(self):
+        """
+        PHASE C #5: Show motion photo indicator in top-right corner.
+
+        Indicates that this photo has a paired video (motion/live photo).
+        """
+        if not hasattr(self, 'motion_indicator'):
+            return
+
+        # Position in top-right corner (with margin)
+        margin = 20
+        x = self.width() - self.motion_indicator.width() - margin
+        y = margin + 80  # Below toolbar
+
+        self.motion_indicator.move(x, y)
+        self.motion_indicator.show()
+        self.motion_indicator.raise_()
+
+        print(f"[MediaLightbox] Motion indicator shown at ({x}, {y})")
+
+    def _hide_motion_indicator(self):
+        """PHASE C #5: Hide motion photo indicator."""
+        if hasattr(self, 'motion_indicator'):
+            self.motion_indicator.hide()
 
 
 class GooglePhotosLayout(BaseLayout):
