@@ -1626,28 +1626,25 @@ class MediaLightbox(QDialog):
         # Reset retry counter on success
         self._position_retry_count = 0
 
-        # CRITICAL FIX: Use viewport() for proper positioning (not scroll_area itself!)
-        # Bug: Using scroll_area.mapTo() and scroll_area.width()/height() caused misalignment
-        # Fix: Position relative to viewport for correct overlay placement and clickability
+        # Position buttons relative to scroll_area (like Current Layout does with canvas)
+        # The scroll_area is the main media display widget
         try:
             from PySide6.QtCore import QPoint
-            viewport = self.scroll_area.viewport()
-            scroll_tl = viewport.mapTo(self, QPoint(0, 0))
-            scroll_w = viewport.width()
-            scroll_h = viewport.height()
+            scroll_tl = self.scroll_area.mapTo(self, QPoint(0, 0))
         except Exception as e:
-            print(f"[MediaLightbox] ⚠️ viewport positioning failed: {e}, using fallback")
+            print(f"[MediaLightbox] ⚠️ mapTo() failed: {e}, using fallback")
             from PySide6.QtCore import QPoint
             scroll_tl = QPoint(0, 0)
-            scroll_w = self.scroll_area.width()
-            scroll_h = self.scroll_area.height()
+
+        scroll_w = self.scroll_area.width()
+        scroll_h = self.scroll_area.height()
 
         # Button dimensions
         btn_w = self.prev_btn.width() or 48
         btn_h = self.prev_btn.height() or 48
-        margin = 12  # Distance from edges (reduced from 20 to match Current Layout)
+        margin = 12  # Distance from edges
 
-        # Calculate vertical center position (relative to dialog, not scroll area)
+        # Calculate vertical center position (relative to dialog)
         y = scroll_tl.y() + (scroll_h // 2) - (btn_h // 2)
 
         # Position left button (relative to dialog)
@@ -1664,7 +1661,7 @@ class MediaLightbox(QDialog):
         self.prev_btn.raise_()
         self.next_btn.raise_()
 
-        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}, scroll_pos=({scroll_tl.x()},{scroll_tl.y()})")
+        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
 
     def _show_nav_buttons(self):
         """Show navigation buttons with instant visibility (always visible for usability)."""
@@ -1716,6 +1713,14 @@ class MediaLightbox(QDialog):
     def mousePressEvent(self, event):
         """Handle mouse press for panning and double-tap detection."""
         from PySide6.QtCore import Qt
+
+        # CRITICAL FIX: Don't consume clicks on buttons or other interactive widgets!
+        # Check if click is on nav buttons or other clickable widgets
+        widget_at_pos = self.childAt(event.pos())
+        if widget_at_pos and isinstance(widget_at_pos, QPushButton):
+            # Let the button handle the click
+            super().mousePressEvent(event)
+            return
 
         # PHASE B #2: Check for double-tap first
         if event.button() == Qt.LeftButton:
