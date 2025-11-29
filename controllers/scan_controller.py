@@ -36,7 +36,6 @@ class ScanController:
         self.db_writer = None
         self.cancel_requested = False
         self.logger = logging.getLogger(__name__)
-        self._last_process_events_time = 0  # Throttle processEvents() to prevent UI freeze
 
     def start_scan(self, folder, incremental: bool):
         """Entry point called from MainWindow toolbar action."""
@@ -182,26 +181,25 @@ class ScanController:
             pass
 
     def _on_progress(self, pct: int, msg: str):
+        """
+        Handle progress updates from scan worker thread.
+
+        CRITICAL: Do NOT call QApplication.processEvents() here!
+        - This method is a Qt SLOT called from worker thread via signal
+        - Calling processEvents() causes re-entrancy and deadlocks
+        - Qt's event loop handles progress dialog updates naturally
+        - Worker thread isolation means main thread stays responsive
+        """
         if not self.main._scan_progress:
             return
         pct_i = max(0, min(100, int(pct or 0)))
         self.main._scan_progress.setValue(pct_i)
         if msg:
             # Enhanced progress display with file details
-            # Extract filename and size from message if available
             label = f"{msg}\nCommitted: {self.main._committed_total}"
             self.main._scan_progress.setLabelText(label)
 
-        # CRITICAL FIX: Throttle processEvents() to prevent UI freeze
-        # Bug: Calling processEvents() on every progress update (every 10 files) caused
-        # freeze at 30% because it processed expensive UI operations synchronously
-        # Fix: Only call processEvents() once per second maximum
-        import time
-        current_time = time.time()
-        if current_time - self._last_process_events_time >= 1.0:  # 1 second throttle
-            QApplication.processEvents()
-            self._last_process_events_time = current_time
-
+        # Check for cancellation (no processEvents needed!)
         if self.main._scan_progress.wasCanceled():
             self.cancel()
 
