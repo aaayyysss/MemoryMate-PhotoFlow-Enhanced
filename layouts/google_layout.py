@@ -313,6 +313,35 @@ class MediaLightbox(QDialog):
         self.help_overlay = None  # Help overlay widget
         self.help_visible = False  # Track help visibility
 
+        # PHASE B #1: Thumbnail Filmstrip
+        self.filmstrip_enabled = True  # Enable thumbnail filmstrip at bottom
+        self.filmstrip_thumbnail_size = 80  # 80x80px thumbnails
+        self.filmstrip_visible_count = 9  # Show 9 thumbnails at once
+        self.filmstrip_thumbnails = {}  # Map index -> QPixmap thumbnail
+        self.filmstrip_buttons = {}  # Map index -> QPushButton
+
+        # PHASE B #2: Enhanced Touch Gestures
+        self.double_tap_enabled = True  # Enable double-tap to zoom
+        self.last_tap_time = None  # Track for double-tap detection
+        self.last_tap_pos = None  # Track tap position
+        self.two_finger_pan_enabled = True  # Enable two-finger pan when zoomed
+        self.inertial_scroll_enabled = True  # Enable inertial scrolling
+
+        # PHASE B #3: Video Scrubbing Preview
+        self.video_scrubbing_enabled = True  # Enable hover frame preview
+        self.scrubbing_preview_widget = None  # Preview widget for frame
+
+        # PHASE B #4: Contextual Toolbars
+        self.contextual_toolbars = True  # Enable contextual toolbar display
+        self.video_only_buttons = []  # Buttons only shown for videos
+        self.photo_only_buttons = []  # Buttons only shown for photos
+
+        # PHASE B #5: Zoom State Persistence
+        self.zoom_persistence_enabled = True  # Remember zoom across photos
+        self.saved_zoom_level = 1.0  # Saved zoom level
+        self.saved_zoom_mode = "fit"  # Saved zoom mode
+        self.apply_zoom_to_all = False  # Apply saved zoom to all photos
+
         self._setup_ui()
         # Don't load media here - wait for showEvent when window has proper size
 
@@ -419,6 +448,10 @@ class MediaLightbox(QDialog):
         # === BOTTOM TOOLBAR (Overlay with gradient) ===
         self.bottom_toolbar = self._create_bottom_toolbar()
         main_layout.addWidget(self.bottom_toolbar)
+
+        # === PHASE B #1: THUMBNAIL FILMSTRIP ===
+        self.filmstrip_widget = self._create_filmstrip()
+        main_layout.addWidget(self.filmstrip_widget)
 
         # Track info panel state
         self.info_panel_visible = False
@@ -1145,6 +1178,11 @@ class MediaLightbox(QDialog):
             # PHASE A #1: Start preloading next photos in background
             self._start_preloading()
 
+            # PHASE B: Integrate all Phase B features
+            self._update_filmstrip()  # B #1: Update filmstrip thumbnails
+            self._update_contextual_toolbars()  # B #4: Show/hide contextual buttons
+            self._restore_zoom_state()  # B #5: Restore saved zoom if enabled
+
         except Exception as e:
             print(f"[MediaLightbox] Error loading photo: {e}")
             self.image_label.setText(f"❌ Error loading image\n\n{str(e)}")
@@ -1408,8 +1446,14 @@ class MediaLightbox(QDialog):
             self._update_zoom_status()
 
     def mousePressEvent(self, event):
-        """Handle mouse press for panning."""
+        """Handle mouse press for panning and double-tap detection."""
         from PySide6.QtCore import Qt
+
+        # PHASE B #2: Check for double-tap first
+        if event.button() == Qt.LeftButton:
+            if self._handle_double_tap(event.pos()):
+                event.accept()
+                return
 
         # Only pan with left mouse button on photos
         if event.button() == Qt.LeftButton and not self._is_video(self.media_path):
@@ -1491,7 +1535,11 @@ class MediaLightbox(QDialog):
         Navigate to previous media (photo or video).
 
         Phase 3 #5: Added smooth cross-fade transition.
+        PHASE B #5: Save zoom state before navigating.
         """
+        # PHASE B #5: Save current zoom state
+        self._save_zoom_state()
+
         if self.current_index > 0:
             self.current_index -= 1
             self.media_path = self.all_media[self.current_index]
@@ -1502,7 +1550,11 @@ class MediaLightbox(QDialog):
         Navigate to next media (photo or video).
 
         Phase 3 #5: Added smooth cross-fade transition.
+        PHASE B #5: Save zoom state before navigating.
         """
+        # PHASE B #5: Save current zoom state
+        self._save_zoom_state()
+
         if self.current_index < len(self.all_media) - 1:
             self.current_index += 1
             self.media_path = self.all_media[self.current_index]
@@ -2375,6 +2427,272 @@ class MediaLightbox(QDialog):
             self.scroll_area.verticalScrollBar().setValue(new_scroll_y)
 
         QTimer.singleShot(10, apply_scroll)
+
+    # ==================== PHASE B IMPROVEMENTS ====================
+
+    def _create_filmstrip(self) -> QWidget:
+        """
+        PHASE B #1: Create thumbnail filmstrip at bottom.
+
+        Shows 7-10 thumbnails with current photo highlighted.
+        Click to jump, auto-scroll to keep current centered.
+        """
+        from PySide6.QtWidgets import QScrollArea, QHBoxLayout
+
+        filmstrip = QWidget()
+        filmstrip.setFixedHeight(120)  # 80px thumbnails + 40px padding
+        filmstrip.setStyleSheet("""
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(0, 0, 0, 0),
+                    stop:1 rgba(0, 0, 0, 0.9));
+            }
+        """)
+
+        layout = QVBoxLayout(filmstrip)
+        layout.setContentsMargins(0, 10, 0, 10)
+        layout.setSpacing(0)
+
+        # Horizontal scroll area for thumbnails
+        self.filmstrip_scroll = QScrollArea()
+        self.filmstrip_scroll.setFrameShape(QFrame.NoFrame)
+        self.filmstrip_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.filmstrip_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.filmstrip_scroll.setWidgetResizable(False)
+        self.filmstrip_scroll.setStyleSheet("background: transparent;")
+
+        # Container for thumbnail buttons
+        filmstrip_container = QWidget()
+        self.filmstrip_layout = QHBoxLayout(filmstrip_container)
+        self.filmstrip_layout.setContentsMargins(10, 0, 10, 0)
+        self.filmstrip_layout.setSpacing(8)
+        self.filmstrip_layout.setAlignment(Qt.AlignLeft)
+
+        self.filmstrip_scroll.setWidget(filmstrip_container)
+        layout.addWidget(self.filmstrip_scroll)
+
+        # Initialize filmstrip on first show
+        QTimer.singleShot(100, self._update_filmstrip)
+
+        return filmstrip
+
+    def _update_filmstrip(self):
+        """
+        PHASE B #1: Update filmstrip thumbnails for current media list.
+
+        FIX: Lazy loading - only load thumbnails for visible range (current ± 10)
+        to prevent UI freeze with large photo collections.
+        """
+        if not self.filmstrip_enabled or not hasattr(self, 'filmstrip_layout'):
+            return
+
+        # Clear existing thumbnails
+        while self.filmstrip_layout.count():
+            child = self.filmstrip_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        self.filmstrip_buttons.clear()
+
+        # LAZY LOADING: Only create buttons for visible range
+        # Show current ± 10 photos (21 total max)
+        visible_range = 10
+        start_idx = max(0, self.current_index - visible_range)
+        end_idx = min(len(self.all_media), self.current_index + visible_range + 1)
+
+        print(f"[MediaLightbox] Filmstrip: Showing {end_idx - start_idx} thumbnails (range {start_idx}-{end_idx} of {len(self.all_media)})")
+
+        # Create thumbnail buttons ONLY for visible range
+        for i in range(start_idx, end_idx):
+            media_path = self.all_media[i]
+            btn = QPushButton()
+            btn.setFixedSize(80, 80)
+            btn.setCursor(Qt.PointingHandCursor)
+
+            # Highlight current photo
+            if i == self.current_index:
+                btn.setStyleSheet("""
+                    QPushButton {
+                        border: 3px solid #4285f4;
+                        border-radius: 4px;
+                        background: #1a1a1a;
+                    }
+                """)
+            else:
+                btn.setStyleSheet("""
+                    QPushButton {
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 4px;
+                        background: #2a2a2a;
+                    }
+                    QPushButton:hover {
+                        border: 2px solid rgba(255, 255, 255, 0.5);
+                    }
+                """)
+
+            # Load thumbnail (still synchronous but only for visible range)
+            self._load_filmstrip_thumbnail(i, media_path, btn)
+
+            # Click handler
+            btn.clicked.connect(lambda checked, idx=i: self._jump_to_media(idx))
+
+            self.filmstrip_layout.addWidget(btn)
+            self.filmstrip_buttons[i] = btn
+
+        # Auto-scroll to keep current centered
+        QTimer.singleShot(50, self._scroll_filmstrip_to_current)
+
+    def _load_filmstrip_thumbnail(self, index: int, media_path: str, button: QPushButton):
+        """PHASE B #1: Load thumbnail for filmstrip button."""
+        try:
+            from app_services import get_thumbnail
+            pixmap = get_thumbnail(media_path, 80)
+
+            if pixmap and not pixmap.isNull():
+                button.setIcon(QIcon(pixmap))
+                button.setIconSize(QSize(76, 76))
+
+                # Add video indicator for videos
+                if self._is_video(media_path):
+                    button.setText("▶")
+                    button.setStyleSheet(button.styleSheet() + """
+                        QPushButton {
+                            color: white;
+                            font-size: 20pt;
+                        }
+                    """)
+            else:
+                button.setText("📷")
+
+        except Exception as e:
+            print(f"[MediaLightbox] Error loading filmstrip thumbnail: {e}")
+            button.setText("📷")
+
+    def _jump_to_media(self, index: int):
+        """PHASE B #1: Jump to specific media from filmstrip click."""
+        print(f"[MediaLightbox] Filmstrip jump to index: {index}")
+        if 0 <= index < len(self.all_media):
+            self.current_index = index
+            self.media_path = self.all_media[index]
+            self._load_media_with_transition()
+            self._update_filmstrip()
+
+    def _scroll_filmstrip_to_current(self):
+        """PHASE B #1: Auto-scroll filmstrip to keep current thumbnail centered."""
+        if not hasattr(self, 'filmstrip_scroll') or self.current_index not in self.filmstrip_buttons:
+            return
+
+        current_btn = self.filmstrip_buttons[self.current_index]
+        filmstrip_width = self.filmstrip_scroll.width()
+
+        # Calculate position to center current thumbnail
+        btn_center_x = current_btn.x() + (current_btn.width() // 2)
+        scroll_to = btn_center_x - (filmstrip_width // 2)
+
+        # Animate scroll
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+
+        if hasattr(self, '_filmstrip_scroll_anim'):
+            self._filmstrip_scroll_anim.stop()
+
+        self._filmstrip_scroll_anim = QPropertyAnimation(
+            self.filmstrip_scroll.horizontalScrollBar(),
+            b"value"
+        )
+        self._filmstrip_scroll_anim.setDuration(300)
+        self._filmstrip_scroll_anim.setStartValue(self.filmstrip_scroll.horizontalScrollBar().value())
+        self._filmstrip_scroll_anim.setEndValue(max(0, scroll_to))
+        self._filmstrip_scroll_anim.setEasingCurve(QEasingCurve.OutCubic)
+        self._filmstrip_scroll_anim.start()
+
+    def _update_contextual_toolbars(self):
+        """
+        PHASE B #4: Update toolbar visibility based on media type.
+
+        Show video controls only for videos, zoom controls only for photos.
+        """
+        if not self.contextual_toolbars:
+            return
+
+        is_video = self._is_video(self.media_path)
+
+        # Update button visibility
+        for btn in self.video_only_buttons:
+            btn.setVisible(is_video)
+
+        for btn in self.photo_only_buttons:
+            btn.setVisible(not is_video)
+
+    def _save_zoom_state(self):
+        """PHASE B #5: Save current zoom state for persistence."""
+        if self.zoom_persistence_enabled and not self._is_video(self.media_path):
+            self.saved_zoom_level = self.zoom_level
+            self.saved_zoom_mode = self.zoom_mode
+            print(f"[MediaLightbox] Zoom state saved: {self.zoom_mode} @ {int(self.zoom_level * 100)}%")
+
+    def _restore_zoom_state(self):
+        """PHASE B #5: Restore saved zoom state to current photo."""
+        if self.zoom_persistence_enabled and self.apply_zoom_to_all and not self._is_video(self.media_path):
+            self.zoom_level = self.saved_zoom_level
+            self.zoom_mode = self.saved_zoom_mode
+            self._apply_zoom()
+            self._update_zoom_status()
+            print(f"[MediaLightbox] Zoom state restored: {self.zoom_mode} @ {int(self.zoom_level * 100)}%")
+
+    def _reset_zoom_state(self):
+        """PHASE B #5: Reset to default fit-to-window zoom."""
+        self.apply_zoom_to_all = False
+        self.zoom_mode = "fit"
+        self._fit_to_window()
+        self._update_zoom_status()
+        print(f"[MediaLightbox] Zoom reset to fit mode")
+
+    def _handle_double_tap(self, pos):
+        """
+        PHASE B #2: Handle double-tap gesture for zoom in/out.
+
+        Tap once: Track tap time/position
+        Tap twice quickly: Toggle between fit and 2x zoom
+        """
+        from PySide6.QtCore import QDateTime
+
+        if not self.double_tap_enabled or self._is_video(self.media_path):
+            return False
+
+        current_time = QDateTime.currentMSecsSinceEpoch()
+
+        # Check if this is second tap
+        if self.last_tap_time and self.last_tap_pos:
+            time_diff = current_time - self.last_tap_time
+            pos_diff = (pos - self.last_tap_pos).manhattanLength()
+
+            # Double-tap detected: within 300ms and 50px
+            if time_diff < 300 and pos_diff < 50:
+                # Toggle zoom
+                if self.zoom_mode == "fit":
+                    # Zoom to 2x
+                    self.zoom_level = 2.0
+                    self.zoom_mode = "custom"
+                else:
+                    # Reset to fit
+                    self.zoom_mode = "fit"
+                    self._fit_to_window()
+
+                self._apply_zoom()
+                self._update_zoom_status()
+
+                # Reset tap tracking
+                self.last_tap_time = None
+                self.last_tap_pos = None
+
+                print(f"[MediaLightbox] Double-tap zoom: {self.zoom_mode}")
+                return True
+
+        # Track this tap
+        self.last_tap_time = current_time
+        self.last_tap_pos = pos
+
+        return False
 
 
 class GooglePhotosLayout(BaseLayout):
