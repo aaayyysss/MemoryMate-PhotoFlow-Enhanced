@@ -1549,52 +1549,6 @@ class MediaLightbox(QDialog):
 
         return False
 
-    def mousePressEvent(self, event):
-        """PHASE 2 #10: Track mouse press for swipe detection."""
-        from PySide6.QtCore import QDateTime
-
-        if event.button() == Qt.LeftButton and not self._is_content_zoomed():
-            # Start tracking for potential swipe
-            self.swipe_start_pos = event.pos()
-            self.swipe_start_time = QDateTime.currentMSecsSinceEpoch()
-            self.is_swiping = False
-
-        super().mousePressEvent(event)
-
-    def mouseMoveEvent(self, event):
-        """PHASE 2 #10: Track mouse move for swipe detection."""
-        if self.swipe_start_pos and not self._is_content_zoomed():
-            # Check if moved enough to be a swipe
-            delta = event.pos() - self.swipe_start_pos
-            if abs(delta.x()) > 50:  # 50px threshold
-                self.is_swiping = True
-
-        super().mouseMoveEvent(event)
-
-    def mouseReleaseEvent(self, event):
-        """PHASE 2 #10: Detect swipe on mouse release."""
-        from PySide6.QtCore import QDateTime
-
-        if self.is_swiping and self.swipe_start_pos and self.swipe_start_time:
-            delta = event.pos() - self.swipe_start_pos
-            time_elapsed = QDateTime.currentMSecsSinceEpoch() - self.swipe_start_time
-
-            # Swipe detected if: moved >100px horizontally in <500ms
-            if abs(delta.x()) > 100 and time_elapsed < 500:
-                if delta.x() < 0:  # Swipe left
-                    print("[MediaLightbox] Mouse swipe left - next photo")
-                    self._next_media()
-                else:  # Swipe right
-                    print("[MediaLightbox] Mouse swipe right - previous photo")
-                    self._previous_media()
-
-        # Reset swipe state
-        self.swipe_start_pos = None
-        self.swipe_start_time = None
-        self.is_swiping = False
-
-        super().mouseReleaseEvent(event)
-
     def _load_media_with_transition(self):
         """
         PHASE 3 #5: Load media with smooth fade transition.
