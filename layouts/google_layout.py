@@ -2477,7 +2477,12 @@ class MediaLightbox(QDialog):
         return filmstrip
 
     def _update_filmstrip(self):
-        """PHASE B #1: Update filmstrip thumbnails for current media list."""
+        """
+        PHASE B #1: Update filmstrip thumbnails for current media list.
+
+        FIX: Lazy loading - only load thumbnails for visible range (current ± 10)
+        to prevent UI freeze with large photo collections.
+        """
         if not self.filmstrip_enabled or not hasattr(self, 'filmstrip_layout'):
             return
 
@@ -2489,8 +2494,17 @@ class MediaLightbox(QDialog):
 
         self.filmstrip_buttons.clear()
 
-        # Create thumbnail buttons for all media
-        for i, media_path in enumerate(self.all_media):
+        # LAZY LOADING: Only create buttons for visible range
+        # Show current ± 10 photos (21 total max)
+        visible_range = 10
+        start_idx = max(0, self.current_index - visible_range)
+        end_idx = min(len(self.all_media), self.current_index + visible_range + 1)
+
+        print(f"[MediaLightbox] Filmstrip: Showing {end_idx - start_idx} thumbnails (range {start_idx}-{end_idx} of {len(self.all_media)})")
+
+        # Create thumbnail buttons ONLY for visible range
+        for i in range(start_idx, end_idx):
+            media_path = self.all_media[i]
             btn = QPushButton()
             btn.setFixedSize(80, 80)
             btn.setCursor(Qt.PointingHandCursor)
@@ -2516,7 +2530,7 @@ class MediaLightbox(QDialog):
                     }
                 """)
 
-            # Load thumbnail
+            # Load thumbnail (still synchronous but only for visible range)
             self._load_filmstrip_thumbnail(i, media_path, btn)
 
             # Click handler
