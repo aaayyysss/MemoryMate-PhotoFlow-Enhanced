@@ -342,6 +342,27 @@ class MediaLightbox(QDialog):
         self.saved_zoom_mode = "fit"  # Saved zoom mode
         self.apply_zoom_to_all = False  # Apply saved zoom to all photos
 
+        # PHASE C #1: RAW/HDR Support
+        self.raw_support_enabled = True  # Enable RAW file rendering
+        self.exposure_adjustment = 0.0  # Exposure adjustment (-2.0 to +2.0)
+
+        # PHASE C #2: Share/Export
+        self.share_dialog_enabled = True  # Enable share/export dialog
+
+        # PHASE C #3: Quick Edit Tools
+        self.rotation_angle = 0  # Current rotation (0, 90, 180, 270)
+        self.crop_mode_active = False  # Crop mode state
+        self.crop_rect = None  # Crop rectangle (x, y, w, h)
+
+        # PHASE C #4: Compare Mode
+        self.compare_mode_active = False  # Compare mode state
+        self.compare_media_path = None  # Second media for comparison
+
+        # PHASE C #5: Motion Photos
+        self.motion_photo_enabled = True  # Enable motion photo detection
+        self.is_motion_photo = False  # Current media is motion photo
+        self.motion_video_path = None  # Path to paired video
+
         self._setup_ui()
         # Don't load media here - wait for showEvent when window has proper size
 
@@ -554,6 +575,15 @@ class MediaLightbox(QDialog):
         self.favorite_btn.clicked.connect(self._toggle_favorite)
         self.favorite_btn.setToolTip("Favorite (F)")
         layout.addWidget(self.favorite_btn)
+
+        # PHASE C #2: Share/Export button
+        self.share_btn = QPushButton("📤")
+        self.share_btn.setFocusPolicy(Qt.NoFocus)
+        self.share_btn.setFixedSize(56, 56)
+        self.share_btn.setStyleSheet(btn_style)
+        self.share_btn.clicked.connect(self._show_share_dialog)
+        self.share_btn.setToolTip("Share/Export (Ctrl+Shift+S)")
+        layout.addWidget(self.share_btn)
 
         layout.addStretch()
 
@@ -948,6 +978,30 @@ class MediaLightbox(QDialog):
         video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.3gp'}
         return os.path.splitext(path)[1].lower() in video_extensions
 
+    def _is_raw(self, path: str) -> bool:
+        """PHASE C #1: Check if file is a RAW photo based on extension."""
+        raw_extensions = {
+            '.cr2', '.cr3',  # Canon
+            '.nef', '.nrw',  # Nikon
+            '.arw', '.srf', '.sr2',  # Sony
+            '.dng',  # Adobe/Universal
+            '.raf',  # Fujifilm
+            '.orf',  # Olympus
+            '.rw2',  # Panasonic
+            '.pef',  # Pentax
+            '.3fr',  # Hasselblad
+            '.ari',  # ARRI
+            '.bay',  # Casio
+            '.crw',  # Canon (old)
+            '.erf',  # Epson
+            '.kdc',  # Kodak
+            '.mef',  # Mamiya
+            '.mos',  # Leaf
+            '.mrw',  # Minolta
+            '.raw',  # Generic
+        }
+        return os.path.splitext(path)[1].lower() in raw_extensions
+
     def _load_media_safe(self):
         """Safe wrapper for _load_media that sets the loaded flag."""
         if not self._media_loaded:
@@ -1198,8 +1252,9 @@ class MediaLightbox(QDialog):
         Direct photo loading (fallback when progressive loading disabled).
 
         Uses the original PIL-based loading method.
+        PHASE C #1: Added RAW file support using rawpy.
         """
-        from PIL import Image, ImageOps
+        from PIL import Image, ImageOps, ImageEnhance
         import io
         from PySide6.QtCore import Qt
         from PySide6.QtGui import QPixmap
@@ -1208,9 +1263,52 @@ class MediaLightbox(QDialog):
         pixmap = None
 
         try:
-            # Load with PIL and auto-rotate based on EXIF orientation
-            pil_image = Image.open(self.media_path)
-            pil_image = ImageOps.exif_transpose(pil_image)
+            # PHASE C #1: Check if file is RAW and try to load with rawpy
+            if self._is_raw(self.media_path) and self.raw_support_enabled:
+                try:
+                    import rawpy
+                    import numpy as np
+
+                    print(f"[MediaLightbox] Loading RAW file with rawpy: {os.path.basename(self.media_path)}")
+
+                    # Load RAW file
+                    with rawpy.imread(self.media_path) as raw:
+                        # Process RAW to RGB with postprocessing
+                        rgb_array = raw.postprocess(
+                            use_camera_wb=True,  # Use camera white balance
+                            half_size=False,     # Full resolution
+                            no_auto_bright=False,  # Auto brightness
+                            output_bps=8         # 8-bit output
+                        )
+
+                        # Convert to PIL Image
+                        pil_image = Image.fromarray(rgb_array)
+
+                        # Apply exposure adjustment if set
+                        if self.exposure_adjustment != 0.0:
+                            # Exposure: -2.0 to +2.0 -> brightness 0.25 to 4.0
+                            exposure_factor = 2 ** self.exposure_adjustment
+                            enhancer = ImageEnhance.Brightness(pil_image)
+                            pil_image = enhancer.enhance(exposure_factor)
+
+                        print(f"[MediaLightbox] ✓ RAW file loaded successfully (exposure: {self.exposure_adjustment:+.1f})")
+
+                except ImportError:
+                    print("[MediaLightbox] ⚠️ rawpy not available, falling back to PIL")
+                    # Fall through to regular PIL loading
+                    pil_image = Image.open(self.media_path)
+                    pil_image = ImageOps.exif_transpose(pil_image)
+                except Exception as e:
+                    print(f"[MediaLightbox] ⚠️ RAW loading failed: {e}, falling back to PIL")
+                    # Fall through to regular PIL loading
+                    pil_image = Image.open(self.media_path)
+                    pil_image = ImageOps.exif_transpose(pil_image)
+
+            # Regular image loading
+            if pil_image is None:
+                # Load with PIL and auto-rotate based on EXIF orientation
+                pil_image = Image.open(self.media_path)
+                pil_image = ImageOps.exif_transpose(pil_image)
 
             if pil_image.mode != 'RGB':
                 pil_image = pil_image.convert('RGB')
@@ -1319,6 +1417,10 @@ class MediaLightbox(QDialog):
             # Add file path (at bottom)
             self._add_metadata_field("📁 Path", self.media_path, word_wrap=True)
 
+            # PHASE C #1: Add exposure slider for RAW files
+            if self._is_raw(self.media_path) and self.raw_support_enabled:
+                self._add_exposure_slider()
+
         except Exception as e:
             print(f"[MediaLightbox] Error loading metadata: {e}")
             self._add_metadata_field("⚠️ Error", str(e))
@@ -1344,6 +1446,91 @@ class MediaLightbox(QDialog):
         if word_wrap:
             value_widget.setWordWrap(True)
         self.metadata_layout.addWidget(value_widget)
+
+    def _add_exposure_slider(self):
+        """
+        PHASE C #1: Add exposure adjustment slider for RAW files.
+
+        Range: -2.0 to +2.0 EV (stops)
+        """
+        from PySide6.QtWidgets import QSlider, QHBoxLayout
+        from PySide6.QtCore import Qt
+
+        # Section label
+        label_widget = QLabel("☀️ Exposure Adjustment")
+        label_widget.setStyleSheet("""
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 9pt;
+            font-weight: bold;
+        """)
+        self.metadata_layout.addWidget(label_widget)
+
+        # Slider container
+        slider_container = QWidget()
+        slider_container.setStyleSheet("background: transparent;")
+        slider_layout = QHBoxLayout(slider_container)
+        slider_layout.setContentsMargins(8, 4, 8, 4)
+        slider_layout.setSpacing(8)
+
+        # Exposure slider (-2.0 to +2.0, in steps of 0.1)
+        self.exposure_slider = QSlider(Qt.Horizontal)
+        self.exposure_slider.setMinimum(-20)  # -2.0 * 10
+        self.exposure_slider.setMaximum(20)   # +2.0 * 10
+        self.exposure_slider.setValue(int(self.exposure_adjustment * 10))
+        self.exposure_slider.setTickPosition(QSlider.TicksBelow)
+        self.exposure_slider.setTickInterval(10)  # Tick every 1.0 EV
+        self.exposure_slider.setStyleSheet("""
+            QSlider::groove:horizontal {
+                background: rgba(255, 255, 255, 0.2);
+                height: 6px;
+                border-radius: 3px;
+            }
+            QSlider::handle:horizontal {
+                background: white;
+                width: 16px;
+                height: 16px;
+                margin: -5px 0;
+                border-radius: 8px;
+            }
+            QSlider::handle:horizontal:hover {
+                background: #4CAF50;
+            }
+        """)
+        self.exposure_slider.valueChanged.connect(self._on_exposure_changed)
+        slider_layout.addWidget(self.exposure_slider)
+
+        # Value label
+        self.exposure_value_label = QLabel(f"{self.exposure_adjustment:+.1f} EV")
+        self.exposure_value_label.setStyleSheet("color: white; font-size: 9pt; min-width: 50px;")
+        slider_layout.addWidget(self.exposure_value_label)
+
+        self.metadata_layout.addWidget(slider_container)
+
+        print(f"[MediaLightbox] Exposure slider added (current: {self.exposure_adjustment:+.1f} EV)")
+
+    def _on_exposure_changed(self, value: int):
+        """
+        PHASE C #1: Handle exposure slider change.
+
+        Reloads the RAW file with new exposure.
+        """
+        # Convert slider value to EV (-2.0 to +2.0)
+        new_exposure = value / 10.0
+
+        if new_exposure != self.exposure_adjustment:
+            self.exposure_adjustment = new_exposure
+
+            # Update label
+            if hasattr(self, 'exposure_value_label'):
+                self.exposure_value_label.setText(f"{self.exposure_adjustment:+.1f} EV")
+
+            # Reload photo with new exposure
+            print(f"[MediaLightbox] Exposure changed to {self.exposure_adjustment:+.1f} EV, reloading...")
+            self._load_photo_direct()
+
+            # Reapply zoom after reload
+            if hasattr(self, 'zoom_level') and hasattr(self, 'original_pixmap'):
+                self._apply_zoom()
 
     def _position_nav_buttons(self):
         """Position navigation buttons on left/right sides, vertically centered (like Current Layout)."""
@@ -1782,6 +1969,30 @@ class MediaLightbox(QDialog):
             self._toggle_fullscreen()
             event.accept()
 
+        # PHASE C #3: R key - Rotate image clockwise
+        elif key == Qt.Key_R:
+            print("[MediaLightbox] R pressed - rotate image")
+            self._rotate_image()
+            event.accept()
+
+        # PHASE C #3: E key - Auto-enhance
+        elif key == Qt.Key_E:
+            print("[MediaLightbox] E pressed - auto-enhance")
+            self._auto_enhance()
+            event.accept()
+
+        # PHASE C #3: C key - Toggle crop mode
+        elif key == Qt.Key_C:
+            print("[MediaLightbox] C pressed - toggle crop mode")
+            self._toggle_crop_mode()
+            event.accept()
+
+        # PHASE C #2: Ctrl+Shift+S - Share/Export dialog
+        elif key == Qt.Key_S and modifiers == (Qt.ControlModifier | Qt.ShiftModifier):
+            print("[MediaLightbox] Ctrl+Shift+S pressed - share dialog")
+            self._show_share_dialog()
+            event.accept()
+
         else:
             print(f"[MediaLightbox] Unhandled key: {key}")
             super().keyPressEvent(event)
@@ -2194,6 +2405,12 @@ class MediaLightbox(QDialog):
 <tr><td><b>F</b></td><td>Toggle favorite</td></tr>
 <tr><td><b>D</b></td><td>Delete photo</td></tr>
 <tr><td><b>1-5</b></td><td>Rate photo (1-5 stars)</td></tr>
+
+<tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Quick Edit</td></tr>
+<tr><td><b>R</b></td><td>Rotate image clockwise (90°)</td></tr>
+<tr><td><b>E</b></td><td>Auto-enhance (brightness + contrast)</td></tr>
+<tr><td><b>C</b></td><td>Toggle crop mode</td></tr>
+<tr><td><b>Ctrl+Shift+S</b></td><td>Share / Export dialog</td></tr>
 
 <tr><td colspan='2' style='font-size: 14pt; font-weight: bold; padding-top: 12px;'>Video Controls</td></tr>
 <tr><td><b>Space / K</b></td><td>Play / Pause video</td></tr>
@@ -2770,6 +2987,221 @@ class MediaLightbox(QDialog):
             new_pos = max(current_pos - 10000, 0)  # -10s (10000ms)
             self.video_player.setPosition(new_pos)
             print(f"[MediaLightbox] Video skip -10s: {new_pos // 1000}s")
+
+    # ==================== PHASE C IMPROVEMENTS ====================
+
+    def _rotate_image(self):
+        """
+        PHASE C #3: Rotate image clockwise by 90 degrees.
+
+        R key cycles: 0° → 90° → 180° → 270° → 0°
+        """
+        if self._is_video(self.media_path):
+            return  # Don't rotate videos
+
+        # Cycle rotation
+        self.rotation_angle = (self.rotation_angle + 90) % 360
+
+        # Apply rotation to current pixmap
+        if self.original_pixmap and not self.original_pixmap.isNull():
+            from PySide6.QtGui import QTransform
+
+            # Create rotation transform
+            transform = QTransform().rotate(self.rotation_angle)
+            rotated_pixmap = self.original_pixmap.transformed(transform, Qt.SmoothTransformation)
+
+            # Update original pixmap with rotated version
+            self.original_pixmap = rotated_pixmap
+
+            # Reapply zoom
+            self._apply_zoom()
+
+            print(f"[MediaLightbox] Image rotated: {self.rotation_angle}°")
+
+    def _toggle_crop_mode(self):
+        """
+        PHASE C #3: Toggle crop mode on/off.
+
+        C key enables crop mode where user can select crop rectangle.
+        """
+        if self._is_video(self.media_path):
+            return  # Don't crop videos
+
+        self.crop_mode_active = not self.crop_mode_active
+
+        if self.crop_mode_active:
+            print("[MediaLightbox] Crop mode ENABLED - Select area to crop (not yet implemented)")
+            # TODO: Show crop overlay and selection rectangle
+        else:
+            print("[MediaLightbox] Crop mode DISABLED")
+            self.crop_rect = None
+
+    def _auto_enhance(self):
+        """
+        PHASE C #3: Apply automatic enhancement to photo.
+
+        Basic brightness/contrast adjustment.
+        """
+        if self._is_video(self.media_path) or not self.original_pixmap:
+            return
+
+        try:
+            from PySide6.QtGui import QImage
+            from PIL import Image, ImageEnhance
+            import io
+
+            # Convert QPixmap to PIL Image
+            qimage = self.original_pixmap.toImage()
+            buffer = qimage.bits().tobytes()
+            pil_image = Image.frombytes('RGBA', (qimage.width(), qimage.height()), buffer)
+
+            # Auto-enhance
+            enhancer = ImageEnhance.Contrast(pil_image)
+            pil_image = enhancer.enhance(1.2)  # +20% contrast
+
+            enhancer = ImageEnhance.Brightness(pil_image)
+            pil_image = enhancer.enhance(1.1)  # +10% brightness
+
+            # Convert back to QPixmap
+            buffer = io.BytesIO()
+            pil_image.save(buffer, format='PNG')
+            buffer.seek(0)
+
+            enhanced_pixmap = QPixmap()
+            enhanced_pixmap.loadFromData(buffer.read())
+
+            self.original_pixmap = enhanced_pixmap
+            self._apply_zoom()
+
+            print("[MediaLightbox] Auto-enhance applied: +20% contrast, +10% brightness")
+
+        except Exception as e:
+            print(f"[MediaLightbox] Auto-enhance error: {e}")
+
+    def _show_share_dialog(self):
+        """
+        PHASE C #2: Show share/export dialog.
+
+        Options: Small/Medium/Large/Original, Copy to clipboard
+        """
+        from PySide6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QButtonGroup, QRadioButton
+
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Share / Export")
+        dialog.setMinimumWidth(400)
+
+        layout = QVBoxLayout(dialog)
+
+        # Title
+        title = QLabel("📤 Share or Export Photo")
+        title.setStyleSheet("font-size: 14pt; font-weight: bold; padding: 10px;")
+        layout.addWidget(title)
+
+        # Size options
+        size_label = QLabel("Export Size:")
+        size_label.setStyleSheet("font-weight: bold; padding-top: 10px;")
+        layout.addWidget(size_label)
+
+        size_group = QButtonGroup(dialog)
+        sizes = [
+            ("Small (800px)", "small"),
+            ("Medium (1920px)", "medium"),
+            ("Large (3840px)", "large"),
+            ("Original Size", "original")
+        ]
+
+        for text, value in sizes:
+            radio = QRadioButton(text)
+            radio.setProperty("size_value", value)
+            size_group.addButton(radio)
+            layout.addWidget(radio)
+
+        size_group.buttons()[2].setChecked(True)  # Default: Large
+
+        # Action buttons
+        button_layout = QHBoxLayout()
+
+        copy_btn = QPushButton("📋 Copy to Clipboard")
+        copy_btn.clicked.connect(lambda: self._copy_to_clipboard())
+        button_layout.addWidget(copy_btn)
+
+        save_btn = QPushButton("💾 Save As...")
+        save_btn.clicked.connect(lambda: self._export_photo(size_group.checkedButton().property("size_value")))
+        button_layout.addWidget(save_btn)
+
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.clicked.connect(dialog.reject)
+        button_layout.addWidget(cancel_btn)
+
+        layout.addLayout(button_layout)
+
+        dialog.exec()
+
+    def _copy_to_clipboard(self):
+        """PHASE C #2: Copy current photo to clipboard."""
+        if self.original_pixmap and not self.original_pixmap.isNull():
+            from PySide6.QtWidgets import QApplication
+            clipboard = QApplication.clipboard()
+            clipboard.setPixmap(self.original_pixmap)
+            print("[MediaLightbox] Photo copied to clipboard")
+
+    def _export_photo(self, size_option: str):
+        """PHASE C #2: Export photo with size options."""
+        from PySide6.QtWidgets import QFileDialog
+
+        if not self.original_pixmap or self.original_pixmap.isNull():
+            return
+
+        # Get save location
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Save Photo",
+            f"photo_{size_option}.jpg",
+            "JPEG Images (*.jpg);;PNG Images (*.png)"
+        )
+
+        if not file_path:
+            return
+
+        # Resize based on option
+        pixmap = self.original_pixmap
+
+        if size_option == "small":
+            pixmap = pixmap.scaledToWidth(800, Qt.SmoothTransformation)
+        elif size_option == "medium":
+            pixmap = pixmap.scaledToWidth(1920, Qt.SmoothTransformation)
+        elif size_option == "large":
+            pixmap = pixmap.scaledToWidth(3840, Qt.SmoothTransformation)
+
+        # Save
+        pixmap.save(file_path, quality=95)
+        print(f"[MediaLightbox] Photo exported: {file_path} ({size_option})")
+
+    def _toggle_compare_mode(self):
+        """
+        PHASE C #4: Toggle compare mode (split-screen).
+
+        Shows current photo side-by-side with previous/next for comparison.
+        """
+        self.compare_mode_active = not self.compare_mode_active
+
+        if self.compare_mode_active:
+            # Select comparison photo (previous or next)
+            if self.current_index > 0:
+                self.compare_media_path = self.all_media[self.current_index - 1]
+            elif self.current_index < len(self.all_media) - 1:
+                self.compare_media_path = self.all_media[self.current_index + 1]
+            else:
+                print("[MediaLightbox] No other photos to compare")
+                self.compare_mode_active = False
+                return
+
+            print(f"[MediaLightbox] Compare mode ENABLED: {os.path.basename(self.media_path)} vs {os.path.basename(self.compare_media_path)}")
+            # TODO: Show split-screen view
+
+        else:
+            print("[MediaLightbox] Compare mode DISABLED")
+            self.compare_media_path = None
 
 
 class GooglePhotosLayout(BaseLayout):
