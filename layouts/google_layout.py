@@ -1626,18 +1626,21 @@ class MediaLightbox(QDialog):
         # Reset retry counter on success
         self._position_retry_count = 0
 
-        # CRITICAL FIX: Use mapTo() to get scroll area position relative to dialog window
-        # (like Current Layout's LightboxDialog does with canvas.mapTo())
+        # CRITICAL FIX: Use viewport() for proper positioning (not scroll_area itself!)
+        # Bug: Using scroll_area.mapTo() and scroll_area.width()/height() caused misalignment
+        # Fix: Position relative to viewport for correct overlay placement and clickability
         try:
             from PySide6.QtCore import QPoint
-            scroll_tl = self.scroll_area.mapTo(self, QPoint(0, 0))
+            viewport = self.scroll_area.viewport()
+            scroll_tl = viewport.mapTo(self, QPoint(0, 0))
+            scroll_w = viewport.width()
+            scroll_h = viewport.height()
         except Exception as e:
-            print(f"[MediaLightbox] ⚠️ mapTo() failed: {e}, using fallback")
+            print(f"[MediaLightbox] ⚠️ viewport positioning failed: {e}, using fallback")
             from PySide6.QtCore import QPoint
             scroll_tl = QPoint(0, 0)
-
-        scroll_w = self.scroll_area.width()
-        scroll_h = self.scroll_area.height()
+            scroll_w = self.scroll_area.width()
+            scroll_h = self.scroll_area.height()
 
         # Button dimensions
         btn_w = self.prev_btn.width() or 48
