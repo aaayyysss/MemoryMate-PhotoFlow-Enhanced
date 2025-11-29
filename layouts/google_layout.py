@@ -692,24 +692,51 @@ class MediaLightbox(QDialog):
         return toolbar
 
     def _create_overlay_nav_buttons(self):
-        """Create Google Photos-style overlay navigation buttons on left/right sides."""
-        from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve
-        from PySide6.QtGui import QCursor
+        """Create Google Photos-style overlay navigation buttons with SVG icons."""
+        from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve, QSize
+        from PySide6.QtGui import QCursor, QIcon, QPixmap, QPainter
+        from PySide6.QtSvg import QSvgRenderer
 
         print("[MediaLightbox] Creating overlay navigation buttons...")
 
-        # Previous button (left side)
-        self.prev_btn = QPushButton("◄", self)
+        # Create SVG-based chevron icons for crisp scaling
+        def create_chevron_icon(direction: str) -> QIcon:
+            """Create crisp SVG chevron icon (left or right)."""
+            # SVG chevron paths (optimized for clarity at all sizes)
+            if direction == "left":
+                svg_data = '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                          fill="white" stroke="white" stroke-width="0.5"/>
+                </svg>'''
+            else:  # right
+                svg_data = '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                          fill="white" stroke="white" stroke-width="0.5"/>
+                </svg>'''
+
+            # Render SVG to pixmap at high resolution for crisp display
+            renderer = QSvgRenderer(svg_data.encode('utf-8'))
+            pixmap = QPixmap(48, 48)  # High-res base
+            pixmap.fill(Qt.transparent)
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+
+            return QIcon(pixmap)
+
+        # Previous button (left side) - PROFESSIONAL SIZE: 60px
+        self.prev_btn = QPushButton(self)
+        self.prev_btn.setIcon(create_chevron_icon("left"))
+        self.prev_btn.setIconSize(QSize(32, 32))  # Icon size within button
         self.prev_btn.setFocusPolicy(Qt.NoFocus)
-        self.prev_btn.setFixedSize(48, 48)
+        self.prev_btn.setFixedSize(60, 60)  # Larger for easier clicking
         self.prev_btn.setCursor(Qt.PointingHandCursor)
+        self.prev_btn.setToolTip("Previous photo (← or ◄)")  # Accessibility
         self.prev_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(0, 0, 0, 0.5);
-                color: white;
                 border: none;
-                border-radius: 24px;
-                font-size: 18pt;
+                border-radius: 30px;
             }
             QPushButton:hover {
                 background: rgba(0, 0, 0, 0.7);
@@ -719,23 +746,24 @@ class MediaLightbox(QDialog):
             }
             QPushButton:disabled {
                 background: rgba(0, 0, 0, 0.2);
-                color: rgba(255, 255, 255, 0.3);
+                opacity: 0.3;
             }
         """)
         self.prev_btn.clicked.connect(self._previous_media)
 
-        # Next button (right side)
-        self.next_btn = QPushButton("►", self)
+        # Next button (right side) - PROFESSIONAL SIZE: 60px
+        self.next_btn = QPushButton(self)
+        self.next_btn.setIcon(create_chevron_icon("right"))
+        self.next_btn.setIconSize(QSize(32, 32))
         self.next_btn.setFocusPolicy(Qt.NoFocus)
-        self.next_btn.setFixedSize(48, 48)
+        self.next_btn.setFixedSize(60, 60)
         self.next_btn.setCursor(Qt.PointingHandCursor)
+        self.next_btn.setToolTip("Next photo (→ or ►)")  # Accessibility
         self.next_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(0, 0, 0, 0.5);
-                color: white;
                 border: none;
-                border-radius: 24px;
-                font-size: 18pt;
+                border-radius: 30px;
             }
             QPushButton:hover {
                 background: rgba(0, 0, 0, 0.7);
@@ -745,7 +773,7 @@ class MediaLightbox(QDialog):
             }
             QPushButton:disabled {
                 background: rgba(0, 0, 0, 0.2);
-                color: rgba(255, 255, 255, 0.3);
+                opacity: 0.3;
             }
         """)
         self.next_btn.clicked.connect(self._next_media)
@@ -958,6 +986,9 @@ class MediaLightbox(QDialog):
         else:
             self.info_panel.show()
             self.info_panel_visible = True
+
+        # Reposition nav buttons when panel visibility changes (viewport width changes)
+        self._position_nav_buttons()
 
     def _toggle_play_pause(self):
         """Toggle video playback (play/pause)."""
@@ -1639,10 +1670,10 @@ class MediaLightbox(QDialog):
         scroll_w = self.scroll_area.width()
         scroll_h = self.scroll_area.height()
 
-        # Button dimensions
-        btn_w = self.prev_btn.width() or 48
-        btn_h = self.prev_btn.height() or 48
-        margin = 12  # Distance from edges
+        # Button dimensions - PROFESSIONAL: 60px size, 24px margin
+        btn_w = self.prev_btn.width() or 60
+        btn_h = self.prev_btn.height() or 60
+        margin = 24  # Professional spacing from edges
 
         # Calculate vertical center position (relative to dialog)
         y = scroll_tl.y() + (scroll_h // 2) - (btn_h // 2)
@@ -1655,6 +1686,9 @@ class MediaLightbox(QDialog):
         right_x = scroll_tl.x() + scroll_w - btn_w - margin
         self.next_btn.move(right_x, max(8, y))
 
+        # Update button states (dim at boundaries)
+        self._update_nav_button_states()
+
         # CRITICAL: Ensure buttons are visible and on top
         self.prev_btn.show()
         self.next_btn.show()
@@ -1662,6 +1696,17 @@ class MediaLightbox(QDialog):
         self.next_btn.raise_()
 
         print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
+
+    def _update_nav_button_states(self):
+        """Update button enabled/disabled states based on current position (dim at boundaries)."""
+        if not hasattr(self, 'prev_btn') or not hasattr(self, 'all_media'):
+            return
+
+        # Disable prev button at first photo
+        self.prev_btn.setEnabled(self.current_index > 0)
+
+        # Disable next button at last photo
+        self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
 
     def _show_nav_buttons(self):
         """Show navigation buttons with instant visibility (always visible for usability)."""
@@ -1819,6 +1864,7 @@ class MediaLightbox(QDialog):
             self.current_index -= 1
             self.media_path = self.all_media[self.current_index]
             self._load_media_with_transition()
+            self._update_nav_button_states()  # Dim at boundaries
 
     def _next_media(self):
         """
@@ -1834,6 +1880,7 @@ class MediaLightbox(QDialog):
             self.current_index += 1
             self.media_path = self.all_media[self.current_index]
             self._load_media_with_transition()
+            self._update_nav_button_states()  # Dim at boundaries
 
     def event(self, event):
         """
