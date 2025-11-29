@@ -11,17 +11,81 @@ Responsibilities:
 - Face detection integration
 - Sidebar/grid refresh coordination
 
-Version: 09.20.00.00
+Version: 09.21.00.00
 """
 
 import logging
 from PySide6.QtCore import QThread, Qt, QTimer
 from PySide6.QtWidgets import (
-    QProgressDialog, QMessageBox, QDialog, QVBoxLayout,
-    QLabel, QProgressBar, QApplication
+    QProgressDialog, QMessageBox, QDialog, QVBoxLayout, QHBoxLayout,
+    QLabel, QProgressBar, QApplication, QPushButton
 )
 #from translations import tr
 from translation_manager import tr
+
+
+class ScanProgressDialog(QDialog):
+    """
+    Custom progress dialog for scanning without internal processEvents().
+
+    CRITICAL FIX: QProgressDialog internally calls QApplication.processEvents()
+    when setValue() is called, causing re-entrancy and deadlock when updated
+    from worker thread signals. This custom dialog avoids that issue.
+
+    Provides:
+    - Progress bar (0-100%)
+    - Status message label
+    - Cancel button
+    - No internal processEvents() calls
+    """
+
+    def __init__(self, title: str, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(title)
+        self.setWindowModality(Qt.WindowModal)
+        self.setMinimumWidth(500)
+        self._was_canceled = False
+
+        # Layout
+        layout = QVBoxLayout(self)
+
+        # Status label
+        self.label = QLabel("Preparing scan...")
+        layout.addWidget(self.label)
+
+        # Progress bar
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 100)
+        self.progress_bar.setValue(0)
+        self.progress_bar.setTextVisible(True)
+        layout.addWidget(self.progress_bar)
+
+        # Cancel button
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button.clicked.connect(self._on_cancel)
+        button_layout.addWidget(self.cancel_button)
+        button_layout.addStretch()
+        layout.addLayout(button_layout)
+
+    def _on_cancel(self):
+        """Handle cancel button click."""
+        self._was_canceled = True
+        self.cancel_button.setEnabled(False)
+        self.cancel_button.setText("Canceling...")
+
+    def setValue(self, value: int):
+        """Set progress value (0-100) - NO processEvents() called!"""
+        self.progress_bar.setValue(value)
+
+    def setLabelText(self, text: str):
+        """Set status message - NO processEvents() called!"""
+        self.label.setText(text)
+
+    def wasCanceled(self) -> bool:
+        """Check if user clicked cancel."""
+        return self._was_canceled
 
 
 class ScanController:
@@ -43,12 +107,10 @@ class ScanController:
         self.main.statusBar().showMessage(f"📸 Scanning repository: {folder} (incremental={incremental})")
         self.main._committed_total = 0
 
-        # Progress dialog
-        self.main._scan_progress = QProgressDialog("Preparing scan...", "Cancel", 0, 100, self.main)
-        self.main._scan_progress.setWindowTitle("Scanning Photos")
-        self.main._scan_progress.setWindowModality(Qt.WindowModal)
-        self.main._scan_progress.setAutoClose(False)
-        self.main._scan_progress.setAutoReset(False)
+        # CRITICAL FIX: Use custom progress dialog instead of QProgressDialog
+        # QProgressDialog.setValue() internally calls QApplication.processEvents(),
+        # causing re-entrancy deadlock when updated from worker thread signals
+        self.main._scan_progress = ScanProgressDialog("Scanning Photos", self.main)
         self.main._scan_progress.show()
 
         # DB writer
@@ -272,10 +334,10 @@ class ScanController:
         self.main._scan_complete_msgbox = msgbox
 
         # Show progress indicator for post-scan processing
-        progress = QProgressDialog("Building date branches...", None, 0, 4, self.main)
-        progress.setWindowTitle("Processing...")
-        progress.setWindowModality(Qt.WindowModal)
-        progress.setAutoClose(True)
+        # CRITICAL FIX: Use custom progress dialog (no internal processEvents)
+        progress = ScanProgressDialog("Processing...", self.main)
+        progress.setLabelText("Building date branches...")
+        progress.cancel_button.hide()  # No cancel for post-processing
         progress.setValue(0)
         progress.show()
         QApplication.processEvents()
