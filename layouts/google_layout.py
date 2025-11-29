@@ -1694,6 +1694,11 @@ class MediaLightbox(QDialog):
         super().resizeEvent(event)
         self._position_nav_buttons()
 
+        # CRITICAL: Ensure buttons stay on top after resize
+        if hasattr(self, 'prev_btn') and hasattr(self, 'next_btn'):
+            self.prev_btn.raise_()
+            self.next_btn.raise_()
+
         # SAFETY: Ensure media is loaded (fallback if showEvent didn't fire)
         if not self._media_loaded:
             print(f"[MediaLightbox] resizeEvent: media not loaded yet, triggering load...")
@@ -1711,16 +1716,13 @@ class MediaLightbox(QDialog):
             self._update_zoom_status()
 
     def mousePressEvent(self, event):
-        """Handle mouse press for panning and double-tap detection."""
-        from PySide6.QtCore import Qt
+        """
+        Handle mouse press for panning and double-tap detection.
 
-        # CRITICAL FIX: Don't consume clicks on buttons or other interactive widgets!
-        # Check if click is on nav buttons or other clickable widgets
-        widget_at_pos = self.childAt(event.pos())
-        if widget_at_pos and isinstance(widget_at_pos, QPushButton):
-            # Let the button handle the click
-            super().mousePressEvent(event)
-            return
+        NOTE: Nav buttons handle their own clicks - they're raised above this widget
+        so button clicks go directly to buttons, not through this handler.
+        """
+        from PySide6.QtCore import Qt
 
         # PHASE B #2: Check for double-tap first
         if event.button() == Qt.LeftButton:
@@ -1922,6 +1924,15 @@ class MediaLightbox(QDialog):
         """Load media when dialog is first shown (after window has proper size)."""
         super().showEvent(event)
         print(f"[MediaLightbox] showEvent triggered, _media_loaded={self._media_loaded}")
+
+        # CRITICAL FIX: Ensure nav buttons are on top AFTER all widgets are laid out
+        # Problem: buttons were raised BEFORE middle_widget was added to layout
+        # Solution: raise buttons again after layout is finalized
+        if hasattr(self, 'prev_btn') and hasattr(self, 'next_btn'):
+            self.prev_btn.raise_()
+            self.next_btn.raise_()
+            print("[MediaLightbox] Nav buttons raised to top in showEvent")
+
         if not self._media_loaded:
             # ROBUST FIX: Use longer delay to ensure window is fully sized and rendered
             from PySide6.QtCore import QTimer
