@@ -246,6 +246,20 @@ class MediaLightbox(QDialog):
     - Close button and ESC key
     """
 
+    # === CLASS CONSTANTS ===
+    # Navigation button configuration
+    NAV_BUTTON_SIZE = 60  # Button width/height in pixels (professional size)
+    NAV_BUTTON_MARGIN = 24  # Margin from viewport edges in pixels
+    NAV_BUTTON_ICON_SIZE = 32  # Icon size within button in pixels
+    NAV_BUTTON_BORDER_RADIUS = 30  # Half of button size for circular shape
+
+    # Button positioning retry configuration
+    MAX_POSITION_RETRIES = 20  # Maximum attempts to position buttons before giving up
+    POSITION_RETRY_DELAY_MS = 50  # Delay between retry attempts in milliseconds
+
+    # SVG icon rendering configuration
+    SVG_ICON_RENDER_SIZE = 48  # High-resolution pixmap size for crisp SVG rendering
+
     def __init__(self, media_path: str, all_media: List[str], parent=None):
         """
         Initialize media lightbox.
@@ -701,7 +715,15 @@ class MediaLightbox(QDialog):
 
         # Create SVG-based chevron icons for crisp scaling
         def create_chevron_icon(direction: str) -> QIcon:
-            """Create crisp SVG chevron icon (left or right)."""
+            """
+            Create crisp SVG chevron icon (left or right) with error handling.
+
+            Args:
+                direction: "left" or "right" for chevron direction
+
+            Returns:
+                QIcon with rendered SVG, or empty QIcon on error
+            """
             # SVG chevron paths (optimized for clarity at all sizes)
             if direction == "left":
                 svg_data = '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -715,21 +737,41 @@ class MediaLightbox(QDialog):
                 </svg>'''
 
             # Render SVG to pixmap at high resolution for crisp display
-            renderer = QSvgRenderer(svg_data.encode('utf-8'))
-            pixmap = QPixmap(48, 48)  # High-res base
-            pixmap.fill(Qt.transparent)
-            painter = QPainter(pixmap)
-            renderer.render(painter)
-            painter.end()
+            try:
+                renderer = QSvgRenderer(svg_data.encode('utf-8'))
 
-            return QIcon(pixmap)
+                # Validate SVG renderer
+                if not renderer.isValid():
+                    print(f"[MediaLightbox] ⚠️ Invalid SVG data for {direction} chevron, using fallback")
+                    return QIcon()  # Return empty icon as fallback
 
-        # Previous button (left side) - PROFESSIONAL SIZE: 60px
+                # Use class constant for consistent high-res rendering
+                size = MediaLightbox.SVG_ICON_RENDER_SIZE
+                pixmap = QPixmap(size, size)
+                pixmap.fill(Qt.transparent)
+                painter = QPainter(pixmap)
+
+                # Verify painter is active
+                if not painter.isActive():
+                    print(f"[MediaLightbox] ⚠️ QPainter failed to initialize for {direction} chevron")
+                    return QIcon()
+
+                renderer.render(painter)
+                painter.end()
+
+                return QIcon(pixmap)
+
+            except Exception as e:
+                print(f"[MediaLightbox] ⚠️ SVG rendering error for {direction} chevron: {e}")
+                # Return empty icon - button will still work but without icon
+                return QIcon()
+
+        # Previous button (left side) - PROFESSIONAL SIZE
         self.prev_btn = QPushButton(self)
         self.prev_btn.setIcon(create_chevron_icon("left"))
-        self.prev_btn.setIconSize(QSize(32, 32))  # Icon size within button
+        self.prev_btn.setIconSize(QSize(self.NAV_BUTTON_ICON_SIZE, self.NAV_BUTTON_ICON_SIZE))
         self.prev_btn.setFocusPolicy(Qt.NoFocus)
-        self.prev_btn.setFixedSize(60, 60)  # Larger for easier clicking
+        self.prev_btn.setFixedSize(self.NAV_BUTTON_SIZE, self.NAV_BUTTON_SIZE)
         self.prev_btn.setCursor(Qt.PointingHandCursor)
         self.prev_btn.setToolTip("Previous photo (← or ◄)")  # Accessibility
         self.prev_btn.setStyleSheet("""
@@ -751,12 +793,12 @@ class MediaLightbox(QDialog):
         """)
         self.prev_btn.clicked.connect(self._previous_media)
 
-        # Next button (right side) - PROFESSIONAL SIZE: 60px
+        # Next button (right side) - PROFESSIONAL SIZE
         self.next_btn = QPushButton(self)
         self.next_btn.setIcon(create_chevron_icon("right"))
-        self.next_btn.setIconSize(QSize(32, 32))
+        self.next_btn.setIconSize(QSize(self.NAV_BUTTON_ICON_SIZE, self.NAV_BUTTON_ICON_SIZE))
         self.next_btn.setFocusPolicy(Qt.NoFocus)
-        self.next_btn.setFixedSize(60, 60)
+        self.next_btn.setFixedSize(self.NAV_BUTTON_SIZE, self.NAV_BUTTON_SIZE)
         self.next_btn.setCursor(Qt.PointingHandCursor)
         self.next_btn.setToolTip("Next photo (→ or ►)")  # Accessibility
         self.next_btn.setStyleSheet("""
@@ -1644,14 +1686,14 @@ class MediaLightbox(QDialog):
 
         # Check if scroll area has valid size
         if self.scroll_area.width() == 0 or self.scroll_area.height() == 0:
-            # Safety limit: stop retrying after 20 attempts (1 second total)
-            if self._position_retry_count < 20:
+            # Safety limit: stop retrying after maximum attempts
+            if self._position_retry_count < self.MAX_POSITION_RETRIES:
                 self._position_retry_count += 1
-                print(f"[MediaLightbox] Scroll area not ready (retry {self._position_retry_count}/20), waiting 50ms...")
+                print(f"[MediaLightbox] Scroll area not ready (retry {self._position_retry_count}/{self.MAX_POSITION_RETRIES}), waiting {self.POSITION_RETRY_DELAY_MS}ms...")
                 from PySide6.QtCore import QTimer
-                QTimer.singleShot(50, self._position_nav_buttons)
+                QTimer.singleShot(self.POSITION_RETRY_DELAY_MS, self._position_nav_buttons)
             else:
-                print(f"[MediaLightbox] ⚠️ Scroll area still not ready after 20 retries!")
+                print(f"[MediaLightbox] ⚠️ Scroll area still not ready after {self.MAX_POSITION_RETRIES} retries!")
             return
 
         # Reset retry counter on success
@@ -1670,10 +1712,10 @@ class MediaLightbox(QDialog):
         scroll_w = self.scroll_area.width()
         scroll_h = self.scroll_area.height()
 
-        # Button dimensions - PROFESSIONAL: 60px size, 24px margin
-        btn_w = self.prev_btn.width() or 60
-        btn_h = self.prev_btn.height() or 60
-        margin = 24  # Professional spacing from edges
+        # Button dimensions - use class constants for consistency
+        btn_w = self.prev_btn.width() or self.NAV_BUTTON_SIZE
+        btn_h = self.prev_btn.height() or self.NAV_BUTTON_SIZE
+        margin = self.NAV_BUTTON_MARGIN
 
         # Calculate vertical center position (relative to dialog)
         y = scroll_tl.y() + (scroll_h // 2) - (btn_h // 2)
