@@ -1,14 +1,275 @@
+2025-11-28 02:20:55,877 [INFO] [Scan] Metadata extracted successfully: IMG_E9574.JPG [w=2316, h=3088, date=2024-11-16 11:51:22]
+[SCAN] Creating folder hierarchy for: IMG_E9574.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: IMG_E9574.JPG
+[SCAN] Added to batch: IMG_E9574.JPG [batch size: 93/200]
+[SCAN] Starting file 294/298: JKHC8378.JPG
+2025-11-28 02:20:55,891 [INFO] [Scan] File 294/298: JKHC8378.JPG
+[SCAN] _process_file started for: JKHC8378.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,907 [INFO] 📷 Processing: JKHC8378.JPG (241.8 KB)
+[SCAN] Processing: JKHC8378.JPG
+[SCAN] ✓ Metadata extracted: JKHC8378.JPG [w=1153, h=2048, date=None]
+2025-11-28 02:20:55,907 [INFO] [Scan] Metadata extracted successfully: JKHC8378.JPG [w=1153, h=2048, date=None]
+[SCAN] Creating folder hierarchy for: JKHC8378.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: JKHC8378.JPG
+[SCAN] Added to batch: JKHC8378.JPG [batch size: 94/200]
+[SCAN] Starting file 295/298: NTXK2933.JPG
+2025-11-28 02:20:55,922 [INFO] [Scan] File 295/298: NTXK2933.JPG
+[SCAN] _process_file started for: NTXK2933.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,922 [INFO] 📷 Processing: NTXK2933.JPG (235.8 KB)
+[SCAN] Processing: NTXK2933.JPG
+[SCAN] ✓ Metadata extracted: NTXK2933.JPG [w=1153, h=2048, date=None]
+2025-11-28 02:20:55,922 [INFO] [Scan] Metadata extracted successfully: NTXK2933.JPG [w=1153, h=2048, date=None]
+[SCAN] Creating folder hierarchy for: NTXK2933.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=783
+[SCAN] ✓ File processed successfully: NTXK2933.JPG
+[SCAN] Added to batch: NTXK2933.JPG [batch size: 95/200]
+[SCAN] Starting file 296/298: IMG_1779.JPEG
+2025-11-28 02:20:55,954 [INFO] [Scan] File 296/298: IMG_1779.JPEG
+[SCAN] _process_file started for: IMG_1779.JPEG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,954 [INFO] 📷 Processing: IMG_1779.JPEG (2384.7 KB)
+[SCAN] Processing: IMG_1779.JPEG
+[SCAN] ✓ Metadata extracted: IMG_1779.JPEG [w=3024, h=4032, date=2022-01-15 10:14:36]
+2025-11-28 02:20:55,954 [INFO] [Scan] Metadata extracted successfully: IMG_1779.JPEG [w=3024, h=4032, date=2022-01-15 10:14:36]
+[SCAN] Creating folder hierarchy for: IMG_1779.JPEG
+[SCAN] ✓ Folder hierarchy created: folder_id=839
+[SCAN] ✓ File processed successfully: IMG_1779.JPEG
+[SCAN] Added to batch: IMG_1779.JPEG [batch size: 96/200]
+[SCAN] Starting file 297/298: IMG_E3091.JPG
+2025-11-28 02:20:55,970 [INFO] [Scan] File 297/298: IMG_E3091.JPG
+[SCAN] _process_file started for: IMG_E3091.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:55,970 [INFO] 📷 Processing: IMG_E3091.JPG (4800.5 KB)
+[SCAN] Processing: IMG_E3091.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3091.JPG [w=3024, h=4032, date=2022-08-18 20:26:59]
+2025-11-28 02:20:55,970 [INFO] [Scan] Metadata extracted successfully: IMG_E3091.JPG [w=3024, h=4032, date=2022-08-18 20:26:59]
+[SCAN] Creating folder hierarchy for: IMG_E3091.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=843
+[SCAN] ✓ File processed successfully: IMG_E3091.JPG
+[SCAN] Added to batch: IMG_E3091.JPG [batch size: 97/200]
+[SCAN] Starting file 298/298: IMG_E3106.JPG
+2025-11-28 02:20:56,002 [INFO] [Scan] File 298/298: IMG_E3106.JPG
+[SCAN] _process_file started for: IMG_E3106.JPG
+[SCAN] Getting file stats...
+[SCAN] File stats retrieved successfully
+2025-11-28 02:20:56,002 [INFO] 📷 Processing: IMG_E3106.JPG (2052.9 KB)
+[SCAN] Processing: IMG_E3106.JPG
+[SCAN] ✓ Metadata extracted: IMG_E3106.JPG [w=3024, h=4032, date=2022-08-18 20:30:04]
+2025-11-28 02:20:56,002 [INFO] [Scan] Metadata extracted successfully: IMG_E3106.JPG [w=3024, h=4032, date=2022-08-18 20:30:04]
+[SCAN] Creating folder hierarchy for: IMG_E3106.JPG
+[SCAN] ✓ Folder hierarchy created: folder_id=843
+[SCAN] ✓ File processed successfully: IMG_E3106.JPG
+[SCAN] Added to batch: IMG_E3106.JPG [batch size: 98/200]
+[SCAN] ⚡ Writing final batch to database: 98 photos
+2025-11-28 02:20:56,028 [INFO] Writing final batch of 98 photos to database
+[SCAN] 💾 Starting bulk_upsert for 98 photos...
+2025-11-28 02:20:56,028 [INFO] [DB] Starting bulk_upsert for 98 photos
+2025-11-28 02:20:56,050 [INFO] Bulk upserted 98 photos for project 1
+[SCAN] ✓ Bulk_upsert completed: 98 photos written
+2025-11-28 02:20:56,050 [INFO] [DB] Bulk_upsert completed: 98 photos written
+[SCAN] ✓ Final batch write complete
+[SCAN] Shutting down executor
+2025-11-28 02:20:56,050 [INFO] Executor shutdown complete
+2025-11-28 02:20:56,058 [INFO] Scan complete: 298 photos indexed, 0 videos indexed, 0 skipped, 0 failed in 6.0s
+2025-11-28 02:20:56,058 [INFO] Scan completed: 298 photos, 0 videos, 12 folders in 6.0s
+[ScanController] scan finished: 12 folders, 298 photos, 0 videos
+[ScanController] cleanup after scan
+2025-11-28 02:20:56,272 [INFO] Building date branches...
+2025-11-28 02:20:56,272 [INFO] Building date branches for project_id=1
+[build_date_branches] Using project_id=1
+[build_date_branches] Populating 'all' branch with 298 photos for project 1
+[build_date_branches] Inserted 298/298 photos into 'all' branch
+[build_date_branches] Found 11 unique dates for project 1
+[build_date_branches] Date 2022-01-02: found 16 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_0484.jpg
+[build_date_branches] Date 2022-01-02: inserted 16/16 into project_images (new)
+[build_date_branches] Date 2022-01-15: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/4/img_1779.jpeg
+[build_date_branches] Date 2022-01-15: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2022-03-01: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_e7069.jpg
+[build_date_branches] Date 2022-03-01: inserted 3/3 into project_images (new)
+[build_date_branches] Date 2022-08-18: found 211 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_e3062.jpg
+[build_date_branches] Date 2022-08-18: inserted 211/211 into project_images (new)
+[build_date_branches] Date 2023-10-19: found 5 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_3307.jpg
+[build_date_branches] Date 2023-10-19: inserted 5/5 into project_images (new)
+[build_date_branches] Date 2023-10-27: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4973.jpg
+[build_date_branches] Date 2023-10-27: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2024-11-07: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_e7413.jpg
+[build_date_branches] Date 2024-11-07: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2024-11-16: found 6 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_9570.jpg
+[build_date_branches] Date 2024-11-16: inserted 6/6 into project_images (new)
+[build_date_branches] Date 2024-11-26: found 2 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/1/img_1550.dng
+[build_date_branches] Date 2024-11-26: inserted 2/2 into project_images (new)
+[build_date_branches] Date 2025-03-13: found 4 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/photos/refs/3/img_8152.jpeg
+[build_date_branches] Date 2025-03-13: inserted 4/4 into project_images (new)
+[build_date_branches] Date 2025-04-25: found 3 photos for project 1
+[build_date_branches] Sample path: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
+[build_date_branches] Date 2025-04-25: inserted 3/3 into project_images (new)
+[build_date_branches] Total entries processed: 256
+[build_date_branches] project_images table has 554 rows for project 1
+2025-11-28 02:20:56,296 [INFO] Created 256 photo date branch entries for project 1
+2025-11-28 02:20:56,296 [INFO] Building video date branches for project_id=1
+[build_video_date_branches] Using project_id=1
+[build_video_date_branches] Found 0 videos with dates for project 1
+[build_video_date_branches] No videos with dates found, skipping branch creation
+2025-11-28 02:20:56,296 [INFO] Created 0 video date branch entries for project 1
+2025-11-28 02:20:56,300 [INFO] Backfilling created_date fields for photos...
+2025-11-28 02:20:56,309 [INFO] Backfilled 42 photo rows with created_date
+2025-11-28 02:20:56,310 [INFO] Backfilling created_date fields for videos...
+[FaceConfig] Loaded from C:\Users\ASUS\.memorymate\face_detection_config.json
+2025-11-28 02:20:56,312 [INFO] Reloading sidebar after date branches built...
+[SidebarQt] reload() called, display_mode=list, tabs_visible=False
+[SidebarQt] Calling _build_tree_model() instead of tabs refresh
+[SidebarQt] _build_tree_model() called with project_id=1
+[Sidebar] Detaching old model from tree view
+[Sidebar] Pending events processed (skipped explicit processEvents)
+[Sidebar] Creating fresh model (avoiding Qt segfault)
+[Sidebar] Attaching fresh model to tree view
+[SidebarQt] list_branches() returned 1 branches
+[SidebarQt] Sample branches: [{'branch_key': 'all', 'display_name': '📁 All Photos', 'count': 298}]
+[Sidebar] Loaded 17 folder counts in batch (performance optimization)
+[Sidebar] Loaded date counts in batch: 5 years, 14 months, 25 days
+[Sidebar] Loading videos for project_id=1
+[Sidebar] Found 0 videos in project 1
+
+[Sidebar] ===== Initiating mobile device scan from sidebar =====
+[Sidebar] Database: <reference_db.ReferenceDB object at 0x000001D502EBBC10>
+[Sidebar] Register devices: True
+
+[DeviceScanner] ===== Starting device scan  =====
+[DeviceScanner] Platform: Windows
+[DeviceScanner] Database registration: enabled
+[DeviceScanner] Scanning Windows drives...
+[DeviceScanner]   Checking drive letters D:-Z:...
+[DeviceScanner]     Drive D: exists, checking...
+[DeviceScanner]           Checking path: D:\
+[DeviceScanner]           Directories found: ['$RECYCLE.BIN', 'Architect Books', 'Architecture', 'Arshiif', 'B2 Prüfung', 'CORONA', 'CORONA 1', 'CORONA 2024', 'En', 'From Ammar', 'IPhone', 'MirrorTo transfer', 'MirrorTo video', 'My Phone', 'My Work', 'New folder (2)', 'Python', 'Recovery', 'REVIT', 'Revit Advance', 'REVIT NEW', 'Samer Matar V-Ray', 'SnapPea', 'System Volume Information', 'To write', 'training 2020', 'Workshop- Corona', 'المشروع الألماني', 'انكليزي', 'تصويؤي', 'تلغرام', 'روايات', 'صور للإرسال', 'طيران مدني', 'عزفي', 'فيديو', 'كورس الفرنسي- هيئة التخطيط والتعاون الدولي', 'للطباعة', 'ملفاتي']
+[DeviceScanner]           Has DCIM folder: False
+[DeviceScanner]           No alternate structure found
+[DeviceScanner]           Checking subdirectories for DCIM (MTP mounts)...
+[DeviceScanner]             Checking subdirectory: IPhone
+[DeviceScanner]               Checking nested: IPhone/202202__
+[DeviceScanner]               Checking nested: IPhone/242CLOUD
+[DeviceScanner]               Checking nested: IPhone/Family
+[DeviceScanner]               Checking nested: IPhone/French Video
+[DeviceScanner]               Checking nested: IPhone/To draw
+[DeviceScanner]               Checking nested: IPhone/To learn Deutsch
+[DeviceScanner]               Checking nested: IPhone/خواطر
+[DeviceScanner]               Checking nested: IPhone/عن الموت
+[DeviceScanner]               Checking nested: IPhone/منزل عمار وسوزي
+[DeviceScanner]             Checking subdirectory: My Phone
+[DeviceScanner]               Checking nested: My Phone/Android
+[DeviceScanner]               Checking nested: My Phone/DCM
+[DeviceScanner]               Checking nested: My Phone/Document Scanner
+[DeviceScanner]               Checking nested: My Phone/Final
+[DeviceScanner]               ✓ Found DCIM in: My Phone/Final/DCIM
+[DeviceScanner]           Has DCIM in subdirectory: True
+[DeviceScanner]           Device type: android
+[DeviceScanner]           Device label: 🤖 Mobile Device
+[DeviceScanner]           Scanning for media folders...
+[DeviceScanner]           Found 0 media folder(s)
+[DeviceScanner]           REJECTED: No media folders with photos/videos
+[DeviceScanner]       ✗ No device on drive D:
+[DeviceScanner]   Checking portable devices (MTP/PTP)...
+[DeviceScanner]     Attempting Shell COM enumeration...
+[DeviceScanner]     COM initialized for current thread
+[DeviceScanner]     Found 3 items under 'This PC'
+[DeviceScanner]       → Item: 'Manage my phone' | IsFolder=False | IsFileSystem=False
+[DeviceScanner]       → Item: 'Local Disk (C:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]       → Item: 'DATA (D:)' | IsFolder=True | IsFileSystem=True
+[DeviceScanner]     COM uninitialized
+[DeviceScanner] ===== Scan complete: 0 device(s) found =====
+[DeviceScanner] Results cached for 5.0s
+
+[Sidebar] ===== Scan complete: 0 mobile device(s) found =====
+[Sidebar]   ✗ No devices found
+[Sidebar] ===== End device scan =====
+
+[Sidebar] No mobile devices detected - added help message
+[Sidebar] starting async count population for 1 branch targets
+[Sidebar][counts worker gen=6] running for 1 targets...
+
+[GRID] ====== reload() CALLED ======
+[GRID] project_id=1, load_mode=branch
+[GRID] Step 1: Setting _reloading=True
+[get_images_by_branch] project_id=1, branch_key='all'
+[get_images_by_branch] Found 298 photos
+[Sidebar][counts worker gen=6] finished scanning targets, scheduling UI update
+[DB_TAGS_DEBUG] Sample normalized paths being queried:
+  [0] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif'
+  [1] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg'
+  [2] norm='c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg'
+      orig='c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg'
+[DB_TAGS_SQL] Photos query:
+                        SELECT pm.path, t.name
+                        FROM photo_metadata pm
+                        JOIN photo_tags pt ON pt.photo_...
+[DB_TAGS_SQL] Videos query:
+                        SELECT vm.path, t.name
+                        FROM video_metadata vm
+                        JOIN video_tags vt ON vt.video_...
+[DB_TAGS_SQL] First 3 params: ['c:/users/asus/onedrive/documents/python/test-photos/inbox/22.jfif', 'c:/users/asus/onedrive/documents/python/test-photos/inbox/ewkj3802.jpg', 'c:/users/asus/onedrive/documents/python/test-photos/inbox/few-qty/ewkj3802.jpg']
+[DB_TAGS_SQL] project_id: 1
+[DB_TAGS_SQL] Query returned 0 rows (0 photos + 0 videos)
+[DB_TAGS_SQL] No rows returned! Checking if ANY tags exist in DB...
+[DB_TAGS_SQL] Sample tagged PHOTOS in DB:
+[DB_TAGS_SQL] Sample tagged VIDEOS in DB:
+[DB_TAGS] Retrieved 0 tags for 0/298 paths (project_id=1)
+[GRID] Fetched tags for 298 paths, got 298 entries
+[Sidebar][counts applied] updated UI with counts
+[GRID] Using scroll-based start position: 0 (scroll: 0/2834)
+[GRID] Loading viewport range: 0-120 of 298
+[GRID] Queued 121 new thumbnail workers
+[GRID] Loaded 298 thumbnails.
+[GRID] Reloaded 298 thumbnails in branch-mode (base=298)
+[GRID] Step 5: Emitting gridReloaded signal...
+
+[Breadcrumb] _update_breadcrumb() CALLED
+[Breadcrumb] Grid state: navigation_mode=branch, project_id=1
+[Breadcrumb] Looking for CURRENT project_id=1 in 1 projects
+[Breadcrumb] Found CURRENT project name: P01
+[Breadcrumb] Added project segment: P01
+[Breadcrumb] Added branch segment: All Photos
+[Breadcrumb] Calling set_path() with 2 segments
+[BreadcrumbNav] set_path() called with 2 segments
+[BreadcrumbNav] Clearing 3 existing widgets
+[BreadcrumbNav] Cleared all existing widgets
+[BreadcrumbNav] Added segment 0: P01
+[BreadcrumbNav] Added segment 1: All Photos
+[BreadcrumbNav] set_path() completed - 2 segments added
+[Breadcrumb] set_path() completed successfully
+[Breadcrumb] _update_breadcrumb() COMPLETED
+
 [GRID] Step 5: ✓ gridReloaded signal emitted
 [GRID] ====== reload() COMPLETED SUCCESSFULLY ======
 
 [GRID] Finally block: Setting _reloading=False
 [GRID] Loading viewport range: 0-120 of 298
-[GRID] Queued 1 new thumbnail workers
+[GRID] Queued 2 new thumbnail workers
 [LayoutManager] Switching layout: current → google
 [LayoutManager] 💾 Took ownership of original central widget: QWidget
 [GooglePhotosLayout] Using default project: 1
 [GooglePhotosLayout] ✅ Create Project button connected in toolbar creation
 [GooglePhotosLayout] Project selector populated with 1 projects
+[GooglePhotosLayout] ✅ Scroll-triggered lazy loading enabled
 [GooglePhotosLayout] Loading photos from database (thumb size: 200px)...
 [GooglePhotosLayout] 🔍 SQL Query:
 
@@ -25,155 +286,132 @@ ORDER BY pm.date_taken DESC
 [GoogleLayout] Loading videos for project_id=1
 [GoogleLayout] Found 0 videos in project 1
 [GooglePhotosLayout] Tracking 298 paths for multi-selection
-[GooglePhotosLayout] Loaded 298 photos in 25 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 📐 Responsive grid: 2 columns (viewport: 640px, thumb: 200px)
+[GooglePhotosLayout] 🚀 Virtual scrolling: 25 date groups (5 rendered, 20 placeholders)
+[GooglePhotosLayout] Queued 17 thumbnails for loading (initial limit: 50)
 [LayoutManager] Setting new central widget: QWidget
 [GooglePhotosLayout] 📍 Layout activated
 [GooglePhotosLayout] ✓ Connected Scan button
 [GooglePhotosLayout] ✓ Connected Faces button
 [LayoutManager] ✓ Switched to: Google Photos Style
 [MainWindow] ✓ Switched to layout: google
-[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
-[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] 🔎 Zoom changed to: 123px
+[GooglePhotosLayout] Loading photos from database (thumb size: 123px)...
+[GooglePhotosLayout] 🔍 SQL Query:
+
+                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
+                FROM photo_metadata pm
+                JOIN project_images pi ON pm.path = pi.image_path
+                WHERE pi.project_id = ?
+
+ORDER BY pm.date_taken DESC
+[GooglePhotosLayout] 🔍 Parameters: [1]
+[GooglePhotosLayout] 📊 Loaded 298 photos from database
+[GooglePhotosLayout] 👥 Querying face_branch_reps for project_id=1
+[GooglePhotosLayout] 👥 Found 0 face clusters
+[GoogleLayout] Loading videos for project_id=1
+[GoogleLayout] Found 0 videos in project 1
+[GooglePhotosLayout] Tracking 298 paths for multi-selection
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 🚀 Virtual scrolling: 25 date groups (5 rendered, 20 placeholders)
+[GooglePhotosLayout] Queued 17 thumbnails for loading (initial limit: 50)
+[GooglePhotosLayout] Photo clicked: c:/users/asus/onedrive/documents/python/test-photos/photos/inbox/img_4790.jpeg
+[GooglePhotosLayout] 👁️ Opening lightbox for: c:/users/asus/onedrive/documents/python/test-photos/photos/inbox/img_4790.jpeg
 [GooglePhotosLayout] Found 256 photos + 0 videos = 256 total media
-[MediaLightbox] Nav buttons positioned: left=20, right=572, y=216
-[MediaLightbox] showEvent triggered, scheduling media load...
-[MediaLightbox] Nav buttons positioned: left=20, right=291, y=3
-[MediaLightbox] Nav buttons positioned: left=20, right=1852, y=410
+[MediaLightbox] _position_nav_buttons: Missing attributes (prev_btn=False, scroll_area=False)
+[MediaLightbox] resizeEvent: media not loaded yet, triggering load...
+[MediaLightbox] showEvent triggered, _media_loaded=False
+[MediaLightbox] Scheduling media load in 100ms...
+[MediaLightbox] Creating overlay navigation buttons...
+[MediaLightbox] ✓ Nav buttons created and shown
+[MediaLightbox] showEvent triggered, _media_loaded=False
+[MediaLightbox] Scheduling media load in 100ms...
+[MediaLightbox] ✓ Nav buttons positioned: left=12, right=580, y=216, scroll_pos=(0,0)
+[MediaLightbox] _load_media called for: img_4790.jpeg
 [MediaLightbox] Loading photo: img_4790.jpeg
-[MediaLightbox] Window size: 1920x1009
+[MediaLightbox] Window size: 1728x972
 [PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
 [PhotoLightbox] ✓ PIL image and buffer closed
-[PhotoLightbox] Scaling to: max_width=1820, max_height=809
-[PhotoLightbox] ✓ Photo displayed: 606x809, zoom=1.0
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_4790.jpeg
+[MediaLightbox] Loading photo: img_4790.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_8158.jpeg
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
+[EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
+[MediaLightbox] _load_media called for: img_8158.jpeg
+[MediaLightbox] Loading photo: img_8158.jpeg
+[MediaLightbox] Window size: 1728x972
+[PhotoLightbox] ✓ Image loaded with EXIF orientation: 1536x2048
+[PhotoLightbox] ✓ PIL image and buffer closed
+[PhotoLightbox] Scaling to: max_width=1628, max_height=772
+[PhotoLightbox] ✓ Photo displayed: 579x772, zoom=1.0
 [EXIFParser] ✓ HEIC/HEIF support enabled (pillow-heif)
 [GooglePhotosLayout] ✓ MediaLightbox closed
-[GooglePhotosLayout] Filtering by year: 2025
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2025]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2025']
-[GooglePhotosLayout] 📊 Loaded 38 photos from database
-[GooglePhotosLayout] Tracking 38 paths for multi-selection
-[GooglePhotosLayout] Loaded 38 photos in 10 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2024
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2024]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2024']
-[GooglePhotosLayout] 📊 Loaded 13 photos from database
-[GooglePhotosLayout] Tracking 13 paths for multi-selection
-[GooglePhotosLayout] Loaded 13 photos in 5 date groups
-[GooglePhotosLayout] Queued 13 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2023
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2023]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2023']
-[GooglePhotosLayout] 📊 Loaded 10 photos from database
-[GooglePhotosLayout] Tracking 10 paths for multi-selection
-[GooglePhotosLayout] Loaded 10 photos in 4 date groups
-[GooglePhotosLayout] Queued 10 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2022
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2022]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2022']
-[GooglePhotosLayout] 📊 Loaded 236 photos from database
-[GooglePhotosLayout] Tracking 236 paths for multi-selection
-[GooglePhotosLayout] Loaded 236 photos in 5 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by year: 2021
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [year=2021]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND strftime('%Y', pm.created_date) = ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, '2021']
-[GooglePhotosLayout] 📊 Loaded 1 photos from database
-[GooglePhotosLayout] Tracking 1 paths for multi-selection
-[GooglePhotosLayout] Loaded 1 photos in 1 date groups
-[GooglePhotosLayout] Queued 1 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: inbox
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/inbox]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/inbox%']
-[GooglePhotosLayout] 📊 Loaded 92 photos from database
-[GooglePhotosLayout] Tracking 92 paths for multi-selection
-[GooglePhotosLayout] Loaded 92 photos in 8 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: inbox
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/inbox%']
-[GooglePhotosLayout] 📊 Loaded 84 photos from database
-[GooglePhotosLayout] Tracking 84 paths for multi-selection
-[GooglePhotosLayout] Loaded 84 photos in 7 date groups
-[GooglePhotosLayout] Queued 30 thumbnails for loading (limit: 30)
-[GooglePhotosLayout] Filtering by folder: 2
-[GooglePhotosLayout] Loading photos from database (thumb size: 200px) [folder=c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2]...
-[GooglePhotosLayout] 🔍 SQL Query:
-
-                SELECT DISTINCT pm.path, pm.created_date as date_taken, pm.width, pm.height
-                FROM photo_metadata pm
-                JOIN project_images pi ON pm.path = pi.image_path
-                WHERE pi.project_id = ?
-
-AND pm.path LIKE ?
-ORDER BY pm.date_taken DESC
-[GooglePhotosLayout] 🔍 Parameters: [1, 'c:/users/asus/onedrive/documents/python/test-photos/test-photos - copy/refs/2%']
-[GooglePhotosLayout] 📊 Loaded 14 photos from database
-[GooglePhotosLayout] Tracking 14 paths for multi-selection
-[GooglePhotosLayout] Loaded 14 photos in 11 date groups
-[GooglePhotosLayout] Queued 14 thumbnails for loading (limit: 30)
-PS C:\Users\ASUS\OneDrive\Documents\Python\Zip\09_36.01.01-Photo-App\MemoryMate-PhotoFlow-Enhanced-main-15>
+[GooglePhotosLayout] 🎨 Rendering 2 date groups that entered viewport...
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] ✓ Now 7/25 groups rendered
+[GooglePhotosLayout] 🎨 Rendering 1 date groups that entered viewport...
+[GooglePhotosLayout] 📐 Responsive grid: 8 columns (viewport: 1605px, thumb: 123px)
+[GooglePhotosLayout] Deferred thumbnail #51: img_e3142.jpg
