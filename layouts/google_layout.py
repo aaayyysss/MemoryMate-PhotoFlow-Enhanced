@@ -34,69 +34,14 @@ class ThumbnailLoader(QRunnable):
     def run(self):
         """Load thumbnail in background thread."""
         try:
-            # Check if it's a video
-            video_extensions = {'.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v', '.3gp'}
-            is_video = os.path.splitext(self.path)[1].lower() in video_extensions
-            
-            if is_video:
-                # Generate or load video thumbnail using VideoThumbnailService
-                try:
-                    from services.video_thumbnail_service import get_video_thumbnail_service
-                    from PySide6.QtGui import QPixmap
-                    from PySide6.QtCore import Qt
-                    
-                    service = get_video_thumbnail_service()
-                    
-                    # Prefer existing thumbnail; generate if missing
-                    if service.thumbnail_exists(self.path):
-                        thumb_path = service.get_thumbnail_path(self.path)
-                    else:
-                        thumb_path = service.generate_thumbnail(self.path, width=self.size, height=self.size)
-                    
-                    if thumb_path and os.path.exists(thumb_path):
-                        pixmap = QPixmap(str(thumb_path))
-                        if not pixmap.isNull():
-                            scaled = pixmap.scaled(self.size, self.size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                            self.signals.loaded.emit(self.path, scaled, self.size)
-                            print(f"[ThumbnailLoader] ✓ Video thumbnail: {os.path.basename(self.path)}")
-                        else:
-                            # Fallback to placeholder
-                            self._emit_video_placeholder()
-                    else:
-                        # Fallback to placeholder
-                        self._emit_video_placeholder()
-                except Exception as video_err:
-                    print(f"[ThumbnailLoader] Video thumbnail error: {video_err}")
-                    self._emit_video_placeholder()
-            else:
-                # Regular photo thumbnail
-                from app_services import get_thumbnail
-                pixmap = get_thumbnail(self.path, self.size)
+            from app_services import get_thumbnail
+            pixmap = get_thumbnail(self.path, self.size)
 
-                if pixmap and not pixmap.isNull():
-                    # Emit to shared signal (connected in GooglePhotosLayout)
-                    self.signals.loaded.emit(self.path, pixmap, self.size)
+            if pixmap and not pixmap.isNull():
+                # Emit to shared signal (connected in GooglePhotosLayout)
+                self.signals.loaded.emit(self.path, pixmap, self.size)
         except Exception as e:
             print(f"[ThumbnailLoader] Error loading {self.path}: {e}")
-    
-    def _emit_video_placeholder(self):
-        """Emit a video placeholder icon."""
-        from PySide6.QtGui import QPainter, QFont
-        from PySide6.QtCore import Qt
-        
-        # Create a dark pixmap with video icon
-        pixmap = QPixmap(self.size, self.size)
-        pixmap.fill(QColor(45, 45, 45))
-        
-        painter = QPainter(pixmap)
-        painter.setPen(QColor(200, 200, 200))
-        font = QFont()
-        font.setPixelSize(self.size // 3)
-        painter.setFont(font)
-        painter.drawText(pixmap.rect(), Qt.AlignCenter, "🎬")
-        painter.end()
-        
-        self.signals.loaded.emit(self.path, pixmap, self.size)
 
 
 class PreloadImageSignals(QObject):
@@ -301,6 +246,20 @@ class MediaLightbox(QDialog):
     - Close button and ESC key
     """
 
+    # === CLASS CONSTANTS ===
+    # Navigation button configuration
+    NAV_BUTTON_SIZE = 60  # Button width/height in pixels (professional size)
+    NAV_BUTTON_MARGIN = 24  # Margin from viewport edges in pixels
+    NAV_BUTTON_ICON_SIZE = 32  # Icon size within button in pixels
+    NAV_BUTTON_BORDER_RADIUS = 30  # Half of button size for circular shape
+
+    # Button positioning retry configuration
+    MAX_POSITION_RETRIES = 20  # Maximum attempts to position buttons before giving up
+    POSITION_RETRY_DELAY_MS = 50  # Delay between retry attempts in milliseconds
+
+    # SVG icon rendering configuration
+    SVG_ICON_RENDER_SIZE = 48  # High-resolution pixmap size for crisp SVG rendering
+
     def __init__(self, media_path: str, all_media: List[str], parent=None):
         """
         Initialize media lightbox.
@@ -469,33 +428,6 @@ class MediaLightbox(QDialog):
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scroll_area.setAlignment(Qt.AlignCenter)
 
-        # === MEDIA CAPTION (Overlay at bottom of media, like Google Photos) ===
-        self.media_caption = QLabel()
-        self.media_caption.setParent(self)
-        self.media_caption.setAlignment(Qt.AlignCenter)
-        self.media_caption.setStyleSheet("""
-            QLabel {
-                background: rgba(0, 0, 0, 0.75);
-                color: white;
-                font-size: 11pt;
-                padding: 8px 16px;
-                border-radius: 4px;
-            }
-        """)
-        self.media_caption.setWordWrap(False)
-        self.media_caption.hide()  # Hidden initially, shown after load
-        
-        # Caption auto-hide timer (like Google Photos - fades after 3 seconds)
-        self.caption_hide_timer = QTimer()
-        self.caption_hide_timer.setSingleShot(True)
-        self.caption_hide_timer.setInterval(3000)  # 3 seconds
-        self.caption_hide_timer.timeout.connect(self._fade_out_caption)
-        
-        # Caption opacity effect for smooth fade
-        self.caption_opacity = QGraphicsOpacityEffect()
-        self.media_caption.setGraphicsEffect(self.caption_opacity)
-        self.caption_opacity.setOpacity(0.0)  # Start hidden
-
         # CRITICAL FIX: Create container widget to hold both image and video
         # This prevents Qt from deleting widgets when switching with setWidget()
         self.media_container = QWidget()
@@ -567,11 +499,10 @@ class MediaLightbox(QDialog):
         # === BOTTOM TOOLBAR (Overlay with gradient) ===
         self.bottom_toolbar = self._create_bottom_toolbar()
         main_layout.addWidget(self.bottom_toolbar)
-        self.bottom_toolbar.hide()  # Hide by default, show for videos
 
         # === PHASE B #1: THUMBNAIL FILMSTRIP ===
         self.filmstrip_widget = self._create_filmstrip()
-        self.filmstrip_widget.hide()  # Hide by default for maximum photo area
+        main_layout.addWidget(self.filmstrip_widget)
 
         # Track info panel state
         self.info_panel_visible = False
@@ -612,56 +543,6 @@ class MediaLightbox(QDialog):
 
         # PHASE A #5: Create keyboard shortcut help overlay
         self._create_help_overlay()
-
-    def closeEvent(self, event):
-        """Clean up resources when lightbox closes."""
-        print("[MediaLightbox] Closing - cleaning up resources...")
-        
-        try:
-            # Stop and cleanup video player
-            if hasattr(self, 'video_player') and self.video_player is not None:
-                try:
-                    self.video_player.stop()
-                    if hasattr(self, 'position_timer') and self.position_timer:
-                        self.position_timer.stop()
-                    # Clear source to release decoder
-                    from PySide6.QtCore import QUrl
-                    self.video_player.setSource(QUrl())
-                    print("[MediaLightbox] ✓ Video player cleaned up")
-                except Exception as video_cleanup_err:
-                    print(f"[MediaLightbox] Warning during video cleanup: {video_cleanup_err}")
-            
-            # Stop slideshow timer
-            if hasattr(self, 'slideshow_timer') and self.slideshow_timer:
-                self.slideshow_timer.stop()
-            
-            # Clear preload cache to free memory
-            if hasattr(self, 'preload_cache'):
-                self.preload_cache.clear()
-            
-            # Stop thread pools
-            if hasattr(self, 'preload_thread_pool'):
-                self.preload_thread_pool.clear()
-                self.preload_thread_pool.waitForDone(1000)  # Wait max 1 second
-            
-            print("[MediaLightbox] ✓ All resources cleaned up")
-        except Exception as e:
-            print(f"[MediaLightbox] Error during cleanup: {e}")
-        
-        # Accept the close event
-        event.accept()
-    
-    def resizeEvent(self, event):
-        """Handle window resize - reposition navigation buttons and caption."""
-        super().resizeEvent(event)
-        
-        # Reposition nav buttons
-        if hasattr(self, 'prev_btn') and hasattr(self, 'next_btn'):
-            self._position_nav_buttons()
-        
-        # Reposition caption
-        if hasattr(self, 'media_caption'):
-            self._position_media_caption()
 
     def _create_top_toolbar(self) -> QWidget:
         """Create top overlay toolbar with close, info, zoom, slideshow, and action buttons."""
@@ -825,24 +706,79 @@ class MediaLightbox(QDialog):
         return toolbar
 
     def _create_overlay_nav_buttons(self):
-        """Create Google Photos-style overlay navigation buttons on left/right sides."""
-        from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve
-        from PySide6.QtGui import QCursor
+        """Create Google Photos-style overlay navigation buttons with SVG icons."""
+        from PySide6.QtCore import QTimer, QPropertyAnimation, QEasingCurve, QSize
+        from PySide6.QtGui import QCursor, QIcon, QPixmap, QPainter
+        from PySide6.QtSvg import QSvgRenderer
 
         print("[MediaLightbox] Creating overlay navigation buttons...")
 
-        # Previous button (left side)
-        self.prev_btn = QPushButton("◄", self)
+        # Create SVG-based chevron icons for crisp scaling
+        def create_chevron_icon(direction: str) -> QIcon:
+            """
+            Create crisp SVG chevron icon (left or right) with error handling.
+
+            Args:
+                direction: "left" or "right" for chevron direction
+
+            Returns:
+                QIcon with rendered SVG, or empty QIcon on error
+            """
+            # SVG chevron paths (optimized for clarity at all sizes)
+            if direction == "left":
+                svg_data = '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                          fill="white" stroke="white" stroke-width="0.5"/>
+                </svg>'''
+            else:  # right
+                svg_data = '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                          fill="white" stroke="white" stroke-width="0.5"/>
+                </svg>'''
+
+            # Render SVG to pixmap at high resolution for crisp display
+            try:
+                renderer = QSvgRenderer(svg_data.encode('utf-8'))
+
+                # Validate SVG renderer
+                if not renderer.isValid():
+                    print(f"[MediaLightbox] ⚠️ Invalid SVG data for {direction} chevron, using fallback")
+                    return QIcon()  # Return empty icon as fallback
+
+                # Use class constant for consistent high-res rendering
+                size = MediaLightbox.SVG_ICON_RENDER_SIZE
+                pixmap = QPixmap(size, size)
+                pixmap.fill(Qt.transparent)
+                painter = QPainter(pixmap)
+
+                # Verify painter is active
+                if not painter.isActive():
+                    print(f"[MediaLightbox] ⚠️ QPainter failed to initialize for {direction} chevron")
+                    return QIcon()
+
+                renderer.render(painter)
+                painter.end()
+
+                return QIcon(pixmap)
+
+            except Exception as e:
+                print(f"[MediaLightbox] ⚠️ SVG rendering error for {direction} chevron: {e}")
+                # Return empty icon - button will still work but without icon
+                return QIcon()
+
+        # Previous button (left side) - PROFESSIONAL SIZE
+        self.prev_btn = QPushButton(self)
+        self.prev_btn.setIcon(create_chevron_icon("left"))
+        self.prev_btn.setIconSize(QSize(self.NAV_BUTTON_ICON_SIZE, self.NAV_BUTTON_ICON_SIZE))
         self.prev_btn.setFocusPolicy(Qt.NoFocus)
-        self.prev_btn.setFixedSize(48, 48)
+        self.prev_btn.setFixedSize(self.NAV_BUTTON_SIZE, self.NAV_BUTTON_SIZE)
         self.prev_btn.setCursor(Qt.PointingHandCursor)
+        self.prev_btn.setToolTip("Previous photo (← or ◄)")  # Accessibility
         self.prev_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(0, 0, 0, 0.5);
-                color: white;
                 border: none;
-                border-radius: 24px;
-                font-size: 18pt;
+                border-radius: 30px;
             }
             QPushButton:hover {
                 background: rgba(0, 0, 0, 0.7);
@@ -852,23 +788,24 @@ class MediaLightbox(QDialog):
             }
             QPushButton:disabled {
                 background: rgba(0, 0, 0, 0.2);
-                color: rgba(255, 255, 255, 0.3);
+                opacity: 0.3;
             }
         """)
         self.prev_btn.clicked.connect(self._previous_media)
 
-        # Next button (right side)
-        self.next_btn = QPushButton("►", self)
+        # Next button (right side) - PROFESSIONAL SIZE
+        self.next_btn = QPushButton(self)
+        self.next_btn.setIcon(create_chevron_icon("right"))
+        self.next_btn.setIconSize(QSize(self.NAV_BUTTON_ICON_SIZE, self.NAV_BUTTON_ICON_SIZE))
         self.next_btn.setFocusPolicy(Qt.NoFocus)
-        self.next_btn.setFixedSize(48, 48)
+        self.next_btn.setFixedSize(self.NAV_BUTTON_SIZE, self.NAV_BUTTON_SIZE)
         self.next_btn.setCursor(Qt.PointingHandCursor)
+        self.next_btn.setToolTip("Next photo (→ or ►)")  # Accessibility
         self.next_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(0, 0, 0, 0.5);
-                color: white;
                 border: none;
-                border-radius: 24px;
-                font-size: 18pt;
+                border-radius: 30px;
             }
             QPushButton:hover {
                 background: rgba(0, 0, 0, 0.7);
@@ -878,7 +815,7 @@ class MediaLightbox(QDialog):
             }
             QPushButton:disabled {
                 background: rgba(0, 0, 0, 0.2);
-                color: rgba(255, 255, 255, 0.3);
+                opacity: 0.3;
             }
         """)
         self.next_btn.clicked.connect(self._next_media)
@@ -1091,15 +1028,9 @@ class MediaLightbox(QDialog):
         else:
             self.info_panel.show()
             self.info_panel_visible = True
-        
-        # Reposition nav buttons when info panel changes
+
+        # Reposition nav buttons when panel visibility changes (viewport width changes)
         self._position_nav_buttons()
-        
-        # Reposition caption when info panel changes
-        self._position_media_caption()
-        
-        # Trigger resize of media to adjust to new available space
-        QTimer.singleShot(10, self._reposition_media_for_panel)
 
     def _toggle_play_pause(self):
         """Toggle video playback (play/pause)."""
@@ -1111,108 +1042,6 @@ class MediaLightbox(QDialog):
             else:
                 self.video_player.play()
                 self.play_pause_btn.setText("⏸")
-
-    def _position_media_caption(self):
-        """Position media caption overlay at bottom center (like Google Photos/Lightroom)."""
-        from PySide6.QtCore import QPoint
-        
-        if not hasattr(self, 'media_caption') or not self.media_caption:
-            return
-        
-        # Get scroll area viewport position and size
-        viewport = self.scroll_area.viewport()
-        viewport_pos = viewport.mapTo(self, QPoint(0, 0))
-        viewport_width = viewport.width()
-        viewport_height = viewport.height()
-        
-        # Adjust caption width
-        caption_width = min(500, viewport_width - 40)  # Max 500px, leave 20px margins
-        self.media_caption.setMaximumWidth(caption_width)
-        self.media_caption.adjustSize()  # Resize to content
-        
-        # Position at BOTTOM CENTER (like Google Photos)
-        caption_x = viewport_pos.x() + (viewport_width - self.media_caption.width()) // 2
-        
-        # Calculate Y position from bottom
-        # If video controls are visible, position above them; otherwise use bottom margin
-        bottom_offset = 20  # Default 20px from bottom
-        if hasattr(self, 'bottom_toolbar') and self.bottom_toolbar.isVisible():
-            bottom_offset = self.bottom_toolbar.height() + 10  # 10px above video controls
-        
-        caption_y = viewport_pos.y() + viewport_height - self.media_caption.height() - bottom_offset
-        
-        self.media_caption.move(caption_x, caption_y)
-        self.media_caption.raise_()  # Ensure it's on top
-    
-    def _update_media_caption(self, filename: str):
-        """Update and show media caption with filename (Google Photos style - auto-fade)."""
-        if not hasattr(self, 'media_caption'):
-            return
-        
-        self.media_caption.setText(filename)
-        self.media_caption.show()
-        self._position_media_caption()
-        
-        # Fade in caption
-        self._fade_in_caption()
-        
-        # Start auto-hide timer (3 seconds)
-        self.caption_hide_timer.stop()
-        self.caption_hide_timer.start()
-    
-    def _fade_in_caption(self):
-        """Fade in the caption smoothly."""
-        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
-        
-        if not hasattr(self, 'caption_opacity'):
-            return
-        
-        # Stop any existing animation
-        if hasattr(self, '_caption_fade_anim'):
-            self._caption_fade_anim.stop()
-        
-        # Create fade-in animation
-        self._caption_fade_anim = QPropertyAnimation(self.caption_opacity, b"opacity")
-        self._caption_fade_anim.setDuration(300)  # 300ms fade in
-        self._caption_fade_anim.setStartValue(0.0)
-        self._caption_fade_anim.setEndValue(1.0)
-        self._caption_fade_anim.setEasingCurve(QEasingCurve.OutCubic)
-        self._caption_fade_anim.start()
-    
-    def _fade_out_caption(self):
-        """Fade out the caption smoothly (auto-hide after 3 seconds)."""
-        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
-        
-        if not hasattr(self, 'caption_opacity'):
-            return
-        
-        # Stop any existing animation
-        if hasattr(self, '_caption_fade_anim'):
-            self._caption_fade_anim.stop()
-        
-        # Create fade-out animation
-        self._caption_fade_anim = QPropertyAnimation(self.caption_opacity, b"opacity")
-        self._caption_fade_anim.setDuration(500)  # 500ms fade out (slower)
-        self._caption_fade_anim.setStartValue(1.0)
-        self._caption_fade_anim.setEndValue(0.0)
-        self._caption_fade_anim.setEasingCurve(QEasingCurve.InCubic)
-        self._caption_fade_anim.start()
-    
-    def _reposition_media_for_panel(self):
-        """Reposition/resize media when info panel toggles."""
-        if self._is_video(self.media_path):
-            # Reapply video zoom to adjust to new viewport size
-            if hasattr(self, 'video_widget') and self.video_widget:
-                self._apply_video_zoom()
-        else:
-            # Reapply photo zoom to adjust to new viewport size
-            if self.original_pixmap and not self.original_pixmap.isNull():
-                if self.zoom_mode == "fit":
-                    self._fit_to_window()
-                elif self.zoom_mode == "fill":
-                    self._fill_window()
-                else:
-                    self._apply_zoom()
 
     def _on_volume_changed(self, value: int):
         """Handle volume slider change."""
@@ -1326,39 +1155,16 @@ class MediaLightbox(QDialog):
         try:
             from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
             from PySide6.QtMultimediaWidgets import QVideoWidget
-            from PySide6.QtCore import QUrl
-
-            # CRITICAL: Stop and cleanup previous video BEFORE loading new one
-            if hasattr(self, 'video_player') and self.video_player is not None:
-                print(f"[MediaLightbox] Stopping previous video...")
-                try:
-                    # Stop playback
-                    self.video_player.stop()
-                    
-                    # Stop position timer
-                    if hasattr(self, 'position_timer') and self.position_timer:
-                        self.position_timer.stop()
-                    
-                    # Clear source to release decoder resources
-                    self.video_player.setSource(QUrl())
-                    
-                    # Small delay to allow decoder cleanup
-                    from PySide6.QtCore import QThread
-                    QThread.msleep(50)  # 50ms delay for GPU resource cleanup
-                    
-                    print(f"[MediaLightbox] ✓ Previous video stopped and cleaned up")
-                except Exception as cleanup_err:
-                    print(f"[MediaLightbox] Warning during video cleanup: {cleanup_err}")
+            from PySide6.QtCore import QUrl, QTimer
 
             # Clear previous content
             self.image_label.clear()
             self.image_label.setStyleSheet("")
-            self.image_label.hide()
 
             # Create video player if not exists
-            if not hasattr(self, 'video_player') or self.video_player is None:
-                self.video_player = QMediaPlayer(self)
-                self.audio_output = QAudioOutput(self)
+            if not hasattr(self, 'video_player'):
+                self.video_player = QMediaPlayer()
+                self.audio_output = QAudioOutput()
                 self.video_player.setAudioOutput(self.audio_output)
 
                 # Create video widget
@@ -1366,57 +1172,40 @@ class MediaLightbox(QDialog):
                 self.video_widget.setStyleSheet("background: black;")
                 self.video_player.setVideoOutput(self.video_widget)
 
-                # Add video widget to container
+                # Add video widget to container (alongside image_label)
+                # CRITICAL: Add to container, not replace scroll area widget!
                 container_layout = self.media_container.layout()
-                if container_layout:
-                    container_layout.addWidget(self.video_widget)
+                container_layout.addWidget(self.video_widget)
 
-                # Connect video player signals with error handling
-                try:
-                    self.video_player.durationChanged.connect(self._on_duration_changed)
-                    self.video_player.positionChanged.connect(self._on_position_changed)
-                    self.video_player.errorOccurred.connect(self._on_video_error)
-                except Exception as signal_err:
-                    print(f"[MediaLightbox] Warning: Could not connect video signals: {signal_err}")
+                # Connect video player signals
+                self.video_player.durationChanged.connect(self._on_duration_changed)
+                self.video_player.positionChanged.connect(self._on_position_changed)
 
                 # Create position update timer
-                if not hasattr(self, 'position_timer'):
-                    self.position_timer = QTimer(self)
-                    self.position_timer.timeout.connect(self._update_video_position)
-                    self.position_timer.setInterval(100)
+                self.position_timer = QTimer()
+                self.position_timer.timeout.connect(self._update_video_position)
+                self.position_timer.setInterval(100)  # Update every 100ms
 
-            # Show video widget and resize to fill scroll area
-            if hasattr(self, 'video_widget'):
-                # Get scroll area dimensions
-                viewport = self.scroll_area.viewport()
-                available_width = viewport.width()
-                available_height = viewport.height()
-                
-                # Set video widget to fill the available space
-                self.video_widget.setMinimumSize(available_width, available_height)
-                self.video_widget.resize(available_width, available_height)
-                
-                # Update container size to match
-                self.media_container.setMinimumSize(available_width, available_height)
-                self.media_container.resize(available_width, available_height)
-                
-                self.video_widget.show()
-                print(f"[MediaLightbox] Video widget sized: {available_width}x{available_height}")
+            # Show video, hide image (simple show/hide, no widget replacement!)
+            self.image_label.hide()
+            self.video_widget.show()
 
-            # Show video controls in bottom toolbar
-            if hasattr(self, 'video_controls_widget'):
-                self.video_controls_widget.show()
-            if hasattr(self, 'bottom_toolbar'):
-                self.bottom_toolbar.show()  # Show bottom toolbar for video controls
+            # CRITICAL FIX: Resize video widget and container (same pattern as photos!)
+            # Calculate video display size based on scroll area dimensions
+            video_width = self.scroll_area.width() - 100  # Leave margin for scroll bars
+            video_height = self.scroll_area.height() - 200  # Leave space for toolbars
 
-            # Set volume
-            if hasattr(self, 'volume_slider') and hasattr(self, 'audio_output'):
-                volume = self.volume_slider.value() / 100.0
-                self.audio_output.setVolume(volume)
+            # Resize both video widget and container (QScrollArea needs explicit size!)
+            self.video_widget.resize(video_width, video_height)
+            self.media_container.resize(video_width, video_height)
+            print(f"[MediaLightbox] ✓ Video widget sized: {video_width}x{video_height}")
 
-            # Verify file exists
-            if not os.path.exists(self.media_path):
-                raise FileNotFoundError(f"Video file not found: {self.media_path}")
+            # Show video controls
+            self.video_controls_widget.show()
+
+            # Set initial volume
+            volume = self.volume_slider.value() / 100.0
+            self.audio_output.setVolume(volume)
 
             # Load and play video
             video_url = QUrl.fromLocalFile(self.media_path)
@@ -1424,28 +1213,12 @@ class MediaLightbox(QDialog):
             self.video_player.play()
 
             # Update play/pause button
-            if hasattr(self, 'play_pause_btn'):
-                self.play_pause_btn.setText("⏸")
+            self.play_pause_btn.setText("⏸")
 
             # Start position timer
-            if hasattr(self, 'position_timer'):
-                self.position_timer.start()
-
-            # Update counter and navigation
-            if hasattr(self, 'counter_label'):
-                self.counter_label.setText(f"{self.current_index + 1} of {len(self.all_media)}")
-            if hasattr(self, 'prev_btn'):
-                self.prev_btn.setEnabled(self.current_index > 0)
-            if hasattr(self, 'next_btn'):
-                self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
-
-            # Load metadata
-            self._load_metadata()
+            self.position_timer.start()
 
             print(f"[MediaLightbox] ✓ Video player started: {os.path.basename(self.media_path)}")
-            
-            # Update and show caption
-            self._update_media_caption(os.path.basename(self.media_path))
 
         except Exception as e:
             print(f"[MediaLightbox] ⚠️ Error loading video: {e}")
@@ -1456,36 +1229,19 @@ class MediaLightbox(QDialog):
             self.image_label.show()
             if hasattr(self, 'video_widget'):
                 self.video_widget.hide()
-            if hasattr(self, 'video_controls_widget'):
-                self.video_controls_widget.hide()
-            self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\n⚠️ Playback error\n{str(e)}")
-            self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
-            
-            # Update counter even on error
-            if hasattr(self, 'counter_label'):
-                self.counter_label.setText(f"{self.current_index + 1} of {len(self.all_media)}")
-            if hasattr(self, 'prev_btn'):
-                self.prev_btn.setEnabled(self.current_index > 0)
-            if hasattr(self, 'next_btn'):
-                self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
-
-    def _on_video_error(self, error):
-        """Handle video playback errors."""
-        from PySide6.QtMultimedia import QMediaPlayer
-        error_string = "Unknown error"
-        if hasattr(self, 'video_player'):
-            error_string = self.video_player.errorString()
-        print(f"[MediaLightbox] Video error: {error} - {error_string}")
-        
-        # Show error in UI
-        if hasattr(self, 'image_label'):
-            self.image_label.show()
-            self.image_label.setText(f"🎬 VIDEO ERROR\n\n{os.path.basename(self.media_path)}\n\n{error_string}")
-            self.image_label.setStyleSheet("color: #ff6b6b; font-size: 14pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
-        if hasattr(self, 'video_widget'):
-            self.video_widget.hide()
-        if hasattr(self, 'video_controls_widget'):
             self.video_controls_widget.hide()
+            self.image_label.setText(f"🎬 VIDEO\n\n{os.path.basename(self.media_path)}\n\n⚠️ Playback error")
+            self.image_label.setStyleSheet("color: white; font-size: 16pt; background: #2a2a2a; border-radius: 8px; padding: 40px;")
+
+        # Update counter
+        self.counter_label.setText(f"{self.current_index + 1} of {len(self.all_media)}")
+
+        # Update navigation buttons
+        self.prev_btn.setEnabled(self.current_index > 0)
+        self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
+
+        # Load video metadata
+        self._load_metadata()
 
     def _on_duration_changed(self, duration: int):
         """Handle video duration change (set seek slider range)."""
@@ -1535,8 +1291,6 @@ class MediaLightbox(QDialog):
             # Hide video controls
             if hasattr(self, 'video_controls_widget'):
                 self.video_controls_widget.hide()
-            if hasattr(self, 'bottom_toolbar'):
-                self.bottom_toolbar.hide()  # Hide bottom toolbar when showing photos
 
             # Show image label (simple show/hide, no widget replacement!)
             self.image_label.show()
@@ -1629,9 +1383,6 @@ class MediaLightbox(QDialog):
                 self._show_motion_indicator()
             else:
                 self._hide_motion_indicator()
-            
-            # Update and show caption
-            self._update_media_caption(os.path.basename(self.media_path))
 
         except Exception as e:
             print(f"[MediaLightbox] Error loading photo: {e}")
@@ -1935,14 +1686,14 @@ class MediaLightbox(QDialog):
 
         # Check if scroll area has valid size
         if self.scroll_area.width() == 0 or self.scroll_area.height() == 0:
-            # Safety limit: stop retrying after 20 attempts (1 second total)
-            if self._position_retry_count < 20:
+            # Safety limit: stop retrying after maximum attempts
+            if self._position_retry_count < self.MAX_POSITION_RETRIES:
                 self._position_retry_count += 1
-                print(f"[MediaLightbox] Scroll area not ready (retry {self._position_retry_count}/20), waiting 50ms...")
+                print(f"[MediaLightbox] Scroll area not ready (retry {self._position_retry_count}/{self.MAX_POSITION_RETRIES}), waiting {self.POSITION_RETRY_DELAY_MS}ms...")
                 from PySide6.QtCore import QTimer
-                QTimer.singleShot(50, self._position_nav_buttons)
+                QTimer.singleShot(self.POSITION_RETRY_DELAY_MS, self._position_nav_buttons)
             else:
-                print(f"[MediaLightbox] ⚠️ Scroll area still not ready after 20 retries!")
+                print(f"[MediaLightbox] ⚠️ Scroll area still not ready after {self.MAX_POSITION_RETRIES} retries!")
             return
 
         # Reset retry counter on success
@@ -1952,33 +1703,33 @@ class MediaLightbox(QDialog):
         # The scroll_area is the main media display widget
         try:
             from PySide6.QtCore import QPoint
-            viewport = self.scroll_area.viewport()
-            scroll_tl = viewport.mapTo(self, QPoint(0, 0))
+            scroll_tl = self.scroll_area.mapTo(self, QPoint(0, 0))
         except Exception as e:
             print(f"[MediaLightbox] ⚠️ mapTo() failed: {e}, using fallback")
             from PySide6.QtCore import QPoint
             scroll_tl = QPoint(0, 0)
 
-        scroll_w = viewport.width()
-        scroll_h = viewport.height()
+        scroll_w = self.scroll_area.width()
+        scroll_h = self.scroll_area.height()
 
-        # Button dimensions
-        btn_w = self.prev_btn.width() or 48
-        btn_h = self.prev_btn.height() or 48
-        margin = 12  # Distance from edges
+        # Button dimensions - use class constants for consistency
+        btn_w = self.prev_btn.width() or self.NAV_BUTTON_SIZE
+        btn_h = self.prev_btn.height() or self.NAV_BUTTON_SIZE
+        margin = self.NAV_BUTTON_MARGIN
 
-        # Calculate vertical center position within middle content area (excluding toolbars)
-        top_h = self.top_toolbar.height() if hasattr(self, 'top_toolbar') else 0
-        bottom_h = self.bottom_toolbar.height() if hasattr(self, 'bottom_toolbar') else 0
-        center_y = top_h + ((self.height() - top_h - bottom_h) // 2) - (btn_h // 2)
+        # Calculate vertical center position (relative to dialog)
+        y = scroll_tl.y() + (scroll_h // 2) - (btn_h // 2)
 
-        # Position buttons at the dialog's left/right visible edges
-        margin = 16
-        left_x = margin
-        self.prev_btn.move(left_x, max(8, center_y))
+        # Position left button (relative to dialog)
+        left_x = scroll_tl.x() + margin
+        self.prev_btn.move(left_x, max(8, y))
 
-        right_x = self.width() - btn_w - margin
-        self.next_btn.move(right_x, max(8, center_y))
+        # Position right button (relative to dialog)
+        right_x = scroll_tl.x() + scroll_w - btn_w - margin
+        self.next_btn.move(right_x, max(8, y))
+
+        # Update button states (dim at boundaries)
+        self._update_nav_button_states()
 
         # CRITICAL: Ensure buttons are visible and on top
         self.prev_btn.show()
@@ -1986,7 +1737,18 @@ class MediaLightbox(QDialog):
         self.prev_btn.raise_()
         self.next_btn.raise_()
 
-        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={center_y}")
+        print(f"[MediaLightbox] ✓ Nav buttons positioned: left={left_x}, right={right_x}, y={y}")
+
+    def _update_nav_button_states(self):
+        """Update button enabled/disabled states based on current position (dim at boundaries)."""
+        if not hasattr(self, 'prev_btn') or not hasattr(self, 'all_media'):
+            return
+
+        # Disable prev button at first photo
+        self.prev_btn.setEnabled(self.current_index > 0)
+
+        # Disable next button at last photo
+        self.next_btn.setEnabled(self.current_index < len(self.all_media) - 1)
 
     def _show_nav_buttons(self):
         """Show navigation buttons with instant visibility (always visible for usability)."""
@@ -2070,22 +1832,8 @@ class MediaLightbox(QDialog):
         super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        """Handle mouse move for panning, cursor updates, toolbar reveal, and caption."""
+        """Handle mouse move for panning, cursor updates, and toolbar reveal."""
         from PySide6.QtCore import Qt
-        
-        # Re-show caption on mouse movement (Google Photos behavior)
-        if hasattr(self, 'media_caption') and self.media_caption.text():
-            # Cancel auto-hide timer
-            if hasattr(self, 'caption_hide_timer'):
-                self.caption_hide_timer.stop()
-            
-            # Fade in if currently faded out
-            if hasattr(self, 'caption_opacity') and self.caption_opacity.opacity() < 0.5:
-                self._fade_in_caption()
-            
-            # Restart auto-hide timer
-            if hasattr(self, 'caption_hide_timer'):
-                self.caption_hide_timer.start()
 
         # PHASE A #3: Track mouse position for cursor-centered zoom
         self.last_mouse_pos = event.pos()
@@ -2151,17 +1899,15 @@ class MediaLightbox(QDialog):
         Phase 3 #5: Added smooth cross-fade transition.
         PHASE B #5: Save zoom state before navigating.
         """
-        print(f"[MediaLightbox] Prev clicked at index={self.current_index} of {len(self.all_media)}")
         # PHASE B #5: Save current zoom state
         self._save_zoom_state()
 
         if self.current_index > 0:
             self.current_index -= 1
             self.media_path = self.all_media[self.current_index]
-            print(f"[MediaLightbox] → Loading previous: {os.path.basename(self.media_path)} (idx={self.current_index})")
             self._load_media_with_transition()
-        else:
-            print("[MediaLightbox] Prev at start — no action")
+            self._update_nav_button_states()  # Dim at boundaries
+
     def _next_media(self):
         """
         Navigate to next media (photo or video).
@@ -2169,17 +1915,15 @@ class MediaLightbox(QDialog):
         Phase 3 #5: Added smooth cross-fade transition.
         PHASE B #5: Save zoom state before navigating.
         """
-        print(f"[MediaLightbox] Next clicked at index={self.current_index} of {len(self.all_media)}")
         # PHASE B #5: Save current zoom state
         self._save_zoom_state()
 
         if self.current_index < len(self.all_media) - 1:
             self.current_index += 1
             self.media_path = self.all_media[self.current_index]
-            print(f"[MediaLightbox] → Loading next: {os.path.basename(self.media_path)} (idx={self.current_index})")
             self._load_media_with_transition()
-        else:
-            print("[MediaLightbox] Next at end — no action")
+            self._update_nav_button_states()  # Dim at boundaries
+
     def event(self, event):
         """
         PHASE 2 #10: Handle gesture events (swipe, pinch).
@@ -2227,44 +1971,43 @@ class MediaLightbox(QDialog):
 
         Cross-fades from current image to new image for professional feel.
         """
-        from PySide6.QtCore import QPropertyAnimation, QEasingCurve
+        from PySide6.QtCore import QPropertyAnimation, QEasingCurve, QTimer
 
-        # If current content is video, bypass image fade and load directly
-        if self._is_video(self.media_path):
-            self._load_media()
-            return
-
-        # Ensure an opacity effect exists on the image label
-        opacity_effect = self.image_label.graphicsEffect()
-        if not opacity_effect:
+        # Create opacity effect if not present
+        if not self.image_label.graphicsEffect():
             opacity_effect = QGraphicsOpacityEffect()
             self.image_label.setGraphicsEffect(opacity_effect)
             opacity_effect.setOpacity(1.0)
 
+        opacity_effect = self.image_label.graphicsEffect()
+
         # Fade out current image
         fade_out = QPropertyAnimation(opacity_effect, b"opacity")
-        fade_out.setDuration(150)
+        fade_out.setDuration(150)  # 150ms fade-out
         fade_out.setStartValue(1.0)
         fade_out.setEndValue(0.0)
         fade_out.setEasingCurve(QEasingCurve.InCubic)
-        fade_out.setParent(self)  # Keep object alive
-        self._fade_out_animation = fade_out  # Strong reference
 
         # Load new media after fade-out completes
         def load_and_fade_in():
             self._load_media()
+
             # Fade in new image
             fade_in = QPropertyAnimation(opacity_effect, b"opacity")
-            fade_in.setDuration(200)
+            fade_in.setDuration(200)  # 200ms fade-in
             fade_in.setStartValue(0.0)
             fade_in.setEndValue(1.0)
             fade_in.setEasingCurve(QEasingCurve.OutCubic)
-            fade_in.setParent(self)  # Keep object alive
-            self._fade_in_animation = fade_in  # Strong reference
             fade_in.start()
+
+            # Store animation to prevent garbage collection
+            self.setProperty("fade_in_animation", fade_in)
 
         fade_out.finished.connect(load_and_fade_in)
         fade_out.start()
+
+        # Store animation to prevent garbage collection
+        self.setProperty("fade_out_animation", fade_out)
 
     def showEvent(self, event):
         """Load media when dialog is first shown (after window has proper size)."""
@@ -2442,8 +2185,12 @@ class MediaLightbox(QDialog):
             super().keyPressEvent(event)
 
     def wheelEvent(self, event):
-        """Handle mouse wheel for smooth continuous zoom (photos and videos)."""
-        # PROFESSIONAL UX: Smooth zoom for both photos and videos
+        """Handle mouse wheel for smooth continuous zoom (like Current Layout)."""
+        if self._is_video(self.media_path):
+            super().wheelEvent(event)
+            return
+
+        # PROFESSIONAL UX: Smooth zoom without Ctrl modifier (like Current Layout)
         steps = event.angleDelta().y() / 120.0
         if steps == 0:
             super().wheelEvent(event)
@@ -2452,20 +2199,18 @@ class MediaLightbox(QDialog):
         # Calculate zoom factor (1.15 per step - smooth and natural)
         factor = self.zoom_factor ** steps
 
-        # Apply smooth zoom (works for both photos and videos)
+        # Apply smooth zoom
         self._smooth_zoom(factor)
         event.accept()
 
     def _smooth_zoom(self, factor):
         """
-        Apply smooth continuous zoom with animation (photos and videos).
+        Apply smooth continuous zoom with animation.
 
         Phase 3 #5: Enhanced with smooth zoom animation instead of instant zoom.
         PHASE A #3: Cursor-centered zoom keeps point under mouse fixed.
         """
-        # Check if we have content to zoom
-        is_video = self._is_video(self.media_path)
-        if not is_video and not self.original_pixmap:
+        if self._is_video(self.media_path) or not self.original_pixmap:
             return
 
         # PHASE A #3: Store old zoom for cursor-centered calculation
@@ -2474,13 +2219,9 @@ class MediaLightbox(QDialog):
         # Calculate new zoom level
         new_zoom = self.zoom_level * factor
 
-        # Enforce minimum and maximum zoom
-        if is_video:
-            min_zoom = 0.5  # Videos can zoom down to 50%
-            max_zoom = 3.0  # Videos can zoom up to 300%
-        else:
-            min_zoom = max(0.1, self.fit_zoom_level * 0.25)  # Allow 25% of fit as minimum
-            max_zoom = 10.0  # Maximum 1000% zoom
+        # Enforce minimum: don't zoom below fit level
+        min_zoom = max(0.1, self.fit_zoom_level * 0.25)  # Allow 25% of fit as minimum
+        max_zoom = 10.0  # Maximum 1000% zoom
 
         new_zoom = max(min_zoom, min(new_zoom, max_zoom))
 
@@ -2502,25 +2243,18 @@ class MediaLightbox(QDialog):
         def update_zoom(value):
             self.zoom_level = value
             # Switch to custom zoom mode if zooming from fit/fill
-            if not is_video and self.zoom_level > self.fit_zoom_level * 1.01:
+            if self.zoom_level > self.fit_zoom_level * 1.01:
                 self.zoom_mode = "custom"
-            elif not is_video and abs(self.zoom_level - self.fit_zoom_level) < 0.01:
+            elif abs(self.zoom_level - self.fit_zoom_level) < 0.01:
                 self.zoom_mode = "fit"
-            
-            # Apply zoom based on media type
-            if is_video:
-                self._apply_video_zoom()
-            else:
-                self._apply_zoom()
-            
+            self._apply_zoom()
             self._update_zoom_status()
 
         self._zoom_animation.valueChanged.connect(update_zoom)
 
         # PHASE A #3: Apply cursor-centered scroll adjustment when zoom completes
         def on_zoom_complete():
-            if not is_video:
-                self._calculate_zoom_scroll_adjustment(old_zoom, new_zoom)
+            self._calculate_zoom_scroll_adjustment(old_zoom, new_zoom)
 
         self._zoom_animation.finished.connect(on_zoom_complete)
         self._zoom_animation.start()
@@ -2562,35 +2296,9 @@ class MediaLightbox(QDialog):
         else:
             self.scroll_area.setCursor(Qt.ArrowCursor)
 
-    def _apply_video_zoom(self):
-        """Apply current zoom level to video widget."""
-        if not hasattr(self, 'video_widget') or not self.video_widget:
-            return
-        
-        # Get viewport dimensions
-        viewport = self.scroll_area.viewport()
-        base_width = viewport.width()
-        base_height = viewport.height()
-        
-        # Apply zoom to video dimensions
-        zoomed_width = int(base_width * self.zoom_level)
-        zoomed_height = int(base_height * self.zoom_level)
-        
-        # Resize video widget and container
-        self.video_widget.setMinimumSize(zoomed_width, zoomed_height)
-        self.video_widget.resize(zoomed_width, zoomed_height)
-        self.media_container.setMinimumSize(zoomed_width, zoomed_height)
-        self.media_container.resize(zoomed_width, zoomed_height)
-        
-        print(f"[MediaLightbox] Video zoom applied: {int(self.zoom_level * 100)}% ({zoomed_width}x{zoomed_height})")
-
     def _zoom_to_fit(self):
         """Zoom to fit window (Keyboard: 0) - Letterboxing if needed."""
         if self._is_video(self.media_path):
-            # Reset video to original size
-            self.zoom_level = 1.0
-            self._apply_video_zoom()
-            self._update_zoom_status()
             return
 
         self.zoom_mode = "fit"
@@ -2600,9 +2308,6 @@ class MediaLightbox(QDialog):
     def _zoom_to_actual(self):
         """Zoom to 100% actual size (Keyboard: 1) - 1:1 pixel mapping."""
         if self._is_video(self.media_path):
-            self.zoom_level = 1.0
-            self._apply_video_zoom()
-            self._update_zoom_status()
             return
 
         self.zoom_mode = "actual"
@@ -2678,13 +2383,8 @@ class MediaLightbox(QDialog):
         """Update status label with professional zoom indicators."""
         status_parts = []
 
-        # Zoom indicator (for both photos and videos)
-        if self._is_video(self.media_path):
-            # Show zoom percentage for videos
-            zoom_pct = int(self.zoom_level * 100)
-            status_parts.append(f"🔍 {zoom_pct}%")
-        else:
-            # Show mode or percentage for photos
+        # Zoom indicator (for photos)
+        if not self._is_video(self.media_path):
             if self.zoom_mode == "fit":
                 status_parts.append("🔍 Fit to Window")
             elif self.zoom_mode == "fill":
@@ -2705,18 +2405,15 @@ class MediaLightbox(QDialog):
         """Update status label with zoom level or slideshow status."""
         status_parts = []
 
-        # Zoom indicator (for both photos and videos)
-        zoom_pct = int(self.zoom_level * 100)
+        # Zoom indicator (for photos)
         if not self._is_video(self.media_path):
+            zoom_pct = int(self.zoom_level * 100)
             if self.zoom_mode == "fit":
                 status_parts.append("Fit")
             elif self.zoom_mode == "fill":
                 status_parts.append("Fill")
             else:
                 status_parts.append(f"{zoom_pct}%")
-        else:
-            # Show zoom percentage for videos
-            status_parts.append(f"{zoom_pct}%")
 
         # Slideshow indicator
         if self.slideshow_active:
@@ -3580,7 +3277,6 @@ class MediaLightbox(QDialog):
         dialog = QDialog(self)
         dialog.setWindowTitle("Share / Export")
         dialog.setMinimumWidth(400)
-        dialog.setStyleSheet("QDialog { background-color: #1e1e1e; } QLabel { color: white; } QRadioButton { color: white; } QPushButton { background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 6px; padding: 8px 12px; } QPushButton:hover { background: rgba(255,255,255,0.25); }")
 
         layout = QVBoxLayout(dialog)
 
@@ -3614,17 +3310,14 @@ class MediaLightbox(QDialog):
         button_layout = QHBoxLayout()
 
         copy_btn = QPushButton("📋 Copy to Clipboard")
-        copy_btn.setStyleSheet("")
         copy_btn.clicked.connect(lambda: self._copy_to_clipboard())
         button_layout.addWidget(copy_btn)
 
         save_btn = QPushButton("💾 Save As...")
-        save_btn.setStyleSheet("")
         save_btn.clicked.connect(lambda: self._export_photo(size_group.checkedButton().property("size_value")))
         button_layout.addWidget(save_btn)
 
         cancel_btn = QPushButton("Cancel")
-        cancel_btn.setStyleSheet("")
         cancel_btn.clicked.connect(dialog.reject)
         button_layout.addWidget(cancel_btn)
 
@@ -5288,8 +4981,6 @@ class GooglePhotosLayout(BaseLayout):
             empty_label.setAlignment(Qt.AlignCenter)
             empty_label.setStyleSheet("font-size: 12pt; color: #888; padding: 60px;")
             self.timeline_layout.addWidget(empty_label)
-            # Clear displayed paths when no videos
-            self.all_displayed_paths = []
             return
 
         # Group videos by date
@@ -5300,10 +4991,6 @@ class GooglePhotosLayout(BaseLayout):
                 # Extract just the date part (YYYY-MM-DD)
                 date = date.split(' ')[0] if ' ' in date else date
             videos_by_date[date].append(video)
-
-        # Track all displayed video paths for lightbox navigation
-        self.all_displayed_paths = [video['path'] for video in videos]
-        print(f"[GoogleLayout] Tracking {len(self.all_displayed_paths)} video paths for navigation")
 
         # Create date groups for videos
         for date_str in sorted(videos_by_date.keys(), reverse=True):
@@ -5335,10 +5022,10 @@ class GooglePhotosLayout(BaseLayout):
         layout.setContentsMargins(16, 12, 16, 16)
         layout.setSpacing(12)
 
-        # Header - Use smart date labels (like photo groups)
+        # Header
         try:
             date_obj = datetime.fromisoformat(date_str)
-            formatted_date = self._get_smart_date_label(date_obj)
+            formatted_date = date_obj.strftime("%B %d, %Y (%A)")
         except:
             formatted_date = date_str
 
@@ -5533,51 +5220,11 @@ class GooglePhotosLayout(BaseLayout):
 
         return group
 
-    def _format_smart_date(self, date_str: str) -> str:
-        """Format date with Google Photos-style smart labels (Today, Yesterday, etc.)."""
-        try:
-            from datetime import timedelta
-            
-            date_obj = datetime.fromisoformat(date_str)
-            today = datetime.now().date()
-            photo_date = date_obj.date()
-            
-            diff_days = (today - photo_date).days
-            
-            # Smart labels based on recency
-            if diff_days == 0:
-                return "Today"
-            elif diff_days == 1:
-                return "Yesterday"
-            elif diff_days <= 6:
-                # This week - show day name
-                return date_obj.strftime("%A")  # e.g., "Monday"
-            elif diff_days <= 13:
-                # Last week
-                return f"Last {date_obj.strftime('%A')}"
-            elif diff_days <= 30:
-                # This month - show date without year
-                return date_obj.strftime("%B %d")  # e.g., "November 15"
-            elif photo_date.year == today.year:
-                # This year - show month and day
-                return date_obj.strftime("%B %d")  # e.g., "March 22"
-            else:
-                # Previous years - show full date
-                return date_obj.strftime("%B %d, %Y")  # e.g., "March 22, 2023"
-        except:
-            # Fallback to basic formatting
-            try:
-                date_obj = datetime.fromisoformat(date_str)
-                return date_obj.strftime("%B %d, %Y")
-            except:
-                return date_str
-    
     def _create_date_header(self, date_str: str, count: int) -> QWidget:
         """
         Create date group header with date and photo count.
 
         QUICK WIN #4: Now includes collapse/expand button.
-        Google Photos Enhancement: Smart date labels (Today, Yesterday, etc.)
         """
         header = QWidget()
         header_layout = QHBoxLayout(header)
@@ -5647,8 +5294,7 @@ class GooglePhotosLayout(BaseLayout):
 
     def _get_smart_date_label(self, date_obj: datetime) -> str:
         """
-        ENHANCED: Google Photos-style smart date labels (Today, Yesterday, Monday, etc.).
-        More concise and user-friendly than verbose labels.
+        PHASE 3 #4: Generate smart date labels like "Today", "Yesterday", "This Week".
 
         Args:
             date_obj: datetime object
@@ -5665,33 +5311,34 @@ class GooglePhotosLayout(BaseLayout):
         # Calculate difference in days
         delta = (today - photo_date).days
 
-        # Today (no extra date info - it's today!)
+        # Today
         if delta == 0:
-            return "Today"
+            return f"Today - {date_obj.strftime('%B %d, %Y')}"
 
         # Yesterday
         elif delta == 1:
-            return "Yesterday"
+            return f"Yesterday - {date_obj.strftime('%B %d, %Y')}"
 
-        # This Week (show day name only)
-        elif delta <= 6:
-            return date_obj.strftime("%A")  # "Monday", "Tuesday", etc.
+        # This Week (within last 7 days)
+        elif delta < 7:
+            return f"This Week - {date_obj.strftime('%A, %B %d, %Y')}"
 
-        # Last Week (show "Last Monday", etc.)
-        elif delta <= 13:
-            return f"Last {date_obj.strftime('%A')}"
-
-        # This Month (show month + day)
+        # This Month (same month and year)
         elif photo_date.month == today.month and photo_date.year == today.year:
-            return date_obj.strftime("%B %d")  # "November 15"
+            return f"This Month - {date_obj.strftime('%B %d, %Y (%A)')}"
 
-        # This Year (show month + day without year)
-        elif photo_date.year == today.year:
-            return date_obj.strftime("%B %d")  # "March 22"
+        # Last Month
+        elif delta < 60:  # Within last 2 months
+            last_month = today.replace(day=1) - timedelta(days=1)
+            if photo_date.month == last_month.month and photo_date.year == last_month.year:
+                return f"Last Month - {date_obj.strftime('%B %d, %Y (%A)')}"
 
-        # Previous Years (show full date)
-        else:
-            return date_obj.strftime("%B %d, %Y")  # "March 22, 2023"
+        # This Year
+        if photo_date.year == today.year:
+            return f"{date_obj.strftime('%B %d, %Y (%A)')}"
+
+        # Older (show full date with year)
+        return date_obj.strftime("%B %d, %Y (%A)")
 
     def _create_empty_state(self, icon: str, title: str, message: str, action_text: str = "") -> QWidget:
         """
@@ -6482,22 +6129,6 @@ class GooglePhotosLayout(BaseLayout):
         Returns:
             List of media paths
         """
-        # Prefer the currently displayed context (branch/day/group)
-        try:
-            if hasattr(self, 'all_displayed_paths') and self.all_displayed_paths:
-                return list(self.all_displayed_paths)
-        except Exception:
-            pass
-        # Fallback: ask grid for visible paths if available
-        try:
-            grid = getattr(self, 'grid', None)
-            if grid and hasattr(grid, 'get_visible_paths'):
-                paths = grid.get_visible_paths()
-                if paths:
-                    return paths
-        except Exception:
-            pass
-
         all_paths = []
 
         try:
